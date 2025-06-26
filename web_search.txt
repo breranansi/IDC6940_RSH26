@@ -1,0 +1,26 @@
+Articles
+========
+https://en.wikipedia.org/wiki/Symbolic_regression
+https://arxiv.org/abs/2305.01582 (PySR)
+https://proceedings.mlr.press/v139/landajuela21a.html (DSO)
+https://openreview.net/forum?id=m5Qsh0kBQG (DSO)
+https://link.springer.com/article/10.1007/s11831-023-09922-z 
+https://www.nature.com/articles/s41598-023-28328-2
+https://medium.com/@wilstrup/symbolic-regression-a-simple-and-friendly-introduction-16bcadbe870a
+https://arxiv.org/html/2406.03585v1 (Comparison)
+https://www.nature.com/articles/s41467-025-59288-y
+
+Libraries
+=========
+https://en.wikipedia.org/wiki/QLattice (Python)
+https://www.abzu.ai/qlattice/
+https://docs.abzu.ai/docs/guides/getting_started/quick_start.html
+
+https://github.com/MilesCranmer/PySR (Python)
+https://github.com/MilesCranmer/PySR?tab=readme-ov-file#quickstart
+
+https://github.com/dso-org/deep-symbolic-optimization (Python)
+
+https://github.com/alcides/GeneticEngine/
+
+https://gplearn.readthedocs.io/en/stable/ <-- easy read

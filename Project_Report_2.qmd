@@ -1,0 +1,234 @@
+---
+title: "IDC6940"
+author: "Richard Henry"
+subtitle: "Weekly Report 2"
+date: "26-Jun-2025"
+format: html
+editor: visual
+---
+
+Let's start by rebuilding our toy data set:
+
+$\gamma_{api}=\frac{141.5}{\gamma_o}-131.5$
+
+```{r}
+x <- seq(from=0.55, to=1.075, by=0.025)
+y <- 141.5/x-131.5
+plot(x,y,main="First Toy Dataset",xlab="Specific Gravity",ylab="API Gravity")
+grid()
+```
+
+## Grammatical Evolution
+
+Next, we will import a library that uses an evolutionary search algorithm to find an equation to match this data:
+
+```{r}
+library("gramEvol")
+```
+
+The advantage of this technology over the regression methods we looked at last time is that we do not have to decide on the size of the equation before we start.
+
+We do, however, have to decide what kind of operations we will allow.
+
+`op = grule('+', '-', '*','/')`
+
+This line says that we will allow addition, subtraction, multiplication and division.
+
+`expr=grule(op(expr, expr), var,con)`
+
+This line says that each operator will handle two expressions at a time, and that expressions can consists of other expressions, variables and constants.
+
+`var = grule(x)`
+
+This line says that x is our only variable.
+
+`con = gvrule(w)`
+
+This line says that we will use a list of constants.
+
+Here we define that list to include the two constants we need, plus some others we don't need.
+
+```{r}
+w<-seq(from=121.5,to=161.5, by=10)
+```
+
+Next, we put it all together to build the grammar which the algorithm will use to build equations in polish notation.
+
+```{r}
+# Define the rules
+ruleDef <- list(expr = grule(op(expr, expr), var,con),
+                op = grule('+', '-', '*','/'),
+                var = grule(x),
+                con = gvrule(w))
+# Create the Grammar
+grammarDef <- CreateGrammar(ruleDef)
+# Print Backus-Naur version
+grammarDef
+```
+
+Our target equation in polish notation looks like this:
+
+`-(/(141.5,x),131.5)`
+
+If you were lucky enough to use a 1980's HP calculator, then you know that we can drop the parenthesis and commas and *still* have a valid expression:
+
+`-/141.5x131.5`
+
+and if you're curious, this expression has a length of 5.
+
+| 1   | 2   | 3       | 4   | 5       |
+|-----|-----|---------|-----|---------|
+| $-$ | $/$ | $141.5$ | $x$ | $131.5$ |
+
+Next, the algorithm will generate hundreds of expressions randomly using the grammar we just defined. Here are the first 15 (converted to R for readability):
+
+```{r}
+set.seed(13)
+GrammarRandomExpression(grammarDef, 15)
+```
+
+There are a couple of things to notice here.
+
+1.  Candidate expressions are of different lengths
+2.  All 15 expressions are pretty useless
+3.  Some expressions turn up more than once
+
+Next, we need a fitness function to measure how good these equations are. We will stay with the default:
+
+`(mean(log(1 + abs(y - result))`
+
+Here, `result` is the estimate of y produced by the randomly generated expressions. These expressions in polish notation are converted into R code to calculate `result`.
+
+As some of the expressions generated will produce rubbish answers, we need to punish them by assigning a fitness of positive infinity:
+
+`if (any(is.nan(result)))     return(Inf)`
+
+Our target expression will generate a fitness of zero, as `result=y`.
+
+Here is our fitness function:
+
+```{r}
+SymRegFitFunc <- function(expr) {
+  result <- eval(expr)
+  if (any(is.nan(result)))
+    return(Inf)
+  return (mean(log(1 + abs(y - result))))
+}
+```
+
+Next, we set the algorithm off to search for the optimum equation by mimicking natural selection in biology.
+
+We are telling it that it can stop early if the value of the fitness function drops below 0.1:
+
+`terminationCost = 0.1`
+
+Otherwise, continue for 2500 generations:
+
+`iterations = 2500`
+
+and ensure that any equation considered has a length of 10 or less
+
+`max.depth = 10`
+
+```{r}
+set.seed(13)
+ge <- GrammaticalEvolution(grammarDef,
+                           SymRegFitFunc,
+                           terminationCost = 0.1,
+                           iterations = 2500,
+                           max.depth = 10)
+```
+
+Here are the results:
+
+```{r}
+ge
+```
+
+The algorithm succeeded in finding our target equation in after 1531 generations.
+
+```{r}
+plot(x,y,main="First Toy Dataset",xlab="Specific Gravity",ylab="API Gravity")
+points(x,eval(ge$best$expressions), col = "purple", pch=1,type="b")
+legend("topright",legend=c("raw","fit"),col=c("black","purple"),lwd=c(1,1),pch=c(1,1))
+grid()
+```
+
+Although not useful for this toy dataset, we can expand the types of equations in the search by adding operations that work on only one expression.
+
+In this example we will add logarithms and exponentiation:
+
+`func = grule(log, exp)`
+
+and tell the algorithm that it takes only one expression:
+
+`func(expr)`
+
+```{r}
+ruleDefnew <- list(expr = grule(op(expr, expr), func(expr), var,con),
+                func = grule(log, exp),
+                op = grule('+', '-', '*','/'),
+                var = grule(x),
+                con = gvrule(w))
+
+grammarDefnew <- CreateGrammar(ruleDefnew)
+grammarDefnew
+```
+
+Here are a few examples:
+
+```{r}
+set.seed(17)
+GrammarRandomExpression(grammarDefnew, 15)
+```
+
+And now we'll rerun the search:
+
+```{r}
+set.seed(17)
+geNew <- GrammaticalEvolution(grammarDefnew,
+                           SymRegFitFunc,
+                           terminationCost = 0.1,
+                           iterations = 2500,
+                           max.depth = 10,
+                           disable.warnings = TRUE)
+```
+
+And the new results:
+
+```{r}
+geNew
+```
+
+Three things to notice here:
+
+1.  We did not recover our equation on this go-around.
+2.  We used all the available generations.
+3.  We generated a lot of warnings concerning non-numeric results.
+
+The first two suggests that *maybe* if we ran the algorithm for more generations, we could discover our underlying equation.
+
+The third brings up the concept of a "protected expression" that intercepts a `NaN` before it is calculated.
+
+But first let's see what the `best expression` looks like:
+
+```{r}
+plot(x,y,main="First Toy Dataset",xlab="Specific Gravity",ylab="API Gravity")
+points(x,eval(geNew$best$expressions), col = "red", pch=1,type="b")
+legend("topright",legend=c("raw","fit"),col=c("black","red"),lwd=c(1,1),pch=c(1,1))
+grid()
+```
+
+This expression is close in performance to our target expression, but significantly more complicated. This brings up a second idea... that we need to find a way to punish complexity.
+
+## Tentative Conclusions
+
+1.  Not specifying the form of the equation ahead of time is a big advantage over sparse regression.
+2.  However, the "kitchen-sink" approach may slow down the search for the underlying equation.
+3.  Having to specify the correct constants ahead of time is a big disadvantage compared to sparse regression.
+4.  However, if the constants must have a physical meaning (e.g. boiling point of water) then this restriction can impose discipline on the search.
+5.  We need to investigate regularization.
+
+## Next Steps
+
+1.  Return to Python from R to look at an algorithm that combines the best features of sparse regression and evolutionary algorithms.
