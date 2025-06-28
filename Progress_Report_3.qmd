@@ -1,0 +1,196 @@
+---
+title: IDC6940
+jupyter: python3
+---
+
+## Weekly Report 3
+### Richard Henry & Delanyce Rose
+
+June 26, 2025
+
+We will continue with two symbolic regression libraries available for Python.
+
+## PySR
+Since this library runs in Google Colab, but continually dies on a local machine running Jupyter notebook, the first step is to ensure that the library is installed on the current instance of Colab.
+
+
+```{python}
+#| colab: {base_uri: https://localhost:8080/}
+# Install libraries
+!pip install -U pysr
+```
+
+Next we force the installation of the julia programming language by making a call to the Python side:
+
+```{python}
+# import pysr
+```
+
+Now we will import everything else we need:
+
+```{python}
+# Call libraries
+import numpy as np
+import pandas as pd
+import sympy as sym
+import matplotlib.pyplot as plt
+from pysr import PySRRegressor
+import time
+```
+
+Next, we rebuild our toy dataset and plot it.
+
+```{python}
+#| colab: {base_uri: https://localhost:8080/, height: 472}
+# Build Two Copies of Toy Dataset
+x4=np.arange(start=0.55,stop=1.075,step=0.025)
+x5=np.arange(start=0.55,stop=1.075,step=0.025)
+y4=141.5/x4-131.5
+y5=141.5/x5-131.5
+# Plot
+plt.plot(x4,y4,marker="o",linestyle="None")
+plt.xlabel("Specific Gravity")
+plt.ylabel("API Gravity")
+plt.title("First Toy Dataset")
+plt.grid()
+plt.show()
+```
+
+Next, we:
+- Initiate the Symbolic Regressor
+- Use the regressor to fit the toy dataset
+- Predict the API gravity values using the Regressor.
+
+The creators of this library chose to use the scikit-learn workflow, so that the terminology is similar to what was used in progress report 1, with the exception of having to reshape the data because we only have one predictor.
+
+We are using defaults for everything except for the random number seed.
+
+```{python}
+#| colab: {base_uri: https://localhost:8080/}
+t0 = time.time()
+myMod04=PySRRegressor(random_state=7)
+myMod04.fit(x4.reshape(-1, 1),y4)
+y_pred04=myMod04.predict(x4.reshape(-1, 1))
+print("time to fit: ",time.time() - t0, 'seconds')
+```
+
+```{python}
+#| colab: {base_uri: https://localhost:8080/, height: 472}
+plt.scatter(x4,y4,label="Raw")
+plt.plot(x4,y_pred04,label="Fit")
+plt.xlabel("Specific Gravity")
+plt.ylabel("API Gravity")
+plt.title("First Toy Dataset - PySR Fit")
+plt.grid()
+plt.legend()
+plt.show()
+```
+
+We appear to have a wonderful fit, so let us look at the winning equation:
+
+```{python}
+#| colab: {base_uri: https://localhost:8080/, height: 54}
+myEq04=myMod04.sympy()
+myEq04
+```
+
+On first glance, this equation looks too complicated.  However, since it is in `sympy` format, we can ask for a simplified version:
+
+```{python}
+#| colab: {base_uri: https://localhost:8080/, height: 54}
+sym.simplify(myEq04)
+```
+
+This is very close to our target equation.  The big difference between `PySR` and `gramEvol` is that the constants calculated from regression instead of being picked from a list.
+
+Just to be clear, here is the `sympy` version of the target equation:
+
+```{python}
+#| colab: {base_uri: https://localhost:8080/, height: 51}
+x, y = sym.symbols('x y')
+myTarg=sym.sympify(141.5/x-131.5)
+myTarg
+```
+
+## GPLearn
+Next, we are going to repeat the workflow with a similar python library.
+
+```{python}
+#| colab: {base_uri: https://localhost:8080/}
+# Install libraries
+!pip install gplearn
+```
+
+```{python}
+# Call libraries
+#import numpy as np
+#import pandas as pd
+#import sympy as sym
+#import matplotlib.pyplot as plt
+from gplearn.genetic import SymbolicRegressor
+#import time
+```
+
+This library also follows scikit-learn:
+
+```{python}
+#| colab: {base_uri: https://localhost:8080/}
+t1 = time.time()
+myMod05=SymbolicRegressor(verbose=1)
+myMod05.fit(x5.reshape(-1, 1),y5)
+y_pred05=myMod05.predict(x5.reshape(-1, 1))
+print("time to fit: ",time.time() - t1, 'seconds')
+```
+
+```{python}
+#| colab: {base_uri: https://localhost:8080/, height: 472}
+plt.scatter(x5,y5,label="Raw")
+plt.plot(x5,y_pred05,label="Fit")
+plt.xlabel("Specific Gravity")
+plt.ylabel("API Gravity")
+plt.title("First Toy Dataset - GPLearn Fit")
+plt.grid()
+plt.legend()
+plt.show()
+```
+
+The fit is *almost* as good as PySR, and it ran *almost* twice as fast.
+
+Since we chose *nearly* default parameters for this library we need to provide a dictionary for it to convert the winning equation to sympy:
+
+```{python}
+#| colab: {base_uri: https://localhost:8080/, height: 144}
+converter = {
+    'add': lambda x, y : x + y,
+    'sub': lambda x, y : x - y,
+    'mul': lambda x, y : x*y,
+    'div': lambda x, y : x/y,
+    'sqrt': lambda x : x**0.5,
+    'log': lambda x : log(x),
+    'abs': lambda x : abs(x),
+    'neg': lambda x : -x,
+    'inv': lambda x : 1/x,
+    'max': lambda x, y : max(x, y),
+    'min': lambda x, y : min(x, y),
+    'sin': lambda x : sin(x),
+    'cos': lambda x : cos(x),
+    'pow': lambda x, y : x**y,
+}
+myEq05 = sym.sympify(str(myMod05._program), locals=converter)
+myEq05
+```
+
+Hmm. Lets have it simplified:
+
+```{python}
+#| colab: {base_uri: https://localhost:8080/, height: 78}
+sym.simplify(myEq05)
+```
+
+That did not change much. (:-<)  This is a *good* equation, but it is much more complicated than it needs to be.
+
+## Tentative Conclusions
+1. Setting the random number seed does *not* guarantee the same answers in either library.
+2. Both libraries "work", but one may need more tuning than the other to produce actionable results.
+3. It would appear as though domain knowledge may be necessary to tell whether a winning equation is "simple" enough.
+
