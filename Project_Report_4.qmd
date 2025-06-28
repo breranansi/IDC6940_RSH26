@@ -1,7 +1,7 @@
 ---
 title: "IDC6940"
 subtitle: "Weekly Report 4"
-author: "Richard Henry"
+author: "Richard Henry, Delanyce Rose"
 date: "28-Jun-2025"
 format: html
 editor: visual
@@ -20,33 +20,38 @@ grid()
 
 ## Alternating Conditional Expectations
 
-This is a technology can be viewed as a cross between the Box-Cox transform and Linear Regression.  The idea is to improve the fit of the straight line by iteratively transforming both the dependent and the independent variables.
+This is a technology can be viewed as a cross between the Box-Cox transform and Linear Regression. The idea is to improve the fit of the straight line by iteratively transforming both the dependent and the independent variables.
 
 Let's continue by importing our library:
+
 ```{r}
 library("acepack")
 ```
 
 Next, we fit the data:
+
 ```{r}
 myMod<-ace(x,y)
 ```
 
 Now we can examine the relationship between the transformed variables:
+
 ```{r}
 plot(myMod$tx,myMod$ty,main="First Toy Dataset",xlab="Transformed Specific Gravity",ylab="Transformed API Gravity")
 grid()
 ```
 
-As expected, the algorithm finds a straight-line relationship.  However, the change in slope direction (negative to positive) is a surprise!
+As expected, the algorithm finds a straight-line relationship. However, the change in slope direction (negative to positive) is a surprise!
 
 Let us look at the independent variable transformation:
+
 ```{r}
 plot(x,myMod$tx,main="First Toy Dataset",xlab="Specific Gravity",ylab="Transformed Specific Gravity")
 grid()
 ```
 
 And now the dependent variable:
+
 ```{r}
 plot(y,myMod$ty,main="First Toy Dataset",xlab="API Gravity",ylab="Transformed API Gravity")
 grid()
@@ -55,5 +60,6 @@ grid()
 This relationship appears to be linear, and looks as though it is shifted.
 
 # Tentative Conclusions
-1. The method works
-2. We need to figure out how to extract the transformations.  In the worst-case scenario, we can use symbolic regression...
+
+1.  The method works
+2.  We need to figure out how to extract the transformations. In the worst-case scenario, we can use symbolic regression...

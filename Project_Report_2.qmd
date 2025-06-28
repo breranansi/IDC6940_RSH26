@@ -1,6 +1,6 @@
 ---
 title: "IDC6940"
-author: "Richard Henry"
+author: "Richard Henry, Delanyce Rose"
 subtitle: "Weekly Report 2"
 date: "26-Jun-2025"
 format: html
