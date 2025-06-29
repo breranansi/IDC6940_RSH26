@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>IDC6940</title>
+<title>progress_report_3</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,35 +70,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="Progress_Report_3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="Progress_Report_3_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -108,25 +79,12 @@ window.Quarto = {
 
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">IDC6940</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
+<p><a href="https://colab.research.google.com/github/breranansi/IDC6940_RSH26/blob/main/Progress_Report_3.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
+<section id="idc6940" class="level1">
+<h1>IDC6940</h1>
 <section id="weekly-report-3" class="level2">
 <h2 class="anchored" data-anchor-id="weekly-report-3">Weekly Report 3</h2>
 <section id="richard-henry-delanyce-rose" class="level3">
@@ -138,7 +96,7 @@ window.Quarto = {
 <section id="pysr" class="level2">
 <h2 class="anchored" data-anchor-id="pysr">PySR</h2>
 <p>Since this library runs in Google Colab, but continually dies on a local machine running Jupyter notebook, the first step is to ensure that the library is installed on the current instance of Colab.</p>
-<div id="cell-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="57967884-0264-4c46-e18d-d3d8b0c0f5b5">
+<div id="cell-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="57967884-0264-4c46-e18d-d3d8b0c0f5b5" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">-</span>U pysr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -164,11 +122,11 @@ Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.11/dist-pac
 </div>
 </div>
 <p>Next we force the installation of the julia programming language by making a call to the Python side:</p>
-<div id="cell-4" class="cell">
+<div id="cell-4" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import pysr</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we will import everything else we need:</p>
-<div id="cell-6" class="cell">
+<div id="cell-6" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Call libraries</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -178,7 +136,7 @@ Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.11/dist-pac
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, we rebuild our toy dataset and plot it.</p>
-<div id="cell-8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:472}}" data-outputid="8ec35aab-f37a-4a55-ff43-2fc1d871d99f">
+<div id="cell-8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:472}}" data-outputid="8ec35aab-f37a-4a55-ff43-2fc1d871d99f" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build Two Copies of Toy Dataset</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>x4<span class="op">=</span>np.arange(start<span class="op">=</span><span class="fl">0.55</span>,stop<span class="op">=</span><span class="fl">1.075</span>,step<span class="op">=</span><span class="fl">0.025</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>x5<span class="op">=</span>np.arange(start<span class="op">=</span><span class="fl">0.55</span>,stop<span class="op">=</span><span class="fl">1.075</span>,step<span class="op">=</span><span class="fl">0.025</span>)</span>
@@ -202,7 +160,7 @@ Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.11/dist-pac
 <p>Next, we: - Initiate the Symbolic Regressor - Use the regressor to fit the toy dataset - Predict the API gravity values using the Regressor.</p>
 <p>The creators of this library chose to use the scikit-learn workflow, so that the terminology is similar to what was used in progress report 1, with the exception of having to reshape the data because we only have one predictor.</p>
 <p>We are using defaults for everything except for the random number seed.</p>
-<div id="cell-10" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="929d2804-dc87-4f01-ae05-9d923aeea436">
+<div id="cell-10" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="929d2804-dc87-4f01-ae05-9d923aeea436" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> time.time()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>myMod04<span class="op">=</span>PySRRegressor(random_state<span class="op">=</span><span class="dv">7</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>myMod04.fit(x4.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>),y4)</span>
@@ -409,7 +367,7 @@ time to fit:  49.09089636802673 seconds
   - outputs/20250626_201459_NJnrIf/hall_of_fame.csv</code></pre>
 </div>
 </div>
-<div id="cell-11" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:472}}" data-outputid="321f25ae-f72f-4bad-e026-0aadb30e357d">
+<div id="cell-11" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:472}}" data-outputid="321f25ae-f72f-4bad-e026-0aadb30e357d" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(x4,y4,label<span class="op">=</span><span class="st">"Raw"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x4,y_pred04,label<span class="op">=</span><span class="st">"Fit"</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Specific Gravity"</span>)</span>
@@ -427,37 +385,37 @@ time to fit:  49.09089636802673 seconds
 </div>
 </div>
 <p>We appear to have a wonderful fit, so let us look at the winning equation:</p>
-<div id="cell-13" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:54}}" data-outputid="ee58b657-f9bb-4bcb-a8bb-9398164872c3">
+<div id="cell-13" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:54}}" data-outputid="ee58b657-f9bb-4bcb-a8bb-9398164872c3" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>myEq04<span class="op">=</span>myMod04.sympy()</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>myEq04</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="22">
-<p><span class="math inline">\(\displaystyle \frac{x_{0} - -160.84647}{x_{0} + x_{0}} - 132.00002 + \frac{122.15356}{x_{0} + x_{0}}\)</span></p>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>(x0 - 1*(-160.84647))/(x0 + x0) - 132.00002 + 122.15356/(x0 + x0)</code></pre>
 </div>
 </div>
 <p>On first glance, this equation looks too complicated. However, since it is in <code>sympy</code> format, we can ask for a simplified version:</p>
-<div id="cell-15" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:54}}" data-outputid="3d9fdab0-9f21-42b7-b129-5213805e2a48">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sym.simplify(myEq04)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="23">
-<p><span class="math inline">\(\displaystyle -131.50002 + \frac{141.500015}{x_{0}}\)</span></p>
+<div id="cell-15" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:54}}" data-outputid="3d9fdab0-9f21-42b7-b129-5213805e2a48" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sym.simplify(myEq04)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>-131.50002 + 141.500015/x0</code></pre>
 </div>
 </div>
 <p>This is very close to our target equation. The big difference between <code>PySR</code> and <code>gramEvol</code> is that the constants calculated from regression instead of being picked from a list.</p>
 <p>Just to be clear, here is the <code>sympy</code> version of the target equation:</p>
-<div id="cell-17" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:51}}" data-outputid="36cad795-932e-49c0-a47e-2e463e64bcda">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>x, y <span class="op">=</span> sym.symbols(<span class="st">'x y'</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>myTarg<span class="op">=</span>sym.sympify(<span class="fl">141.5</span><span class="op">/</span>x<span class="op">-</span><span class="fl">131.5</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>myTarg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="24">
-<p><span class="math inline">\(\displaystyle -131.5 + \frac{141.5}{x}\)</span></p>
+<div id="cell-17" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:51}}" data-outputid="36cad795-932e-49c0-a47e-2e463e64bcda" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>x, y <span class="op">=</span> sym.symbols(<span class="st">'x y'</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>myTarg<span class="op">=</span>sym.sympify(<span class="fl">141.5</span><span class="op">/</span>x<span class="op">-</span><span class="fl">131.5</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>myTarg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>-131.5 + 141.5/x</code></pre>
 </div>
 </div>
 </section>
 <section id="gplearn" class="level2">
 <h2 class="anchored" data-anchor-id="gplearn">GPLearn</h2>
 <p>Next, we are going to repeat the workflow with a similar python library.</p>
-<div id="cell-19" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="5e38872a-5113-4551-9248-e7e436a2e07a">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install libraries</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install gplearn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-19" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="5e38872a-5113-4551-9248-e7e436a2e07a" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install libraries</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install gplearn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Requirement already satisfied: gplearn in /usr/local/lib/python3.11/dist-packages (0.4.2)
 Requirement already satisfied: scikit-learn&gt;=1.0.2 in /usr/local/lib/python3.11/dist-packages (from gplearn) (1.6.1)
@@ -467,22 +425,22 @@ Requirement already satisfied: scipy&gt;=1.6.0 in /usr/local/lib/python3.11/dist
 Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3.11/dist-packages (from scikit-learn&gt;=1.0.2-&gt;gplearn) (3.6.0)</code></pre>
 </div>
 </div>
-<div id="cell-20" class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Call libraries</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#import numpy as np</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#import pandas as pd</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#import sympy as sym</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#import matplotlib.pyplot as plt</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> gplearn.genetic <span class="im">import</span> SymbolicRegressor</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#import time</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-20" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Call libraries</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#import numpy as np</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#import pandas as pd</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#import sympy as sym</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">#import matplotlib.pyplot as plt</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> gplearn.genetic <span class="im">import</span> SymbolicRegressor</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co">#import time</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This library also follows scikit-learn:</p>
-<div id="cell-22" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="cc02a78a-55d6-4023-a66c-7f9d627e6683">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>t1 <span class="op">=</span> time.time()</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>myMod05<span class="op">=</span>SymbolicRegressor(verbose<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>myMod05.fit(x5.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>),y5)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>y_pred05<span class="op">=</span>myMod05.predict(x5.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"time to fit: "</span>,time.time() <span class="op">-</span> t1, <span class="st">'seconds'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-22" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="cc02a78a-55d6-4023-a66c-7f9d627e6683" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>t1 <span class="op">=</span> time.time()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>myMod05<span class="op">=</span>SymbolicRegressor(verbose<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>myMod05.fit(x5.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>),y5)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>y_pred05<span class="op">=</span>myMod05.predict(x5.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"time to fit: "</span>,time.time() <span class="op">-</span> t1, <span class="st">'seconds'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>/usr/local/lib/python3.11/dist-packages/sklearn/base.py:474: FutureWarning: `BaseEstimator._validate_data` is deprecated in 1.6 and will be removed in 1.7. Use `sklearn.utils.validation.validate_data` instead. This function becomes public and is part of the scikit-learn developer API.
   warnings.warn(</code></pre>
@@ -514,15 +472,15 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3
 time to fit:  47.844974517822266 seconds</code></pre>
 </div>
 </div>
-<div id="cell-23" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:472}}" data-outputid="5dee9daf-cc26-41a3-8064-e6b5e4ba71e4">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(x5,y5,label<span class="op">=</span><span class="st">"Raw"</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x5,y_pred05,label<span class="op">=</span><span class="st">"Fit"</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Specific Gravity"</span>)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"API Gravity"</span>)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"First Toy Dataset - GPLearn Fit"</span>)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-23" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:472}}" data-outputid="5dee9daf-cc26-41a3-8064-e6b5e4ba71e4" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(x5,y5,label<span class="op">=</span><span class="st">"Raw"</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x5,y_pred05,label<span class="op">=</span><span class="st">"Fit"</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Specific Gravity"</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"API Gravity"</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"First Toy Dataset - GPLearn Fit"</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -533,34 +491,34 @@ time to fit:  47.844974517822266 seconds</code></pre>
 </div>
 <p>The fit is <em>almost</em> as good as PySR, and it ran <em>almost</em> twice as fast.</p>
 <p>Since we chose <em>nearly</em> default parameters for this library we need to provide a dictionary for it to convert the winning equation to sympy:</p>
-<div id="cell-25" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:144}}" data-outputid="439b735c-7e10-4abc-ce63-00baa6622c08">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>converter <span class="op">=</span> {</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'add'</span>: <span class="kw">lambda</span> x, y : x <span class="op">+</span> y,</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sub'</span>: <span class="kw">lambda</span> x, y : x <span class="op">-</span> y,</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'mul'</span>: <span class="kw">lambda</span> x, y : x<span class="op">*</span>y,</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'div'</span>: <span class="kw">lambda</span> x, y : x<span class="op">/</span>y,</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sqrt'</span>: <span class="kw">lambda</span> x : x<span class="op">**</span><span class="fl">0.5</span>,</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'log'</span>: <span class="kw">lambda</span> x : log(x),</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'abs'</span>: <span class="kw">lambda</span> x : <span class="bu">abs</span>(x),</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'neg'</span>: <span class="kw">lambda</span> x : <span class="op">-</span>x,</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'inv'</span>: <span class="kw">lambda</span> x : <span class="dv">1</span><span class="op">/</span>x,</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max'</span>: <span class="kw">lambda</span> x, y : <span class="bu">max</span>(x, y),</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min'</span>: <span class="kw">lambda</span> x, y : <span class="bu">min</span>(x, y),</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sin'</span>: <span class="kw">lambda</span> x : sin(x),</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'cos'</span>: <span class="kw">lambda</span> x : cos(x),</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'pow'</span>: <span class="kw">lambda</span> x, y : x<span class="op">**</span>y,</span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>myEq05 <span class="op">=</span> sym.sympify(<span class="bu">str</span>(myMod05._program), <span class="bu">locals</span><span class="op">=</span>converter)</span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>myEq05</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="29">
-<p><span class="math inline">\(\displaystyle \frac{2.86285714285714 \left(X_{0} - 0.357\right) \left(- \left(2.710027100271 X_{0} + \frac{0.059}{X_{0}}\right) \left(-0.8 + \frac{3.16000385319333 X_{0} \left(X_{0} - 0.26\right) + 4.13139611542167 X_{0} + 3.61861904761905}{X_{0} - 0.357 - \frac{0.872428571428571}{X_{0}}} + \frac{1.43142857142857}{X_{0}}\right) + \frac{- 2.80898876404494 X_{0} \left(- X_{0} - 0.306\right) + 0.501}{\frac{3.19488817891374 X_{0} + 1}{1.489 X_{0} - \left(2.710027100271 X_{0} + \frac{0.059}{X_{0}}\right) \left(0.356 + \frac{3.16000385319333 X_{0} \left(X_{0} - 0.26\right) + 4.13139611542167 X_{0} + 3.61861904761905}{X_{0} - 0.357 - \frac{0.872428571428571}{X_{0}}} + \frac{0.791139240506329 \left(3.19488817891374 X_{0} + 1\right)}{X_{0}}\right) + 0.643 - \frac{0.872428571428571}{X_{0}}} - 1} - \frac{231.122687272957}{X_{0}^{2}}\right)}{\left(1.84152184795823 - 16.8788528927984 X_{0}\right) \left(X_{0}^{2} + 0.26 X_{0}\right)}\)</span></p>
+<div id="cell-25" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:144}}" data-outputid="439b735c-7e10-4abc-ce63-00baa6622c08" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>converter <span class="op">=</span> {</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'add'</span>: <span class="kw">lambda</span> x, y : x <span class="op">+</span> y,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sub'</span>: <span class="kw">lambda</span> x, y : x <span class="op">-</span> y,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'mul'</span>: <span class="kw">lambda</span> x, y : x<span class="op">*</span>y,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'div'</span>: <span class="kw">lambda</span> x, y : x<span class="op">/</span>y,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sqrt'</span>: <span class="kw">lambda</span> x : x<span class="op">**</span><span class="fl">0.5</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'log'</span>: <span class="kw">lambda</span> x : log(x),</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'abs'</span>: <span class="kw">lambda</span> x : <span class="bu">abs</span>(x),</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'neg'</span>: <span class="kw">lambda</span> x : <span class="op">-</span>x,</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'inv'</span>: <span class="kw">lambda</span> x : <span class="dv">1</span><span class="op">/</span>x,</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max'</span>: <span class="kw">lambda</span> x, y : <span class="bu">max</span>(x, y),</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min'</span>: <span class="kw">lambda</span> x, y : <span class="bu">min</span>(x, y),</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sin'</span>: <span class="kw">lambda</span> x : sin(x),</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'cos'</span>: <span class="kw">lambda</span> x : cos(x),</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'pow'</span>: <span class="kw">lambda</span> x, y : x<span class="op">**</span>y,</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>myEq05 <span class="op">=</span> sym.sympify(<span class="bu">str</span>(myMod05._program), <span class="bu">locals</span><span class="op">=</span>converter)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>myEq05</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<pre><code>2.86285714285714*(X0 - 0.357)*(-(2.710027100271*X0 + 0.059/X0)*(-0.8 + (3.16000385319333*X0*(X0 - 0.26) + 4.13139611542167*X0 + 3.61861904761905)/(X0 - 0.357 - 0.872428571428571/X0) + 1.43142857142857/X0) + (-2.80898876404494*X0*(-X0 - 0.306) + 0.501)/((3.19488817891374*X0 + 1)/(1.489*X0 - (2.710027100271*X0 + 0.059/X0)*(0.356 + (3.16000385319333*X0*(X0 - 0.26) + 4.13139611542167*X0 + 3.61861904761905)/(X0 - 0.357 - 0.872428571428571/X0) + 0.791139240506329*(3.19488817891374*X0 + 1)/X0) + 0.643 - 0.872428571428571/X0) - 1) - 231.122687272957/X0**2)/((1.84152184795823 - 16.8788528927984*X0)*(X0**2 + 0.26*X0))</code></pre>
 </div>
 </div>
 <p>Hmm. Lets have it simplified:</p>
-<div id="cell-27" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:78}}" data-outputid="93336663-7718-4446-fa42-79246de9608a">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>sym.simplify(myEq05)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="30">
-<p><span class="math inline">\(\displaystyle \frac{278.820002953071 X_{0}^{13} + 640.018813576176 X_{0}^{12} + 690.754307137746 X_{0}^{11} + 268.31036133222 X_{0}^{10} + 5457.87712812355 X_{0}^{9} + 7619.62577640509 X_{0}^{8} - 6937.47921256253 X_{0}^{7} - 16804.077869542 X_{0}^{6} + 1575.78354402274 X_{0}^{5} + 6273.6100798772 X_{0}^{4} - 102.256793911761 X_{0}^{3} + 2.9432049685599 X_{0}^{2} - 170.865461382981 X_{0} - 8.39525390570684}{X_{0}^{3} \left(144.545366338012 X_{0}^{10} + 282.301566657126 X_{0}^{9} - 48.7993700979364 X_{0}^{8} - 481.522001438071 X_{0}^{7} - 191.930188319542 X_{0}^{6} + 109.695704741436 X_{0}^{5} + 59.6272490047645 X_{0}^{4} + 16.4463177493779 X_{0}^{3} + 1.59776694954208 X_{0}^{2} - 0.303370477591 X_{0} - 0.0170104154782206\right)}\)</span></p>
+<div id="cell-27" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:78}}" data-outputid="93336663-7718-4446-fa42-79246de9608a" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>sym.simplify(myEq05)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<pre><code>(278.820002953071*X0**13 + 640.018813576176*X0**12 + 690.754307137746*X0**11 + 268.31036133222*X0**10 + 5457.87712812355*X0**9 + 7619.62577640509*X0**8 - 6937.47921256253*X0**7 - 16804.077869542*X0**6 + 1575.78354402274*X0**5 + 6273.6100798772*X0**4 - 102.256793911761*X0**3 + 2.9432049685599*X0**2 - 170.865461382981*X0 - 8.39525390570684)/(X0**3*(144.545366338012*X0**10 + 282.301566657126*X0**9 - 48.7993700979364*X0**8 - 481.522001438071*X0**7 - 191.930188319542*X0**6 + 109.695704741436*X0**5 + 59.6272490047645*X0**4 + 16.4463177493779*X0**3 + 1.59776694954208*X0**2 - 0.303370477591*X0 - 0.0170104154782206))</code></pre>
 </div>
 </div>
 <p>That did not change much. (:-&lt;) This is a <em>good</em> equation, but it is much more complicated than it needs to be.</p>
@@ -572,6 +530,7 @@ time to fit:  47.844974517822266 seconds</code></pre>
 <li>Both libraries “work”, but one may need more tuning than the other to produce actionable results.</li>
 <li>It would appear as though domain knowledge may be necessary to tell whether a winning equation is “simple” enough.</li>
 </ol>
+</section>
 </section>
 
 </main>
