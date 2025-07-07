@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Delanyce Rose &amp; Richard Henry">
+<meta name="dcterms.date" content="2025-07-07">
+
+<title>IDC6940 Final Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="LiteratureReview2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="LiteratureReview2_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="LiteratureReview2_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="LiteratureReview2_files/libs/quarto-html/popper.min.js"></script>
+<script src="LiteratureReview2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="LiteratureReview2_files/libs/quarto-html/anchor.min.js"></script>
+<link href="LiteratureReview2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="LiteratureReview2_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="LiteratureReview2_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="LiteratureReview2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="LiteratureReview2_files/libs/bootstrap/bootstrap-58427a5cdc6db58bd8a7f543ac0b26a6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">IDC6940 Final Project</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Delanyce Rose &amp; Richard Henry </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 7, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="week-2" class="level1">
+<h1>Week 2</h1>
+<p>This week we read about symbolic regression models that use genetic programming and linear regression.</p>
+<section id="interpretable-machine-learning-for-science-with-pysr-and-symbolicregression.jl-by-cranmer-2023" class="level2">
+<h2 class="anchored" data-anchor-id="interpretable-machine-learning-for-science-with-pysr-and-symbolicregression.jl-by-cranmer-2023">“Interpretable Machine Learning for Science with PySR and SymbolicRegression.jl” by Cranmer (2023)</h2>
+<p><a href="https://arxiv.org/abs/2305.01582">URL</a></p>
+<p>Although this is essentially a description of how the PySr package works, it is the article that the student spent the most time on, as this package has been the most successful of the 6 libraries (and counting) that the student has managed to make work on his toy dataset. The literature survey was particularly interesting, as it described competing technologies to the “evolutionary programming plus regression” workflow typically used for symbolic regression. The student has found libraries for two of them, but has not got them to work yet. There is also a section on competing packages, comparing them to PySr. Also interesting was the use of “back ends” in a second language (like Julia and C++) to speed up computations. Finally, even though the integration with sympy was mentioned briefly in the article, this design choice turned out to be a stroke of genius when compared to the symbolic manipulation of the “best” equation in the other packages that are working so far.</p>
+</section>
+<section id="genetic-programming-by-koza-poli-2005" class="level2">
+<h2 class="anchored" data-anchor-id="genetic-programming-by-koza-poli-2005">“Genetic Programming” by Koza &amp; Poli (2005)</h2>
+<p><a href="https://link.springer.com/article/10.1007/BF00175355">URL</a></p>
+<p>This appears to be a chapter in a book by Koza. It describes how genetic programming is being used to pull equations out of data. It talks about using trees to represent equations, but more importantly for this student, explains how these trees are changed between generations using reproduction, cross-over and mutation. It also talks about “architecture alteration”, but this is less clear. The student was hoping to see some comments on regression, but since it was absent, it is concluded that this description is only half of the symbolic regression workflow.</p>
+</section>
+<section id="gramevol-grammatical-evolution-in-r-by-noorian-de-silva-leong-2016" class="level2">
+<h2 class="anchored" data-anchor-id="gramevol-grammatical-evolution-in-r-by-noorian-de-silva-leong-2016">“gramEvol: Grammatical Evolution in R” by Noorian, de Silva &amp; Leong (2016)</h2>
+<p><a href="https://www.jstatsoft.org/article/view/v071i01/0">URL</a></p>
+<p>This is nearly identical to the tutorials provided with the gramEvol package. In it, they describe the workflow in R for pulling equations out of data. Particularly useful to the student was the discussion of context-free grammar and the Backus-Naar notation, which would have been “old hat” for those CS students who studied compiler design. Again, the search for the regression piece was frustrated, as it is absent in the gramEvol package.</p>
+</section>
+<section id="sparse-regression-nyu-lecture-notes-2016" class="level2">
+<h2 class="anchored" data-anchor-id="sparse-regression-nyu-lecture-notes-2016">“Sparse Regression” NYU Lecture Notes (2016)</h2>
+<p><a href="https://cims.nyu.edu/~cfgranda/pages/OBDA_spring16/material/sparse_regression.pdf">URL</a></p>
+<p>These are lecture notes (probably from somebody called C.F.Granda) that starts off by talking about linear and logistic regression, and then goes on to define sparse regression as the edge case where the number of predictors is NOT significantly smaller than the number of datapoints. It goes on to talk about lasso and ridge regression, and the combination of the two, the elastic net. This prompted the student to review the scikit-learn documentation as the triple combo rang a bell loudly from earlier classes at UWF. The big takeaways were the need to handle overtraining and correlation between predictors. Neither of these explained why the student’s lasso model performed more poorly than the “standard” multiple linear model on his toy dataset on first read. This will clearly require a re-read.</p>
+</section>
+<section id="pysimdy-a-comprehensive-python-package-for-robust-sparse-system-identification-by-kaptangou-et-al-2022" class="level2">
+<h2 class="anchored" data-anchor-id="pysimdy-a-comprehensive-python-package-for-robust-sparse-system-identification-by-kaptangou-et-al-2022">“PySimDy: A Comprehensive Python Package for Robust Sparse System Identification” by Kaptangou et al (2022)</h2>
+<p><a href="https://arxiv.org/abs/2111.08481">URL</a></p>
+<p>This is also a library description paper, and the student has not got this particular one off the ground yet. Two things are fascinating here. First, they are using data to discover relationships best described with differential equations. This is a very big deal! Secondly, they appear to be doubling down on sparse regression, and I the student hasn’t seen any hints yet that they are using an evolutionary algorithm. This student may have unreasonable expectations as the authors appear to be engineers, not data scientists…. (:-&lt;)</p>
+</section>
+<section id="other-papers" class="level2">
+<h2 class="anchored" data-anchor-id="other-papers">Other Papers</h2>
+<section id="artificial-intelligence-in-physical-sciences-symbolic-regression-trends-and-perspectives-by-angelis-sofos-karakasidis-2023" class="level3">
+<h3 class="anchored" data-anchor-id="artificial-intelligence-in-physical-sciences-symbolic-regression-trends-and-perspectives-by-angelis-sofos-karakasidis-2023">“Artificial Intelligence in Physical Sciences: Symbolic Regression Trends and Perspectives” by Angelis, Sofos &amp; Karakasidis (2023)</h3>
+<p><a href="https://link.springer.com/article/10.1007/s11831-023-09922-z">URL</a></p>
+</section>
+<section id="a-comparison-of-recent-algorithms-for-symbolic-regression-to-genetic-programming-by-kronberger-radwan-winkler-2024" class="level3">
+<h3 class="anchored" data-anchor-id="a-comparison-of-recent-algorithms-for-symbolic-regression-to-genetic-programming-by-kronberger-radwan-winkler-2024">“A Comparison of Recent Algorithms for Symbolic Regression to Genetic Programming” by Kronberger, Radwan &amp; Winkler (2024)</h3>
+<p><a href="https://arxiv.org/html/2406.03585v1">URL</a></p>
+</section>
+<section id="a-computational-framework-for-physics-informed-symbolic-regression-with-straightforward-integration-of-domain-knowledge-by-keren-liberzon-lazebnik-2023" class="level3">
+<h3 class="anchored" data-anchor-id="a-computational-framework-for-physics-informed-symbolic-regression-with-straightforward-integration-of-domain-knowledge-by-keren-liberzon-lazebnik-2023">“A Computational Framework for Physics-Informed Symbolic Regression with Straightforward Integration of Domain Knowledge” by Keren, Liberzon &amp; Lazebnik (2023)</h3>
+<p><a href="https://www.nature.com/articles/s41598-023-28328-2">URL</a></p>
+</section>
+<section id="discovering-symbolic-policies-with-deep-reinforcement-learning-by-landajuela-et-al-2021" class="level3">
+<h3 class="anchored" data-anchor-id="discovering-symbolic-policies-with-deep-reinforcement-learning-by-landajuela-et-al-2021">“Discovering Symbolic Policies with Deep Reinforcement Learning” by Landajuela et al (2021)</h3>
+<p><a href="https://proceedings.mlr.press/v139/landajuela21a.html">URL</a></p>
+</section>
+<section id="interactive-symbolic-regression-with-co-design-mechanism-through-offline-reinforcement-learning-by-tian-et-al-2025" class="level3">
+<h3 class="anchored" data-anchor-id="interactive-symbolic-regression-with-co-design-mechanism-through-offline-reinforcement-learning-by-tian-et-al-2025">“Interactive Symbolic Regression with Co-Design Mechanism through Offline Reinforcement Learning” by Tian et al (2025)</h3>
+<p><a href="https://www.nature.com/articles/s41467-025-59288-y">URL</a></p>
+</section>
+<section id="automated-reverse-engineering-of-nonlinear-dynamical-systems-by-bongard-lipson-2007" class="level3">
+<h3 class="anchored" data-anchor-id="automated-reverse-engineering-of-nonlinear-dynamical-systems-by-bongard-lipson-2007">“Automated Reverse Engineering of Nonlinear Dynamical Systems” by Bongard &amp; Lipson (2007)</h3>
+<p><a href="https://www.pnas.org/doi/abs/10.1073/pnas.0609476104">URL</a></p>
+</section>
+<section id="discovering-governing-equations-from-data-by-sparse-identification-of-nonlinear-dynamical-systems-by-brunton-proctor-kutz-2016" class="level3">
+<h3 class="anchored" data-anchor-id="discovering-governing-equations-from-data-by-sparse-identification-of-nonlinear-dynamical-systems-by-brunton-proctor-kutz-2016">“Discovering Governing Equations from Data by Sparse Identification of Nonlinear Dynamical Systems” by Brunton, Proctor &amp; Kutz (2016)</h3>
+<p><a href="https://www.pnas.org/doi/abs/10.1073/pnas.1517384113">URL</a></p>
+</section>
+<section id="data-driven-discovery-of-coordinates-and-governing-equations-by-champion-et-al-2019" class="level3">
+<h3 class="anchored" data-anchor-id="data-driven-discovery-of-coordinates-and-governing-equations-by-champion-et-al-2019">“Data Driven Discovery of Coordinates and Governing Equations” by Champion et al (2019)</h3>
+<p><a href="https://www.pnas.org/doi/abs/10.1073/pnas.1906995116">URL</a></p>
+</section>
+<section id="distilling-free-form-natural-laws-from-experimental-data-by-schmidt-lipson-2009" class="level3">
+<h3 class="anchored" data-anchor-id="distilling-free-form-natural-laws-from-experimental-data-by-schmidt-lipson-2009">“Distilling Free-Form Natural Laws from Experimental Data” by Schmidt &amp; Lipson (2009)</h3>
+<p><a href="https://www.science.org/doi/abs/10.1126/science.1165893">URL</a></p>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Delanyce Rose &amp; Richard Henry">
+<meta name="dcterms.date" content="2025-07-07">
+
+<title>IDC6940 Final Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="LiteratureReview3_files/libs/clipboard/clipboard.min.js"></script>
+<script src="LiteratureReview3_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="LiteratureReview3_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="LiteratureReview3_files/libs/quarto-html/popper.min.js"></script>
+<script src="LiteratureReview3_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="LiteratureReview3_files/libs/quarto-html/anchor.min.js"></script>
+<link href="LiteratureReview3_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="LiteratureReview3_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="LiteratureReview3_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="LiteratureReview3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="LiteratureReview3_files/libs/bootstrap/bootstrap-58427a5cdc6db58bd8a7f543ac0b26a6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">IDC6940 Final Project</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Delanyce Rose &amp; Richard Henry </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 7, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="week-3" class="level1">
+<h1>Week 3</h1>
+<p>This week we continued reading about deep learning models for symbolic regression and started looking at papers published after the PySR revision of May 2023.</p>
+<section id="martius-lampert-2016-extrapolation-and-learning-equations" class="level2">
+<h2 class="anchored" data-anchor-id="martius-lampert-2016-extrapolation-and-learning-equations">Martius &amp; Lampert (2016) “Extrapolation and Learning Equations”</h2>
+<p><a href="https://arxiv.org/abs/1610.02995">URL</a></p>
+<section id="goal" class="level3">
+<h3 class="anchored" data-anchor-id="goal">Goal</h3>
+<p>Find a model from data which can extrapolate well outside the range of the data it was trained on</p>
+</section>
+<section id="importance" class="level3">
+<h3 class="anchored" data-anchor-id="importance">Importance</h3>
+<p>Unknown at this point</p>
+</section>
+<section id="solution" class="level3">
+<h3 class="anchored" data-anchor-id="solution">Solution</h3>
+<p>The approach to the problem taken by the authors was a surprise to the student.</p>
+<ol type="1">
+<li>They replace the activation function (e.g.&nbsp;‘relu’) with trancendental functions such as sine and cosine.</li>
+<li>Each layer will have multiple (different) activation functions in parallel.</li>
+<li>Each activation function services a small number of nodes (like 2)</li>
+<li>Then they used regularization to force small weights to zero</li>
+<li>After training, the final equation can be revealed by tracing the non-zero weights in the neural network.</li>
+</ol>
+</section>
+<section id="results" class="level3">
+<h3 class="anchored" data-anchor-id="results">Results</h3>
+<p>Sahoo et al point out that the algorithm does not handle division!</p>
+</section>
+</section>
+<section id="sahoo-lampert-martius-2018-learning-equations-for-extrapolation-and-control" class="level2">
+<h2 class="anchored" data-anchor-id="sahoo-lampert-martius-2018-learning-equations-for-extrapolation-and-control">Sahoo, Lampert &amp; Martius (2018) “Learning Equations for Extrapolation and Control”</h2>
+<p><a href="https://arxiv.org/abs/1806.07259">URL</a></p>
+<section id="goal-1" class="level3">
+<h3 class="anchored" data-anchor-id="goal-1">Goal</h3>
+<p>In this follow-up paper to the one above, the authors address two weaknesses of the original method:</p>
+<ol type="1">
+<li>Adding division capability</li>
+<li>Improving model selection</li>
+</ol>
+</section>
+<section id="importance-1" class="level3">
+<h3 class="anchored" data-anchor-id="importance-1">Importance</h3>
+<p>Unknown at this point.</p>
+</section>
+<section id="solution-1" class="level3">
+<h3 class="anchored" data-anchor-id="solution-1">Solution</h3>
+<section id="division" class="level4">
+<h4 class="anchored" data-anchor-id="division">Division</h4>
+<p>Other papers on symbolic regression have discussed the issues of numerical overflow and underflow and how they wreck havoc on our calculations of “fitness”. The protected division introduced here simply sets the result to zero for “bad” divisors. This works for a neural network as it kills the back-propagation of information past the division-by-zero point for that particular record.</p>
+</section>
+<section id="selection" class="level4">
+<h4 class="anchored" data-anchor-id="selection">Selection</h4>
+<p>The original paper, the model was chosen based on ranked validation error and ranked sparsity. In this revision, the authors decided it was better to normalize error and sparsity rather than rank them.</p>
+<p>Interestingly, if “outlier” data is <em>not</em> excluded as we want the model to perform well at these extremes (or beyond), the authors found that the “sparsity term loses its importance”.</p>
+</section>
+</section>
+<section id="results-1" class="level3">
+<h3 class="anchored" data-anchor-id="results-1">Results</h3>
+<p>Petersen et al point out “that the authors make several simplifications to the search space, ultimately precluding learning certain simple classes of expressions”</p>
+</section>
+</section>
+<section id="petersen-et-al-2021-deep-symbolic-regression-recovering-mathematical-expressions-from-data-via-risk-seeking-policy-gradients" class="level2">
+<h2 class="anchored" data-anchor-id="petersen-et-al-2021-deep-symbolic-regression-recovering-mathematical-expressions-from-data-via-risk-seeking-policy-gradients">Petersen et al (2021) “Deep Symbolic Regression: Recovering Mathematical Expressions from Data via Risk-Seeking Policy Gradients”</h2>
+<p><a href="https://openreview.net/pdf?id=m5Qsh0kBQG">URL</a></p>
+<section id="goal-2" class="level3">
+<h3 class="anchored" data-anchor-id="goal-2">Goal</h3>
+<p>Find an efficient way to apply neural networks to Symbolic Regression.</p>
+</section>
+<section id="importance-2" class="level3">
+<h3 class="anchored" data-anchor-id="importance-2">Importance</h3>
+<p>“DSR” won first place in the Real World Track of the the 2022 SRBench Symbolic Regression Competition.</p>
+</section>
+<section id="solution-2" class="level3">
+<h3 class="anchored" data-anchor-id="solution-2">Solution</h3>
+<ol type="1">
+<li>Elements that can be used to make up an expression (eg “sin” or “+”) are sampled from a probability distribution, put together as an expression, and that expression used to estimate the dependent variables of the dataset.</li>
+<li>Based on the fitness of that expression, the probability distribution is adjusted. This “memory” is provided by a recurrent neural network.</li>
+<li>The weights of the RNN are adjusted not to optimize the <em>average</em> performance of the generated expressions, but to optimize the <em>best case</em> performance of the generated expressions.</li>
+</ol>
+</section>
+<section id="results-2" class="level3">
+<h3 class="anchored" data-anchor-id="results-2">Results</h3>
+<p>This algorithm was apparently published before the SRBench benchmarks were published. The authors claim that the algorithm exceeded the performance of the gold-standard closed-source algorithm on some older benchmarks.</p>
+</section>
+</section>
+<section id="landajuela-et-al-2022-a-unified-framework-for-deep-symbolic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="landajuela-et-al-2022-a-unified-framework-for-deep-symbolic-regression">Landajuela et al (2022) “A Unified Framework for Deep Symbolic Regression”</h2>
+<p><a href="https://openreview.net/forum?id=2FNnBhwJsHK">URL</a></p>
+<section id="goal-3" class="level3">
+<h3 class="anchored" data-anchor-id="goal-3">Goal</h3>
+<p>Find a way to integrate disparate approaches to Symbolic Regression</p>
+</section>
+<section id="importance-3" class="level3">
+<h3 class="anchored" data-anchor-id="importance-3">Importance</h3>
+<p>This is a follow-up paper to the one above, and may <em>actually</em> be the algorithm that won the competition.</p>
+</section>
+<section id="solution-3" class="level3">
+<h3 class="anchored" data-anchor-id="solution-3">Solution</h3>
+<p>Identify the strengths and weaknesses of the following 5 technologies</p>
+<ul>
+<li><p>AI Feynman “AIF”</p></li>
+<li><p>Deep Symbolic Regression “DSR”(paper above)</p></li>
+<li><p>Large Scale Pre-Training “LSPT” (paper below)</p></li>
+<li><p>Genetic Programming “GP”</p></li>
+<li><p>Linear Models “LM”</p></li>
+</ul>
+<p>Next, carefully combine them to neutralize the identified weaknesses. The typical workflow looks like this:</p>
+<p>DSR-&gt;AIF-&gt;LM-&gt;GP-&gt;LSPT</p>
+</section>
+<section id="results-3" class="level3">
+<h3 class="anchored" data-anchor-id="results-3">Results</h3>
+<p>Appears to be <em>the</em> top performer against the SRBench benchmarks at the time of publishing.</p>
+</section>
+</section>
+<section id="kamienny-et-al-2022-end-to-end-symbolic-regression-with-transformers" class="level2">
+<h2 class="anchored" data-anchor-id="kamienny-et-al-2022-end-to-end-symbolic-regression-with-transformers">Kamienny et al (2022) “End-to-End Symbolic Regression with Transformers”</h2>
+<p><a href="https://proceedings.neurips.cc/paper_files/paper/2022/hash/42eb37cdbefd7abae0835f4b67548c39-Abstract-Conference.html">URL</a></p>
+<section id="goal-4" class="level3">
+<h3 class="anchored" data-anchor-id="goal-4">Goal</h3>
+<p>Replace the two-step proceedure typical in Symbolic Regression with a single step</p>
+</section>
+<section id="importance-4" class="level3">
+<h3 class="anchored" data-anchor-id="importance-4">Importance</h3>
+<p>Raises the possibility of building models in <em>real time</em>.</p>
+</section>
+<section id="solution-4" class="level3">
+<h3 class="anchored" data-anchor-id="solution-4">Solution</h3>
+<p>Pre-train a neural net on gobs and gobs of synthetic data.</p>
+</section>
+<section id="results-4" class="level3">
+<h3 class="anchored" data-anchor-id="results-4">Results</h3>
+<p>The authors claim that the results are <em>almost</em> as accurate as the leading two-step algorithm, but much faster.</p>
+</section>
+</section>
+<section id="la-cava-et-al-2021-contemporary-symbolic-regression-methods-and-their-relative-performance" class="level2">
+<h2 class="anchored" data-anchor-id="la-cava-et-al-2021-contemporary-symbolic-regression-methods-and-their-relative-performance">La Cava et al (2021) “Contemporary Symbolic Regression Methods and their Relative Performance”</h2>
+<p><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11074949/">URL</a></p>
+</section>
+<section id="goal-5" class="level2">
+<h2 class="anchored" data-anchor-id="goal-5">Goal</h2>
+<p>Establishment of a benchmark for Symbolic Regression (SRBench)</p>
+<section id="importance-5" class="level3">
+<h3 class="anchored" data-anchor-id="importance-5">Importance</h3>
+<p>No fair way to compare models existed before this.</p>
+</section>
+<section id="solution-5" class="level3">
+<h3 class="anchored" data-anchor-id="solution-5">Solution</h3>
+<ol type="1">
+<li>Collect nearly 300 diverse regression problems</li>
+<li>Separate them into 2 buckets: “Black Box” and “Synthetic”</li>
+<li>Test available models against the problems</li>
+<li>Archive the data/models in an open-access format for transparency</li>
+</ol>
+</section>
+<section id="results-5" class="level3">
+<h3 class="anchored" data-anchor-id="results-5">Results</h3>
+<p>GP based methods peformed best on the “black box” datasets. These are datasets for which we do not know the underlying equations. AIF did the best on the synthetic datasets. These are the datasets for which we do know the underlying equations.</p>
+</section>
+</section>
+<section id="dong-zhong-june-2025-recent-advances-in-symbolic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="dong-zhong-june-2025-recent-advances-in-symbolic-regression">Dong &amp; Zhong (June 2025) “Recent Advances in Symbolic Regression”</h2>
+<p><a href="https://doi.org/10.1145/3735634">URL</a></p>
+<section id="goal-6" class="level3">
+<h3 class="anchored" data-anchor-id="goal-6">Goal</h3>
+<p>This is a survey paper.</p>
+</section>
+<section id="importance-6" class="level3">
+<h3 class="anchored" data-anchor-id="importance-6">Importance</h3>
+</section>
+<section id="solution-6" class="level3">
+<h3 class="anchored" data-anchor-id="solution-6">Solution</h3>
+</section>
+<section id="results-6" class="level3">
+<h3 class="anchored" data-anchor-id="results-6">Results</h3>
+</section>
+</section>
+<section id="other-papers" class="level2">
+<h2 class="anchored" data-anchor-id="other-papers">Other Papers</h2>
+<section id="ouyang-et-al-2018-sisso-a-compressed-sensing-method-for-indentifying-the-best-low-dimensional-descriptor-in-an-immensity-of-offered-candidates" class="level3">
+<h3 class="anchored" data-anchor-id="ouyang-et-al-2018-sisso-a-compressed-sensing-method-for-indentifying-the-best-low-dimensional-descriptor-in-an-immensity-of-offered-candidates">Ouyang et al (2018) “SISSO: A Compressed-Sensing Method for Indentifying the Best Low-Dimensional Descriptor in an Immensity of Offered Candidates”</h3>
+<p><a href="DOI:%20https://doi.org/10.1103/PhysRevMaterials.2.083802">URL</a></p>
+</section>
+<section id="muthyala-et-al-february-2025-symantic-an-efficient-symbolic-regression-method-for-interpretable-and-parsimoniuous-model-discovery-in-science-and-beyond" class="level3">
+<h3 class="anchored" data-anchor-id="muthyala-et-al-february-2025-symantic-an-efficient-symbolic-regression-method-for-interpretable-and-parsimoniuous-model-discovery-in-science-and-beyond">Muthyala et al (February 2025) “SyMANTIC: An efficient Symbolic Regression Method for Interpretable and Parsimoniuous Model Discovery in Science and Beyond”</h3>
+<p><a href="https://pubs.acs.org/doi/10.1021/acs.iecr.4c03503">URL</a></p>
+</section>
+<section id="virgolin-bosman-2022-coefficient-mutation-in-the-gene-pool-optimal-mixing-evolutionary-algorithm-for-symbolic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="virgolin-bosman-2022-coefficient-mutation-in-the-gene-pool-optimal-mixing-evolutionary-algorithm-for-symbolic-regression">Virgolin &amp; Bosman (2022) “Coefficient Mutation in the Gene-Pool Optimal Mixing Evolutionary Algorithm for Symbolic Regression”</h3>
+<p><a href="https://doi.org/10.1145/3520304.3534036">URL</a></p>
+</section>
+<section id="virgolin-pissis-2022-symbolic-regression-is-np-hard" class="level3">
+<h3 class="anchored" data-anchor-id="virgolin-pissis-2022-symbolic-regression-is-np-hard">Virgolin &amp; Pissis (2022) “Symbolic Regression is NP-Hard”</h3>
+<p><a href="https://arxiv.org/abs/2207.01018">URL</a></p>
+</section>
+<section id="anthes-sobania-rothlauf-2025-transformer-semantic-genetic-programing-for-symbolic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="anthes-sobania-rothlauf-2025-transformer-semantic-genetic-programing-for-symbolic-regression">Anthes, Sobania &amp; Rothlauf (2025) “Transformer Semantic Genetic Programing for Symbolic Regression”</h3>
+<p><a href="https://arxiv.org/abs/2501.18479">URL</a></p>
+</section>
+<section id="abdussalam-abel-romao-2025-symbolic-regression-for-beyond-the-standard-model-physics" class="level3">
+<h3 class="anchored" data-anchor-id="abdussalam-abel-romao-2025-symbolic-regression-for-beyond-the-standard-model-physics">AbdusSalam, Abel &amp; Romao (2025) “Symbolic Regression for Beyond the Standard Model Physics”</h3>
+<p><a href="DOI:%20https://doi.org/10.1103/PhysRevD.111.015022">URL</a></p>
+</section>
+<section id="udrescu-et-al-2020pareto-optimal-symbolic-regression-exploiting-graph-modularity" class="level3">
+<h3 class="anchored" data-anchor-id="udrescu-et-al-2020pareto-optimal-symbolic-regression-exploiting-graph-modularity">Udrescu et al (2020)“Pareto-Optimal Symbolic Regression Exploiting Graph Modularity”</h3>
+<p><a href="https://proceedings.neurips.cc/paper/2020/hash/33a854e247155d590883b93bca53848a-Abstract.html">URL</a></p>
+</section>
+<section id="jin-et-al-2019-bayesian-symbolic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="jin-et-al-2019-bayesian-symbolic-regression">Jin et al (2019) “Bayesian Symbolic Regression”</h3>
+<p><a href="https://arxiv.org/abs/1910.08892">URL</a></p>
+</section>
+<section id="mcconaghy-2011-fast-scalable-deterministic-symbolic-regression-technology" class="level3">
+<h3 class="anchored" data-anchor-id="mcconaghy-2011-fast-scalable-deterministic-symbolic-regression-technology">McConaghy (2011) “Fast, Scalable, Deterministic Symbolic Regression Technology”</h3>
+<p><a href="https://link.springer.com/chapter/10.1007/978-1-4614-1770-5_13">URL</a></p>
+</section>
+<section id="lacava-et-al-2019-learning-concise-representations-for-regression-by-evolving-networks-of-trees" class="level3">
+<h3 class="anchored" data-anchor-id="lacava-et-al-2019-learning-concise-representations-for-regression-by-evolving-networks-of-trees">LaCava et al (2019) “Learning Concise Representations for Regression by Evolving Networks of Trees”</h3>
+<p><a href="https://arxiv.org/abs/1807.00981">URL</a></p>
+</section>
+<section id="lacava-et-al-2019-epsilon-lexicase-selection-for-regression" class="level3">
+<h3 class="anchored" data-anchor-id="lacava-et-al-2019-epsilon-lexicase-selection-for-regression">LaCava et al (2019) “Epsilon-Lexicase Selection for Regression”</h3>
+<p><a href="https://dl.acm.org/doi/abs/10.1145/2908812.2908898">URL</a></p>
+</section>
+<section id="cranmer-et-al-2020-discovering-symbolic-models-from-deep-learning-with-inductive-biases" class="level3">
+<h3 class="anchored" data-anchor-id="cranmer-et-al-2020-discovering-symbolic-models-from-deep-learning-with-inductive-biases">Cranmer et al (2020) “Discovering Symbolic Models from Deep Learning with Inductive Biases”</h3>
+<p><a href="https://proceedings.neurips.cc/paper_files/paper/2020/hash/c9f2f917078bd2db12f23c3b413d9cba-Abstract.html">URL</a></p>
+</section>
+<section id="zhang-et-al-2020-ps-tree-a-piecewise-symbolic-regression-tree" class="level3">
+<h3 class="anchored" data-anchor-id="zhang-et-al-2020-ps-tree-a-piecewise-symbolic-regression-tree">Zhang et al (2020) “PS-Tree: A Piecewise Symbolic Regression Tree”</h3>
+<p><a href="https://doi.org/10.1016/j.swevo.2022.101061">URL</a></p>
+</section>
+</section>
+</section>
+<section id="paywall-protected" class="level1">
+<h1>Paywall Protected</h1>
+<section id="schmidt-lipson-2010-age-fitness-pareto-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="schmidt-lipson-2010-age-fitness-pareto-optimization">Schmidt, Lipson (2010) “Age-Fitness Pareto Optimization”</h3>
+</section>
+<section id="virgolin-et-al-2017-scaleable-genetic-programming-by-gene-pool-optimal-mixing.." class="level3">
+<h3 class="anchored" data-anchor-id="virgolin-et-al-2017-scaleable-genetic-programming-by-gene-pool-optimal-mixing..">Virgolin et al (2017) “Scaleable Genetic Programming by Gene-Pool Optimal Mixing..”</h3>
+</section>
+<section id="de-franca-aldeia-2021-interaction-transformation-evolutionary-algorithm-for-symbolic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="de-franca-aldeia-2021-interaction-transformation-evolutionary-algorithm-for-symbolic-regression">de Franca, Aldeia (2021) “Interaction-Transformation Evolutionary Algorithm for Symbolic Regression”</h3>
+</section>
+<section id="arnaldo-et-al-2014-multiple-regression-genetic-programming" class="level3">
+<h3 class="anchored" data-anchor-id="arnaldo-et-al-2014-multiple-regression-genetic-programming">Arnaldo et al (2014) “Multiple Regression Genetic Programming”</h3>
+</section>
+<section id="burlacu-et-al-2020-operon-c-an-efficient-genetic-programming-framework-for-symbolic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="burlacu-et-al-2020-operon-c-an-efficient-genetic-programming-framework-for-symbolic-regression">Burlacu et al (2020) “Operon C++: An efficient genetic programming framework for symbolic regression”</h3>
+</section>
+<section id="virgolin-2019-linear-scaling-with-and-within-semantic-back-propagation-based-genetic" class="level3">
+<h3 class="anchored" data-anchor-id="virgolin-2019-linear-scaling-with-and-within-semantic-back-propagation-based-genetic">Virgolin (2019) “Linear Scaling with and Within Semantic Back-Propagation-based Genetic…”</h3>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

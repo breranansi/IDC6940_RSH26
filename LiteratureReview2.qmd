@@ -1,0 +1,62 @@
+---
+title: "IDC6940 Final Project"
+author: "Delanyce Rose & Richard Henry"
+date: "07-Jul-2025"
+format: html
+---
+# Week 2
+This week we read about symbolic regression models that use genetic programming and linear regression.
+
+## "Interpretable Machine Learning for Science with PySR and SymbolicRegression.jl" by Cranmer (2023)
+[URL](https://arxiv.org/abs/2305.01582)
+
+Although this is essentially a description of how the PySr package works, it is the article that the student spent the most time on, as this package has been the most successful of the 6 libraries (and counting) that the student has managed to make work on his toy dataset.  The literature survey was particularly interesting, as it described competing technologies to the "evolutionary programming plus regression" workflow typically used for symbolic regression. The student has found libraries for two of them, but has not got them to work yet. There is also a section on competing packages, comparing them to PySr. Also interesting was the use of "back ends" in a second language (like Julia and C++) to speed up computations.  Finally, even though the integration with sympy was mentioned briefly in the article, this design choice turned out to be a stroke of genius when compared to the symbolic manipulation of the "best" equation in the other packages that are working so far.
+
+## "Genetic Programming" by Koza & Poli (2005)
+[URL](https://link.springer.com/article/10.1007/BF00175355)
+
+This appears to be a chapter in a book by Koza.  It describes how genetic programming is being used to pull equations out of data.  It talks about using trees to represent equations, but more importantly for this student, explains how these trees are changed between generations using reproduction, cross-over and mutation.  It also talks about "architecture alteration", but this is less clear.  The student was hoping to see some comments on regression, but since it was absent, it is concluded that this description is only half of the symbolic regression workflow.
+
+## "gramEvol: Grammatical Evolution in R" by Noorian, de Silva & Leong (2016)
+[URL](https://www.jstatsoft.org/article/view/v071i01/0)
+
+This is nearly identical to the tutorials provided with the gramEvol package.  In it, they describe the workflow in R for pulling equations out of data.  Particularly useful to the student was the discussion of context-free grammar and the Backus-Naar notation, which would have been "old hat" for those CS students who studied compiler design.  Again, the search for the regression piece was frustrated, as it is absent in the gramEvol package.
+
+## "Sparse Regression" NYU Lecture Notes (2016)
+[URL](https://cims.nyu.edu/~cfgranda/pages/OBDA_spring16/material/sparse_regression.pdf)
+
+These are lecture notes (probably from somebody called C.F.Granda) that starts off by talking about linear and logistic regression, and then goes on to define sparse regression as the edge case where the number of predictors is NOT significantly smaller than the number of datapoints.  It goes on to talk about lasso and ridge regression, and the combination of the two, the elastic net.  This prompted the student to review the scikit-learn documentation as the triple combo rang a bell loudly from earlier classes at UWF.  The big takeaways were the need to handle overtraining and correlation between predictors.  Neither of these explained why the student's lasso model performed more poorly than the "standard" multiple linear model on his toy dataset on first read.  This will clearly require a re-read.
+
+## "PySimDy: A Comprehensive Python Package for Robust Sparse System Identification" by Kaptangou et al (2022)
+[URL](https://arxiv.org/abs/2111.08481)
+
+This is also a library description paper, and the student has not got this particular one off the ground yet.  Two things are fascinating here.  First, they are using data to discover relationships best described with differential equations.  This is a very big deal!   Secondly, they appear to be doubling down on sparse regression, and I the student hasn't seen any hints yet that they are using an evolutionary algorithm.  This student may have unreasonable expectations as the authors appear to be engineers, not data scientists.... (:-<) 
+
+## Other Papers
+
+### "Artificial Intelligence in Physical Sciences: Symbolic Regression Trends and Perspectives" by Angelis, Sofos & Karakasidis (2023)
+[URL](https://link.springer.com/article/10.1007/s11831-023-09922-z)
+
+### "A Comparison of Recent Algorithms for Symbolic Regression to Genetic Programming" by Kronberger, Radwan & Winkler (2024)
+[URL](https://arxiv.org/html/2406.03585v1)
+
+### "A Computational Framework for Physics-Informed Symbolic Regression with Straightforward Integration of Domain Knowledge" by Keren, Liberzon & Lazebnik (2023)
+[URL](https://www.nature.com/articles/s41598-023-28328-2)
+
+### "Discovering Symbolic Policies with Deep Reinforcement Learning" by Landajuela et al (2021)
+[URL](https://proceedings.mlr.press/v139/landajuela21a.html)
+
+### "Interactive Symbolic Regression with Co-Design Mechanism through Offline Reinforcement Learning" by Tian et al (2025)
+[URL](https://www.nature.com/articles/s41467-025-59288-y)
+
+### "Automated Reverse Engineering of Nonlinear Dynamical Systems" by Bongard & Lipson (2007)
+[URL](https://www.pnas.org/doi/abs/10.1073/pnas.0609476104)
+
+### "Discovering Governing Equations from Data by Sparse Identification of Nonlinear Dynamical Systems" by Brunton, Proctor & Kutz (2016) 
+[URL](https://www.pnas.org/doi/abs/10.1073/pnas.1517384113)
+
+### "Data Driven Discovery of Coordinates and Governing Equations" by Champion et al (2019) 
+[URL](https://www.pnas.org/doi/abs/10.1073/pnas.1906995116)
+
+### "Distilling Free-Form Natural Laws from Experimental Data" by  Schmidt & Lipson (2009)
+[URL](https://www.science.org/doi/abs/10.1126/science.1165893)

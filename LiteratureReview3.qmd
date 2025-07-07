@@ -1,0 +1,197 @@
+---
+title: "IDC6940 Final Project"
+author: "Delanyce Rose & Richard Henry"
+date: "07-Jul-2025"
+format: html
+---
+# Week 3
+This week we continued reading about deep learning models for symbolic regression and started looking at papers published after the PySR revision of May 2023.
+
+## Martius & Lampert (2016) "Extrapolation and Learning Equations"
+[URL](https://arxiv.org/abs/1610.02995)
+
+### Goal
+Find a model from data which can extrapolate well outside the range of the data it was trained on
+
+### Importance
+Unknown at this point
+
+### Solution
+The approach to the problem taken by the authors was a surprise to the student. 
+
+1. They replace the activation function (e.g. 'relu') with trancendental functions such as sine and cosine.
+2. Each layer will have multiple (different) activation functions in parallel.
+3. Each activation function services a small number of nodes (like 2)
+4. Then they used regularization to force small weights to zero
+5. After training, the final equation can be revealed by tracing the non-zero weights in the neural network.
+
+### Results
+Sahoo et al point out that the algorithm does not handle division!
+
+## Sahoo, Lampert & Martius (2018) "Learning Equations for Extrapolation and Control"
+[URL](https://arxiv.org/abs/1806.07259)
+
+### Goal
+In this follow-up paper to the one above, the authors address two weaknesses of the original method:
+
+1. Adding division capability
+2. Improving model selection
+
+### Importance
+Unknown at this point.
+
+### Solution
+
+#### Division
+Other papers on symbolic regression have discussed the issues of numerical overflow and underflow and how they wreck havoc on our calculations of "fitness".  The protected division introduced here simply sets the result to zero for "bad" divisors.  This works for a neural network as it kills the back-propagation of information past the division-by-zero point for that particular record.
+
+#### Selection
+The original paper, the model was chosen based on ranked validation error and ranked sparsity.  In this revision, the authors decided it was better to normalize error and sparsity rather than rank them.
+
+Interestingly, if "outlier" data is *not* excluded as we want the model to perform well at these extremes (or beyond), the authors found that the "sparsity term loses its importance".
+
+### Results
+Petersen et al point out "that the authors make several simplifications to the search space, ultimately precluding learning certain simple classes of expressions"
+
+## Petersen et al (2021) "Deep Symbolic Regression: Recovering Mathematical Expressions from Data via Risk-Seeking Policy Gradients"
+[URL](https://openreview.net/pdf?id=m5Qsh0kBQG)
+
+### Goal
+Find an efficient way to apply neural networks to Symbolic Regression.
+
+### Importance
+"DSR" won first place in the Real World Track of the the 2022 SRBench Symbolic Regression Competition.
+
+### Solution
+1. Elements that can be used to make up an expression (eg "sin" or "+") are sampled from a probability distribution, put together as an expression, and that expression used to estimate the dependent variables of the dataset.
+2. Based on the fitness of that expression, the probability distribution is adjusted.  This "memory" is provided by a recurrent neural network.
+3. The weights of the RNN are adjusted not to optimize the *average* performance of the generated expressions, but to optimize the *best case* performance of the generated expressions.
+
+### Results
+This algorithm was apparently published before the SRBench benchmarks were published.  The authors claim that the algorithm exceeded the performance of the gold-standard closed-source algorithm on some older benchmarks.
+
+## Landajuela et al (2022) "A Unified Framework for Deep Symbolic Regression"
+[URL](https://openreview.net/forum?id=2FNnBhwJsHK)
+
+### Goal
+Find a way to integrate disparate approaches to Symbolic Regression 
+
+### Importance
+This is a follow-up paper to the one above, and may *actually* be the algorithm that won the competition.
+
+### Solution
+Identify the strengths and weaknesses of the following 5 technologies
+
+- AI Feynman "AIF"
+
+- Deep Symbolic Regression "DSR"(paper above)
+
+- Large Scale Pre-Training "LSPT" (paper below)
+
+- Genetic Programming "GP" 
+
+- Linear Models "LM"
+
+Next, carefully combine them to neutralize the identified weaknesses.  The typical workflow looks like this:
+
+DSR->AIF->LM->GP->LSPT
+
+### Results
+Appears to be *the* top performer against the SRBench benchmarks at the time of publishing.
+
+## Kamienny et al (2022) "End-to-End Symbolic Regression with Transformers"
+[URL](https://proceedings.neurips.cc/paper_files/paper/2022/hash/42eb37cdbefd7abae0835f4b67548c39-Abstract-Conference.html)
+
+### Goal
+Replace the two-step proceedure typical in Symbolic Regression with a single step
+
+### Importance
+Raises the possibility of building models in *real time*.
+
+### Solution
+Pre-train a neural net on gobs and gobs of synthetic data.
+
+### Results
+The authors claim that the results are *almost* as accurate as the leading two-step algorithm, but much faster.
+
+## La Cava et al (2021) "Contemporary Symbolic Regression Methods and their Relative Performance"
+[URL](https://pmc.ncbi.nlm.nih.gov/articles/PMC11074949/)
+
+## Goal
+Establishment of a benchmark for Symbolic Regression (SRBench)
+
+### Importance
+No fair way to compare models existed before this.
+
+### Solution
+1. Collect nearly 300 diverse regression problems
+2. Separate them into 2 buckets: "Black Box" and "Synthetic"
+3. Test available models against the problems
+4. Archive the data/models in an open-access format for transparency
+
+### Results
+GP based methods peformed best on the "black box" datasets.  These are datasets for which we do not know the underlying equations.  AIF did the best on the synthetic datasets. These are the datasets for which we do know the underlying equations.
+
+
+## Dong & Zhong (June 2025) "Recent Advances in Symbolic Regression"
+[URL](https://doi.org/10.1145/3735634)
+
+### Goal
+This is a survey paper.
+
+### Importance
+
+### Solution
+
+### Results
+
+
+## Other Papers
+
+### Ouyang et al (2018) "SISSO: A Compressed-Sensing Method for Indentifying the Best Low-Dimensional Descriptor in an Immensity of Offered Candidates"
+[URL](DOI: https://doi.org/10.1103/PhysRevMaterials.2.083802)
+
+### Muthyala et al (February 2025) "SyMANTIC: An efficient Symbolic Regression Method for Interpretable and Parsimoniuous Model Discovery in Science and Beyond"
+[URL](https://pubs.acs.org/doi/10.1021/acs.iecr.4c03503)
+
+### Virgolin & Bosman (2022) "Coefficient Mutation in the Gene-Pool Optimal Mixing Evolutionary Algorithm for Symbolic Regression"
+[URL](https://doi.org/10.1145/3520304.3534036)
+
+### Virgolin & Pissis (2022) "Symbolic Regression is NP-Hard"
+[URL](https://arxiv.org/abs/2207.01018)
+
+### Anthes, Sobania & Rothlauf (2025) "Transformer Semantic Genetic Programing for Symbolic Regression"
+[URL](https://arxiv.org/abs/2501.18479)
+
+### AbdusSalam, Abel & Romao (2025) "Symbolic Regression for Beyond the Standard Model Physics"
+[URL](DOI: https://doi.org/10.1103/PhysRevD.111.015022)
+
+### Udrescu et al (2020)"Pareto-Optimal Symbolic Regression Exploiting Graph Modularity"
+[URL](https://proceedings.neurips.cc/paper/2020/hash/33a854e247155d590883b93bca53848a-Abstract.html)
+
+### Jin et al (2019) "Bayesian Symbolic Regression"
+[URL](https://arxiv.org/abs/1910.08892)
+
+### McConaghy (2011) "Fast, Scalable, Deterministic Symbolic Regression Technology"
+[URL](https://link.springer.com/chapter/10.1007/978-1-4614-1770-5_13)
+
+### LaCava et al (2019) "Learning Concise Representations for Regression by Evolving Networks of Trees"
+[URL](https://arxiv.org/abs/1807.00981)
+
+### LaCava et al (2019) "Epsilon-Lexicase Selection for Regression"
+[URL](https://dl.acm.org/doi/abs/10.1145/2908812.2908898)
+
+### Cranmer et al (2020) "Discovering Symbolic Models from Deep Learning with Inductive Biases"
+[URL](https://proceedings.neurips.cc/paper_files/paper/2020/hash/c9f2f917078bd2db12f23c3b413d9cba-Abstract.html)
+
+### Zhang et al (2020) "PS-Tree: A Piecewise Symbolic Regression Tree"
+[URL](https://doi.org/10.1016/j.swevo.2022.101061)
+
+# Paywall Protected
+### Schmidt, Lipson (2010) "Age-Fitness Pareto Optimization"
+### Virgolin et al (2017) "Scaleable Genetic Programming by Gene-Pool Optimal Mixing.."
+### de Franca, Aldeia (2021) "Interaction-Transformation Evolutionary Algorithm for Symbolic Regression"
+### Arnaldo et al (2014) "Multiple Regression Genetic Programming"
+### Burlacu et al (2020) "Operon C++: An efficient genetic programming framework for symbolic regression"
+### Virgolin (2019) "Linear Scaling with and Within Semantic Back-Propagation-based Genetic... "
+
