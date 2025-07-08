@@ -9,49 +9,25 @@ Summer 2025
 Delanyce Rose & Richard Henry
 
 ## Proposed Workflow
-Here we outline our expected workflow for producing this paper:
-```{python}
-# Mermaid Diagramming Library
-import mermaid as md
-# Graph Description
+![image](mermaidChart.svg)
 
-myGraph=md.Mermaid("""
-    flowchart LR
-    %% Nodes
-    A("Introduction"):::green
-    B("Definition"):::green
-    C("Importance"):::green
-    D("Competing<br>Technologies"):::green
-    E("Datasets"):::green
-    F("Performance"):::green
-    G("Observations"):::green
-    H("Conclusions"):::green
-    J("References"):::green
-    D1("Evolutionary<br>Algorithms"):::purple
-    D2("General<br>Linear<br>Regression"):::purple
-    D3("Neural<br>Networks"):::purple
-    D4("Sparse<br>Regression"):::purple
-    E1("API Gravity"):::purple
-    E2("Ideal Gas"):::purple
-    E3("Molecular<br>Mass 1"):::purple
-    E4("Molecular<br>Mass 2"):::purple
-    E5("Health<br>Care"):::purple
-    %% Edges
-    A --> B --> C --> D
-    D --> D1-->E
-    D --> D2-->E
-    D --> D3-->E
-    D --> D4-->E
-    E-->E1-->F
-    E-->E2-->F
-    E-->E3-->F
-    E-->E4-->F
-    E-->E5-->F
-    F-->G-->H-->J
-    %% Styling
-    classDef green fill:#B2DFDB,stroke:#00897B,stroke-width:2px;
-    classDef purple fill:#E1BEE7,stroke:#8E24AA,stroke-width:2px;
-""")
+## Introduction
+First, We'll start with some sort of introduction.
 
+## Definition
+This is where we say what symbolic regression is.
 
-```
+## Importance
+Here we talk about why we'd want to use symbolic regression.
+
+## Competing Technologies
+Here we talk about the alternatives:
+
+### Neural Networks
+This can provide answers, but cannot explain *why* those answers are correct. Yes, they are working on reasoning LLM's, but we are not there yet.
+
+### General Linear Regression
+This also provides answers, but the engineer or scientist has to decide on the form of the equation before using GLM to fit the constants.
+
+### Sparse Regression
+Here we present a variety of different functional forms to a regression model, and then throw away the forms with small constants. What's left tells us what kind of equation to use.  This is not *technically* sparse regression, but the workflow is very similar.
