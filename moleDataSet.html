@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>IDC 6940 Final Project</title>
+<title>Molecular Mass Dataset</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,21 +20,88 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="index_files/libs/clipboard/clipboard.min.js"></script>
-<script src="index_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="index_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="index_files/libs/quarto-html/popper.min.js"></script>
-<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="index_files/libs/quarto-html/anchor.min.js"></script>
-<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="index_files/libs/bootstrap/bootstrap-58427a5cdc6db58bd8a7f543ac0b26a6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="moleDataSet_files/libs/clipboard/clipboard.min.js"></script>
+<script src="moleDataSet_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="moleDataSet_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="moleDataSet_files/libs/quarto-html/popper.min.js"></script>
+<script src="moleDataSet_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="moleDataSet_files/libs/quarto-html/anchor.min.js"></script>
+<link href="moleDataSet_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="moleDataSet_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="moleDataSet_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="moleDataSet_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="moleDataSet_files/libs/bootstrap/bootstrap-58427a5cdc6db58bd8a7f543ac0b26a6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -46,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">IDC 6940 Final Project</h1>
+<h1 class="title">Molecular Mass Dataset</h1>
 </div>
 
 
@@ -63,31 +130,183 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="university-of-west-florida" class="level2">
-<h2 class="anchored" data-anchor-id="university-of-west-florida">University of West Florida</h2>
-<p>Delanyce Rose &amp; Richard Henry</p>
-<p>Summer 2025</p>
-<p>Welcome to our Github Repository!</p>
-<p>This is a MVP (minimum viable product) so stay tuned as we build it out!</p>
-</section>
-<section id="game-plan" class="level1">
-<h1>Game Plan</h1>
-<p><a href="./Forward_Plan-2.html">Proposed Workflow</a></p>
-<p><a href="./TentativeIntroduction.html">Introduction</a></p>
-</section>
-<section id="literature-reviews" class="level1">
-<h1>Literature Reviews</h1>
-<p><a href="./LiteratureReview2.html">Group 2</a></p>
-<p><a href="./LiteratureReview3.html">Group 3</a></p>
-</section>
-<section id="project-reports" class="level1">
-<h1>Project Reports</h1>
-<p><a href="./Progress_Report_1.html">First</a></p>
-<p><a href="./Project_Report_2.html">Second</a></p>
-<p><a href="./Progress_Report_3.html">Third</a></p>
-<p><a href="./Project_Report_4.html">Fourth</a></p>
-<p><a href="./moleDataSet.html">Molecular Mass Dataset</a></p>
-</section>
+<div id="e5c0852f" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Call Libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here we will take a first look at the molecular mass dataset, taken from <a href="https://pubs.acs.org/doi/full/10.1021/ie950484l?casa_token=-Vy315d8K38AAAAA%3Anxdm5rReXldLbOrBYLfwm0l3MmsCw_Mbnw1vVdNJ308Ki_3lEcnU3bXQmS8TL2nsArNG-AydRFEKVZc">Goossens.</a></p>
+<div id="3a3829a2" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#df=pd.read_csv('./c694/goossens_raw.csv')</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>pd.read_csv(<span class="st">'./goossens_raw.csv'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">SG</th>
+<th data-quarto-table-cell-role="th">TBP(K)</th>
+<th data-quarto-table-cell-role="th">MW</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0.6310</td>
+<td>306</td>
+<td>76</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0.7135</td>
+<td>372</td>
+<td>99</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0.7205</td>
+<td>365</td>
+<td>96</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0.7293</td>
+<td>373</td>
+<td>100</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0.6786</td>
+<td>329</td>
+<td>82</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">65</td>
+<td>0.7054</td>
+<td>367</td>
+<td>95</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">66</td>
+<td>0.6315</td>
+<td>309</td>
+<td>72</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">67</td>
+<td>0.8842</td>
+<td>353</td>
+<td>78</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">68</td>
+<td>1.1762</td>
+<td>612</td>
+<td>178</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">69</td>
+<td>1.3793</td>
+<td>798</td>
+<td>300</td>
+</tr>
+</tbody>
+</table>
+
+<p>70 rows × 3 columns</p>
+</div>
+</div>
+</div>
+<p>We have 3 variables:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+<th>Designation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(Mw\)</span></td>
+<td>Molecular Mass</td>
+<td>dependent</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(SG\)</span></td>
+<td>Specific Gravity</td>
+<td>independent</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(TBP\)</span></td>
+<td>True Boiling Point</td>
+<td>independent</td>
+</tr>
+</tbody>
+</table>
+<p>We can designate any one of the three as dependent, but as the molecular mass is the most difficult to measure, we’ll chose it.</p>
+<div id="8d4be203" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.plot(kind<span class="op">=</span><span class="st">'scatter'</span>,x<span class="op">=</span><span class="st">'SG'</span>,y<span class="op">=</span><span class="st">'MW'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Molecular Mass vs Specific Gravity"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="moleDataSet_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Although there appears to be a clear linear relationship between molecular mass and specific gravity at low gravity numbers, the heteroscedasticity explodes above a gravity of about 0.75.</p>
+<div id="3188785e" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df.plot(kind<span class="op">=</span><span class="st">'scatter'</span>,x<span class="op">=</span><span class="st">'TBP(K)'</span>,y<span class="op">=</span><span class="st">'MW'</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Molecular Mass vs True Boiling Point"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="moleDataSet_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>There seems to be a monotonically increasing relationship between molecular mass and true boiling point, with a possible “pole” around the boiling point of 1000.</p>
+<p>At this point, it may be tempting to ignore the effect of specific gravity on the prediction of molecular mass.</p>
+<div id="dfd53526" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.plot(kind<span class="op">=</span><span class="st">'scatter'</span>,x<span class="op">=</span><span class="st">'TBP(K)'</span>,y<span class="op">=</span><span class="st">'SG'</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Specific Gravity vs True Boiling Point"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="moleDataSet_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This plot suggests that there is very little correlation between specific gravity and true boiling point, except maybe at low values of boiling point. Lets test this:</p>
+<div id="fddfda51" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>c_sg_tbp<span class="op">=</span>np.corrcoef(df[<span class="st">'SG'</span>],df[<span class="st">'TBP(K)'</span>])</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(c_sg_tbp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1.         0.62521831]
+ [0.62521831 1.        ]]</code></pre>
+</div>
+</div>
 
 </main>
 <!-- /main column -->

@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Delanyce Rose, Richard Henry">
+<meta name="dcterms.date" content="2025-07-09">
 
-<title>IDC 6940 Final Project</title>
+<title>Tentative Introduction</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,18 +25,47 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="index_files/libs/clipboard/clipboard.min.js"></script>
-<script src="index_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="index_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="index_files/libs/quarto-html/popper.min.js"></script>
-<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="index_files/libs/quarto-html/anchor.min.js"></script>
-<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="index_files/libs/bootstrap/bootstrap-58427a5cdc6db58bd8a7f543ac0b26a6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="TentativeIntroduction_files/libs/clipboard/clipboard.min.js"></script>
+<script src="TentativeIntroduction_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="TentativeIntroduction_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="TentativeIntroduction_files/libs/quarto-html/popper.min.js"></script>
+<script src="TentativeIntroduction_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="TentativeIntroduction_files/libs/quarto-html/anchor.min.js"></script>
+<link href="TentativeIntroduction_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="TentativeIntroduction_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="TentativeIntroduction_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="TentativeIntroduction_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="TentativeIntroduction_files/libs/bootstrap/bootstrap-58427a5cdc6db58bd8a7f543ac0b26a6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -46,14 +77,26 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">IDC 6940 Final Project</h1>
+<h1 class="title">Tentative Introduction</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Delanyce Rose, Richard Henry </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 9, 2025</p>
+    </div>
+  </div>
   
     
   </div>
@@ -63,30 +106,53 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="university-of-west-florida" class="level2">
-<h2 class="anchored" data-anchor-id="university-of-west-florida">University of West Florida</h2>
-<p>Delanyce Rose &amp; Richard Henry</p>
-<p>Summer 2025</p>
-<p>Welcome to our Github Repository!</p>
-<p>This is a MVP (minimum viable product) so stay tuned as we build it out!</p>
+<section id="idc-6940-final-project" class="level1">
+<h1>IDC 6940 Final Project</h1>
+<section id="university-of-west-florida" class="level3">
+<h3 class="anchored" data-anchor-id="university-of-west-florida">University of West Florida</h3>
 </section>
-<section id="game-plan" class="level1">
-<h1>Game Plan</h1>
-<p><a href="./Forward_Plan-2.html">Proposed Workflow</a></p>
-<p><a href="./TentativeIntroduction.html">Introduction</a></p>
+<section id="paper-on-symbolic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="paper-on-symbolic-regression">Paper on Symbolic Regression</h2>
+<section id="symbolic-regression" class="level4">
+<h4 class="anchored" data-anchor-id="symbolic-regression">Symbolic Regression</h4>
+<p>Consider a dataset consisting of an independent variable <span class="math inline">\(X\)</span> and a dependent variable <span class="math inline">\(y\)</span>. Symbolic Regression allows us to discover, from the data, and analytical expression <span class="math inline">\(f(X)\)</span> which we can use to predict values of <span class="math inline">\(y\)</span> for values of <span class="math inline">\(X\)</span> unseen by the algorithm during training. For example:</p>
+<p><span class="math inline">\(\hat{y}_{23} \approx f(X_{23})\)</span></p>
 </section>
-<section id="literature-reviews" class="level1">
-<h1>Literature Reviews</h1>
-<p><a href="./LiteratureReview2.html">Group 2</a></p>
-<p><a href="./LiteratureReview3.html">Group 3</a></p>
+<section id="neural-networks" class="level4">
+<h4 class="anchored" data-anchor-id="neural-networks">Neural Networks</h4>
+<p>Neural networks allow us to make this prediction without first generating an analytical expression. Often, this is good enough, but we give up a property called <em>explainability</em>.</p>
+<p>In the case of a neural net, we can reclaim some of this explainability by performing a second prediction for a value of <span class="math inline">\(X\)</span> we really don’t care about, but happens to be close to <span class="math inline">\(X_{23}\)</span>:</p>
+<p><span class="math inline">\(\hat{y}_{24} \approx f(X_{24})\)</span></p>
+<p>And now we can make statements on whether <span class="math inline">\(y\)</span> increases or decreases with increasing <span class="math inline">\(X\)</span> in the neighbourhood of <span class="math inline">\(X_{23}\)</span>:</p>
+<p><span class="math inline">\(\frac{dy}{dX}|_{X_{23}}\approx \frac{\hat{y}_{24}-\hat{y}_{23}}{X_{24}-X_{23}}\)</span></p>
 </section>
-<section id="project-reports" class="level1">
-<h1>Project Reports</h1>
-<p><a href="./Progress_Report_1.html">First</a></p>
-<p><a href="./Project_Report_2.html">Second</a></p>
-<p><a href="./Progress_Report_3.html">Third</a></p>
-<p><a href="./Project_Report_4.html">Fourth</a></p>
-<p><a href="./moleDataSet.html">Molecular Mass Dataset</a></p>
+<section id="linear-regression" class="level4">
+<h4 class="anchored" data-anchor-id="linear-regression">Linear Regression</h4>
+<p>The traditional alternative to neural networks which provides explainability is linear regression:</p>
+<p><span class="math inline">\(\hat{y}_{23} \approx \beta_0 +\beta_1 \cdot X\)</span></p>
+<p>In which we use the data to discover the best values of the constants <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
+<p>However, this may not be the best functional form for this predictive equation. For example, maybe an exponental or a logarithmic relationship may be better:</p>
+<p><span class="math inline">\(\hat{y}_{23} \approx \beta_2 +\beta_3 \cdot e^X\)</span></p>
+<p>or</p>
+<p><span class="math inline">\(\hat{y}_{23} \approx \beta_4 +\beta_5 \cdot log(X)\)</span></p>
+<p>or maybe</p>
+<p><span class="math inline">\(log(\hat{y}_{23}) \approx \beta_6 +\beta_7 \cdot log(X)\)</span></p>
+<p>We can certainly investigate these, and hundreds of other possibilities by building multiple models and comparing the performance between them.</p>
+<p>The promise of symbolic regression is to find the optimum functional form <em>and</em> the optimum values of the constants in the same workflow.</p>
+</section>
+<section id="next-steps" class="level3">
+<h3 class="anchored" data-anchor-id="next-steps">Next Steps</h3>
+<p>In this paper, we will endeavor to:</p>
+<ul>
+<li><p>Describe the most common workflow for symbolic regression</p></li>
+<li><p>Explain why this is a hard problem to solve</p></li>
+<li><p>Give examples of how a selection of open-source libraries perform on a toy dataset</p></li>
+<li><p>Describe some of the strategies being used to improve symbolic regression performance</p></li>
+<li><p>Show an example of symbolic regression on a chemical engineering dataset</p></li>
+<li><p>Show an example of symbolic regression on a public health dataset</p></li>
+</ul>
+</section>
+</section>
 </section>
 
 </main>

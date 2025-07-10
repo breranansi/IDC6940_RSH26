@@ -1,0 +1,65 @@
+---
+title: "Tentative Introduction"
+author: "Delanyce Rose, Richard Henry"
+date: "09-Jul-2025"
+format: html
+---
+# IDC 6940 Final Project
+### University of West Florida
+## Paper on Symbolic Regression
+
+#### Symbolic Regression
+Consider a dataset consisting of an independent variable $X$ and a dependent variable $y$.  Symbolic Regression allows us to discover, from the data, and analytical expression $f(X)$ which we can use to predict values of $y$ for values of $X$ unseen by the algorithm during training. For example:
+
+$\hat{y}_{23} \approx f(X_{23})$
+
+#### Neural Networks
+Neural networks allow us to make this prediction without first generating an analytical expression. Often, this is good enough, but we give up a property called *explainability*.
+
+In the case of a neural net, we can reclaim some of this explainability by performing a second prediction for a value of $X$ we really don't care about, but happens to be close to $X_{23}$:
+
+$\hat{y}_{24} \approx f(X_{24})$
+
+And now we can make statements on whether $y$ increases or decreases with increasing $X$ in the neighbourhood of $X_{23}$:
+
+$\frac{dy}{dX}|_{X_{23}}\approx \frac{\hat{y}_{24}-\hat{y}_{23}}{X_{24}-X_{23}}$
+
+#### Linear Regression
+The traditional alternative to neural networks which provides explainability is linear regression:
+
+$\hat{y}_{23} \approx \beta_0 +\beta_1 \cdot X$
+
+In which we use the data to discover the best values of the constants $\beta_0$ and $\beta_1$.
+
+However, this may not be the best functional form for this predictive equation.  For example, maybe an exponental or a logarithmic relationship may be better:
+
+$\hat{y}_{23} \approx \beta_2 +\beta_3 \cdot e^X$
+
+or
+
+$\hat{y}_{23} \approx \beta_4 +\beta_5 \cdot log(X)$
+
+or maybe
+
+$log(\hat{y}_{23}) \approx \beta_6 +\beta_7 \cdot log(X)$
+
+We can certainly investigate these, and hundreds of other possibilities by building multiple models and comparing the performance between them.
+
+The promise of symbolic regression is to find the optimum functional form *and* the optimum values of the constants in the same workflow.
+
+### Next Steps
+In this paper, we will endeavor to:
+
+- Describe the most common workflow for symbolic regression
+
+- Explain why this is a hard problem to solve
+
+- Give examples of how a selection of open-source libraries perform on a toy dataset
+
+- Describe some of the strategies being used to improve symbolic regression performance
+
+- Show an example of symbolic regression on a chemical engineering dataset
+
+- Show an example of symbolic regression on a public health dataset
+
+
