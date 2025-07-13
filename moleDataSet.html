@@ -130,14 +130,14 @@ window.Quarto = {
 </header>
 
 
-<div id="e5c0852f" class="cell" data-execution_count="4">
+<div id="e5c0852f" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Call Libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here we will take a first look at the molecular mass dataset, taken from <a href="https://pubs.acs.org/doi/full/10.1021/ie950484l?casa_token=-Vy315d8K38AAAAA%3Anxdm5rReXldLbOrBYLfwm0l3MmsCw_Mbnw1vVdNJ308Ki_3lEcnU3bXQmS8TL2nsArNG-AydRFEKVZc">Goossens.</a></p>
-<div id="3a3829a2" class="cell" data-execution_count="5">
+<div id="3a3829a2" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#df=pd.read_csv('./c694/goossens_raw.csv')</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>pd.read_csv(<span class="st">'./goossens_raw.csv'</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -256,7 +256,7 @@ window.Quarto = {
 </tbody>
 </table>
 <p>We can designate any one of the three as dependent, but as the molecular mass is the most difficult to measure, we’ll chose it.</p>
-<div id="8d4be203" class="cell" data-execution_count="6">
+<div id="8d4be203" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.plot(kind<span class="op">=</span><span class="st">'scatter'</span>,x<span class="op">=</span><span class="st">'SG'</span>,y<span class="op">=</span><span class="st">'MW'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Molecular Mass vs Specific Gravity"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
@@ -270,7 +270,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Although there appears to be a clear linear relationship between molecular mass and specific gravity at low gravity numbers, the heteroscedasticity explodes above a gravity of about 0.75.</p>
-<div id="3188785e" class="cell" data-execution_count="7">
+<div id="3188785e" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df.plot(kind<span class="op">=</span><span class="st">'scatter'</span>,x<span class="op">=</span><span class="st">'TBP(K)'</span>,y<span class="op">=</span><span class="st">'MW'</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Molecular Mass vs True Boiling Point"</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
@@ -285,7 +285,7 @@ window.Quarto = {
 </div>
 <p>There seems to be a monotonically increasing relationship between molecular mass and true boiling point, with a possible “pole” around the boiling point of 1000.</p>
 <p>At this point, it may be tempting to ignore the effect of specific gravity on the prediction of molecular mass.</p>
-<div id="dfd53526" class="cell" data-execution_count="8">
+<div id="dfd53526" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.plot(kind<span class="op">=</span><span class="st">'scatter'</span>,x<span class="op">=</span><span class="st">'TBP(K)'</span>,y<span class="op">=</span><span class="st">'SG'</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Specific Gravity vs True Boiling Point"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
@@ -299,7 +299,7 @@ window.Quarto = {
 </div>
 </div>
 <p>This plot suggests that there is very little correlation between specific gravity and true boiling point, except maybe at low values of boiling point. Lets test this:</p>
-<div id="fddfda51" class="cell" data-execution_count="9">
+<div id="fddfda51" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>c_sg_tbp<span class="op">=</span>np.corrcoef(df[<span class="st">'SG'</span>],df[<span class="st">'TBP(K)'</span>])</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(c_sg_tbp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -307,6 +307,93 @@ window.Quarto = {
  [0.62521831 1.        ]]</code></pre>
 </div>
 </div>
+<section id="existing-correlations" class="level2">
+<h2 class="anchored" data-anchor-id="existing-correlations">Existing Correlations</h2>
+<p>There are many correlations available for estimating molecular mass from true boiling point and specific gravity. Here are a few of them using the following nomenclature:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(M_w\)</span></td>
+<td>Apparent Molecular Mass</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(T_b\)</span></td>
+<td>Boiling Point Temperature at Atmospheric Pressure</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\gamma\)</span></td>
+<td>Specific Gravity (density compared to water)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(a_{00}..a_{09}\)</span></td>
+<td>Empirical Constants</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(K_w\)</span></td>
+<td>Characterization factor (intermediate value)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(X_0...X_3\)</span></td>
+<td>Intermediate Variables</td>
+</tr>
+</tbody>
+</table>
+<section id="hariu-sage-1969" class="level3">
+<h3 class="anchored" data-anchor-id="hariu-sage-1969">Hariu &amp; Sage (1969)</h3>
+<p><span class="math inline">\({M} _ {w} = {a} _ {00} + {a} _ {01} {K} _ {w} + {a} _ {02} {K} _ {w} ^ {2} + {a} _ {03} {T} _ {b} {K} _ {w} + {a} _ {04} {T} _ {b} {K} _ {w} ^ {2} + {a} _ {05} {T} _ {b} ^ {2} {K} _ {w} + {a} _ {06} {T} _ {b} ^ {2} {K} _ {w} ^ {2}\)</span></p>
+<p><span class="math inline">\({K} _ {w} =\frac {\sqrt [3] {{T} _ {b}}}  {\gamma}\)</span></p>
+</section>
+<section id="kesler-lee-1976" class="level3">
+<h3 class="anchored" data-anchor-id="kesler-lee-1976">Kesler &amp; Lee (1976)</h3>
+<p><span class="math inline">\({M} _ {w} = {X} _ {0} + \frac{{X} _ {1}}  {{T} _ {b}} + \frac{{X} _ {2}}  {{T} _ {b} ^ {2}}\)</span></p>
+<p><span class="math inline">\({X} _ {0} = {a} _ {00} + {a} _ {01} γ+ \left ({a} _ {02} + {a} _ {03} γ \right ) {T} _ {b}\)</span></p>
+<p><span class="math inline">\({X} _ {1} = \left (1+ {a} _ {04} γ+ {a} _ {05} {γ} ^ {2} \right ) \left ({a} _ {06} + \frac{{a} _ {07}}  {{T} _ {b}} \right ) \cdot {10} ^ {7}\)</span></p>
+<p><span class="math inline">\({X} _ {2} = \left (1+ {a} _ {08} γ+ {a} _ {09} {γ} ^ {2} \right ) \left ({a} _ {10} + \frac{{a} _ {11}}  {{T} _ {b}} \right ) \cdot {10} ^ {12}\)</span></p>
+</section>
+<section id="american-petroleum-institute-1977" class="level3">
+<h3 class="anchored" data-anchor-id="american-petroleum-institute-1977">American Petroleum Institute (1977)</h3>
+<p><span class="math inline">\({M} _ {w} = {a} _ {00} {e} ^ {\left ({a} _ {01} {T} _ {b} \right )} {e} ^ {\left ({a} _ {02} γ \right )} {T} _ {b} ^ {{a} _ {03}} {γ} ^ {{a} _ {04}}\)</span></p>
+</section>
+<section id="winn-sim-daubert-1980" class="level3">
+<h3 class="anchored" data-anchor-id="winn-sim-daubert-1980">Winn, Sim &amp; Daubert (1980)</h3>
+<p><span class="math inline">\({M} _ {w} = {a} _ {00} {T} _ {b} ^ {{a} _ {01}} {γ} ^ {{a} _ {02}}\)</span></p>
+</section>
+<section id="riazi-daubert-1980" class="level3">
+<h3 class="anchored" data-anchor-id="riazi-daubert-1980">Riazi &amp; Daubert (1980)</h3>
+<p><span class="math inline">\({M} _ {w} = {a} _ {00} {T} _ {b} ^ {{a} _ {01}} {γ} ^ {{a} _ {02}}\)</span></p>
+</section>
+<section id="rao-bardon-1985" class="level3">
+<h3 class="anchored" data-anchor-id="rao-bardon-1985">Rao &amp; Bardon (1985)</h3>
+<p><span class="math inline">\(ln {{M} _ {w}} = \left ({a} _ {00} + {a} _ {01} {K} _ {w} \right ) ln {\left (\frac{{T} _ {b}}  {{a} _ {02} + {a} _ {03} {K} _ {w}} \right )}\)</span></p>
+</section>
+<section id="riazi-daubert-1987" class="level3">
+<h3 class="anchored" data-anchor-id="riazi-daubert-1987">Riazi &amp; Daubert (1987)</h3>
+<p><span class="math inline">\({M} _ {w} = {a} _ {00} {T} _ {b} ^ {{a} _ {01}} {γ} ^ {{a} _ {02}} {e} ^ {\left ({a} _ {03} {T} _ {b} + {a} _ {04} γ+ {a} _ {05} {T} _ {b} γ \right )}\)</span></p>
+</section>
+<section id="goossens-1996" class="level3">
+<h3 class="anchored" data-anchor-id="goossens-1996">Goossens (1996)</h3>
+<p><span class="math inline">\({M} _ {w} = {a} _ {00} {T} _ {b} ^ {{X} _ {0}}\)</span></p>
+<p><span class="math inline">\({X} _ {0} =\frac {{a} _ {03} + {a} _ {04} ln {\left (\frac{{T} _ {b}}  {{a} _ {05} - {T} _ {b}} \right )}}  {{a} _ {01} γ + {a} _ {02}}\)</span></p>
+</section>
+<section id="linan-2011" class="level3">
+<h3 class="anchored" data-anchor-id="linan-2011">Linan (2011)</h3>
+<p><span class="math inline">\({M} _ {w} = {a} _ {00} {e} ^ {\left ({a} _ {01} {T} _ {b} \right )} {e} ^ {\left ({a} _ {02} γ \right )} {T} _ {b} ^ {{a} _ {03}} {γ} ^ {{a} _ {04}}\)</span></p>
+</section>
+<section id="hosseinifar-shahverdi-2021" class="level3">
+<h3 class="anchored" data-anchor-id="hosseinifar-shahverdi-2021">Hosseinifar &amp; Shahverdi (2021)</h3>
+<p><span class="math inline">\({M} _ {w} = {\left [{a} _ {00} {T} _ {b} ^ {{a} _ {01}} {\left (\frac{3+2γ} {3-γ} \right )} ^ {\frac{{a} _ {02}} {2}} + {a} _ {03} {T} _ {b} ^ {{a} _ {04}} {\left (\frac{3+2γ} {3-γ} \right )} ^ {\frac{{a} _ {05}} {2}} \right ]} ^ {{a} _ {06}}\)</span></p>
+</section>
+<section id="stratiev-2022" class="level3">
+<h3 class="anchored" data-anchor-id="stratiev-2022">Stratiev (2022)</h3>
+<p><span class="math inline">\({M} _ {w} = {a} _ {00} + {a} _ {01} {e} ^ {\left [{a} _ {02} {e} ^ {\left ({a} _ {03} \frac{{T} _ {b} ^ {{a} _ {06}}} {{γ} ^ {{a} _ {05}}} \right )} \right ]}\)</span></p>
+</section>
+</section>
 
 </main>
 <!-- /main column -->
