@@ -130,17 +130,50 @@ window.Quarto = {
 </header>
 
 
-<div id="e5c0852f" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Call Libraries</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="QngKUFGpk-Wj" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:7793,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1752441730623,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;},&quot;user_tz&quot;:300}}" data-outputid="ae7f07d1-8323-4471-938f-b818b5484a60" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install <span class="op">-</span>U pysr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Requirement already satisfied: pysr in /home/richard/Documents/p312a/lib/python3.12/site-packages (1.5.8)
+Requirement already satisfied: click&lt;9.0.0,&gt;=7.0.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from pysr) (8.2.1)
+Requirement already satisfied: juliacall&lt;0.9.26,&gt;=0.9.24 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from pysr) (0.9.25)
+Requirement already satisfied: numpy&lt;3.0.0,&gt;=1.13.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from pysr) (2.3.1)
+Requirement already satisfied: pandas&lt;3.0.0,&gt;=0.21.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from pysr) (2.3.1)
+Requirement already satisfied: scikit-learn&lt;2.0.0,&gt;=1.0.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from pysr) (1.7.0)
+Requirement already satisfied: sympy&lt;2.0.0,&gt;=1.0.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from pysr) (1.14.0)
+Requirement already satisfied: typing-extensions&lt;5.0.0,&gt;=4.0.0 in /usr/share/positron/resources/app/extensions/positron-python/python_files/lib/ipykernel/py3 (from pysr) (4.13.2)
+Requirement already satisfied: juliapkg~=0.1.17 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from juliacall&lt;0.9.26,&gt;=0.9.24-&gt;pysr) (0.1.17)
+Requirement already satisfied: python-dateutil&gt;=2.8.2 in /usr/share/positron/resources/app/extensions/positron-python/python_files/lib/ipykernel/py3 (from pandas&lt;3.0.0,&gt;=0.21.0-&gt;pysr) (2.9.0.post0)
+Requirement already satisfied: pytz&gt;=2020.1 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from pandas&lt;3.0.0,&gt;=0.21.0-&gt;pysr) (2025.2)
+Requirement already satisfied: tzdata&gt;=2022.7 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from pandas&lt;3.0.0,&gt;=0.21.0-&gt;pysr) (2025.2)
+Requirement already satisfied: scipy&gt;=1.8.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from scikit-learn&lt;2.0.0,&gt;=1.0.0-&gt;pysr) (1.16.0)
+Requirement already satisfied: joblib&gt;=1.2.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from scikit-learn&lt;2.0.0,&gt;=1.0.0-&gt;pysr) (1.5.1)
+Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from scikit-learn&lt;2.0.0,&gt;=1.0.0-&gt;pysr) (3.6.0)
+Requirement already satisfied: mpmath&lt;1.4,&gt;=1.1.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from sympy&lt;2.0.0,&gt;=1.0.0-&gt;pysr) (1.3.0)
+Requirement already satisfied: filelock&lt;4.0,&gt;=3.16 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from juliapkg~=0.1.17-&gt;juliacall&lt;0.9.26,&gt;=0.9.24-&gt;pysr) (3.18.0)
+Requirement already satisfied: semver&lt;4.0,&gt;=3.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from juliapkg~=0.1.17-&gt;juliacall&lt;0.9.26,&gt;=0.9.24-&gt;pysr) (3.0.4)
+Requirement already satisfied: six&gt;=1.5 in /usr/share/positron/resources/app/extensions/positron-python/python_files/lib/ipykernel/py3 (from python-dateutil&gt;=2.8.2-&gt;pandas&lt;3.0.0,&gt;=0.21.0-&gt;pysr) (1.17.0)
+Note: you may need to restart the kernel to use updated packages.</code></pre>
+</div>
+</div>
+<div id="e5c0852f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:14,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1752444241554,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;},&quot;user_tz&quot;:300}}" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Call Libraries</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#from google.colab import drive</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pysr <span class="im">import</span> PySRRegressor</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy <span class="im">as</span> sym</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here we will take a first look at the molecular mass dataset, taken from <a href="https://pubs.acs.org/doi/full/10.1021/ie950484l?casa_token=-Vy315d8K38AAAAA%3Anxdm5rReXldLbOrBYLfwm0l3MmsCw_Mbnw1vVdNJ308Ki_3lEcnU3bXQmS8TL2nsArNG-AydRFEKVZc">Goossens.</a></p>
-<div id="3a3829a2" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#df=pd.read_csv('./c694/goossens_raw.csv')</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>pd.read_csv(<span class="st">'./goossens_raw.csv'</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="3a3829a2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:368,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1752441731053,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;},&quot;user_tz&quot;:300}}" data-outputid="578f10f5-232b-48a3-d67e-65aa1818d520" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#drive.mount('/content/drive')</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>pd.read_csv(<span class="st">'./goossens_raw.csv'</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#df=pd.read_csv('./c694/goossens_raw.csv')</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#df=pd.read_csv('/content/drive/MyDrive/goossens_raw.csv')</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 
@@ -150,7 +183,7 @@ window.Quarto = {
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">SG</th>
-<th data-quarto-table-cell-role="th">TBP(K)</th>
+<th data-quarto-table-cell-role="th">TBP</th>
 <th data-quarto-table-cell-role="th">MW</th>
 </tr>
 </thead>
@@ -256,25 +289,11 @@ window.Quarto = {
 </tbody>
 </table>
 <p>We can designate any one of the three as dependent, but as the molecular mass is the most difficult to measure, we’ll chose it.</p>
-<div id="8d4be203" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.plot(kind<span class="op">=</span><span class="st">'scatter'</span>,x<span class="op">=</span><span class="st">'SG'</span>,y<span class="op">=</span><span class="st">'MW'</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Molecular Mass vs Specific Gravity"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="moleDataSet_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Although there appears to be a clear linear relationship between molecular mass and specific gravity at low gravity numbers, the heteroscedasticity explodes above a gravity of about 0.75.</p>
-<div id="3188785e" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df.plot(kind<span class="op">=</span><span class="st">'scatter'</span>,x<span class="op">=</span><span class="st">'TBP(K)'</span>,y<span class="op">=</span><span class="st">'MW'</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Molecular Mass vs True Boiling Point"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="8d4be203" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:267,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1752441731317,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;},&quot;user_tz&quot;:300}}" data-outputid="8f186734-ddca-4f98-c9aa-a6c45a9060f5" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.plot(kind<span class="op">=</span><span class="st">'scatter'</span>,x<span class="op">=</span><span class="st">'SG'</span>,y<span class="op">=</span><span class="st">'MW'</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Molecular Mass vs Specific Gravity"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -283,13 +302,12 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>There seems to be a monotonically increasing relationship between molecular mass and true boiling point, with a possible “pole” around the boiling point of 1000.</p>
-<p>At this point, it may be tempting to ignore the effect of specific gravity on the prediction of molecular mass.</p>
-<div id="dfd53526" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.plot(kind<span class="op">=</span><span class="st">'scatter'</span>,x<span class="op">=</span><span class="st">'TBP(K)'</span>,y<span class="op">=</span><span class="st">'SG'</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Specific Gravity vs True Boiling Point"</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Although there appears to be a clear linear relationship between molecular mass and specific gravity at low gravity numbers, the heteroscedasticity explodes above a gravity of about 0.75.</p>
+<div id="3188785e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:264,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1752441731582,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;},&quot;user_tz&quot;:300}}" data-outputid="8337ff56-21e7-47af-887b-b88166d4ea46" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df.plot(kind<span class="op">=</span><span class="st">'scatter'</span>,x<span class="op">=</span><span class="st">'TBP'</span>,y<span class="op">=</span><span class="st">'MW'</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Molecular Mass vs True Boiling Point"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -298,10 +316,25 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<p>There seems to be a monotonically increasing relationship between molecular mass and true boiling point, with a possible “pole” around the boiling point of 1000.</p>
+<p>At this point, it may be tempting to ignore the effect of specific gravity on the prediction of molecular mass.</p>
+<div id="dfd53526" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:185,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1752441731770,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;},&quot;user_tz&quot;:300}}" data-outputid="de69901b-2b88-46fd-bebd-6e39aece4b3f" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df.plot(kind<span class="op">=</span><span class="st">'scatter'</span>,x<span class="op">=</span><span class="st">'TBP'</span>,y<span class="op">=</span><span class="st">'SG'</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Specific Gravity vs True Boiling Point"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="moleDataSet_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>This plot suggests that there is very little correlation between specific gravity and true boiling point, except maybe at low values of boiling point. Lets test this:</p>
-<div id="fddfda51" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>c_sg_tbp<span class="op">=</span>np.corrcoef(df[<span class="st">'SG'</span>],df[<span class="st">'TBP(K)'</span>])</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(c_sg_tbp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fddfda51" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:9,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1752441731781,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;},&quot;user_tz&quot;:300}}" data-outputid="a27647f7-d33a-42aa-dcc8-2e4e316f3587" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>c_sg_tbp<span class="op">=</span>np.corrcoef(df[<span class="st">'SG'</span>],df[<span class="st">'TBP'</span>])</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(c_sg_tbp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1.         0.62521831]
  [0.62521831 1.        ]]</code></pre>
@@ -392,6 +425,386 @@ window.Quarto = {
 <section id="stratiev-2022" class="level3">
 <h3 class="anchored" data-anchor-id="stratiev-2022">Stratiev (2022)</h3>
 <p><span class="math inline">\({M} _ {w} = {a} _ {00} + {a} _ {01} {e} ^ {\left [{a} _ {02} {e} ^ {\left ({a} _ {03} \frac{{T} _ {b} ^ {{a} _ {06}}} {{γ} ^ {{a} _ {05}}} \right )} \right ]}\)</span></p>
+</section>
+<section id="observations" class="level3">
+<h3 class="anchored" data-anchor-id="observations">Observations</h3>
+<p>On the assumption that all of these correlations are, at least, reasonable, then it appears as though many different functional forms may work.</p>
+</section>
+<section id="first-run" class="level3">
+<h3 class="anchored" data-anchor-id="first-run">First Run</h3>
+<p>Let’s see what happens if we present this data to PySR:</p>
+<div id="SrVDMXU2o9Rl" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:9,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1752441731793,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;},&quot;user_tz&quot;:300}}" data-outputid="9c27afa8-c453-4c96-9736-87d8158f6555" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>y<span class="op">=</span>df[<span class="st">'MW'</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#print(y)</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>x<span class="op">=</span>df[[<span class="st">'SG'</span>,<span class="st">'TBP'</span>]]</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        SG  TBP
+0   0.6310  306
+1   0.7135  372
+2   0.7205  365
+3   0.7293  373
+4   0.6786  329
+..     ...  ...
+65  0.7054  367
+66  0.6315  309
+67  0.8842  353
+68  1.1762  612
+69  1.3793  798
+
+[70 rows x 2 columns]</code></pre>
+</div>
+</div>
+<div id="BOSwzl9yn0RR" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:51916,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1752441783711,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;},&quot;user_tz&quot;:300}}" data-outputid="943b5db2-c6b3-40fc-8d54-885f31180e33" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> time.time()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>myMod<span class="op">=</span>PySRRegressor(random_state<span class="op">=</span><span class="dv">7</span>,deterministic<span class="op">=</span><span class="va">True</span>,parallelism<span class="op">=</span><span class="st">'serial'</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>myMod.fit(x,y)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>y_pred<span class="op">=</span>myMod.predict(x)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"time to fit: "</span>,time.time() <span class="op">-</span> t0, <span class="st">'seconds'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/richard/Documents/p312a/lib/python3.12/site-packages/pysr/sr.py:2811: UserWarning: Note: it looks like you are running in Jupyter. The progress bar will be turned off.
+  warnings.warn(
+[ Info: Started!</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Expressions evaluated per second: 1.180e+05
+Progress: 491 / 3100 total iterations (15.839%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.59
+3           2.941e+04  5.897e-01  y = TBP + -270.61
+5           1.858e+04  2.281e-01  y = (TBP * 0.00093598) * TBP
+7           7.214e+03  4.724e-01  y = (TBP * (TBP * 1.1819e-06)) * TBP
+9           5.649e+03  1.220e-01  y = (TBP * ((TBP * 1.1819e-06) * TBP)) / SG
+11          4.316e+03  1.342e-01  y = TBP * (((TBP * -0.0008915) * TBP) * (-0.001222 / SG))
+13          3.549e+03  9.779e-02  y = TBP * ((0.00039856 / SG) * (((TBP - 178.35) * TBP) * 0...
+                                      .0034851))
+15          2.039e+03  2.768e-01  y = (((((TBP - 426.95) * TBP) * (TBP * 1.8921e-06)) + 85.1...
+                                      89) / SG) + -3.1497
+17          1.251e+03  2.443e-01  y = SG + (((-23.115 * (SG - (TBP / ((93240 / TBP) + -76.27...
+                                      1)))) / SG) - -64.03)
+21          1.747e+02  4.921e-01  y = ((((TBP * -0.9981) + (TBP + -23.115)) * (SG - (TBP / (...
+                                      (93240 / TBP) + -76.271)))) / SG) - -64.03
+23          5.692e+01  5.606e-01  y = (-36.837 - ((((TBP * -1.0211) + TBP) + 30.959) * (SG -...
+                                       ((TBP / ((67088 / TBP) + -59.41)) / SG)))) + 56.511
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 1.190e+05
+Progress: 1009 / 3100 total iterations (32.548%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.59
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+5           1.858e+04  2.281e-01  y = (TBP * 0.00093598) * TBP
+7           2.736e+03  9.571e-01  y = 16407 / ((92674 / TBP) + -81.249)
+9           4.691e+02  8.816e-01  y = (27959 / SG) / ((1.6592e+05 / TBP) - 144.56)
+11          6.255e+01  1.007e+00  y = ((41116 / SG) / ((1.9899e+05 / TBP) - 168.34)) + -50.7...
+                                      58
+17          5.919e+01  9.197e-03  y = (7.976 - (((TBP * 0.019721) + -36.987) * (TBP / ((9324...
+                                      1 / TBP) + -79.797)))) / SG
+19          4.936e+01  9.089e-02  y = (4.8376 - ((((TBP + 49.878) * 0.024706) + -41.413) * (...
+                                      TBP / ((93240 / TBP) + -81.259)))) / SG
+21          4.227e+01  7.747e-02  y = (3.2557 - (((((TBP + 41.305) * 0.024309) + (SG + -42.0...
+                                      23)) * TBP) / ((93240 / TBP) + -81.012))) / SG
+23          4.220e+01  8.485e-04  y = ((3.9418 - (((((TBP + 41.304) * 0.024408) + -42.1) + S...
+                                      G) * (TBP / ((93240 / TBP) + -81.051)))) / SG) - SG
+25          4.205e+01  1.824e-03  y = (((3.2682 - ((TBP / ((93240 / TBP) + -81.007)) * ((SG ...
+                                      + -42.093) + ((TBP + 41.304) * 0.024367)))) / SG) + 0.6725...
+                                      3) - SG
+27          2.998e+01  1.691e-01  y = ((((-3.9604 - TBP) / ((93240 / TBP) + -80.927)) * ((((...
+                                      TBP + 49.877) * 0.024411) + -41.48) / SG)) + (-0.37482 / (...
+                                      1.3883 - SG))) + 3.0334
+29          2.970e+01  4.710e-03  y = ((1.6452 + (((-3.9604 - TBP) / ((93240 / TBP) + -80.92...
+                                      7)) * (-41.48 + (0.02441 * (TBP + 49.877))))) / SG) + ((-0...
+                                      .37482 / (1.3882 - SG)) + 1.2714)
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 1.140e+05
+Progress: 1526 / 3100 total iterations (49.226%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.59
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+5           1.858e+04  2.281e-01  y = (TBP * 0.00093598) * TBP
+7           2.607e+03  9.811e-01  y = 17477 / ((92526 / TBP) + -80.179)
+9           4.691e+02  8.575e-01  y = (27959 / ((1.6592e+05 / TBP) - 144.56)) / SG
+11          6.201e+01  1.012e+00  y = ((51382 / SG) / ((2.4739e+05 / TBP) - 209.11)) + -51.8...
+                                      93
+13          5.679e+01  4.402e-02  y = ((27961 / ((1.6592e+05 / (TBP + 119.24)) - 127.53)) + ...
+                                      -61.088) / SG
+15          5.060e+01  5.766e-02  y = ((51380 / SG) / ((2.4739e+05 / TBP) - 208.99)) + ((-21...
+                                      .804 / SG) + -25.575)
+17          4.847e+01  2.155e-02  y = ((51381 / SG) / ((2.4739e+05 / TBP) - 208.97)) + (-37....
+                                      161 - ((9.5712 / SG) / SG))
+21          4.227e+01  3.423e-02  y = (3.2878 - (TBP * ((((TBP + 41.305) * 0.024339) + (SG +...
+                                       -42.047)) / ((93240 / TBP) + -81.019)))) / SG
+23          4.203e+01  2.844e-03  y = ((3.9233 - ((((0.024299 * (TBP + 41.305)) + (-42.029 +...
+                                       SG)) * TBP) / ((93240 / TBP) + -81.001))) / SG) - SG
+25          4.166e+01  4.324e-03  y = ((3.9233 - ((((0.024299 * (TBP + 41.305)) + -42.029) +...
+                                       SG) * (TBP / ((93240 / TBP) + -81.001)))) / SG) - (SG * S...
+                                      G)
+27          2.944e+01  1.737e-01  y = (-0.37483 / (1.3889 - SG)) + ((((-3.7459 - TBP) * ((((...
+                                      TBP + 49.877) * 0.024412) + -41.48) / ((93240 / TBP) + -80...
+                                      .927))) + 2.9691) / SG)
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 1.110e+05
+Progress: 2042 / 3100 total iterations (65.871%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.59
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+5           1.858e+04  2.281e-01  y = (TBP * 0.00093598) * TBP
+7           2.607e+03  9.811e-01  y = 17475 / ((92526 / TBP) + -80.179)
+9           4.690e+02  8.576e-01  y = 27970 / (((1.6592e+05 / TBP) - 144.55) * SG)
+11          5.426e+01  1.078e+00  y = (85050 / SG) / ((3.2391e+05 / (TBP - 151.05)) + -315.9...
+                                      2)
+13          5.062e+01  3.475e-02  y = ((85048 / SG) / ((3.2378e+05 / (TBP - 140.19)) - 311.2...
+                                      8)) + -8.2961
+15          5.044e+01  1.827e-03  y = (-21.034 / SG) + (((51380 / SG) / ((2.4739e+05 / TBP) ...
+                                      - 208.99)) + -26.032)
+17          4.847e+01  1.991e-02  y = -37.161 + (((51381 / SG) / ((2.4739e+05 / TBP) - 208.9...
+                                      7)) - ((9.5712 / SG) / SG))
+19          4.275e+01  6.276e-02  y = 5.1633 - (TBP * ((((TBP * 0.023763) + (-40.569 + SG)) ...
+                                      / ((93240 / TBP) + -80.925)) / SG))
+21          4.227e+01  5.706e-03  y = (3.2878 - (TBP * ((((TBP + 41.305) * 0.024339) + (SG +...
+                                       -42.047)) / ((93240 / TBP) + -81.019)))) / SG
+23          4.202e+01  2.890e-03  y = ((3.9233 - (TBP * ((SG + (((TBP + 41.305) * 0.024296) ...
+                                      + -42.029)) / ((93240 / TBP) + -81.001)))) / SG) - SG
+25          4.166e+01  4.278e-03  y = ((3.9233 - ((TBP * ((0.024299 * (TBP + 41.305)) + (-42...
+                                      .029 + SG))) / (-81.001 + (93240 / TBP)))) / SG) - (SG * S...
+                                      G)
+27          2.931e+01  1.759e-01  y = (((0.97315 - ((((TBP + 49.877) * 0.024362) + -41.48) *...
+                                       (TBP / (-80.927 + (93240 / TBP))))) + 2.9691) / SG) + (-0...
+                                      .37485 / (1.3891 - SG))
+29          2.916e+01  2.504e-03  y = (-0.37485 / (1.3891 - SG)) + (((((SG - TBP) * ((((TBP ...
+                                      + 49.877) * 0.024344) + -41.48) / ((93240 / TBP) + -80.927...
+                                      ))) + 2.9691) / SG) - -1.172)
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 1.080e+05
+Progress: 2560 / 3100 total iterations (82.581%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.59
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+5           1.858e+04  2.281e-01  y = (TBP * 0.00093598) * TBP
+7           2.607e+03  9.811e-01  y = 17475 / ((92526 / TBP) + -80.179)
+9           4.690e+02  8.576e-01  y = 27970 / (SG * ((1.6592e+05 / TBP) - 144.56))
+11          5.409e+01  1.080e+00  y = (85053 / SG) / ((3.2391e+05 / (TBP + -151.63)) + -316....
+                                      23)
+13          5.062e+01  3.317e-02  y = ((85048 / SG) / ((3.2378e+05 / (TBP - 140.19)) - 311.2...
+                                      8)) + -8.2961
+15          4.654e+01  4.201e-02  y = ((85048 / SG) / ((3.2378e+05 / (TBP - 135.72)) - 309.4...
+                                      8)) + (SG * -13.49)
+17          4.622e+01  3.448e-03  y = ((85048 / SG) / ((3.2378e+05 / (TBP - 135.24)) - 309.3...
+                                      1)) + (SG * (-13.128 - SG))
+19          4.275e+01  3.904e-02  y = 5.1633 - (TBP * ((((TBP * 0.023763) + (-40.569 + SG)) ...
+                                      / ((93240 / TBP) + -80.925)) / SG))
+21          4.227e+01  5.706e-03  y = (3.2878 - (TBP * ((((TBP + 41.305) * 0.024339) + (SG +...
+                                       -42.047)) / ((93240 / TBP) + -81.019)))) / SG
+23          4.202e+01  2.891e-03  y = ((3.9232 - ((((TBP + 41.305) * 0.024296) + (SG + -42.0...
+                                      29)) * (TBP / ((93240 / TBP) + -81)))) / SG) - SG
+25          2.953e+01  1.764e-01  y = ((-0.37485 / (1.3891 - SG)) + 4.5828) - ((((TBP + 49.8...
+                                      77) * 0.024368) + -41.48) * ((TBP / ((93240 / TBP) + -80.9...
+                                      27)) / SG))
+27          2.925e+01  4.754e-03  y = ((2.9691 - ((-41.48 + ((TBP + 49.877) * 0.024356)) * (...
+                                      TBP / ((93240 / TBP) + -80.927)))) / SG) + ((-0.39025 / (1...
+                                      .3892 - SG)) - -1.0755)
+29          2.916e+01  1.552e-03  y = (((((SG - TBP) * ((((TBP + 49.877) * 0.024345) + -41.4...
+                                      8) / ((93240 / TBP) + -80.927))) + 2.9691) / SG) + (-0.374...
+                                      85 / (1.3891 - SG))) - -1.2152
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 1.060e+05
+Progress: 3068 / 3100 total iterations (98.968%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.59
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+5           1.858e+04  2.281e-01  y = (TBP * 0.00093598) * TBP
+7           2.607e+03  9.811e-01  y = 17472 / ((92526 / TBP) + -80.181)
+9           4.690e+02  8.576e-01  y = 27972 / (SG * ((1.6592e+05 / TBP) - 144.56))
+11          5.409e+01  1.080e+00  y = (85053 / SG) / ((3.2391e+05 / (TBP + -151.63)) + -316....
+                                      23)
+13          5.062e+01  3.316e-02  y = ((85048 / SG) / ((3.2378e+05 / (TBP - 140.19)) - 311.2...
+                                      8)) + -8.2961
+15          4.652e+01  4.225e-02  y = (SG * -13.492) + ((85048 / SG) / ((3.2378e+05 / (TBP -...
+                                       135.72)) - 309.5))
+17          4.622e+01  3.201e-03  y = ((85048 / SG) / ((3.2378e+05 / (TBP - 135.24)) - 309.3...
+                                      1)) + (SG * (-13.128 - SG))
+19          4.275e+01  3.904e-02  y = 5.1633 - (TBP * ((((TBP * 0.023763) + (-40.569 + SG)) ...
+                                      / ((93240 / TBP) + -80.925)) / SG))
+21          4.227e+01  5.706e-03  y = (3.2878 - (TBP * ((((TBP + 41.305) * 0.024339) + (SG +...
+                                       -42.047)) / ((93240 / TBP) + -81.019)))) / SG
+23          4.044e+01  2.204e-02  y = 3.4861 - (TBP * (((SG + ((((TBP + 49.877) * 0.024332) ...
+                                      + -41.48) / SG)) + -0.88174) / ((93240 / TBP) + -80.927)))
+25          2.953e+01  1.573e-01  y = ((-0.37485 / (1.3891 - SG)) + 4.5828) - ((((TBP + 49.8...
+                                      77) * 0.024368) + -41.48) * ((TBP / ((93240 / TBP) + -80.9...
+                                      27)) / SG))
+27          2.924e+01  4.955e-03  y = (-0.39031 / (1.3894 - SG)) + ((SG + (2.9691 - (((((TBP...
+                                       + 49.877) * 0.024357) + -41.48) * TBP) / ((93240 / TBP) +...
+                                       -80.927)))) / SG)
+29          2.916e+01  1.351e-03  y = (((((SG - TBP) * ((((TBP + 49.877) * 0.024345) + -41.4...
+                                      8) / ((93240 / TBP) + -80.927))) + 2.9691) / SG) + (-0.374...
+                                      85 / (1.3891 - SG))) - -1.2152
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[ Info: Final population:
+[ Info: Results saved to:</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.59
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+5           1.858e+04  2.281e-01  y = (TBP * 0.00093598) * TBP
+7           2.607e+03  9.811e-01  y = 17472 / ((92526 / TBP) + -80.181)
+9           4.690e+02  8.576e-01  y = 27972 / (SG * ((1.6592e+05 / TBP) - 144.56))
+11          5.409e+01  1.080e+00  y = (85053 / SG) / ((3.2391e+05 / (TBP + -151.63)) + -316....
+                                      23)
+13          5.062e+01  3.316e-02  y = ((85048 / SG) / ((3.2378e+05 / (TBP - 140.19)) - 311.2...
+                                      8)) + -8.2961
+15          4.652e+01  4.225e-02  y = (SG * -13.492) + ((85048 / SG) / ((3.2378e+05 / (TBP -...
+                                       135.72)) - 309.5))
+17          4.622e+01  3.201e-03  y = ((85048 / SG) / ((3.2378e+05 / (TBP - 135.24)) - 309.3...
+                                      1)) + (SG * (-13.128 - SG))
+19          4.275e+01  3.904e-02  y = 5.1633 - (TBP * ((((TBP * 0.023763) + (-40.569 + SG)) ...
+                                      / ((93240 / TBP) + -80.925)) / SG))
+21          4.227e+01  5.706e-03  y = (3.2878 - (TBP * ((((TBP + 41.305) * 0.024339) + (SG +...
+                                       -42.047)) / ((93240 / TBP) + -81.019)))) / SG
+23          4.044e+01  2.204e-02  y = 3.4861 - (TBP * (((SG + ((((TBP + 49.877) * 0.024332) ...
+                                      + -41.48) / SG)) + -0.88174) / ((93240 / TBP) + -80.927)))
+25          2.953e+01  1.573e-01  y = ((-0.37485 / (1.3891 - SG)) + 4.5828) - ((((TBP + 49.8...
+                                      77) * 0.024368) + -41.48) * ((TBP / ((93240 / TBP) + -80.9...
+                                      27)) / SG))
+27          2.924e+01  4.957e-03  y = (-0.39031 / (1.3894 - SG)) + (((SG + 2.9691) - ((((TBP...
+                                       + 49.877) * 0.024357) + -41.48) * (TBP / ((93240 / TBP) +...
+                                       -80.927)))) / SG)
+29          2.916e+01  1.349e-03  y = (((((SG - TBP) * ((((TBP + 49.877) * 0.024345) + -41.4...
+                                      8) / ((93240 / TBP) + -80.927))) + 2.9691) / SG) + (-0.374...
+                                      85 / (1.3891 - SG))) - -1.2152
+───────────────────────────────────────────────────────────────────────────────────────────────────
+time to fit:  32.54327344894409 seconds
+  - outputs/20250713_205435_p1nl5Z/hall_of_fame.csv</code></pre>
+</div>
+</div>
+</section>
+<section id="results" class="level3">
+<h3 class="anchored" data-anchor-id="results">Results</h3>
+<p>Let’s take a peek at how the predicted molecular mass looks compared to the actual:</p>
+<div id="29DEnstMrmIr" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:185,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1752442026572,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;},&quot;user_tz&quot;:300}}" data-outputid="db6e225b-ab73-46d1-bd4e-585e900f1c2f" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plt.plot(y,y_pred,marker<span class="op">=</span><span class="st">"o"</span>,linestyle<span class="op">=</span><span class="st">"None"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'True Molecular Mass'</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Predicted Molecular Mass'</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Molecular Mass vs Predicted Molecular Mass'</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="moleDataSet_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As the correlation looks reasonable, let us take a look at the equation:</p>
+<div id="7z1FZLT-scOR" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:46,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1752442219704,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;},&quot;user_tz&quot;:300}}" data-outputid="b269b6be-3c8a-4387-88c2-1cfd0df74bd6" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>myEq<span class="op">=</span>myMod.sympy()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(myEq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>4.5827713 - 0.37485117/(1.3891245 - SG) - TBP*((TBP + 49.876865)*0.024368146 - 41.479553)/(SG*(-80.92693 + 93240.055/TBP))</code></pre>
+</div>
+</div>
+<p>This looks dramatically different. Lets us clean it up a bit:</p>
+<div id="UsQentxMs9O7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:449,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1752442356221,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;},&quot;user_tz&quot;:300}}" data-outputid="d57350e0-25bf-4791-a0fb-dd7029d1b879" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>sym.simplify(myEq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle 4.5827713 + \frac{0.37485117}{SG - 1.3891245} + \frac{TBP \left(0.024368146 TBP - 40.2641462716577\right)}{SG \left(80.92693 - \frac{93240.055}{TBP}\right)}\)</span></p>
+</div>
+</div>
+<p>Next, we’ll build a function for it, along with one for the Goossen’s correlation which was based on the same data:</p>
+<div id="wlvnyJF0wDOy" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:46,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1752444360243,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;},&quot;user_tz&quot;:300}}" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> firstTry(SG,TBP):</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  a00<span class="op">=</span><span class="fl">281.3607</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  a01<span class="op">=</span><span class="fl">1.4083161</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  a02<span class="op">=</span><span class="fl">163.50403</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  a03<span class="op">=</span><span class="fl">1181.708815</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  mw<span class="op">=</span>a00<span class="op">*</span>(<span class="op">-</span>SG<span class="op">**</span><span class="dv">2</span> <span class="op">-</span>(SG<span class="op">-</span>a01)<span class="op">*</span>(TBP<span class="op">-</span>a02))</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  mw<span class="op">/=</span>SG<span class="op">*</span>(SG<span class="op">-</span>a01)<span class="op">*</span>(TBP<span class="op">-</span>a03)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> mw</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> secondTry(sg,tbp):</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  a00<span class="op">=</span><span class="fl">0.7157302</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  a01<span class="op">=</span><span class="fl">844.64886</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  a02<span class="op">=</span><span class="fl">31326.5860910937</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  a03<span class="op">=</span><span class="fl">198.543262798009</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  a04<span class="op">=</span><span class="fl">1.416703</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  mw<span class="op">=</span>(sg<span class="op">**</span><span class="dv">2</span>)<span class="op">*</span>(a00<span class="op">*</span>tbp<span class="op">-</span>a01)<span class="op">+</span>(a02<span class="op">-</span>a03<span class="op">*</span>tbp)<span class="op">*</span>(sg<span class="op">-</span>a04)</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>  mw<span class="op">/=</span>(sg<span class="op">*</span>(sg<span class="op">-</span>a04)<span class="op">*</span>(a00<span class="op">*</span>tbp<span class="op">-</span>a01))</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> mw</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> thirdTry(sg,tbp):</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>  a00<span class="op">=</span><span class="fl">4.5827713</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>  a01<span class="op">=</span><span class="fl">0.37485117</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>  a02<span class="op">=</span><span class="fl">1.3891245</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>  a03<span class="op">=</span><span class="fl">0.024368146</span></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>  a04<span class="op">=</span><span class="fl">40.2641462716577</span></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>  a05<span class="op">=</span><span class="fl">80.92693</span></span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>  a06<span class="op">=</span><span class="fl">93240.055</span></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>  mw<span class="op">=</span>a00<span class="op">+</span>(a01<span class="op">/</span>(sg<span class="op">-</span>a02))</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>  mw<span class="op">+=</span>(tbp<span class="op">*</span>(a03<span class="op">*</span>tbp<span class="op">-</span>a04))<span class="op">/</span>(sg<span class="op">*</span>(a05<span class="op">-</span>(a06<span class="op">/</span>tbp)))</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> mw</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> goos_Mw(sg,tbp):</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>  c0 <span class="op">=</span> <span class="fl">0.01077</span></span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>  c1 <span class="op">=</span> <span class="fl">1.52869</span></span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>  c2 <span class="op">=</span> <span class="fl">0.06486</span></span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a>  c3 <span class="op">=</span> <span class="fl">1078.0</span></span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>  c4 <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a>  c5 <span class="op">=</span> <span class="fl">1.002733049</span></span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a>  c6 <span class="op">=</span> <span class="op">-</span><span class="fl">0.006433370483</span></span>
+<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a>  t<span class="op">=</span>tbp <span class="co"># No conversion necessary</span></span>
+<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a>  c4 <span class="op">=</span> c1 <span class="op">+</span> c2 <span class="op">*</span> math.log(t <span class="op">/</span> (c3 <span class="op">-</span> t))</span>
+<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> c0 <span class="op">*</span> (t <span class="op">**</span> c4) <span class="op">/</span> (sg <span class="op">*</span> c5 <span class="op">+</span> c6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="x5INZ3vwxwLc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:9,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1752444364331,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;},&quot;user_tz&quot;:300}}" data-outputid="fe971cb6-9035-4abf-a56e-e32c9999918e" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick Test using the first datapoint</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>mw0<span class="op">=</span>firstTry(<span class="fl">0.6310</span>,<span class="fl">306.0</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mw0)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>mw1<span class="op">=</span>secondTry(<span class="fl">0.6310</span>,<span class="fl">306.0</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mw1)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>mw2<span class="op">=</span>thirdTry(<span class="fl">0.6310</span>,<span class="fl">306.0</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mw2)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>mw3<span class="op">=</span>goos_Mw(<span class="fl">0.6310</span>,<span class="fl">306.0</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mw3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>72.295785575113
+73.73956506101871
+75.1843860895409
+76.93791136542198</code></pre>
+</div>
+</div>
 </section>
 </section>
 
