@@ -86,3 +86,5 @@ In this paper, we will endeavor to:
 7.  Next, we check that the fitness value of the best equation and/or the number of generations tells us to stop. If not..
 
 8.  Then we again select the best and change them for the next generation. Even though this step is usually less computationally demanding as step (6), most libraries will employ optimizations here as well to reduce the number of generations needed to find a suitable equation.
+
+![Workflow](generic_workflow.svg)
