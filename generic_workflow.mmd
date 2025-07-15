@@ -1,0 +1,17 @@
+---
+config:
+      theme: redux
+---
+flowchart TD
+        A["Start"]
+        A --> B["Encoding Style"]
+        B --> C["Fitness Measure"]
+        C --> D["Stopping Criteria"]
+        D --> E["Import Dataset"]
+        E --> F["Initial Population"]
+        F --> G["Fitness Measurement"]
+        G --> H{"Time<br>to<br>Stop?"}
+        H -->|Yes| I["Best Equation"]
+        I --> J["Stop"]
+        H -->|No| K["Evolve Population"]
+        K -->G
