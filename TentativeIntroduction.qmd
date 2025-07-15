@@ -4,16 +4,21 @@ author: "Delanyce Rose, Richard Henry"
 date: "09-Jul-2025"
 format: html
 ---
+
 # IDC 6940 Final Project
+
 ### University of West Florida
+
 ## Paper on Symbolic Regression
 
 #### Symbolic Regression
-Consider a dataset consisting of an independent variable $X$ and a dependent variable $y$.  Symbolic Regression allows us to discover, from the data, and analytical expression $f(X)$ which we can use to predict values of $y$ for values of $X$ unseen by the algorithm during training. For example:
+
+Consider a dataset consisting of an independent variable $X$ and a dependent variable $y$. Symbolic Regression allows us to discover, from the data, and analytical expression $f(X)$ which we can use to predict values of $y$ for values of $X$ unseen by the algorithm during training. For example:
 
 $\hat{y}_{23} \approx f(X_{23})$
 
 #### Neural Networks
+
 Neural networks allow us to make this prediction without first generating an analytical expression. Often, this is good enough, but we give up a property called *explainability*.
 
 In the case of a neural net, we can reclaim some of this explainability by performing a second prediction for a value of $X$ we really don't care about, but happens to be close to $X_{23}$:
@@ -25,13 +30,14 @@ And now we can make statements on whether $y$ increases or decreases with increa
 $\frac{dy}{dX}|_{X_{23}}\approx \frac{\hat{y}_{24}-\hat{y}_{23}}{X_{24}-X_{23}}$
 
 #### Linear Regression
+
 The traditional alternative to neural networks which provides explainability is linear regression:
 
 $\hat{y}_{23} \approx \beta_0 +\beta_1 \cdot X$
 
 In which we use the data to discover the best values of the constants $\beta_0$ and $\beta_1$.
 
-However, this may not be the best functional form for this predictive equation.  For example, maybe an exponental or a logarithmic relationship may be better:
+However, this may not be the best functional form for this predictive equation. For example, maybe an exponental or a logarithmic relationship may be better:
 
 $\hat{y}_{23} \approx \beta_2 +\beta_3 \cdot e^X$
 
@@ -48,18 +54,35 @@ We can certainly investigate these, and hundreds of other possibilities by build
 The promise of symbolic regression is to find the optimum functional form *and* the optimum values of the constants in the same workflow.
 
 ### Next Steps
+
 In this paper, we will endeavor to:
 
-- Describe the most common workflow for symbolic regression
+-   Describe the most common workflow for symbolic regression
 
-- Explain why this is a hard problem to solve
+-   Explain why this is a hard problem to solve
 
-- Give examples of how a selection of open-source libraries perform on a toy dataset
+-   Give examples of how a selection of open-source libraries perform on a toy dataset
 
-- Describe some of the strategies being used to improve symbolic regression performance
+-   Describe some of the strategies being used to improve symbolic regression performance
 
-- Show an example of symbolic regression on a chemical engineering dataset
+-   Show an example of symbolic regression on a chemical engineering dataset
 
-- Show an example of symbolic regression on a public health dataset
+-   Show an example of symbolic regression on a public health dataset
 
+### Typical Workflow
 
+1.  The first step is deciding *how* you are going to encode the equations so that they are easily manipulated in software. The challenges are similar to text processing. For example, we will want equations to be of variable length (like our sentances) and the order of the units making up the equation matter, just as the order of the words making up a sentance do.
+
+2.  The second step is to decide *how* you are going to measure the fitness of a particular equation. The standard workflow is to decode the equation into a function, apply that function to each row in the training dataset, and then calculate the mean squared error between the target value and the equation result. However, most libraries employ optimizations to speed up this step, or offer alternatives to MSE.
+
+3.  The third step is to decide *when* we will stop the workflow. Usually we will set a maximum number of generations *and* an error threshold that the best equation has to meet to stop the search. This equation is the one that will be offered-up as the answer at the end of the workflow.
+
+4.  The fourth step is to generate an initial population of candidate equations. The quantity is usually in the thousands, and involve random number generation. This is one reason why short-cuts are typical for the fitness evaluation, which will normally be performed next.
+
+5.  After the first fitness evaluation, the quality of the equations are usually quite poor. The best are selected, and then changed randomly to form the next generation, in a process influenced by biological evolution theory.
+
+6.  We then perform the fitness evaluation on the new generation. We are expecting, of course, that each generation will produce better equations than the last, *on average*.
+
+7.  Next, we check that the fitness value of the best equation and/or the number of generations tells us to stop. If not..
+
+8.  Then we again select the best and change them for the next generation. Even though this step is usually less computationally demanding as step (6), most libraries will employ optimizations here as well to reduce the number of generations needed to find a suitable equation.

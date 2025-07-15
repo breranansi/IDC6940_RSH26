@@ -152,6 +152,19 @@ window.Quarto = {
 <li><p>Show an example of symbolic regression on a public health dataset</p></li>
 </ul>
 </section>
+<section id="typical-workflow" class="level3">
+<h3 class="anchored" data-anchor-id="typical-workflow">Typical Workflow</h3>
+<ol type="1">
+<li><p>The first step is deciding <em>how</em> you are going to encode the equations so that they are easily manipulated in software. The challenges are similar to text processing. For example, we will want equations to be of variable length (like our sentances) and the order of the units making up the equation matter, just as the order of the words making up a sentance do.</p></li>
+<li><p>The second step is to decide <em>how</em> you are going to measure the fitness of a particular equation. The standard workflow is to decode the equation into a function, apply that function to each row in the training dataset, and then calculate the mean squared error between the target value and the equation result. However, most libraries employ optimizations to speed up this step, or offer alternatives to MSE.</p></li>
+<li><p>The third step is to decide <em>when</em> we will stop the workflow. Usually we will set a maximum number of generations <em>and</em> an error threshold that the best equation has to meet to stop the search. This equation is the one that will be offered-up as the answer at the end of the workflow.</p></li>
+<li><p>The fourth step is to generate an initial population of candidate equations. The quantity is usually in the thousands, and involve random number generation. This is one reason why short-cuts are typical for the fitness evaluation, which will normally be performed next.</p></li>
+<li><p>After the first fitness evaluation, the quality of the equations are usually quite poor. The best are selected, and then changed randomly to form the next generation, in a process influenced by biological evolution theory.</p></li>
+<li><p>We then perform the fitness evaluation on the new generation. We are expecting, of course, that each generation will produce better equations than the last, <em>on average</em>.</p></li>
+<li><p>Next, we check that the fitness value of the best equation and/or the number of generations tells us to stop. If not..</p></li>
+<li><p>Then we again select the best and change them for the next generation. Even though this step is usually less computationally demanding as step (6), most libraries will employ optimizations here as well to reduce the number of generations needed to find a suitable equation.</p></li>
+</ol>
+</section>
 </section>
 </section>
 
