@@ -246,47 +246,47 @@ Here are a few of them using the following nomenclature:
 |$X_0...X_3$|Intermediate Variables|
 
 ##### Hariu & Sage (1969)
-${M} _ {w} = {a} _ {00} + {a} _ {01} {K} _ {w} + {a} _ {02} {K} _ {w} ^ {2} + {a} _ {03} {T} _ {b} {K} _ {w} + {a} _ {04} {T} _ {b} {K} _ {w} ^ {2} + {a} _ {05} {T} _ {b} ^ {2} {K} _ {w} + {a} _ {06} {T} _ {b} ^ {2} {K} _ {w} ^ {2}$
+$M_w = a_{00} + a_{01} K_w + a_{02} K_w^2 + a_{03} T_b K_w + a_04 T_b K_w^2 + a_{05} T_b^2 K_w + a_{06} T_b^2 K_w^2$
 
 $K_w =\frac{\sqrt[3]T_b}{\gamma}$
 
 ##### Kesler & Lee (1976)
-${M} _ {w} = {X} _ {0} + \frac{{X} _ {1}}  {{T} _ {b}} + \frac{{X} _ {2}}  {{T} _ {b} ^ {2}}$
+$M_w = X_0 + \frac{X_1}{T_b} + \frac{X_2}{T_b^2}$
 
-${X} _ {0} = {a} _ {00} + {a} _ {01} γ+ \left ({a} _ {02} + {a} _ {03} γ \right ) {T} _ {b}$
+$X_0 = a_{00} + a_{01} γ+ \left (a_{02} + a_{03} γ \right ) T_b$
 
-${X} _ {1} = \left (1+ {a} _ {04} γ+ {a} _ {05} {γ} ^ {2} \right ) \left ({a} _ {06} + \frac{{a} _ {07}}  {{T} _ {b}} \right ) \cdot {10} ^ {7}$
+$X_1 = \left (1+ a_{04} γ + a_{05}γ^2 \right ) \left (a_{06} + \frac{a_ {07}}{T_b} \right ) \cdot 10^7$
 
-${X} _ {2} = \left (1+ {a} _ {08} γ+ {a} _ {09} {γ} ^ {2} \right ) \left ({a} _ {10} + \frac{{a} _ {11}}  {{T} _ {b}} \right ) \cdot {10} ^ {12}$
+$X_2 = \left (1+ a_{08} γ+ a_{09} γ^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^12$
 
 ##### American Petroleum Institute (1977)
-${M} _ {w} = {a} _ {00} {e} ^ {\left ({a} _ {01} {T} _ {b} \right )} {e} ^ {\left ({a} _ {02} γ \right )} {T} _ {b} ^ {{a} _ {03}} {γ} ^ {{a} _ {04}}$
+$M_w = a_{00} e^ {\left (a_{01} T_b \right )} e^{\left (a_{02} γ \right )} T_b^{a_{03}} γ^ {a_{04}}$
 
 ##### Winn, Sim & Daubert (1980)
-${M} _ {w} = {a} _ {00} {T} _ {b} ^ {{a} _ {01}} {γ} ^ {{a} _ {02}}$
+$M_w = a_{00} T_b^{a_ {01}} γ^{a_{02}}$
 
 ### Riazi & Daubert (1980)
-${M} _ {w} = {a} _ {00} {T} _ {b} ^ {{a} _ {01}} {γ} ^ {{a} _ {02}}$
+$M_w = a_{00} T_b^{a_ {01}}γ^{a_{02}}$
 
 ##### Rao & Bardon (1985)
-$ln {{M} _ {w}} = \left ({a} _ {00} + {a} _ {01} {K} _ {w} \right ) ln {\left (\frac{{T} _ {b}}  {{a} _ {02} + {a} _ {03} {K} _ {w}} \right )}$
+$ln {M_w} = (a_{00} + a_{01} K_w) ln (\frac{T_b} {a_{02} + a_{03} K_w} )$
 
 ##### Riazi & Daubert (1987)
-${M} _ {w} = {a} _ {00} {T} _ {b} ^ {{a} _ {01}} {γ} ^ {{a} _ {02}} {e} ^ {\left ({a} _ {03} {T} _ {b} + {a} _ {04} γ+ {a} _ {05} {T} _ {b} γ \right )}$
+$M_w = a_{00} T_b^{a_{01}} γ^{a_{02}} e^{\left (a_{03} T_b + a_{04} γ + a_{05} T_b γ \right )}$
 
 ##### Goossens (1996)
-${M} _ {w} = {a} _ {00} {T} _ {b} ^ {{X} _ {0}}$
+$M_w = a_{00} T_b^{X_0}$
 
-${X} _ {0} =\frac {{a} _ {03} + {a} _ {04} ln {\left (\frac{{T} _ {b}}  {{a} _ {05} - {T} _ {b}} \right )}}  {{a} _ {01} γ + {a} _ {02}}$
+$X_0 =\frac {a_{03} + a_{04} ln {\left (\frac{T_b}  {a_{05} - T_b} \right )}}  {a_{01} γ + a_{02}}$
 
 ##### Linan (2011)
-${M} _ {w} = {a} _ {00} {e} ^ {\left ({a} _ {01} {T} _ {b} \right )} {e} ^ {\left ({a} _ {02} γ \right )} {T} _ {b} ^ {{a} _ {03}} {γ} ^ {{a} _ {04}}$
+$M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ \right )} T_b^ {a_{03}} γ^{a_{04}}$
 
 ##### Hosseinifar & Shahverdi (2021)
-${M} _ {w} = {\left [{a} _ {00} {T} _ {b} ^ {{a} _ {01}} {\left (\frac{3+2γ} {3-γ} \right )} ^ {\frac{{a} _ {02}} {2}} + {a} _ {03} {T} _ {b} ^ {{a} _ {04}} {\left (\frac{3+2γ} {3-γ} \right )} ^ {\frac{{a} _ {05}} {2}} \right ]} ^ {{a} _ {06}}$
+$M_w = {\left [a_{00} {T}_{b} ^ {{a}_{01}} {\left (\frac{3+2γ} {3-γ} \right )} ^ {\frac{{a}_{02}} {2}} + {a}_{03} {T}_{b} ^{{a}_{04}} {\left (\frac{3+2γ} {3-γ} \right )} ^ {\frac{{a}_{05}} {2}} \right ]} ^ {{a}_{06}}$
 
 ##### Stratiev (2022)
-${M} _ {w} = {a} _ {00} + {a} _ {01} {e} ^ {\left [{a} _ {02} {e} ^ {\left ({a} _ {03} \frac{{T} _ {b} ^ {{a} _ {06}}} {{γ} ^ {{a} _ {05}}} \right )} \right ]}$
+$M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ^{a_{05}}} \right )} \right ]}$
 
 
 ### Modeling and Results
