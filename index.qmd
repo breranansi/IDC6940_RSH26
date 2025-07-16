@@ -283,7 +283,7 @@ $X_0 =\frac {a_{03} + a_{04} ln {\left (\frac{T_b}  {a_{05} - T_b} \right )}}  {
 $M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ \right )} T_b^ {a_{03}} γ^{a_{04}}$
 
 ##### Hosseinifar & Shahverdi (2021)
-$M_w = {\left [a_{00} {T}_{b} ^ {{a}_{01}} {\left (\frac{3+2γ} {3-γ} \right )} ^ {\frac{{a}_{02}} {2}} + {a}_{03} {T}_{b} ^{{a}_{04}} {\left (\frac{3+2γ} {3-γ} \right )} ^ {\frac{{a}_{05}} {2}} \right ]} ^ {{a}_{06}}$
+$M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ} {3-γ} \right )}^{\frac{a_{02}}{2}} + a_{03} T_b^{a_{04}} {\left (\frac{3+2γ}{3-γ} \right )}^{\frac{a_{05}}{2}} \right ]}^{a_{06}}$
 
 ##### Stratiev (2022)
 $M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ^{a_{05}}} \right )} \right ]}$
