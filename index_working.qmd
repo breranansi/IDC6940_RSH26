@@ -1,0 +1,189 @@
+---
+title: "Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids"
+subtitle: ""
+author: "Delanyce Rose & Richard Henry (Advisor: Dr. Cohen)"
+date: '`r Sys.Date()`'
+format:
+  html:
+    code-fold: true
+course: Capstone Projects in Data Science
+bibliography: references.bib # file contains bibtex for references
+#always_allow_html: true # this allows to get PDF with HTML features
+self-contained: true
+execute: 
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+Slides: [slides.html](slides.html){target="_blank"} ( Go to `slides.qmd`
+to edit)
+
+
+## Introduction
+Molecular mass is an important parameter used to model the physical properties of hydrocarbon fluids.  These fluids, such as gasoline and lubricating oil are essential for so many aspects of modern life, and although these end-products are homogenized to exacting standards, the feed stock properties from which they are made vary significantly from one source to another and from the same source over time.
+
+Unfortunately, molecular mass is expensive to measure accurately, so that it is common practice to use more easily measured parameters to estimate the value of molecular mass.
+
+Many of these correlations [@efr2008] have been published over the decades, and although concensus has been reached on *which* predictor varibles should be chosen, there is still considerable variation in the *form* of the equation appearing in the literature.
+
+Rapid progress in machine learning technologies in recent years has provided a new toolbox with which we can revisit the problem.  One of these tools is *symbolic regression*.
+
+#### Symbolic Regression
+
+Consider a dataset consisting of an independent variable $X$ and a dependent variable $y$. Symbolic Regression [@bro2014principal] allows us to discover, from the data, and analytical expression $f(X)$ which we can use to predict values of $y$ for values of $X$ unseen by the algorithm during training. For example:
+
+$\hat{y}_{23} \approx f(X_{23})$
+
+#### Neural Networks
+
+Neural networks allow us to make this prediction without first generating an analytical expression. Often, this is good enough, but we give up a property called *explainability*.
+
+In the case of a neural net, we can reclaim some of this explainability by performing a second prediction for a value of $X$ we really don't care about, but happens to be close to $X_{23}$:
+
+$\hat{y}_{24} \approx f(X_{24})$
+
+And now we can make statements on whether $y$ increases or decreases with increasing $X$ in the neighbourhood of $X_{23}$:
+
+$\frac{dy}{dX}|_{X_{23}}\approx \frac{\hat{y}_{24}-\hat{y}_{23}}{X_{24}-X_{23}}$
+
+#### Linear Regression
+
+The traditional alternative to neural networks which provides explainability is linear regression:
+
+$\hat{y}_{23} \approx \beta_0 +\beta_1 \cdot X$
+
+In which we use the data to discover the best values of the constants $\beta_0$ and $\beta_1$.
+
+However, this may not be the best functional form for this predictive equation. For example, maybe an exponental or a logarithmic relationship may be better:
+
+$\hat{y}_{23} \approx \beta_2 +\beta_3 \cdot e^X$
+
+or
+
+$\hat{y}_{23} \approx \beta_4 +\beta_5 \cdot log(X)$
+
+or maybe
+
+$log(\hat{y}_{23}) \approx \beta_6 +\beta_7 \cdot log(X)$
+
+We can certainly investigate these, and hundreds of other possibilities by building multiple models and comparing the performance between them.
+
+The promise of symbolic regression is to find the optimum functional form *and* the optimum values of the constants in the same workflow.
+
+### Next Steps
+
+In this paper, we will endeavor to:
+
+-   Describe the most common workflow for symbolic regression
+
+-   Describe some of the strategies being used to improve symbolic regression performance
+
+-   Give examples of how a selection of open-source libraries perform on a toy dataset
+
+-   Use symbolic regression to analyze a molecular mass dataset
+
+
+## Methods
+
+### Typical Workflow
+
+1.  The first step is deciding *how* we are going to encode the equations so that they are easily manipulated in software. The challenges are similar to text processing. For example, we will want equations to be of variable length (like our sentances) and the order of the units making up the equation matter, just as the order of the words making up a sentance do.
+
+2.  The second step is to decide *how* we are going to measure the fitness of a particular equation. The standard workflow is to decode the equation into a function, apply that function to each row in the training dataset, and then calculate the mean squared error between the target value and the equation result.
+
+3.  The third step is to decide *when* we will stop the workflow. Usually we will set a maximum number of generations *and* an error threshold that the best equation has to meet to stop the search. This equation is the one that will be offered-up as the answer at the end of the workflow.
+
+4.  The fourth step is to generate an initial population of candidate equations. The quantity is usually in the thousands, and involve random number generation.
+
+5.  After the first fitness evaluation, the quality of the equations are usually quite poor. The best are selected, and then changed randomly to form the next generation, in a process influenced by biological evolution theory.
+
+6.  We then perform the fitness evaluation on the new generation. We are expecting, of course, that each generation will produce better equations than the last, *on average*.
+
+7.  Next, we check that the fitness value of the best equation and/or the number of generations tells us to stop. If not..
+
+8.  Then we again select the best and change them for the next generation. 
+![Figure 2: Workflow](generic_workflow.svg)
+
+### Toy Dataset
+We are going to build a toy dataset to demonstrate the workflow. In addition to its small size (only one predictor variable, only 20 rows) the fact that we know *exactly* what the generating equation is gives us a yardstick to compare our results against.  Here is the equation for predicting API gravity from specific gravity:
+
+$\gamma_{API}=\frac{141.5}{\gamma_{o}}-131.5$
+
+|Symbol|Meaning|Units|
+|---|---|---|
+|$\gamma_{API}$|API Gravity|[degAPI]|
+|$\gamma_o$|specific gravity|[1/wtr]|
+
+And here is our dataset:
+
+```{r}
+x<-seq(from=0.55,to=1.075,by=0.025)
+y<-141.5/x-131.5
+plot(x,y,main="First Toy Dataset",xlab="Specific Gravity",ylab="API Gravity")
+grid()
+```
+
+### Software Implementation
+Most libraries available in Python follow the Scikit-Learn model.  We will  use the PySR library for demonstation purposes.  First, we import the main function for the library:
+
+`%pip install -U pysr`
+
+`from pysr import PySRRegressor()`
+
+Next, we call the main function to set-up the model.  Here, we are using default parameters for everything:
+
+`myMod=PySRRegressor()`
+
+Following that, we instruct the software to search for a suitable equation for the data we have provided:
+
+`myMod.fit(x.reshape(-1, 1),y)`
+
+Here, `x` is specific gravity and `y` is the API Gravity.  The `reshape` is necessary as Scikit-Learn usually expects more than one predictor variable.
+
+Next, we can check the quality of the fit by plotting the predicted values against the original values:
+
+`y_pred=myMod.predict(x.reshape(-1, 1))`
+
+The reader will notice that we have neglected to divide our dataset into `test` and `train` buckets for this demonstration.
+
+```{r}
+y_fit<-141.5/x-131.5
+y_raw<-141.5/x-131.5
+
+plot(x,y_raw,main="Toy Dataset Fit",xlab="Specific Gravity",ylab="API Gravity")
+lines(x,y_fit,type="l",lty=1,col="red")
+legend("topright",legend=c("Original","Predicted"),col=c("black","red"),lty=c(1,1),pch=c(1,1))
+grid()
+```
+
+Next, if we like what we see, we can ask to inspect the final equation:
+
+`myEq=myMod.sympy()`
+
+And the evolutionary algorithm will typically present an output looking like this:
+
+$x_0-(x_0+0.013196754)+1.0131962+ \frac{x_0 (-132.5)- -141.5}{x_0}$​
+
+This looks terrible, but we can clean it up using a symbolic mathematics library:
+
+`sym.simplify(myEq)`
+
+which produces a much better:
+
+$131.500000554+\frac{141.5}{x_0}$
+ 
+
+
+
+## Analysis and Results
+
+### Data Exploration and Visualization
+
+### Modeling and Results
+
+### Conclusion
+
+## References
