@@ -248,7 +248,7 @@ Here are a few of them using the following nomenclature:
 ##### Hariu & Sage (1969)
 ${M} _ {w} = {a} _ {00} + {a} _ {01} {K} _ {w} + {a} _ {02} {K} _ {w} ^ {2} + {a} _ {03} {T} _ {b} {K} _ {w} + {a} _ {04} {T} _ {b} {K} _ {w} ^ {2} + {a} _ {05} {T} _ {b} ^ {2} {K} _ {w} + {a} _ {06} {T} _ {b} ^ {2} {K} _ {w} ^ {2}$
 
-${K} _ {w} =\frac {\sqrt [3] {{T} _ {b}}}  {\gamma}$
+$K_w =\frac{\sqrt[3]T_b}{\gamma}$
 
 ##### Kesler & Lee (1976)
 ${M} _ {w} = {X} _ {0} + \frac{{X} _ {1}}  {{T} _ {b}} + \frac{{X} _ {2}}  {{T} _ {b} ^ {2}}$
