@@ -88,3 +88,63 @@ In this paper, we will endeavor to:
 8.  Then we again select the best and change them for the next generation. Even though this step is usually less computationally demanding as step (6), most libraries will employ optimizations here as well to reduce the number of generations needed to find a suitable equation.
 
 ![Workflow](generic_workflow.svg)
+
+### Encoding
+
+The most common approach to encode equations appears to be a tree structure, in which each node can have 0,1 or 2 children. Let us use our example equations from earlier to illustrate:
+
+$\hat{y}_{23} = \beta_0 +\beta_1 \cdot X$
+
+![Linear Eqn](Eq01_tree.png)
+
+$\hat{y}_{23} = \beta_2 +\beta_3 \cdot e^X$
+
+![Exponential Eqn](Eq02_tree.png)
+
+$\hat{y}_{23} = \beta_4 +\beta_5 \cdot log(X)$
+
+![Logarithm Eqn](Eq03_tree.png)
+
+$\hat{y}_{23} = e^{\beta_4 +\beta_5 \cdot log(X)}$
+
+![Logarithm and Exponential Eqn](Eq04_tree.png)
+
+The rules for putting together equations like these can be expressed compactly using the Backus-Naur form from compiler design:
+
+First the double-child nodes:
+
+`<expr>::= <oper>(<expr>,<expr>)`
+
+`<oper>::='Add'|'Multiply'`
+
+This says that the `Add` and `Multiply` nodes must have two children, but that those children can have further children as well.
+
+Then the single-child nodes:
+
+`<expr>::= <oper>(<expr>,<expr>) | <func>(<expr>)`
+
+`<oper>::='Add'|'Multiply'`
+
+`<func>::='Log'|'Exp'`
+
+This says that the `Log` and `Exp` nodes can only have one child, but that child may have further children.
+
+Now the leaves:
+
+`<expr>::= <oper>(<expr>,<expr>) | <func>(<expr>) | <var> | <con>`
+
+`<oper>::='Add'|'Multiply'`
+
+`<func>::='Log'|'Exp'`
+
+`<var>::= X`
+
+`<con>::= a00|...|a09`
+
+This says that only `X` can be a variable, but that both variables and constants have no children.
+
+### Fitness
+
+### Stopping
+
+### Initial

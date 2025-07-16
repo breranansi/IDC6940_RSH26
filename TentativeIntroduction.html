@@ -115,7 +115,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="paper-on-symbolic-regression">Paper on Symbolic Regression</h2>
 <section id="symbolic-regression" class="level4">
 <h4 class="anchored" data-anchor-id="symbolic-regression">Symbolic Regression</h4>
-<p>Consider a dataset consisting of an independent variable <span class="math inline">\(X\)</span> and a dependent variable <span class="math inline">\(y\)</span>. Symbolic Regression allows us to discover, from the data, and analytical expression <span class="math inline">\(f(X)\)</span> which we can use to predict values of <span class="math inline">\(y\)</span> for values of <span class="math inline">\(X\)</span> unseen by the algorithm during training. For example:</p>
+<p>Consider a dataset consisting of an independent variable <span class="math inline">\(X\)</span> and a dependent variable <span class="math inline">\(y\)</span>. Symbolic Regression <span class="citation" data-cites="bro2014principal">[@bro2014principal]</span> allows us to discover, from the data, and analytical expression <span class="math inline">\(f(X)\)</span> which we can use to predict values of <span class="math inline">\(y\)</span> for values of <span class="math inline">\(X\)</span> unseen by the algorithm during training. For example:</p>
 <p><span class="math inline">\(\hat{y}_{23} \approx f(X_{23})\)</span></p>
 </section>
 <section id="neural-networks" class="level4">
@@ -170,6 +170,64 @@ window.Quarto = {
 <figcaption>Workflow</figcaption>
 </figure>
 </div>
+</section>
+<section id="encoding" class="level3">
+<h3 class="anchored" data-anchor-id="encoding">Encoding</h3>
+<p>The most common approach to encode equations appears to be a tree structure, in which each node can have 0,1 or 2 children. Let us use our example equations from earlier to illustrate:</p>
+<p><span class="math inline">\(\hat{y}_{23} = \beta_0 +\beta_1 \cdot X\)</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Eq01_tree.png" class="img-fluid figure-img"></p>
+<figcaption>Linear Eqn</figcaption>
+</figure>
+</div>
+<p><span class="math inline">\(\hat{y}_{23} = \beta_2 +\beta_3 \cdot e^X\)</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Eq02_tree.png" class="img-fluid figure-img"></p>
+<figcaption>Exponential Eqn</figcaption>
+</figure>
+</div>
+<p><span class="math inline">\(\hat{y}_{23} = \beta_4 +\beta_5 \cdot log(X)\)</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Eq03_tree.png" class="img-fluid figure-img"></p>
+<figcaption>Logarithm Eqn</figcaption>
+</figure>
+</div>
+<p><span class="math inline">\(\hat{y}_{23} = e^{\beta_4 +\beta_5 \cdot log(X)}\)</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Eq04_tree.png" class="img-fluid figure-img"></p>
+<figcaption>Logarithm and Exponential Eqn</figcaption>
+</figure>
+</div>
+<p>The rules for putting together equations like these can be expressed compactly using the Backus-Naur form from compiler design:</p>
+<p>First the double-child nodes:</p>
+<p><code>&lt;expr&gt;::= &lt;oper&gt;(&lt;expr&gt;,&lt;expr&gt;)</code></p>
+<p><code>&lt;oper&gt;::='Add'|'Multiply'</code></p>
+<p>This says that the <code>Add</code> and <code>Multiply</code> nodes must have two children, but that those children can have further children as well.</p>
+<p>Then the single-child nodes:</p>
+<p><code>&lt;expr&gt;::= &lt;oper&gt;(&lt;expr&gt;,&lt;expr&gt;) | &lt;func&gt;(&lt;expr&gt;)</code></p>
+<p><code>&lt;oper&gt;::='Add'|'Multiply'</code></p>
+<p><code>&lt;func&gt;::='Log'|'Exp'</code></p>
+<p>This says that the <code>Log</code> and <code>Exp</code> nodes can only have one child, but that child may have further children.</p>
+<p>Now the leaves:</p>
+<p><code>&lt;expr&gt;::= &lt;oper&gt;(&lt;expr&gt;,&lt;expr&gt;) | &lt;func&gt;(&lt;expr&gt;) | &lt;var&gt; | &lt;con&gt;</code></p>
+<p><code>&lt;oper&gt;::='Add'|'Multiply'</code></p>
+<p><code>&lt;func&gt;::='Log'|'Exp'</code></p>
+<p><code>&lt;var&gt;::= X</code></p>
+<p><code>&lt;con&gt;::= a00|...|a09</code></p>
+<p>This says that only <code>X</code> can be a variable, but that both variables and constants have no children.</p>
+</section>
+<section id="fitness" class="level3">
+<h3 class="anchored" data-anchor-id="fitness">Fitness</h3>
+</section>
+<section id="stopping" class="level3">
+<h3 class="anchored" data-anchor-id="stopping">Stopping</h3>
+</section>
+<section id="initial" class="level3">
+<h3 class="anchored" data-anchor-id="initial">Initial</h3>
 </section>
 </section>
 </section>

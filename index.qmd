@@ -1,7 +1,7 @@
 ---
-title: "Writing a great story for data science projects - spring 2025"
-subtitle: "This is a Report Template Quarto"
-author: "Students names (Advisor: Dr. Cohen)"
+title: "Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids"
+subtitle: ""
+author: "Delanyce Rose & Richard Henry (Advisor: Dr. Cohen)"
 date: '`r Sys.Date()`'
 format:
   html:
@@ -21,132 +21,276 @@ editor:
 Slides: [slides.html](slides.html){target="_blank"} ( Go to `slides.qmd`
 to edit)
 
-::: callout-important
-**Remember:** Your goal is to make your audience understand and care
-about your findings. By crafting a compelling story, you can effectively
-communicate the value of your data science project.
-
-Carefully read this template since it has instructions and tips to
-writing!
-:::
 
 ## Introduction
+Molecular mass is an important parameter used to model the physical properties of hydrocarbon fluids.  These fluids, such as gasoline and lubricating oil are essential for so many aspects of modern life, and although these end-products are homogenized to exacting standards, the feed stock properties from which they are made vary significantly from one source to another and from the same source over time.
 
-The introduction should:
+Unfortunately, molecular mass is expensive to measure accurately, so that it is common practice to use more easily measured parameters to estimate the value of molecular mass.
 
--   Develop a storyline that captures attention and maintains interest.
+Many of these correlations [@efr2008] have been published over the decades, and although concensus has been reached on *which* predictor varibles should be chosen, there is still considerable variation in the *form* of the equation appearing in the literature.
 
--   Your audience is your peers
+Rapid progress in machine learning technologies in recent years has provided a new toolbox with which we can revisit the problem.  One of these tools is *symbolic regression*.
 
--   Clearly state the problem or question you're addressing.
+#### Symbolic Regression
 
-<!-- -->
+Consider a dataset consisting of an independent variable $X$ and a dependent variable $y$. Symbolic Regression [@bro2014principal] allows us to discover, from the data, and analytical expression $f(X)$ which we can use to predict values of $y$ for values of $X$ unseen by the algorithm during training. For example:
 
--   Introduce why it is relevant needs.
+$\hat{y}_{23} \approx f(X_{23})$
 
--   Provide an overview of your approach.
+#### Neural Networks
 
-Example of writing including citing references:
+Neural networks allow us to make this prediction without first generating an analytical expression. Often, this is good enough, but we give up a property called *explainability*.
 
-*This is an introduction to ..... regression, which is a non-parametric
-estimator that estimates the conditional expectation of two variables
-which is random. The goal of a kernel regression is to discover the
-non-linear relationship between two random variables. To discover the
-non-linear relationship, kernel estimator or kernel smoothing is the
-main method to estimate the curve for non-parametric statistics. In
-kernel estimator, weight function is known as kernel function
-[@efr2008]. Cite this paper [@bro2014principal]. The GEE [@wang2014].
-The PCA [@daffertshofer2004pca]*. Topology can be used in machine learning [@adams2021topology]
+In the case of a neural net, we can reclaim some of this explainability by performing a second prediction for a value of $X$ we really don't care about, but happens to be close to $X_{23}$:
 
-*This is my work and I want to add more work...*
+$\hat{y}_{24} \approx f(X_{24})$
+
+And now we can make statements on whether $y$ increases or decreases with increasing $X$ in the neighbourhood of $X_{23}$:
+
+$\frac{dy}{dX}|_{X_{23}}\approx \frac{\hat{y}_{24}-\hat{y}_{23}}{X_{24}-X_{23}}$
+
+#### Linear Regression
+
+The traditional alternative to neural networks which provides explainability is linear regression:
+
+$\hat{y}_{23} \approx \beta_0 +\beta_1 \cdot X$
+
+In which we use the data to discover the best values of the constants $\beta_0$ and $\beta_1$.
+
+However, this may not be the best functional form for this predictive equation. For example, maybe an exponental or a logarithmic relationship may be better:
+
+$\hat{y}_{23} \approx \beta_2 +\beta_3 \cdot e^X$
+
+or
+
+$\hat{y}_{23} \approx \beta_4 +\beta_5 \cdot log(X)$
+
+or maybe
+
+$log(\hat{y}_{23}) \approx \beta_6 +\beta_7 \cdot log(X)$
+
+We can certainly investigate these, and hundreds of other possibilities by building multiple models and comparing the performance between them.
+
+The promise of symbolic regression is to find the optimum functional form *and* the optimum values of the constants in the same workflow.
+
+### Next Steps
+
+In this paper, we will endeavor to:
+
+-   Describe the most common workflow for symbolic regression
+
+-   Describe some of the strategies being used to improve symbolic regression performance
+
+-   Give examples of how a selection of open-source libraries perform on a toy dataset
+
+-   Use symbolic regression to analyze a molecular mass dataset
+
 
 ## Methods
 
--   Detail the models or algorithms used.
+### Typical Workflow
 
--   Justify your choices based on the problem and data.
+1.  The first step is deciding *how* we are going to encode the equations so that they are easily manipulated in software. The challenges are similar to text processing. For example, we will want equations to be of variable length (like our sentances) and the order of the units making up the equation matter, just as the order of the words making up a sentance do.
 
-*The common non-parametric regression model is*
-$Y_i = m(X_i) + \varepsilon_i$*, where* $Y_i$ *can be defined as the sum
-of the regression function value* $m(x)$ *for* $X_i$*. Here* $m(x)$ *is
-unknown and* $\varepsilon_i$ *some errors. With the help of this
-definition, we can create the estimation for local averaging i.e.*
-$m(x)$ *can be estimated with the product of* $Y_i$ *average and* $X_i$
-*is near to* $x$*. In other words, this means that we are discovering
-the line through the data points with the help of surrounding data
-points. The estimation formula is printed below [@R-base]:*
+2.  The second step is to decide *how* we are going to measure the fitness of a particular equation. The standard workflow is to decode the equation into a function, apply that function to each row in the training dataset, and then calculate the mean squared error between the target value and the equation result.
 
-$$
-M_n(x) = \sum_{i=1}^{n} W_n (X_i) Y_i  \tag{1}
-$$$W_n(x)$ *is the sum of weights that belongs to all real numbers.
-Weights are positive numbers and small if* $X_i$ *is far from* $x$*.*
+3.  The third step is to decide *when* we will stop the workflow. Usually we will set a maximum number of generations *and* an error threshold that the best equation has to meet to stop the search. This equation is the one that will be offered-up as the answer at the end of the workflow.
+
+4.  The fourth step is to generate an initial population of candidate equations. The quantity is usually in the thousands, and involve random number generation.
+
+5.  After the first fitness evaluation, the quality of the equations are usually quite poor. The best are selected, and then changed randomly to form the next generation, in a process influenced by biological evolution theory.
+
+6.  We then perform the fitness evaluation on the new generation. We are expecting, of course, that each generation will produce better equations than the last, *on average*.
+
+7.  Next, we check that the fitness value of the best equation and/or the number of generations tells us to stop. If not..
+
+8.  Then we again select the best and change them for the next generation. 
+![Figure 2: Workflow](generic_workflow.svg)
+
+### Toy Dataset
+We are going to build a toy dataset to demonstrate the workflow. In addition to its small size (one predictor variable, 20 rows) the fact that we know *exactly* what the generating equation is gives us a yardstick to compare our results against.  Here is the equation for predicting API gravity from specific gravity:
+
+$\gamma_{API}=\frac{141.5}{\gamma_{o}}-131.5$
+
+|Symbol|Meaning|Units|
+|---|---|---|
+|$\gamma_{API}$|API Gravity|[degAPI]|
+|$\gamma_o$|specific gravity|[1/wtr]|
+
+And here is our dataset:
+
+```{r}
+x<-seq(from=0.55,to=1.075,by=0.025)
+y<-141.5/x-131.5
+plot(x,y,main="First Toy Dataset",xlab="Specific Gravity",ylab="API Gravity")
+grid()
+```
+
+### Software Implementation
+Most libraries available in Python follow the Scikit-Learn model.  We will  use the PySR library for demonstation purposes.  First, we import the main function for the library:
+
+`%pip install -U pysr`
+
+`from pysr import PySRRegressor()`
+
+Next, we call the main function to set-up the model.  Here, we are using default parameters for everything:
+
+`myMod=PySRRegressor()`
+
+Following that, we instruct the software to search for a suitable equation for the data we have provided:
+
+`myMod.fit(x.reshape(-1, 1),y)`
+
+Here, `x` is specific gravity and `y` is the API Gravity.  The `reshape` is necessary as Scikit-Learn usually expects more than one predictor variable.
+
+Next, we can check the quality of the fit by plotting the predicted values against the original values:
+
+`y_pred=myMod.predict(x.reshape(-1, 1))`
+
+The reader will notice that we have neglected to divide our dataset into `test` and `train` buckets for this demonstration.
+
+```{r}
+y_fit<-141.5/x-131.500000554
+y_raw<-141.5/x-131.5
+
+plot(x,y_raw,main="Toy Dataset Fit",xlab="Specific Gravity",ylab="API Gravity")
+lines(x,y_fit,type="l",lty=1,col="red")
+legend("topright",legend=c("Original","Predicted"),col=c("black","red"),lty=c(1,1),pch=c(1,1))
+grid()
+```
+
+Next, if we like what we see, we can ask to inspect the final equation:
+
+`myEq=myMod.sympy()`
+
+And the evolutionary algorithm will typically present an output looking like this:
+
+$x_0-(x_0+0.013196754)+1.0131962+ \frac{x_0 (-132.5)- -141.5}{x_0}$​
+
+This looks terrible, but we can clean it up using a symbolic mathematics library:
+
+`sym.simplify(myEq)`
+
+which produces a much better:
+
+$-131.500000554+\frac{141.5}{x_0}$
+ 
 
 
-*Another equation:*
-
-$$
-y_i = \beta_0 + \beta_1 X_1 +\varepsilon_i
-$$
 
 ## Analysis and Results
 
 ### Data Exploration and Visualization
+Let us take a first look at the dataset from Goossens:
 
--   Describe your data sources and collection process.
-
--   Present initial findings and insights through visualizations.
-
--   Highlight unexpected patterns or anomalies.
-
-A study was conducted to determine how...
-
-```{r, warning=FALSE, echo=T, message=FALSE}
-# loading packages 
-library(tidyverse)
-library(knitr)
-library(ggthemes)
-library(ggrepel)
-library(dslabs)
+```{r}
+# Positron
+#df<-read.csv("./c694/goossens_raw.csv")
+# Quarto
+df<-read.csv("./goossens_raw.csv")
 ```
 
-```{r, warning=FALSE, echo=TRUE}
-# Load Data
-kable(head(murders))
+We have 3 variables:
 
-ggplot1 = murders %>% ggplot(mapping = aes(x=population/10^6, y=total)) 
+|Variable|Description|Designation|
+|---|---|---|
+|$Mw$|Molecular Mass|dependent|
+|$SG$|Specific Gravity|independent|
+|$TBP$|True Boiling Point|independent|
 
-  ggplot1 + geom_point(aes(col=region), size = 4) +
-  geom_text_repel(aes(label=abb)) +
-  scale_x_log10() +
-  scale_y_log10() +
-  geom_smooth(formula = "y~x", method=lm,se = F)+
-  xlab("Populations in millions (log10 scale)") + 
-  ylab("Total number of murders (log10 scale)") +
-  ggtitle("US Gun Murders in 2010") +
-  scale_color_discrete(name = "Region")+
-      theme_bw()
-  
+and 70 rows.  This is a very small dataset by modern machine learning standards.  However, due to the cost of aquiring the molecular mass data, this dataset will be considered "large" by chemical engineering standards.
 
+One of the questions we want to answer is whether datasets like this are "too small" for symbolic regression.
+
+Here is a plot of molecular mass vs. specific gravity:
+
+```{r}
+plot(df$SG,df$MW,main="Goossens Dataset",xlab="Specific Gravity",ylab="Molecular Mass")
+grid()
 ```
+
+Although there appears to be a clear linear relationship between molecular mass and specific gravity at low gravity numbers, the heteroscedasticity explodes above a gravity of about 0.75.
+
+Here is a plot of molecular mass vs. true boiling point:
+
+```{r}
+plot(df$TBP,df$MW,main="Goossens Dataset",xlab="True Boiling Point",ylab="Molecular Mass")
+grid()
+```
+
+There seems to be a monotonically increasing relationship between molecular mass and true boiling point, with a possible "pole" around the boiling point of 1000.
+
+At this point, it may be tempting to ignore the effect of specific gravity on the prediction of molecular mass.
+
+Here we plot the two independent variables against one another:
+
+```{r}
+plot(df$TBP,df$SG,main="Goossens Dataset",xlab="True Boiling Point",ylab="Specific Gravity")
+grid()
+```
+
+This plot suggests that the correlation is poor between true boiling point and specific gravity.  Presumably, the specific gravity helps to reduce the scatter around the trend of molecular weight vs. true boiling point.
+
+#### Existing Correlations
+The existing correlations available for estimating molecular mass from true boiling point and specific gravity provide hints as to what kind of equations we expect to see from the algorithm.  Of course, most of them predate symbolic regression and therefore were developed by people.
+
+Here are a few of them using the following nomenclature:
+
+|Symbol|Meaning|
+|---|---|
+|$M_w$|Apparent Molecular Mass|
+|$T_b$|Boiling Point Temperature at Atmospheric Pressure|
+|$\gamma$|Specific Gravity (density compared to water)|
+|$a_{00}..a_{09}$|Empirical Constants|
+|$K_w$|Characterization factor (intermediate value)|
+|$X_0...X_3$|Intermediate Variables|
+
+##### Hariu & Sage (1969)
+${M} _ {w} = {a} _ {00} + {a} _ {01} {K} _ {w} + {a} _ {02} {K} _ {w} ^ {2} + {a} _ {03} {T} _ {b} {K} _ {w} + {a} _ {04} {T} _ {b} {K} _ {w} ^ {2} + {a} _ {05} {T} _ {b} ^ {2} {K} _ {w} + {a} _ {06} {T} _ {b} ^ {2} {K} _ {w} ^ {2}$
+
+${K} _ {w} =\frac {\sqrt [3] {{T} _ {b}}}  {\gamma}$
+
+##### Kesler & Lee (1976)
+${M} _ {w} = {X} _ {0} + \frac{{X} _ {1}}  {{T} _ {b}} + \frac{{X} _ {2}}  {{T} _ {b} ^ {2}}$
+
+${X} _ {0} = {a} _ {00} + {a} _ {01} γ+ \left ({a} _ {02} + {a} _ {03} γ \right ) {T} _ {b}$
+
+${X} _ {1} = \left (1+ {a} _ {04} γ+ {a} _ {05} {γ} ^ {2} \right ) \left ({a} _ {06} + \frac{{a} _ {07}}  {{T} _ {b}} \right ) \cdot {10} ^ {7}$
+
+${X} _ {2} = \left (1+ {a} _ {08} γ+ {a} _ {09} {γ} ^ {2} \right ) \left ({a} _ {10} + \frac{{a} _ {11}}  {{T} _ {b}} \right ) \cdot {10} ^ {12}$
+
+##### American Petroleum Institute (1977)
+${M} _ {w} = {a} _ {00} {e} ^ {\left ({a} _ {01} {T} _ {b} \right )} {e} ^ {\left ({a} _ {02} γ \right )} {T} _ {b} ^ {{a} _ {03}} {γ} ^ {{a} _ {04}}$
+
+##### Winn, Sim & Daubert (1980)
+${M} _ {w} = {a} _ {00} {T} _ {b} ^ {{a} _ {01}} {γ} ^ {{a} _ {02}}$
+
+### Riazi & Daubert (1980)
+${M} _ {w} = {a} _ {00} {T} _ {b} ^ {{a} _ {01}} {γ} ^ {{a} _ {02}}$
+
+##### Rao & Bardon (1985)
+$ln {{M} _ {w}} = \left ({a} _ {00} + {a} _ {01} {K} _ {w} \right ) ln {\left (\frac{{T} _ {b}}  {{a} _ {02} + {a} _ {03} {K} _ {w}} \right )}$
+
+##### Riazi & Daubert (1987)
+${M} _ {w} = {a} _ {00} {T} _ {b} ^ {{a} _ {01}} {γ} ^ {{a} _ {02}} {e} ^ {\left ({a} _ {03} {T} _ {b} + {a} _ {04} γ+ {a} _ {05} {T} _ {b} γ \right )}$
+
+##### Goossens (1996)
+${M} _ {w} = {a} _ {00} {T} _ {b} ^ {{X} _ {0}}$
+
+${X} _ {0} =\frac {{a} _ {03} + {a} _ {04} ln {\left (\frac{{T} _ {b}}  {{a} _ {05} - {T} _ {b}} \right )}}  {{a} _ {01} γ + {a} _ {02}}$
+
+##### Linan (2011)
+${M} _ {w} = {a} _ {00} {e} ^ {\left ({a} _ {01} {T} _ {b} \right )} {e} ^ {\left ({a} _ {02} γ \right )} {T} _ {b} ^ {{a} _ {03}} {γ} ^ {{a} _ {04}}$
+
+##### Hosseinifar & Shahverdi (2021)
+${M} _ {w} = {\left [{a} _ {00} {T} _ {b} ^ {{a} _ {01}} {\left (\frac{3+2γ} {3-γ} \right )} ^ {\frac{{a} _ {02}} {2}} + {a} _ {03} {T} _ {b} ^ {{a} _ {04}} {\left (\frac{3+2γ} {3-γ} \right )} ^ {\frac{{a} _ {05}} {2}} \right ]} ^ {{a} _ {06}}$
+
+##### Stratiev (2022)
+${M} _ {w} = {a} _ {00} + {a} _ {01} {e} ^ {\left [{a} _ {02} {e} ^ {\left ({a} _ {03} \frac{{T} _ {b} ^ {{a} _ {06}}} {{γ} ^ {{a} _ {05}}} \right )} \right ]}$
+
 
 ### Modeling and Results
 
--   Explain your data preprocessing and cleaning steps.
-
--   Present your key findings in a clear and concise manner.
-
--   Use visuals to support your claims.
-
--   **Tell a story about what the data reveals.**
-
-```{r}
-
-```
-
 ### Conclusion
-
--   Summarize your key findings.
-
--   Discuss the implications of your results.
 
 ## References
