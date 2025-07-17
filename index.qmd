@@ -81,7 +81,7 @@ Although, as shown above, we can use linear regression to find non-linear relati
 
 $\hat{y}=\frac{\beta_0+\beta_1x+\beta_2x^2}{\beta_3+\beta_4x}$
 
-Rational fractions like this may require full-blown non-linear regression techniques which will requrire us to specify the form of the equation and then use the data to find the values of the constants.
+Rational fractions like this may require full-blown non-linear regression techniques which will require us to specify the form of the equation and then use the data to find the values of the constants.
 
 The promise of symbolic regression is to find the optimum functional form, which may not be linear, *and* the optimum values of the constants in the same workflow.
 
@@ -191,9 +191,16 @@ $-131.500000554+\frac{141.5}{x_0}$
 
 One of the challenges of *real* data is that it is noisy.  Accordingly we will add some noise to our toy dataset:
 
-`equation goes here`
+`w=(random.rand(21)-0.5)*2.5`
 
-and re-run it to see whether symbolic regression is robust enough to handle noise.
+and re-run it to see whether symbolic regression is robust enough to handle noise:
+
+![Noisy Toy](/noisy_pysr_files/figure-html/cell-7-output-1.png)
+
+This was enough to throw-off the estimation of the constants a bit, but the form of the equation was preserved:
+
+$-132.05688+\frac{141.88547}{x_0}$
+
 ## Analysis and Results
 
 ### Data Exploration and Visualization
