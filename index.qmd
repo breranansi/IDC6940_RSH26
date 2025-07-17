@@ -27,13 +27,13 @@ Molecular mass is an important parameter used to model the physical properties o
 
 Unfortunately, molecular mass is expensive to measure accurately, so that it is common practice to use more easily measured parameters to estimate the value of molecular mass.
 
-Many of these correlations [@efr2008] have been published over the decades, and although consensus has been reached on *which* predictor variables should be chosen, there is still considerable variation in the *form* of the equation appearing in the literature.
+Many of these correlations [@stratiev2023prediction] have been published over the decades, and although consensus has been reached on *which* predictor variables should be chosen, there is still considerable variation in the *form* of the equation appearing in the literature.
 
 Rapid progress in machine learning technologies in recent years has provided a new toolbox with which we can revisit the problem.  One of these tools is *symbolic regression*.
 
 #### (Symbolic Regression)
 
-Consider a dataset consisting of an independent variable $X$ and a dependent variable $y$. Symbolic Regression [@bro2014principal] allows us to discover, from the data, and analytical expression $f(X)$ which we can use to predict values of $y$ for values of $X$ unseen by the algorithm during training. For example:
+Consider a dataset consisting of an independent variable $X$ and a dependent variable $y$. Symbolic Regression [@koza1994genetic] allows us to discover, from the data, and analytical expression $f(X)$ which we can use to predict values of $y$ for values of $X$ unseen by the algorithm during training. For example:
 
 $\hat{y}_{23} \approx f(X_{23})$
 
@@ -73,7 +73,7 @@ We can certainly investigate these, and hundreds of other possibilities by build
 
 #### (Alternative Conditional Expectations)
 
-Alternative Conditional Expectations is a technology that will automatically transform both the dependent and the independent variables such that the relationship between the dependent variable and a linear combination of the independent variables is as straight as possible.  Accordingly, building and testing hundreds of linear regression models can be avoided. This is different from the Box-Cox transform, where the aim is to make the population more normal.
+Alternative Conditional Expectations[@breiman1985estimating] is a technology that will automatically transform both the dependent and the independent variables such that the relationship between the dependent variable and a linear combination of the independent variables is as straight as possible.  Accordingly, building and testing hundreds of linear regression models can be avoided. This is different from the Box-Cox transform, where the aim is to make the population more normal.
 
 #### (Non-Linear Regression)
 
@@ -83,7 +83,7 @@ $\hat{y}=\frac{\beta_0+\beta_1x+\beta_2x^2}{\beta_3+\beta_4x}$
 
 Rational fractions like this may require full-blown non-linear regression techniques which will require us to specify the form of the equation and then use the data to find the values of the constants.
 
-The promise of symbolic regression is to find the optimum functional form, which may not be linear, *and* the optimum values of the constants in the same workflow.
+The promise of symbolic regression is to find the optimum functional form, which may *not* be linear, *and* the optimum values of the constants in the same workflow.
 
 ### Next Steps
 
@@ -120,7 +120,7 @@ In this paper, we will endeavor to:
 ![Figure 2: Workflow](generic_workflow.svg)
 
 ### Toy Dataset
-We are going to build a toy dataset to demonstrate the workflow. In addition to its small size (one predictor variable, 20 rows) the fact that we know *exactly* what the generating equation is gives us a yardstick to compare our results against.  Here is the equation for predicting API gravity from specific gravity:
+We are going to build a toy dataset to demonstrate the workflow. In addition to its small size (one predictor variable, 21 rows) the fact that we know *exactly* what the generating equation is gives us a yardstick to compare our results against.  Here is the equation for predicting API gravity from specific gravity:
 
 $\gamma_{API}=\frac{141.5}{\gamma_{o}}-131.5$
 
@@ -204,7 +204,7 @@ $-132.05688+\frac{141.88547}{x_0}$
 ## Analysis and Results
 
 ### Data Exploration and Visualization
-Let us take a first look at the dataset from Goossens:
+Let us take a first look at the dataset from Goossens[@goossens1996prediction]:
 
 ```{r}
 # Positron
