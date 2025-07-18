@@ -2544,10 +2544,9 @@ window.Quarto = {
 <p><code>binary_operators=[&quot;+&quot;,&quot;-&quot;,&quot;*&quot;,&quot;/&quot;]</code></p>
 <p>Here we choose which binary operators may appear in our equations. These operators work on two numbers, for example <span class="math inline">\(a+b\)</span>. On first glance, this may appear to be restrictive, but for example, the ternary operation <span class="math inline">\(a+b+c\)</span> can be chained as two binaries <span class="math inline">\(a+(b+c)\)</span>.</p>
 <p>A more serious challenge is handling underflow and overflow. In particular, the classic “division-by-zero” error appear very easily when we are randomly assembling equations using operators, variables and constants. Every library will use a different coping mechanism, but common strategies include pre-assigning a value such as zero, one or positive infinity to a calculation that will generate errors.</p>
-<p>We may want to consider additional binary operators such as the power function (<span class="math inline">\(a^b\)</span>) or the maximum or minimum functions.</p>
+<p>There are additional binary operators such as the power function (<span class="math inline">\(a^b\)</span>) or the maximum and minimum functions.</p>
 <p><code>unary_operators=None</code></p>
 <p>Here we choose the unary operators that may appear in our equations. Some libraries call these “functions” instead. Examples include sine, cosine and square root, the latter capable of being represented by a power function mentioned above.</p>
-<p>In our case, we may want to consider logarithm and exponential functions.</p>
 <p><code>maxsize=30</code></p>
 <p>This is the maximum length of a generated equation. Our toy equation has a length of five:</p>
 <table class="caption-top table">
@@ -2577,18 +2576,31 @@ window.Quarto = {
 <section id="step-2" class="level4">
 <h4 class="anchored" data-anchor-id="step-2">Step 2</h4>
 <p><code>elemtwise_loss=&quot;L2DistLoss()&quot;</code></p>
+<p>This switch says that we will used least squares to judge the accuracy of an equation. There are several canned loss functions like this, for example <code>L1DistLoss</code> will use the average absolute difference between the equation predictions and the actual values. In addition, one may define custom loss functions using julia expressions in PySR.</p>
 <p><code>parsimony=0.0</code></p>
+<p>This is a regularization weight. Unlike Lasso or Ridge regression, the length of the equation is penalized instead of the size of the coefficients. Other libraries consider the length of the equation and over-simplified measure of complexity and propose other measures.</p>
+<p>The idea here is that a simple equation that is very nearly as accurate as a complex one is more “explainable”, and therefore there needs to be a mechanism to encourage simpler equations.</p>
 <p><code>model_selection=&quot;best&quot;</code></p>
+<p>This switch says that the models selected will be a specified trade-off between accuracy and complexity. There are other formulations such as <code>score</code> involving log-loss derivatives or one could simply choose <code>accuracy</code>.</p>
 <p><code>should_simplify=True</code></p>
+<p>This switch says that occasionally equations generated during the search will be simplified. Superficially, it may appear to be a good idea to simplify the equations after <em>every</em> generation, to cut down on “bloat” or equations that are more complex than they need to be. For example, <span class="math inline">\(x_0+5x_0-2x_0\)</span> vs. just <span class="math inline">\(4x_0\)</span></p>
+<p>However, the PySR developers found that allowing some bloat improved the search significantly.</p>
 <p><code>Tournament_selection_n=15</code></p>
+<p>In a nod to evolutionary biology, this says that models compete in groups of 15 for selection. The larger this number, the fewer “winners” there are after every round.</p>
 </section>
 <section id="step-3" class="level4">
 <h4 class="anchored" data-anchor-id="step-3">Step 3</h4>
 <p><code>niterations=100</code></p>
+<p>This is equivalent to an epoch in other machine learning algorithms. 100 is actually quite low. Other libraries require low thousands of epochs to produce the same result.</p>
+<p><code>max_evals=None</code></p>
+<p>This switch counts the number of equation evaluations performed, and stops the search after a specified number. Equation evaluations are a significant fraction of the run time, especially as the equations get longer and contain more transcendental functions.</p>
+<p><code>timeout_in_seconds</code></p>
+<p>This switch keeps track of the run time and stops the search after a specified number.</p>
+</section>
+<section id="step-4" class="level4">
+<h4 class="anchored" data-anchor-id="step-4">Step 4</h4>
 <p><code>populations=31</code></p>
 <p><code>population_size=27</code></p>
-<p><code>max_evals=None</code></p>
-<p><code>timeout_in_seconds</code></p>
 </section>
 </section>
 </section>
