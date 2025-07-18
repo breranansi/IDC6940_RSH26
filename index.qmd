@@ -33,7 +33,7 @@ Rapid progress in machine learning technologies in recent years has provided a n
 
 #### (Symbolic Regression)
 
-Consider a dataset consisting of an independent variable $X$ and a dependent variable $y$. Symbolic Regression [@koza1994genetic] allows us to discover, from the data, and analytical expression $f(X)$ which we can use to predict values of $y$ for values of $X$ unseen by the algorithm during training. For example:
+Consider a dataset consisting of an independent variable $X$ and a dependent variable $y$. Symbolic Regression [@koza1994genetic] allows us to discover, from the data, an analytical expression $f(X)$ which we can use to predict values of $y$ for values of $X$ unseen by the algorithm during training. For example:
 
 $\hat{y}_{23} \approx f(X_{23})$
 
@@ -73,13 +73,13 @@ We can certainly investigate these, and hundreds of other possibilities by build
 
 #### (Alternative Conditional Expectations)
 
-Alternative Conditional Expectations[@breiman1985estimating] is a technology that will automatically transform both the dependent and the independent variables such that the relationship between the dependent variable and a linear combination of the independent variables is as straight as possible.  Accordingly, building and testing hundreds of linear regression models can be avoided. This is different from the Box-Cox transform, where the aim is to make the population more normal.
+Alternative Conditional Expectations [@breiman1985estimating] is a technology that will automatically transform both the dependent and the independent variables such that the relationship between the dependent variable and a linear combination of the independent variables is as straight as possible.  Accordingly, building and testing hundreds of linear regression models can be avoided. This is different from the Box-Cox transform, where the aim is to make the population more normal.
 
 #### (Non-Linear Regression)
 
 Although, as shown above, we can use linear regression to find non-linear relationships between variables, some relationships may be challenging, such as:
 
-$\hat{y}=\frac{\beta_0+\beta_1x+\beta_2x^2}{\beta_3+\beta_4x}$
+$\hat{y}\approx\frac{\beta_0+\beta_1x+\beta_2x^2}{\beta_3+\beta_4x}$
 
 Rational fractions like this may require full-blown non-linear regression techniques which will require us to specify the form of the equation and then use the data to find the values of the constants.
 
@@ -139,7 +139,7 @@ grid()
 ```
 
 ### Software Implementation
-Most libraries available in Python for Symbolic Regression follow the Scikit-Learn model.  We will  use the PySR library for demonstration purposes.  First, we import the main function for the library:
+Most libraries available in Python for Symbolic Regression follow the Scikit-Learn model.  We will  use the PySR library [@cranmer2023interpretable] for demonstration purposes.  First, we import the main function for the library:
 
 `%pip install -U pysr`
 
@@ -201,10 +201,76 @@ This was enough to throw-off the estimation of the constants a bit, but the form
 
 $-132.05688+\frac{141.88547}{x_0}$
 
+### Belly of the Beast
+There are a large number of hyperparameters in a typical symbolic regression model that we have defaulted in the Toy dataset model above.  Here are some of them:
+
+#### Step 1
+
+`binary_operators=["+","-","*","/"]`
+
+Here we choose which binary operators may appear in our equations. These operators work on two numbers, for example $a+b$.  On first glance, this may appear to be restrictive, but for example, the ternary operation $a+b+c$ can be chained as two binaries $a+(b+c)$.
+
+A more serious challenge is handling underflow and overflow. In particular, the classic "division-by-zero" error appear very easily when we are randomly assembling equations using operators, variables and constants.  Every library will use a different coping mechanism, but common strategies include pre-assigning a value such as zero, one or positive infinity to a calculation that will generate errors. 
+
+We may want to consider additional binary operators such as the power function ($a^b$) or the maximum or minimum functions.
+
+`unary_operators=None`
+
+Here we choose the unary operators that may appear in our equations. Some libraries call these "functions" instead.  Examples include sine, cosine and square root, the latter capable of being represented by a power function mentioned above.
+
+In our case, we may want to consider logarithm and exponential functions.
+
+`maxsize=30`
+
+This is the maximum length of a generated equation.  Our toy equation has a length of five:
+
+|1|2|3|4|5|
+|---|---|---|---|---|
+|minus|divide|141.5|specific gravity|131.5|
+
+
+`maxdepth=None`
+
+This is the maximum depth of a generated equation.  Our toy equation has a depth of three:
+![Toy Tree](API_tree.png)
+
+`None` in this case means that there are no restrictions on the depth of the equation.
+
+#### Step 2
+
+`elemtwise_loss="L2DistLoss()"`
+
+`parsimony=0.0`
+
+`model_selection="best"`
+
+`should_simplify=True`
+
+`Tournament_selection_n=15`
+
+#### Step 3
+
+`niterations=100`
+
+`populations=31`
+
+`population_size=27`
+
+`max_evals=None`
+
+`timeout_in_seconds`
+
+
+
+
+
+
+
+
 ## Analysis and Results
 
 ### Data Exploration and Visualization
-Let us take a first look at the dataset from Goossens[@goossens1996prediction]:
+Let us take a first look at the dataset from Goossens [@goossens1996prediction]:
 
 ```{r}
 # Positron
@@ -255,7 +321,7 @@ grid()
 This plot suggests that the correlation is poor between true boiling point and specific gravity.  Presumably, the specific gravity helps to reduce the scatter around the trend of molecular weight vs. true boiling point.
 
 #### Existing Correlations
-The existing correlations available for estimating molecular mass from true boiling point and specific gravity provide hints as to what kind of equations we expect to see from the algorithm.  Of course, most of them predate symbolic regression and therefore were developed by people.
+The existing correlations available for estimating molecular mass from true boiling point and specific gravity provide hints as to what kind of equations we expect to see from the algorithm.  Many of them predate symbolic regression and therefore were developed by people using intuition and experimentation.
 
 Here are a few of them using the following nomenclature:
 
@@ -309,7 +375,7 @@ $M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ \right )} T_b^ 
 ##### Hosseinifar & Shahverdi (2021)
 $M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ} {3-γ} \right )}^{\frac{a_{02}}{2}} + a_{03} T_b^{a_{04}} {\left (\frac{3+2γ}{3-γ} \right )}^{\frac{a_{05}}{2}} \right ]}^{a_{06}}$
 
-##### Stratiev (2022)
+##### Stratiev (2023)
 $M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ^{a_{05}}} \right )} \right ]}$
 
 The reader will notice that all the correlations are non-linear, and that only a few of them can be easily transformed into a linear relationship. 
