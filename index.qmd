@@ -367,6 +367,47 @@ grid()
 
 This plot suggests that the correlation is poor between true boiling point and specific gravity.  Presumably, the specific gravity helps to reduce the scatter around the trend of molecular weight vs. true boiling point.
 
+There is a second, smaller independent dataset available publicly [@hosseinifar2021predictive] which we can use for verification.  Let us compare it to the Goossens dataset:
+
+```{r}
+# Positron
+#dfh<-read.csv("./c694/hosseinifar_raw.csv")
+# Quarto
+dfh<-read.csv("./hosseinifar_raw.csv")
+
+plot(df$TBP,df$MW,
+     main="Goossens vs. Hosseinifar",
+     xlab="True Boiling Point",
+     ylab="Molecular Mass",
+     col="blue")
+points(dfh$TBP,dfh$MW,
+       col="red",
+       pch=2)
+legend("topleft",
+       legend=c("Goossens","Hosseinifar"),
+       col=c("blue","red"),
+       pch=c(1,2))
+grid()
+```
+
+```{r}
+plot(df$SG,df$MW,
+     main="Goossens vs. Hosseinifar",
+     xlab="Specific Gravity",
+     ylab="Molecular Mass",
+     col="blue")
+points(dfh$SG,dfh$MW,
+       col="red",
+       pch=2)
+legend("topleft",
+       legend=c("Goossens","Hosseinifar"),
+       col=c("blue","red"),
+       pch=c(1,2))
+grid()
+```
+
+The two datasets appear to be compatible, even though the variation of the Hosseinifar dataset is significantly smaller.
+
 #### Existing Correlations
 The existing correlations available for estimating molecular mass from true boiling point and specific gravity provide hints as to what kind of equations we expect to see from the algorithm.  Many of them predate symbolic regression and therefore were developed by people using intuition and experimentation.
 
