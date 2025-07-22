@@ -115,7 +115,8 @@ In this paper, we will endeavor to:
 
 7.  Next, we check that the fitness value of the best equation and/or the number of generations tells us to stop. If not..
 
-8.  Then we again select the best and change them for the next generation. 
+8.  Then we again select the best and change them for the next generation.
+ 
 ![Figure 2: Workflow](generic_workflow.svg)
 
 ### Toy Dataset
@@ -224,6 +225,9 @@ This is the maximum length of a generated equation.  Our toy equation has a leng
 |1|2|3|4|5|
 |---|---|---|---|---|
 |minus|divide|141.5|specific gravity|131.5|
+
+
+As a side note, this way of writing an equation is called "Polish Notation", and a post-fix variant was used on scientific calculators in the 1970's as it was more efficient.  The learning curve, however, was brutal for mere mortals, so that owning one of these 'RPN' artifacts became a status symbol in the engineering community well into the 1990's.  Yeah, I know this is irrelevant.
 
 
 `maxdepth=None`
@@ -587,7 +591,98 @@ and the correlation coefficient has degraded slightly:
 </table>
 </div>
 
-One can argue that nested exponents $(a^{b^c})$ aren't very explainable.  However the Stratiev correlation does this with Euler's number $\left ( a \cdot e^{b \cdot e^{c}} \right )$.  In the fluid flow literature, nested logarithms $ln(ln(a))$ are more common. 
+One can argue that nested exponents $(a^{b^c})$ aren't very explainable.  However the Stratiev correlation does this with Euler's number $\left ( a \cdot e^{b \cdot e^{c}} \right )$.  In the hydrocarbon flow literature, nested logarithms $ln(ln(a))$ are more common. 
+
+#### Exponential Run
+Our third experiment was to replace the binary power operator with unary logarithm and exponential operators.  Our initial results were a major surprise as neither transcendental operator made it to the final equation:
+
+$\displaystyle M_w= - TBP \left(a_{00} TBP - a_{01}\right) \left(a_{02} \cdot 10^{-6} \left(a_{03} SG - 2 TBP\right) \left(TBP - a_{04}\right) - 1\right) + a_{05}$
+
+Accordingly, we re-set the random number generator and tried again:
+
+$\displaystyle M_w= a_{00} TBP + a_{01} e^{- SG^{2} + a_{02} SG + a_{03} TBP}$
+
+This is a dramatically different equation.  This experience suggests that the *real* reason the deterministic algorithms are still under active development today is to avoid this kind of ambiguity. We have shown (with the Toy dataset) that equation bloat can often be reduced automatically with symbolic mathematics packages.
+
+Our correlation coefficients are *still* not as good as the default run:
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SG</th>
+      <th>TBP</th>
+      <th>MW</th>
+      <th>1st Equation</th>
+      <th>2nd Equation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>SG</th>
+      <td>1.000000</td>
+      <td>0.625218</td>
+      <td>0.334852</td>
+      <td>0.348819</td>
+      <td>0.344733</td>
+    </tr>
+    <tr>
+      <th>TBP</th>
+      <td>0.625218</td>
+      <td>1.000000</td>
+      <td>0.869591</td>
+      <td>0.869577</td>
+      <td>0.867574</td>
+    </tr>
+    <tr>
+      <th>MW</th>
+      <td>0.334852</td>
+      <td>0.869591</td>
+      <td>1.000000</td>
+      <td>0.997705</td>
+      <td>0.998420</td>
+    </tr>
+    <tr>
+      <th>First Equation</th>
+      <td>0.348819</td>
+      <td>0.869577</td>
+      <td>0.997705</td>
+      <td>1.000000</td>
+      <td>0.999497</td>
+    </tr>
+    <tr>
+      <th>Second Equation</th>
+      <td>0.344733</td>
+      <td>0.867574</td>
+      <td>0.998420</td>
+      <td>0.999497</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+*But* the risk of "division by zero" errors during extrapolation are negligible.
+
+Also noteable in this run is the absence of the logarithm function to linearize the relationship between these two variables:
+
+![Linearizing](around3_files/figure-html/cell-14-output-1.png)
+
+This "obvious" human observation was clearly not an optimum transformation, or was eliminated by the evolutionary algorithm before it could reach its full potential.
 
 ### Conclusion
 
