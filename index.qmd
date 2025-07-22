@@ -527,7 +527,7 @@ There is noticeable drop in the quality of the match visually:
 
 Although the equation has got simpler:
 
-$a_{00} \cdot a_{01}^{SG^{-a_{02}} + a_{03} TBP} + a_{04}$
+$M_w=a_{00} \cdot a_{01}^{SG^{-a_{02}} + a_{03} TBP} + a_{04}$
 
 and the correlation coefficient has degraded slightly:
 <div>
@@ -587,7 +587,7 @@ and the correlation coefficient has degraded slightly:
 </table>
 </div>
 
-One can argue that nested exponents $(a^{b^c})$ aren't very explainable.  However the Stratiev correlation does this with Euler's number $\left ( a \cdot e^{b \cdot e^{c}} \right )$.
+One can argue that nested exponents $(a^{b^c})$ aren't very explainable.  However the Stratiev correlation does this with Euler's number $\left ( a \cdot e^{b \cdot e^{c}} \right )$.  In the fluid flow literature, nested logarithms $ln(ln(a))$ are more common. 
 
 ### Conclusion
 
