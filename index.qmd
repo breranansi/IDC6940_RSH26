@@ -417,7 +417,7 @@ Here are a few of them using the following nomenclature:
 |---|---|
 |$M_w$|Apparent Molecular Mass|
 |$T_b$|Boiling Point Temperature at Atmospheric Pressure|
-|$\gamma$|Specific Gravity (density compared to water)|
+|$\gamma_o$|Specific Gravity (density compared to water)|
 |$a_{00}..a_{09}$|Empirical Constants|
 |$K_w$|Characterization factor (intermediate value)|
 |$X_0...X_3$|Intermediate Variables|
@@ -426,45 +426,47 @@ Here are a few of them using the following nomenclature:
 ##### Hariu & Sage (1969)
 $M_w = a_{00} + a_{01} K_w + a_{02} K_w^2 + a_{03} T_b K_w + a_04 T_b K_w^2 + a_{05} T_b^2 K_w + a_{06} T_b^2 K_w^2$
 
-$K_w =\frac{\sqrt[3]T_b}{\gamma}$
+$K_w =\frac{\sqrt[3]T_b}{\gamma_o}$
 
 ##### Kesler & Lee (1976)
 $M_w = X_0 + \frac{X_1}{T_b} + \frac{X_2}{T_b^2}$
 
-$X_0 = a_{00} + a_{01} γ+ \left (a_{02} + a_{03} γ \right ) T_b$
+$X_0 = a_{00} + a_{01} γ_o+ \left (a_{02} + a_{03} γ_o \right ) T_b$
 
-$X_1 = \left (1+ a_{04} γ + a_{05}γ^2 \right ) \left (a_{06} + \frac{a_ {07}}{T_b} \right ) \cdot 10^7$
+$X_1 = \left (1+ a_{04} γ_o + a_{05}γ_o^2 \right ) \left (a_{06} + \frac{a_ {07}}{T_b} \right ) \cdot 10^7$
 
-$X_2 = \left (1+ a_{08} γ+ a_{09} γ^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^12$
+$X_2 = \left (1+ a_{08} γ_o+ a_{09} γ_o^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^12$
 
 ##### American Petroleum Institute (1977)
-$M_w = a_{00} e^ {\left (a_{01} T_b \right )} e^{\left (a_{02} γ \right )} T_b^{a_{03}} γ^ {a_{04}}$
+$M_w = a_{00} e^ {\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^{a_{03}} γ_o^ {a_{04}}$
 
 ##### Winn, Sim & Daubert (1980)
-$M_w = a_{00} T_b^{a_ {01}} γ^{a_{02}}$
+$M_w = a_{00} T_b^{a_ {01}} γ_o^{a_{02}}$
 
 ##### Riazi & Daubert (1980)
-$M_w = a_{00} T_b^{a_ {01}}γ^{a_{02}}$
+$M_w = a_{00} T_b^{a_ {01}}γ_o^{a_{02}}$
 
 ##### Rao & Bardon (1985)
 $ln {M_w} = (a_{00} + a_{01} K_w) ln (\frac{T_b} {a_{02} + a_{03} K_w} )$
 
+$K_w =\frac{\sqrt[3]T_b}{\gamma_o}$
+
 ##### Riazi & Daubert (1987)
-$M_w = a_{00} T_b^{a_{01}} γ^{a_{02}} e^{\left (a_{03} T_b + a_{04} γ + a_{05} T_b γ \right )}$
+$M_w = a_{00} T_b^{a_{01}} γ_o^{a_{02}} e^{\left (a_{03} T_b + a_{04} γ_o + a_{05} T_b γ \right )}$
 
 ##### Goossens (1996)
 $M_w = a_{00} T_b^{X_0}$
 
-$X_0 =\frac {a_{03} + a_{04} ln {\left (\frac{T_b}  {a_{05} - T_b} \right )}}  {a_{01} γ + a_{02}}$
+$X_0 =\frac {a_{03} + a_{04} ln {\left (\frac{T_b}  {a_{05} - T_b} \right )}}  {a_{01} γ_o + a_{02}}$
 
 ##### Linan (2011)
-$M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ \right )} T_b^ {a_{03}} γ^{a_{04}}$
+$M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^ {a_{03}} γ_o^{a_{04}}$
 
 ##### Hosseinifar & Shahverdi (2021)
-$M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ} {3-γ} \right )}^{\frac{a_{02}}{2}} + a_{03} T_b^{a_{04}} {\left (\frac{3+2γ}{3-γ} \right )}^{\frac{a_{05}}{2}} \right ]}^{a_{06}}$
+$M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ_o} {3-γ_o} \right )}^{\frac{a_{02}}{2}} + a_{03} T_b^{a_{04}} {\left (\frac{3+2γ_o}{3-γ_o} \right )}^{\frac{a_{05}}{2}} \right ]}^{a_{06}}$
 
 ##### Stratiev (2023)
-$M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ^{a_{05}}} \right )} \right ]}$
+$M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ_o^{a_{05}}} \right )} \right ]}$
 
 The reader will notice that all the correlations are non-linear, and that only a few of them can be easily transformed into a linear relationship. Some of the additional operators we may want to consider include:
 
@@ -481,9 +483,9 @@ The reader will notice that all the correlations are non-linear, and that only a
 ### Modeling and Results
 
 #### Default Run
-Our first experiment is to run `PySR` with default parameters against our molecular mass dataset.  The resulting equation, of course, looks nothing like the existing equations:
+Our first experiment is to run `PySR` with default parameters against our molecular mass dataset.  The resulting equation,  looks nothing like the existing equations:
 
-$M_w=a_{00}+\frac{a_{01}}{\gamma-a_{02}}+\frac{T_b(a_{03}T_b-a_{04})}{\gamma(a_{05}-\frac{a_{06}}{T_b})}$
+$M_w=a_{00}+\frac{a_{01}}{\gamma_o-a_{02}}+\frac{T_b(a_{03}T_b-a_{04})}{\gamma_o(a_{05}-\frac{a_{06}}{T_b})}$
 
 But its performance is quite impressive considering its restricted grammar of addition, subtraction, muliplication and division:
 
@@ -572,7 +574,7 @@ There is noticeable drop in the quality of the match visually:
 
 Although the equation has got simpler:
 
-$M_w=a_{00} \cdot a_{01}^{SG^{-a_{02}} + a_{03} TBP} + a_{04}$
+$M_w=a_{00} \cdot a_{01}^{\gamma_o^{-a_{02}} + a_{03} T_b} + a_{04}$
 
 and the correlation coefficient has degraded slightly:
 <div>
@@ -637,11 +639,11 @@ One can argue that nested exponents $(a^{b^c})$ aren't very explainable.  Howeve
 #### Exponential Run
 Our third experiment was to replace the binary power operator with unary logarithm and exponential operators.  Our initial results were a major surprise as neither transcendental operator made it to the final equation:
 
-$\displaystyle M_w= - TBP \left(a_{00} TBP - a_{01}\right) \left(a_{02} \cdot 10^{-6} \left(a_{03} SG - 2 TBP\right) \left(TBP - a_{04}\right) - 1\right) + a_{05}$
+$\displaystyle M_w= - T_b \left(a_{00} T_b - a_{01}\right) \left(a_{02} \cdot 10^{-6} \left(a_{03} \gamma_o - 2 T_b \right) \left(T_b - a_{04}\right) - 1\right) + a_{05}$
 
 Accordingly, we re-set the random number generator and tried again:
 
-$\displaystyle M_w= a_{00} TBP + a_{01} e^{- SG^{2} + a_{02} SG + a_{03} TBP}$
+$\displaystyle M_w= a_{00} T_b + a_{01} e^{- \gamma_o^{2} + a_{02} \gamma_o + a_{03} T_b}$
 
 This is a dramatically different equation.  This experience suggests that the *real* reason the deterministic algorithms are still under active development today is to avoid this kind of ambiguity. We have shown (with the Toy dataset) that equation bloat can often be reduced automatically with symbolic mathematics packages.
 
@@ -719,11 +721,11 @@ Our correlation coefficients are *still* not as good as the default run:
 
 *But* the risk of "division by zero" errors during extrapolation are negligible.
 
-Also noteable in this run is the absence of the logarithm function to linearize the relationship between these two variables:
+Also notable in this run is the absence of the logarithm function to linearize the relationship between these two variables:
 
 ![Linearizing](around3_files/figure-html/cell-14-output-1.png)
 
-This "obvious" human observation was clearly not an optimum transformation, or was eliminated by the evolutionary algorithm before it could reach its full potential.
+This "obvious" human observation appears not to be an optimum transformation, or was eliminated by the evolutionary algorithm before it could reach its full potential.
 
 ### Conclusion
 
