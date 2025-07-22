@@ -31,13 +31,13 @@ Many of these correlations [@stratiev2023prediction] have been published over th
 
 Rapid progress in machine learning technologies in recent years has provided a new toolbox with which we can revisit the problem.  One of these tools is *symbolic regression*.
 
-#### <s>Symbolic Regression</s>
+
 
 Consider a dataset consisting of an independent variable $X$ and a dependent variable $y$. Symbolic Regression [@koza1994genetic] allows us to discover, from the data, an analytical expression $f(X)$ which we can use to predict values of $y$ for values of $X$ unseen by the algorithm during training. For example:
 
 $\hat{y}_{23} \approx f(X_{23})$
 
-#### <s>Neural Networks</s>
+
 
 Neural networks allow us to make this prediction without first generating an analytical expression. Often, this is good enough, but we give up a property called *explainability*.
 
@@ -49,7 +49,7 @@ And now we can make statements on whether $y$ increases or decreases with increa
 
 $\frac{dy}{dX}|_{X_{23}}\approx \frac{\hat{y}_{24}-\hat{y}_{23}}{X_{24}-X_{23}}$
 
-#### <s>Linear Regression</s>
+
 
 The traditional alternative to neural networks which provides explainability is linear regression:
 
@@ -71,11 +71,10 @@ $log(\hat{y}_{23}) \approx \beta_6 +\beta_7 \cdot log(X)$
 
 We can certainly investigate these, and hundreds of other possibilities by building multiple models and comparing the performance between them.
 
-#### <s>Alternative Conditional Expectations</s>
+
 
 Alternative Conditional Expectations [@breiman1985estimating] is a technology that will automatically transform both the dependent and the independent variables such that the relationship between the dependent variable and a linear combination of the independent variables is as straight as possible.  Accordingly, building and testing hundreds of linear regression models can be avoided. This is different from the Box-Cox transform, where the aim is to make the population more normal.
 
-#### <s>Non-Linear Regression</s>
 
 Although, as shown above, we can use linear regression to find non-linear relationships between variables, some relationships may be challenging, such as:
 
@@ -83,17 +82,17 @@ $\hat{y}\approx\frac{\beta_0+\beta_1x+\beta_2x^2}{\beta_3+\beta_4x}$
 
 Rational fractions like this may require full-blown non-linear regression techniques which will require us to specify the form of the equation and then use the data to find the values of the constants.
 
+A very interesting recent development [@liu2024kan] in this space is the Kolmogorov-Arnold Network, in which the activation functions sit on the edges instead of the nodes.  Like the weights they replace in a regular ANN, each one is different, and therefore by plotting the shapes of these activation functions, one could, possibly, if the network is small enough, intuit what is happening to the data as it goes through the network.  Although this provides *explainability* indirectly, it does not serve up an equation.
+
 The promise of symbolic regression is to find the optimum functional form, which may *not* be linear, *and* the optimum values of the constants in the same workflow.
+
+
 
 ### Next Steps
 
 In this paper, we will endeavor to:
 
 -   Describe the most common workflow for symbolic regression
-
--   <s>Describe some of the strategies being used to improve symbolic regression performance</s>
-
--   <s>Give examples of how a selection of open-source libraries perform on a toy dataset</s>
 
 -   Use symbolic regression to analyze a molecular mass dataset
 
@@ -139,7 +138,7 @@ grid()
 ```
 
 ### Software Implementation
-Most libraries available in Python for Symbolic Regression follow the Scikit-Learn model.  We will  use the PySR library [@cranmer2023interpretable] for demonstration purposes.  First, we import the main function for the library:
+Most libraries available in Python for Symbolic Regression follow the Scikit-Learn model.  We will  use the `PySR` library [@cranmer2023interpretable] for demonstration purposes.  First, we import the main function for the library:
 
 `%pip install -U pysr`
 
@@ -238,7 +237,7 @@ This is the maximum depth of a generated equation.  Our toy equation has a depth
 
 `elemtwise_loss="L2DistLoss()"`
 
-This switch says that we will used least squares to judge the accuracy of an equation.  There are several canned loss functions like this, for example `L1DistLoss` will use the average absolute difference between the equation predictions and the actual values.  In addition, one may define custom loss functions using julia expressions in PySR.
+This switch says that we will used least squares to judge the accuracy of an equation.  There are several canned loss functions like this, for example `L1DistLoss` will use the average absolute difference between the equation predictions and the actual values.  In addition, one may define custom loss functions using julia expressions in `PySR`.
 
 `parsimony=0.0`
 
@@ -254,7 +253,7 @@ This switch says that the models selected will be a specified trade-off between 
 
 This switch says that occasionally equations generated during the search will be simplified.  Superficially, it may appear to be a good idea to simplify the equations after *every* generation, to cut down on "bloat" or equations that are more complex than they need to be.  For example, $x_0+5x_0-2x_0$ vs. just $4x_0$
 
-However, the PySR developers found that allowing some bloat improved the search significantly.
+However, the `PySR` developers found that allowing some bloat improved the search significantly.
 
 `Tournament_selection_n=15`
 
@@ -289,13 +288,13 @@ This switch says that each population will have 27 individuals.  Notice that the
 
 ### Alternatives to Evolution
 
-Although genetic programming has proven to be most popular approach to Symbolic Regression (ref), it has been criticized for being slow and producing bloated equations (ref).
+Although genetic programming has proven to be most popular approach to Symbolic Regression [@dong2025recent], it has been criticized for being slow and producing bloated equations.
 
-Deterministic methods such as brute-force search (ref), mathematical programming (ref) and sparse regresion (ref) have been employed from the early times until today.  Typically, they don't solve the speed problem, but are thought to produce more interpretable equations.
+Deterministic methods such as brute-force search [@udrescu2020ai], mathematical programming [@austel2017globally] and sparse regresion [@muthyala2025symantic] have been employed from the early times until today.  Typically, they don't solve the speed problem, but are thought to produce more interpretable equations.
 
-Methods which rely on information technology have also been used, especially of late.  The idea here is to replace the random changes to the equations that are the heart of the evolutionary approach with changes based on what we know about th data.  Sometimes this information is learned from the data (ref), and other times it is supplied externally (ref) as "human experience".  In the latter case, there is the risk that the search space may become so restricted that nothing new can be learned.
+Methods which rely on information technology have also been used, especially of late.  The idea here is to replace the random changes to the equations that are the heart of the evolutionary approach with changes based on what we know about th data.  Sometimes this information is learned from the data [@anthes2025transformer], and other times it is supplied externally [@keren2023computational] as "human experience".  In the latter case, there is the risk that the search space may become so restricted that nothing new can be learned.
 
-Neural Network methods have also made an appearance.  An early approach (ref) replaced the activation functions in an ANN with trancendental functions such as sine and log.  The main idea here is that each layer would host multiple kinds of functions instead of just one.  The more recent approaches (ref) pre-train a transformer model to learn the relationships between data and equations using synthetic data.  The major advantage here is that if we ignore the pre-training phase, the training phase may be quick enough to use the model in real time.
+Neural Network methods have also made an appearance.  An early approach [@martius2016extrapolation] replaced the activation functions in an ANN with trancendental functions such as sine and log.  The main idea here is that each layer would host multiple kinds of functions instead of just one.  The more recent approaches [@kamienny2022end] pre-train a transformer model to learn the relationships between data and equations using synthetic data.  The major advantage here is that if we ignore the pre-training phase, the training phase may be quick enough to use the model in real time.
 
 
 ### Next Steps
@@ -329,6 +328,10 @@ We have 3 variables:
 
 and 70 rows.  This is a very small dataset by modern machine learning standards.  However, due to the cost of aquiring the molecular mass data, this dataset will be considered "large" by chemical engineering standards.
 
+Here is a summary of the dataset:
+```{r}
+summary(df)
+```
 One of the questions we want to answer is whether datasets like this are "too small" for symbolic regression.
 
 Here is a plot of molecular mass vs. specific gravity:
@@ -432,6 +435,7 @@ The reader will notice that all the correlations are non-linear, and that only a
 
 ### Modeling and Results
 
+#### Default Run
 Our first experiment is to run `PySR` with default parameters against our molecular mass dataset.  The resulting equation, of course, looks nothing like the existing equations:
 
 $M_w=a_{00}+\frac{a_{01}}{\gamma-a_{02}}+\frac{T_b(a_{03}T_b-a_{04})}{\gamma(a_{05}-\frac{a_{06}}{T_b})}$
@@ -512,7 +516,78 @@ It even has a (slightly) better correlation coefficient with the raw molecular m
 </table>
 </div>
 
-There are some challenges. The constant $a_{02}$ is only slightly larger than the largest $\gamma$ (specific gravity) in the dataset.  This limits the extrapolation power of this equation to higher specific gravities than seen in this dataset.
+There are some challenges. The constant $a_{02}$ is only slightly larger than the largest $\gamma$ (specific gravity) in the dataset.  This limits the extrapolation power of this equation to higher specific gravities than seen in this dataset.  Extrapolation is one of the strengths of Symbolic Regression [@sahoo2018learning]
+
+#### Power Run
+Our Second experiment is to drop the "division" binary operator $(\frac{a}{b})$ and add the "power" binary operator $(a^b)$ as the latter is a popular component of the existing correlations.
+
+There is noticeable drop in the quality of the match visually:
+
+![Power Params](around2_files/figure-html/cell-6-output-1.png)
+
+Although the equation has got simpler:
+
+$a_{00} \cdot a_{01}^{SG^{-a_{02}} + a_{03} TBP} + a_{04}$
+
+and the correlation coefficient has degraded slightly:
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Raw SG</th>
+      <th>Raw TBP</th>
+      <th>Raw MW</th>
+      <th>This Equation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Raw SG</th>
+      <td>1.000000</td>
+      <td>0.625218</td>
+      <td>0.334852</td>
+      <td>0.325151</td>
+    </tr>
+    <tr>
+      <th>Raw TBP</th>
+      <td>0.625218</td>
+      <td>1.000000</td>
+      <td>0.869591</td>
+      <td>0.868747</td>
+    </tr>
+    <tr>
+      <th>Raw MW</th>
+      <td>0.334852</td>
+      <td>0.869591</td>
+      <td>1.000000</td>
+      <td>0.997281</td>
+    </tr>
+    <tr>
+      <th>This Equation</th>
+      <td>0.325151</td>
+      <td>0.868747</td>
+      <td>0.997281</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+One can argue that nested exponents $(a^{b^c})$ aren't very explainable.  However the Stratiev correlation does this with Euler's number $\left ( a \cdot e^{b \cdot e^{c}} \right )$.
 
 ### Conclusion
 
