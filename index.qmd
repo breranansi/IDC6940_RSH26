@@ -1,5 +1,5 @@
 ---
-title: "Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids"
+title: "Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids and ....health stuff"
 subtitle: ""
 author: "Delanyce Rose & Richard Henry (Advisor: Dr. Cohen)"
 date: '`r Sys.Date()`'
@@ -29,11 +29,15 @@ Unfortunately, molecular mass is expensive to measure accurately, so that it is 
 
 Many of these correlations [@stratiev2023prediction] have been published over the decades, and although consensus has been reached on *which* predictor variables should be chosen, there is still considerable variation in the *form* of the equation appearing in the literature.
 
-Rapid progress in machine learning technologies in recent years has provided a new toolbox with which we can revisit the problem.  One of these tools is *symbolic regression* [@koza1994genetic], which generates equations from data.
+<u> Description of health challenge goes here </u>
+
+Rapid progress in machine learning technologies in recent years has provided a new toolbox with which we can revisit the problem.  One of these tools is *symbolic regression* [@koza1994genetic], which had its origins in an early attempt to teach machines to code, but is now used to generate equations from data.
 
 This technology was famously used to recreate 100 equations from the Feynman Lectures in Physics [@udrescu2020ai], and made the jump to generating differential equations [@bongard2007automated] for describing engineering and biological systems.  The story of Kepler discovering that the earth's orbit around the sun was *not* circular based on data collected by Brahe, which upended Ptolemy's conjecture made a thousand years previously [@brunton2016discovering] is often repeated as an early example of symbolic regression. Like Kepler, if we are more interested in understanding the underlying relationships between variables than prediction accuracy in the presence of noise, then symbolic regression is a good place to start.
 
 A second use case for symbolic regression concerns predicting the behaviour of systems beyond the limits of the data collected on that behaviour. Researchers at the Institute of Science and Technology [@martius2016extrapolation] in Austria were interested in predicting the performance of a robotic arm when it is operated outside of its specifications. The hypothesis was that an equation-based *extrapolation* will fail less spectacularly than a black-box one.
+
+<u> A comment about applying Symbolic Regression to wildly different areas goes here </u>
 
 ## Methods
 
@@ -271,6 +275,7 @@ In practice, however, some populations "go extinct" which in our context means t
 
 This switch says that each population will have 27 individuals.  Notice that the tournament size is smaller than this, so that there is more than one competition between individual equations.
 
+<u> Method description of health dataset goes here </u>
 
 ### Alternatives to Evolution
 
@@ -286,6 +291,8 @@ Neural Network methods have also made an appearance.  An early approach [@martiu
 ### Next Steps
 
 1. Examine our dataset and describe some of the equations that have been used historically to calculate molecular mass.
+
+2. <u> something about health goes here </u>
 
 2. Look at the options for generating equations from data in the `PySR` symbolic regression libray.
 
@@ -461,6 +468,7 @@ The reader will notice that all the correlations are non-linear, and that only a
 |cub|unary|expression cubed|
 |inv|unary|inverse of an expression|
 
+<u> Exploration of health dataset goes here </u>
 
 ### Modeling and Results
 
@@ -726,6 +734,8 @@ The correlation coefficients, however, now rival the default run:
 |Second Equation|0.999324|0.998851|1.000000|
 
 The second equation is truly facinating for two reasons.  Neither the power operator $\left (a^b \right )$ nor the division operator $\left (\frac{a}{b} \right)$ were provided to the algorithm for this run, and yet we have found the middle expression $\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}}$.
+
+<u> health dataset runs go here </u>
 
 #### General Observations
 Replication is very challenging with these symbolic regression libraries that use evolutionary algorithms.  Re-running the same dataset on the same machine with the same libraries produces different equations. In many `Scikit-Learn` algorithms, answer variation can be minimized by seeding the random number generator the same way each time, but in `PySR` we also have to turn off the optimizations that allow Julia to run the calculations massively in parallel, which contributes to the criticism that these algorithms are slow.

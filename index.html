@@ -9,7 +9,7 @@
 <meta name="author" content="Delanyce Rose &amp; Richard Henry (Advisor: Dr. Cohen)">
 <meta name="dcterms.date" content="2025-07-23">
 
-<title>Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids</title>
+<title>Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids and ….health stuff</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -2339,7 +2339,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids</h1>
+<h1 class="title">Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids and ….health stuff</h1>
 </div>
 
 
@@ -2374,9 +2374,11 @@ window.Quarto = {
 <p>Molecular mass is an important parameter used to model the physical properties of hydrocarbon fluids. These fluids, such as gasoline and lubricating oil are essential for so many aspects of modern life, and although these end-products are homogenized to exacting standards, the feed stock properties from which they are made vary significantly from one source to another and from the same source over time.</p>
 <p>Unfortunately, molecular mass is expensive to measure accurately, so that it is common practice to use more easily measured parameters to estimate the value of molecular mass.</p>
 <p>Many of these correlations <span class="citation" data-cites="stratiev2023prediction">(<a href="#ref-stratiev2023prediction" role="doc-biblioref">Stratiev et al. 2023</a>)</span> have been published over the decades, and although consensus has been reached on <em>which</em> predictor variables should be chosen, there is still considerable variation in the <em>form</em> of the equation appearing in the literature.</p>
-<p>Rapid progress in machine learning technologies in recent years has provided a new toolbox with which we can revisit the problem. One of these tools is <em>symbolic regression</em> <span class="citation" data-cites="koza1994genetic">(<a href="#ref-koza1994genetic" role="doc-biblioref">Koza 1994</a>)</span>, which generates equations from data.</p>
+<p><u> Description of health challenge goes here </u></p>
+<p>Rapid progress in machine learning technologies in recent years has provided a new toolbox with which we can revisit the problem. One of these tools is <em>symbolic regression</em> <span class="citation" data-cites="koza1994genetic">(<a href="#ref-koza1994genetic" role="doc-biblioref">Koza 1994</a>)</span>, which had its origins in an early attempt to teach machines to code, but is now used to generate equations from data.</p>
 <p>This technology was famously used to recreate 100 equations from the Feynman Lectures in Physics <span class="citation" data-cites="udrescu2020ai">(<a href="#ref-udrescu2020ai" role="doc-biblioref">Udrescu and Tegmark 2020</a>)</span>, and made the jump to generating differential equations <span class="citation" data-cites="bongard2007automated">(<a href="#ref-bongard2007automated" role="doc-biblioref">Bongard and Lipson 2007</a>)</span> for describing engineering and biological systems. The story of Kepler discovering that the earth’s orbit around the sun was <em>not</em> circular based on data collected by Brahe, which upended Ptolemy’s conjecture made a thousand years previously <span class="citation" data-cites="brunton2016discovering">(<a href="#ref-brunton2016discovering" role="doc-biblioref">Brunton, Proctor, and Kutz 2016</a>)</span> is often repeated as an early example of symbolic regression. Like Kepler, if we are more interested in understanding the underlying relationships between variables than prediction accuracy in the presence of noise, then symbolic regression is a good place to start.</p>
 <p>A second use case for symbolic regression concerns predicting the behaviour of systems beyond the limits of the data collected on that behaviour. Researchers at the Institute of Science and Technology <span class="citation" data-cites="martius2016extrapolation">(<a href="#ref-martius2016extrapolation" role="doc-biblioref">Martius and Lampert 2016</a>)</span> in Austria were interested in predicting the performance of a robotic arm when it is operated outside of its specifications. The hypothesis was that an equation-based <em>extrapolation</em> will fail less spectacularly than a black-box one.</p>
+<p><u> A comment about applying Symbolic Regression to wildly different areas goes here </u></p>
 </section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
@@ -2583,6 +2585,7 @@ window.Quarto = {
 <p>In practice, however, some populations “go extinct” which in our context means that they fail to produce reasonable equations. <code>PySR</code> does allow some “immigration” between populations, which produces benefits in both directions. The “better” populations have some diversity injected into them, and the “worse” populations are given new opportunities to succeed.</p>
 <p><code>population_size=27</code></p>
 <p>This switch says that each population will have 27 individuals. Notice that the tournament size is smaller than this, so that there is more than one competition between individual equations.</p>
+<p><u> Method description of health dataset goes here </u></p>
 </section>
 </section>
 <section id="alternatives-to-evolution" class="level3">
@@ -2596,6 +2599,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="next-steps">Next Steps</h3>
 <ol type="1">
 <li><p>Examine our dataset and describe some of the equations that have been used historically to calculate molecular mass.</p></li>
+<li><p><u> something about health goes here </u></p></li>
 <li><p>Look at the options for generating equations from data in the <code>PySR</code> symbolic regression libray.</p></li>
 <li><p>Compare and contrast the equations that are generated by <code>PySR</code> for our dataset as the options are varied.</p></li>
 </ol>
@@ -2895,6 +2899,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+<p><u> Exploration of health dataset goes here </u></p>
 </section>
 </section>
 </section>
@@ -3333,6 +3338,7 @@ Second Equation
 </tbody>
 </table>
 <p>The second equation is truly facinating for two reasons. Neither the power operator <span class="math inline">\(\left (a^b \right )\)</span> nor the division operator <span class="math inline">\(\left (\frac{a}{b} \right)\)</span> were provided to the algorithm for this run, and yet we have found the middle expression <span class="math inline">\(\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}}\)</span>.</p>
+<p><u> health dataset runs go here </u></p>
 </section>
 <section id="general-observations" class="level4">
 <h4 class="anchored" data-anchor-id="general-observations">General Observations</h4>
