@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Delanyce Rose &amp; Richard Henry (Advisor: Dr. Cohen)">
+<meta name="author" content="Delanyce Rose &amp; Richard Henry">
 <meta name="dcterms.date" content="2025-07-23">
 
 <title>Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids and ….health stuff</title>
@@ -2340,6 +2340,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids and ….health stuff</h1>
+<p class="subtitle lead">Advisor: Dr. A. Cohen</p>
 </div>
 
 
@@ -2349,7 +2350,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Delanyce Rose &amp; Richard Henry (Advisor: Dr. Cohen) </p>
+             <p>Delanyce Rose &amp; Richard Henry </p>
           </div>
   </div>
     
@@ -2469,7 +2470,7 @@ window.Quarto = {
 <p><code>myMod=PySRRegressor()</code></p>
 <p>Following that, we instruct the software to search for a suitable equation for the data we have provided:</p>
 <p><code>myMod.fit(x.reshape(-1, 1),y)</code></p>
-<p>Here, <code>x</code> is specific gravity and <code>y</code> is the API gravity. The <code>reshape</code> is necessary as <code>Scikit-Learn</code> usually expects more than one predictor variable.</p>
+<p>Here, <code>x</code> is specific gravity and <code>y</code> is the API gravity. The <code>reshape</code> is necessary as <code>Scikit-Learn</code> expects more than one predictor variable.</p>
 <p>Next, we can check the quality of the fit by plotting the predicted values against the original values:</p>
 <p><code>y_pred=myMod.predict(x.reshape(-1, 1))</code></p>
 <p>The reader will notice that we have neglected to divide our dataset into <code>test</code> and <code>train</code> buckets for this demonstration.</p>
@@ -2818,7 +2819,7 @@ window.Quarto = {
 <p><span class="math display">\[M_w = X_0 + \frac{X_1}{T_b} + \frac{X_2}{T_b^2}\]</span></p>
 <p><span class="math display">\[X_0 = a_{00} + a_{01} γ_o+ \left (a_{02} + a_{03} γ_o \right ) T_b\]</span></p>
 <p><span class="math display">\[X_1 = \left (1+ a_{04} γ_o + a_{05}γ_o^2 \right ) \left (a_{06} + \frac{a_ {07}}{T_b} \right ) \cdot 10^7\]</span></p>
-<p><span class="math display">\[X_2 = \left (1+ a_{08} γ_o+ a_{09} γ_o^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^12\]</span></p>
+<p><span class="math display">\[X_2 = \left (1+ a_{08} γ_o+ a_{09} γ_o^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^{12}\]</span></p>
 </section>
 <section id="american-petroleum-institute-1977" class="level5">
 <h5 class="anchored" data-anchor-id="american-petroleum-institute-1977">American Petroleum Institute (1977)</h5>
@@ -2918,129 +2919,78 @@ window.Quarto = {
 </div>
 <p>It even has a (slightly) better correlation coefficient with the raw molecular mass data than the equation presented <em>with</em> this data in the Goosens paper:</p>
 <div>
-
-<table class="dataframe table table-sm table-striped small">
+<style scoped>
+.dataframe tbody tr th:only-of-type {
+vertical-align: middle;
+}
+.dataframe tbody tr th {
+vertical-align: top;
+}
+.dataframe thead th {
+text-align: right;
+}
+</style>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 15%">
+<col style="width: 13%">
+</colgroup>
 <thead>
-<tr>
-<th>
-</th>
-<th>
-Raw SG
-</th>
-<th>
-Raw TBP
-</th>
-<th>
-Raw MW
-</th>
-<th>
-Goossens<br>Equation
-</th>
-<th>
-This<br>Equation
-</th>
+<tr class="header">
+<th></th>
+<th>Raw SG</th>
+<th>Raw TBP</th>
+<th>Raw MW</th>
+<th>Goossens<br>
+Equation</th>
+<th>This<br>
+Equation</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<th>
-Raw SG
-</th>
-<td>
-1.000000
-</td>
-<td>
-0.625218
-</td>
-<td>
-0.334852
-</td>
-<td>
-0.339126
-</td>
-<td>
-0.337190
-</td>
+<tr class="odd">
+<td>Raw SG</td>
+<td>1.000000</td>
+<td>0.625218</td>
+<td>0.334852</td>
+<td>0.339126</td>
+<td>0.337190</td>
 </tr>
-<tr>
-<th>
-Raw TBP
-</th>
-<td>
-0.625218
-</td>
-<td>
-1.000000
-</td>
-<td>
-0.869591
-</td>
-<td>
-0.868486
-</td>
-<td>
-0.871037
-</td>
+<tr class="even">
+<td>Raw TBP</td>
+<td>0.625218</td>
+<td>1.000000</td>
+<td>0.869591</td>
+<td>0.868486</td>
+<td>0.871037</td>
 </tr>
-<tr>
-<th>
-Raw MW
-</th>
-<td>
-0.334852
-</td>
-<td>
-0.869591
-</td>
-<td>
-1.000000
-</td>
-<td>
-0.999711
-</td>
-<td>
-0.999847
-</td>
+<tr class="odd">
+<td>Raw MW</td>
+<td>0.334852</td>
+<td>0.869591</td>
+<td>1.000000</td>
+<td>0.999711</td>
+<td>0.999847</td>
 </tr>
-<tr>
-<th>
-Goossens Equation
-</th>
-<td>
-0.339126
-</td>
-<td>
-0.868486
-</td>
-<td>
-0.999711
-</td>
-<td>
-1.000000
-</td>
-<td>
-0.999798
-</td>
+<tr class="even">
+<td>Goossens Equation</td>
+<td>0.339126</td>
+<td>0.868486</td>
+<td>0.999711</td>
+<td>1.000000</td>
+<td>0.999798</td>
 </tr>
-<tr>
-<th>
-This Equation
-</th>
-<td>
-0.337190
-</td>
-<td>
-0.871037
-</td>
-<td>
-0.999847
-</td>
-<td>
-0.999798
-</td>
-<td>
-1.000000
-</td>
+<tr class="odd">
+<td>This Equation</td>
+<td>0.337190</td>
+<td>0.871037</td>
+<td>0.999847</td>
+<td>0.999798</td>
+<td>1.000000</td>
 </tr>
 </tbody>
 </table>
@@ -3059,96 +3009,64 @@ This Equation
 </div>
 <p>Although the equation has got simpler:</p>
 <p><span class="math display">\[M_w=a_{00} \cdot a_{01}^{\gamma_o^{-a_{02}} + a_{03} T_b} + a_{04}\]</span></p>
-and the correlation coefficient has degraded slightly:
+<p>and the correlation coefficient has degraded slightly:</p>
 <div>
-
-<table class="dataframe table table-sm table-striped small">
+<style scoped>
+.dataframe tbody tr th:only-of-type {
+vertical-align: middle;
+}
+.dataframe tbody tr th {
+vertical-align: top;
+}
+.dataframe thead th {
+text-align: right;
+}
+</style>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 22%">
+</colgroup>
 <thead>
-<tr>
-<th>
-</th>
-<th>
-Raw SG
-</th>
-<th>
-Raw TBP
-</th>
-<th>
-Raw MW
-</th>
-<th>
-This Equation
-</th>
+<tr class="header">
+<th></th>
+<th>Raw SG</th>
+<th>Raw TBP</th>
+<th>Raw MW</th>
+<th>This Equation</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<th>
-Raw SG
-</th>
-<td>
-1.000000
-</td>
-<td>
-0.625218
-</td>
-<td>
-0.334852
-</td>
-<td>
-0.325151
-</td>
+<tr class="odd">
+<td>Raw SG</td>
+<td>1.000000</td>
+<td>0.625218</td>
+<td>0.334852</td>
+<td>0.325151</td>
 </tr>
-<tr>
-<th>
-Raw TBP
-</th>
-<td>
-0.625218
-</td>
-<td>
-1.000000
-</td>
-<td>
-0.869591
-</td>
-<td>
-0.868747
-</td>
+<tr class="even">
+<td>Raw TBP</td>
+<td>0.625218</td>
+<td>1.000000</td>
+<td>0.869591</td>
+<td>0.868747</td>
 </tr>
-<tr>
-<th>
-Raw MW
-</th>
-<td>
-0.334852
-</td>
-<td>
-0.869591
-</td>
-<td>
-1.000000
-</td>
-<td>
-0.997281
-</td>
+<tr class="odd">
+<td>Raw MW</td>
+<td>0.334852</td>
+<td>0.869591</td>
+<td>1.000000</td>
+<td>0.997281</td>
 </tr>
-<tr>
-<th>
-This Equation
-</th>
-<td>
-0.325151
-</td>
-<td>
-0.868747
-</td>
-<td>
-0.997281
-</td>
-<td>
-1.000000
-</td>
+<tr class="even">
+<td>This Equation</td>
+<td>0.325151</td>
+<td>0.868747</td>
+<td>0.997281</td>
+<td>1.000000</td>
 </tr>
 </tbody>
 </table>
@@ -3164,129 +3082,76 @@ This Equation
 <p>This is a dramatically different equation. This experience suggests that the <em>real</em> reason the deterministic algorithms are still under active development today is to avoid this kind of ambiguity.</p>
 <p>Our correlation coefficients are <em>still</em> not as good as the default run:</p>
 <div>
-
-<table class="dataframe table table-sm table-striped small">
+<style scoped>
+.dataframe tbody tr th:only-of-type {
+vertical-align: middle;
+}
+.dataframe tbody tr th {
+vertical-align: top;
+}
+.dataframe thead th {
+text-align: right;
+}
+</style>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
 <thead>
-<tr>
-<th>
-</th>
-<th>
-Raw SG
-</th>
-<th>
-Raw TBP
-</th>
-<th>
-Raw MW
-</th>
-<th>
-1st Equation
-</th>
-<th>
-2nd Equation
-</th>
+<tr class="header">
+<th></th>
+<th>Raw SG</th>
+<th>Raw TBP</th>
+<th>Raw MW</th>
+<th>1st Equation</th>
+<th>2nd Equation</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<th>
-Raw SG
-</th>
-<td>
-1.000000
-</td>
-<td>
-0.625218
-</td>
-<td>
-0.334852
-</td>
-<td>
-0.348819
-</td>
-<td>
-0.344733
-</td>
+<tr class="odd">
+<td>Raw SG</td>
+<td>1.000000</td>
+<td>0.625218</td>
+<td>0.334852</td>
+<td>0.348819</td>
+<td>0.344733</td>
 </tr>
-<tr>
-<th>
-Raw TBP
-</th>
-<td>
-0.625218
-</td>
-<td>
-1.000000
-</td>
-<td>
-0.869591
-</td>
-<td>
-0.869577
-</td>
-<td>
-0.867574
-</td>
+<tr class="even">
+<td>Raw TBP</td>
+<td>0.625218</td>
+<td>1.000000</td>
+<td>0.869591</td>
+<td>0.869577</td>
+<td>0.867574</td>
 </tr>
-<tr>
-<th>
-Raw MW
-</th>
-<td>
-0.334852
-</td>
-<td>
-0.869591
-</td>
-<td>
-1.000000
-</td>
-<td>
-0.997705
-</td>
-<td>
-0.998420
-</td>
+<tr class="odd">
+<td>Raw MW</td>
+<td>0.334852</td>
+<td>0.869591</td>
+<td>1.000000</td>
+<td>0.997705</td>
+<td>0.998420</td>
 </tr>
-<tr>
-<th>
-First Equation
-</th>
-<td>
-0.348819
-</td>
-<td>
-0.869577
-</td>
-<td>
-0.997705
-</td>
-<td>
-1.000000
-</td>
-<td>
-0.999497
-</td>
+<tr class="even">
+<td>First Equation</td>
+<td>0.348819</td>
+<td>0.869577</td>
+<td>0.997705</td>
+<td>1.000000</td>
+<td>0.999497</td>
 </tr>
-<tr>
-<th>
-Second Equation
-</th>
-<td>
-0.344733
-</td>
-<td>
-0.867574
-</td>
-<td>
-0.998420
-</td>
-<td>
-0.999497
-</td>
-<td>
-1.000000
-</td>
+<tr class="odd">
+<td>Second Equation</td>
+<td>0.344733</td>
+<td>0.867574</td>
+<td>0.998420</td>
+<td>0.999497</td>
+<td>1.000000</td>
 </tr>
 </tbody>
 </table>
@@ -3313,39 +3178,75 @@ Second Equation
 <thead>
 <tr class="header">
 <th></th>
-<th>Raw Mw</th>
-<th>First Equation</th>
-<th>Second Equation</th>
+<th style="text-align: right;">Raw Mw</th>
+<th style="text-align: right;">First Equation</th>
+<th style="text-align: right;">Second Equation</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Raw Mw</td>
-<td>1.000000</td>
-<td>0.998880</td>
-<td>0.999324</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">0.998880</td>
+<td style="text-align: right;">0.999324</td>
 </tr>
 <tr class="even">
 <td>First Equation</td>
-<td>0.998880</td>
-<td>1.000000</td>
-<td>0.998851</td>
+<td style="text-align: right;">0.998880</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">0.998851</td>
 </tr>
 <tr class="odd">
 <td>Second Equation</td>
-<td>0.999324</td>
-<td>0.998851</td>
-<td>1.000000</td>
+<td style="text-align: right;">0.999324</td>
+<td style="text-align: right;">0.998851</td>
+<td style="text-align: right;">1.000000</td>
 </tr>
 </tbody>
 </table>
 <p>The second equation is truly fascinating for two reasons. Neither the power operator <span class="math inline">\(\left (a^b \right )\)</span> nor the division operator <span class="math inline">\(\left (\frac{a}{b} \right)\)</span> were provided to the algorithm for this run, and yet we have found the middle expression <span class="math inline">\(\left( \frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} \right)\)</span>.</p>
+</section>
+<section id="validation-runs" class="level4">
+<h4 class="anchored" data-anchor-id="validation-runs">Validation Runs</h4>
+<p>As promised, we used the Hosseinifar dataset of 10 records (12.5%) to validate some of these equations:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: right;">Raw<br>Mw</th>
+<th style="text-align: right;">Default<br>Run</th>
+<th style="text-align: right;">Goossens<br>Correlation</th>
+<th style="text-align: right;">Power<br>Run</th>
+<th style="text-align: right;">Exponential<br>Run #2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Raw Mw</td>
+<td style="text-align: right;">1.000000</td>
+<td style="text-align: right;">0.999957</td>
+<td style="text-align: right;">0.999939</td>
+<td style="text-align: right;">0.996964</td>
+<td style="text-align: right;">0.998954</td>
+</tr>
+</tbody>
+</table>
+<p>All of these are very good, with the validation coefficients exceeding the training coefficients. We will resist the temptation to declare victory over overtraining, as the Hosseinifar dataset is far better behaved than the Goossens dataset.</p>
+<p>A better approach is probably to start increasing <code>parsimony</code> or decreasing <code>maxsize</code> or <code>maxdepth</code> until the correlation coefficients start to deteriorate.</p>
 <p><u> health dataset runs go here </u></p>
 </section>
 <section id="general-observations" class="level4">
 <h4 class="anchored" data-anchor-id="general-observations">General Observations</h4>
 <p>Replication is very challenging with these symbolic regression libraries that use evolutionary algorithms. Re-running the same dataset on the same machine with the same libraries produces different equations. In many <code>Scikit-Learn</code> algorithms, answer variation can be minimized by seeding the random number generator the same way each time, but in <code>PySR</code> we also have to turn off the optimizations that allow Julia to run the calculations massively in parallel, which contributes to the criticism that these algorithms are slow.</p>
-<p>Interestingly, switching between the cloud-based compute service <a href="https://colab.research.google.com/">Google Colab</a> and an ancient laptop with a notebook file that was suitably “locked down” produced the same equations. This was reassuring. Moving that same file to a modern desktop with a different brand of processor but otherwise identical set-up produced <em>different</em> equations. This was terrifying.</p>
+<p>Interestingly, switching between the cloud-based compute service <a href="https://colab.research.google.com/">Google Colab</a> and an ancient laptop with a Jupyter notebook file that was suitably “locked down” produces the same equations. This is reassuring. Moving that same file to a modern desktop with a different processor but otherwise identical set-up produces <em>different</em> equations. This is terrifying.</p>
 </section>
 </section>
 <section id="conclusions" class="level3">
