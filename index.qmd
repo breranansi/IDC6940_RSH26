@@ -29,85 +29,69 @@ Unfortunately, molecular mass is expensive to measure accurately, so that it is 
 
 Many of these correlations [@stratiev2023prediction] have been published over the decades, and although consensus has been reached on *which* predictor variables should be chosen, there is still considerable variation in the *form* of the equation appearing in the literature.
 
-Rapid progress in machine learning technologies in recent years has provided a new toolbox with which we can revisit the problem.  One of these tools is *symbolic regression*.
+Rapid progress in machine learning technologies in recent years has provided a new toolbox with which we can revisit the problem.  One of these tools is *symbolic regression* [@koza1994genetic], which generates equations from data.
 
+This technology was famously used to recreate 100 equations from the Feynman Lectures in Physics [@udrescu2020ai], and made the jump to generating differential equations [@bongard2007automated] for describing engineering and biological systems.  The story of Kepler discovering that the earth's orbit around the sun was *not* circular based on data collected by Brahe, which upended Ptolemy's conjecture made a thousand years previously [@brunton2016discovering] is often repeated as an early example of symbolic regression. Like Kepler, if we are more interested in understanding the underlying relationships between variables than prediction accuracy in the presence of noise, then symbolic regression is a good place to start.
 
+A second use case for symbolic regression concerns predicting the behaviour of systems beyond the limits of the data collected on that behaviour. Researchers at the Institute of Science and Technology [@martius2016extrapolation] in Austria were interested in predicting the performance of a robotic arm when it is operated outside of its specifications. The hypothesis was that an equation-based *extrapolation* will fail less spectacularly than a black-box one.
+
+## Methods
 
 Consider a dataset consisting of an independent variable $X$ and a dependent variable $y$. Symbolic Regression [@koza1994genetic] allows us to discover, from the data, an analytical expression $f(X)$ which we can use to predict values of $y$ for values of $X$ unseen by the algorithm during training. For example:
 
-$\hat{y}_{23} \approx f(X_{23})$
-
-
+$$\hat{y}_{23} \approx f(X_{23})$$
 
 Neural networks allow us to make this prediction without first generating an analytical expression. Often, this is good enough, but we give up a property called *explainability*.
 
 In the case of a neural net, we can reclaim some of this explainability by performing a second prediction for a value of $X$ we really don't care about, but happens to be close to $X_{23}$:
 
-$\hat{y}_{24} \approx f(X_{24})$
+$$\hat{y}_{24} \approx f(X_{24})$$
 
 And now we can make statements on whether $y$ increases or decreases with increasing $X$ in the neighbourhood of $X_{23}$:
 
-$\frac{dy}{dX}|_{X_{23}}\approx \frac{\hat{y}_{24}-\hat{y}_{23}}{X_{24}-X_{23}}$
-
-
+$$\frac{dy}{dX}|_{X_{23}}\approx \frac{\hat{y}_{24}-\hat{y}_{23}}{X_{24}-X_{23}}$$
 
 The traditional alternative to neural networks which provides explainability is linear regression:
 
-$\hat{y}_{23} \approx \beta_0 +\beta_1 \cdot X$
+$$\hat{y}_{23} \approx \beta_0 +\beta_1 \cdot X$$
 
 In which we use the data to discover the best values of the constants $\beta_0$ and $\beta_1$.
 
 However, this may not be the best functional form for this predictive equation. For example, maybe an exponential or a logarithmic relationship may be better:
 
-$\hat{y}_{23} \approx \beta_2 +\beta_3 \cdot e^X$
+$$\hat{y}_{23} \approx \beta_2 +\beta_3 \cdot e^X$$
 
 or
 
-$\hat{y}_{23} \approx \beta_4 +\beta_5 \cdot log(X)$
+$$\hat{y}_{23} \approx \beta_4 +\beta_5 \cdot log(X)$$
 
 or maybe
 
-$log(\hat{y}_{23}) \approx \beta_6 +\beta_7 \cdot log(X)$
+$$log(\hat{y}_{23}) \approx \beta_6 +\beta_7 \cdot log(X)$$
 
 We can certainly investigate these, and hundreds of other possibilities by building multiple models and comparing the performance between them.
 
-
-
 Alternative Conditional Expectations [@breiman1985estimating] is a technology that will automatically transform both the dependent and the independent variables such that the relationship between the dependent variable and a linear combination of the independent variables is as straight as possible.  Accordingly, building and testing hundreds of linear regression models can be avoided. This is different from the Box-Cox transform, where the aim is to make the population more normal.
-
 
 Although, as shown above, we can use linear regression to find non-linear relationships between variables, some relationships may be challenging, such as:
 
-$\hat{y}\approx\frac{\beta_0+\beta_1x+\beta_2x^2}{\beta_3+\beta_4x}$
+$$\hat{y}\approx\frac{\beta_0+\beta_1x+\beta_2x^2}{\beta_3+\beta_4x}$$
 
 Rational fractions like this may require full-blown non-linear regression techniques which will require us to specify the form of the equation and then use the data to find the values of the constants.
 
-A very interesting recent development [@liu2024kan] in this space is the Kolmogorov-Arnold Network, in which the activation functions sit on the edges instead of the nodes.  Like the weights they replace in a regular ANN, each one is different, and therefore by plotting the shapes of these activation functions, one could, possibly, if the network is small enough, intuit what is happening to the data as it goes through the network.  Although this provides *explainability* indirectly, it does not serve up an equation.
+A very interesting recent development [@liu2024kan] in this space is the Kolmogorov-Arnold Network, in which the activation functions sit on the edges instead of the nodes.  Like the weights they replace in a regular ANN, each one is different, and therefore by plotting the shapes of these activation functions, one could, if the network is small enough, intuit what is happening to the data as it goes through the network.  Although this provides *explainability*, it does not serve up an equation.
 
 The promise of symbolic regression is to find the optimum functional form, which may *not* be linear, *and* the optimum values of the constants in the same workflow.
 
-
-
-### Next Steps
-
-In this paper, we will endeavor to:
-
--   Describe the most common workflow for symbolic regression
-
--   Use symbolic regression to analyze a molecular mass dataset
-
-
-## Methods
-
 ### Typical Workflow
 
-1.  The first step is deciding *how* we are going to encode the equations so that they are easily manipulated in software. The challenges are similar to text processing. For example, we will want equations to be of variable length (like our sentences) and the order of the units making up the equation matter, just as the order of the words making up a sentence do.
+1.  The first step is deciding *what* we are going to encode so that the generated equations have a reasonable chance of modeling the data we present to the algorithm.  Our equations will consist of operators, variables and constants, and here we are talking about operators.  One may be tempted to simply include all operators known to man, but the more operators we use, the slower most algorithms run.
 
 2.  The second step is to decide *how* we are going to measure the fitness of a particular equation. The standard workflow is to decode the equation into a function, apply that function to each row in the training dataset, and then calculate the mean squared error between the target value and the equation result.
 
 3.  The third step is to decide *when* we will stop the workflow. Usually we will set a maximum number of generations *and* an error threshold that the best equation has to meet to stop the search. This equation is the one that will be offered-up as the answer at the end of the workflow.
 
-4.  The fourth step is to generate an initial population of candidate equations. The quantity is usually in the thousands, and involves random selection.
+4.  The fourth step is to generate an initial population of candidate equations. The quantity is usually in the thousands, and involves the random selection of the components mentioned in the first step.
 
 5.  After the first fitness evaluation, the quality of the equations are usually quite poor. The best are selected, and then changed randomly to form the next generation, in a process influenced by biological evolution theory.
 
@@ -117,12 +101,11 @@ In this paper, we will endeavor to:
 
 8.  Then we again select the best and change them for the next generation.
  
-![Figure 2: Workflow](generic_workflow.svg)
 
 ### Toy Dataset
 We are going to build a toy dataset to demonstrate the workflow. In addition to its small size (one predictor variable, 21 rows) the fact that we know *exactly* what the generating equation is gives us a yardstick to compare our results against.  Here is the equation for predicting API gravity from specific gravity:
 
-$\gamma_{API}=\frac{141.5}{\gamma_{o}}-131.5$
+$$\gamma_{API}=\frac{141.5}{\gamma_{o}}-131.5$$
 
 |Symbol|Meaning|Units|
 |---|---|---|
@@ -139,9 +122,7 @@ grid()
 ```
 
 ### Software Implementation
-Most libraries available in Python for Symbolic Regression follow the Scikit-Learn model.  We will  use the `PySR` library [@cranmer2023interpretable] for demonstration purposes.  First, we import the main function for the library:
-
-`%pip install -U pysr`
+Most libraries available in Python for Symbolic Regression follow the `Scikit-Learn` grammar model.  We will  use the `PySR` library [@cranmer2023interpretable] for demonstration purposes.  First, we import the main function for the library:
 
 `from pysr import PySRRegressor()`
 
@@ -153,7 +134,7 @@ Following that, we instruct the software to search for a suitable equation for t
 
 `myMod.fit(x.reshape(-1, 1),y)`
 
-Here, `x` is specific gravity and `y` is the API Gravity.  The `reshape` is necessary as Scikit-Learn usually expects more than one predictor variable.
+Here, `x` is specific gravity and `y` is the API gravity.  The `reshape` is necessary as Scikit-Learn usually expects more than one predictor variable.
 
 Next, we can check the quality of the fit by plotting the predicted values against the original values:
 
@@ -202,7 +183,7 @@ This was enough to throw-off the estimation of the constants a bit, but the form
 $-132.05688+\frac{141.88547}{x_0}$
 
 ### Belly of the Beast
-There are a large number of hyperparameters in a typical symbolic regression model that we have defaulted in the Toy dataset model above.  Here are a few of them:
+There are a large number of hyperparameters in a typical symbolic regression model that we have defaulted in the Toy dataset model above.  Here are a *few* of them:
 
 #### Step 1 (Encoding)
 
@@ -220,12 +201,13 @@ Here we choose the unary operators that may appear in our equations. Some librar
 
 `maxsize=30`
 
-This is the maximum length of a generated equation.  Our toy equation has a length of five:
+This is the maximum length of a generated equation.  Our (true) toy equation has a length of five:
 
 |1|2|3|4|5|
 |---|---|---|---|---|
 |minus|divide|141.5|specific gravity|131.5|
 
+Notice that the `"best"` generated toy equation is significantly longer than this, and only shrinks to 5 after post-processing.  Accordingly, we want to be liberal with this number.
 
 As a side note, this way of writing an equation is called "Polish Notation", and a post-fix variant was used on scientific calculators in the 1970's as it was more efficient.  The learning curve, however, was brutal for mere mortals, so that owning one of these 'RPN' artifacts became a status symbol in the engineering community well into the 1990's.  Yeah, I know this is irrelevant.
 
@@ -294,7 +276,7 @@ This switch says that each population will have 27 individuals.  Notice that the
 
 Although genetic programming has proven to be most popular approach to Symbolic Regression [@dong2025recent], it has been criticized for being slow and producing bloated equations.
 
-Deterministic methods such as brute-force search [@udrescu2020ai], mathematical programming [@austel2017globally] and sparse regresion [@muthyala2025symantic] have been employed from the early times until today.  Typically, they don't solve the speed problem, but are thought to produce more interpretable equations.
+Deterministic methods such as brute-force search [@udrescu2020ai], mathematical programming [@austel2017globally] and sparse regresion [@muthyala2025symantic] have been employed. The latter is particularly good at removing variables that don't materially contribute to the prediction. Typically, they don't solve the speed problem, but are thought to produce more interpretable equations.
 
 Methods which rely on information technology have also been used, especially of late.  The idea here is to replace the random changes to the equations that are the heart of the evolutionary approach with changes based on what we know about th data.  Sometimes this information is learned from the data [@anthes2025transformer], and other times it is supplied externally [@keren2023computational] as "human experience".  In the latter case, there is the risk that the search space may become so restricted that nothing new can be learned.
 
@@ -424,49 +406,49 @@ Here are a few of them using the following nomenclature:
 
 
 ##### Hariu & Sage (1969)
-$M_w = a_{00} + a_{01} K_w + a_{02} K_w^2 + a_{03} T_b K_w + a_04 T_b K_w^2 + a_{05} T_b^2 K_w + a_{06} T_b^2 K_w^2$
+$$M_w = a_{00} + a_{01} K_w + a_{02} K_w^2 + a_{03} T_b K_w + a_04 T_b K_w^2 + a_{05} T_b^2 K_w + a_{06} T_b^2 K_w^2$$
 
-$K_w =\frac{\sqrt[3]T_b}{\gamma_o}$
+$$K_w =\frac{\sqrt[3]T_b}{\gamma_o}$$
 
 ##### Kesler & Lee (1976)
-$M_w = X_0 + \frac{X_1}{T_b} + \frac{X_2}{T_b^2}$
+$$M_w = X_0 + \frac{X_1}{T_b} + \frac{X_2}{T_b^2}$$
 
-$X_0 = a_{00} + a_{01} γ_o+ \left (a_{02} + a_{03} γ_o \right ) T_b$
+$$X_0 = a_{00} + a_{01} γ_o+ \left (a_{02} + a_{03} γ_o \right ) T_b$$
 
-$X_1 = \left (1+ a_{04} γ_o + a_{05}γ_o^2 \right ) \left (a_{06} + \frac{a_ {07}}{T_b} \right ) \cdot 10^7$
+$$X_1 = \left (1+ a_{04} γ_o + a_{05}γ_o^2 \right ) \left (a_{06} + \frac{a_ {07}}{T_b} \right ) \cdot 10^7$$
 
-$X_2 = \left (1+ a_{08} γ_o+ a_{09} γ_o^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^12$
+$$X_2 = \left (1+ a_{08} γ_o+ a_{09} γ_o^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^12$$
 
 ##### American Petroleum Institute (1977)
-$M_w = a_{00} e^ {\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^{a_{03}} γ_o^ {a_{04}}$
+$$M_w = a_{00} e^ {\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^{a_{03}} γ_o^ {a_{04}}$$
 
 ##### Winn, Sim & Daubert (1980)
-$M_w = a_{00} T_b^{a_ {01}} γ_o^{a_{02}}$
+$$M_w = a_{00} T_b^{a_ {01}} γ_o^{a_{02}}$$
 
 ##### Riazi & Daubert (1980)
-$M_w = a_{00} T_b^{a_ {01}}γ_o^{a_{02}}$
+$$M_w = a_{00} T_b^{a_ {01}}γ_o^{a_{02}}$$
 
 ##### Rao & Bardon (1985)
-$ln {M_w} = (a_{00} + a_{01} K_w) ln (\frac{T_b} {a_{02} + a_{03} K_w} )$
+$$ln {M_w} = (a_{00} + a_{01} K_w) ln (\frac{T_b} {a_{02} + a_{03} K_w} )$$
 
-$K_w =\frac{\sqrt[3]T_b}{\gamma_o}$
+$$K_w =\frac{\sqrt[3]T_b}{\gamma_o}$$
 
 ##### Riazi & Daubert (1987)
-$M_w = a_{00} T_b^{a_{01}} γ_o^{a_{02}} e^{\left (a_{03} T_b + a_{04} γ_o + a_{05} T_b γ \right )}$
+$$M_w = a_{00} T_b^{a_{01}} γ_o^{a_{02}} e^{\left (a_{03} T_b + a_{04} γ_o + a_{05} T_b γ \right )}$$
 
 ##### Goossens (1996)
-$M_w = a_{00} T_b^{X_0}$
+$$M_w = a_{00} T_b^{X_0}$$
 
-$X_0 =\frac {a_{03} + a_{04} ln {\left (\frac{T_b}  {a_{05} - T_b} \right )}}  {a_{01} γ_o + a_{02}}$
+$$X_0 =\frac {a_{03} + a_{04} ln {\left (\frac{T_b}  {a_{05} - T_b} \right )}}  {a_{01} γ_o + a_{02}}$$
 
 ##### Linan (2011)
-$M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^ {a_{03}} γ_o^{a_{04}}$
+$$M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^ {a_{03}} γ_o^{a_{04}}$$
 
 ##### Hosseinifar & Shahverdi (2021)
-$M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ_o} {3-γ_o} \right )}^{\frac{a_{02}}{2}} + a_{03} T_b^{a_{04}} {\left (\frac{3+2γ_o}{3-γ_o} \right )}^{\frac{a_{05}}{2}} \right ]}^{a_{06}}$
+$$M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ_o} {3-γ_o} \right )}^{\frac{a_{02}}{2}} + a_{03} T_b^{a_{04}} {\left (\frac{3+2γ_o}{3-γ_o} \right )}^{\frac{a_{05}}{2}} \right ]}^{a_{06}}$$
 
 ##### Stratiev (2023)
-$M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ_o^{a_{05}}} \right )} \right ]}$
+$$M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ_o^{a_{05}}} \right )} \right ]}$$
 
 The reader will notice that all the correlations are non-linear, and that only a few of them can be easily transformed into a linear relationship. Some of the additional operators we may want to consider include:
 
@@ -483,7 +465,7 @@ The reader will notice that all the correlations are non-linear, and that only a
 ### Modeling and Results
 
 #### Default Run
-Our first experiment is to run `PySR` with default parameters against our molecular mass dataset.  The resulting equation,  looks nothing like the existing equations:
+Our first experiment is to run `PySR` with default parameters against our molecular mass dataset.  The resulting equation looks nothing like the existing equations:
 
 $M_w=a_{00}+\frac{a_{01}}{\gamma_o-a_{02}}+\frac{T_b(a_{03}T_b-a_{04})}{\gamma_o(a_{05}-\frac{a_{06}}{T_b})}$
 
@@ -563,7 +545,7 @@ It even has a (slightly) better correlation coefficient with the raw molecular m
 </table>
 </div>
 
-There are some challenges. The constant $a_{02}$ is only slightly larger than the largest $\gamma$ (specific gravity) in the dataset.  This limits the extrapolation power of this equation to higher specific gravities than seen in this dataset.  Extrapolation is one of the strengths of Symbolic Regression [@sahoo2018learning]
+There are some challenges. The constant $a_{02}$ is only slightly larger than the largest $\gamma_o$ (specific gravity) in the dataset.  This limits the extrapolation power of this equation to higher specific gravities than seen in this dataset.  Extrapolation is one of the strengths of Symbolic Regression [@sahoo2018learning]
 
 #### Power Run
 Our Second experiment is to drop the "division" binary operator $(\frac{a}{b})$ and add the "power" binary operator $(a^b)$ as the latter is a popular component of the existing correlations.
@@ -645,7 +627,7 @@ Accordingly, we re-set the random number generator and tried again:
 
 $\displaystyle M_w= a_{00} T_b + a_{01} e^{- \gamma_o^{2} + a_{02} \gamma_o + a_{03} T_b}$
 
-This is a dramatically different equation.  This experience suggests that the *real* reason the deterministic algorithms are still under active development today is to avoid this kind of ambiguity. We have shown (with the Toy dataset) that equation bloat can often be reduced automatically with symbolic mathematics packages.
+This is a dramatically different equation.  This experience suggests that the *real* reason the deterministic algorithms are still under active development today is to avoid this kind of ambiguity.
 
 Our correlation coefficients are *still* not as good as the default run:
 
@@ -667,16 +649,16 @@ Our correlation coefficients are *still* not as good as the default run:
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>SG</th>
-      <th>TBP</th>
-      <th>MW</th>
+      <th>Raw SG</th>
+      <th>Raw TBP</th>
+      <th>Raw MW</th>
       <th>1st Equation</th>
       <th>2nd Equation</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>SG</th>
+      <th>Raw SG</th>
       <td>1.000000</td>
       <td>0.625218</td>
       <td>0.334852</td>
@@ -684,7 +666,7 @@ Our correlation coefficients are *still* not as good as the default run:
       <td>0.344733</td>
     </tr>
     <tr>
-      <th>TBP</th>
+      <th>Raw TBP</th>
       <td>0.625218</td>
       <td>1.000000</td>
       <td>0.869591</td>
@@ -692,7 +674,7 @@ Our correlation coefficients are *still* not as good as the default run:
       <td>0.867574</td>
     </tr>
     <tr>
-      <th>MW</th>
+      <th>Raw MW</th>
       <td>0.334852</td>
       <td>0.869591</td>
       <td>1.000000</td>
@@ -727,6 +709,29 @@ Also notable in this run is the absence of the logarithm function to linearize t
 
 This "obvious" human observation appears not to be an optimum transformation, or was eliminated by the evolutionary algorithm before it could reach its full potential.
 
-### Conclusion
+#### Aeon Run
+This fourth experiments is the same as the third experiment, except that we run it for ten times as long.  Here, we are interested in whether different starting points will eventually converge to similar equations.  The answer appears to be *no*.  Here is the first equation:
+$$ M_w=(a_{00}T_b-a_{01})e^{a_{02}\cdot 10^{-9}T_b^2(a_{03}\cdot \gamma_0 +a_{04}\cdot T_b)} $$
+
+And the second equation:
+
+$$ M_w=-a_{00}\cdot \gamma_o+\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} +a_{02}\cdot T_b$$
+
+The correlation coefficients, however, now rival the default run:
+
+||Raw Mw|First Equation|Second Equation|
+|---|---|---|---|
+|Raw Mw|1.000000|0.998880|0.999324|
+|First Equation|0.998880|1.000000|0.998851|
+|Second Equation|0.999324|0.998851|1.000000|
+
+The second equation is truly facinating for two reasons.  Neither the power operator $\left (a^b \right )$ nor the division operator $\left (\frac{a}{b} \right)$ were provided to the algorithm for this run, and yet we have found the middle expression $\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}}$.
+
+#### General Observations
+Replication is very challenging with these symbolic regression libraries that use evolutionary algorithms.  Re-running the same dataset on the same machine with the same libraries produces different equations. In many `Scikit-Learn` algorithms, answer variation can be minimized by seeding the random number generator the same way each time, but in `PySR` we also have to turn off the optimizations that allow Julia to run the calculations massively in parallel, which contributes to the criticism that these algorithms are slow.
+
+Interestingly, switching between a cloud-based compute service (Google Colab) and a laptop with a notebook file that was suitably "locked down" produced the same equations. This was reassuring. Moving that same file to a desktop with a different brand of processor but otherwise identical set-up produced *different* equations. This was terrifying.
+
+### Conclusions
 
 ## References
