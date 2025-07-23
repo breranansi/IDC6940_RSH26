@@ -934,6 +934,12 @@ equations. This is reassuring. Moving that same file to a modern desktop
 with a different processor but otherwise identical set-up produces
 *different* equations. This is terrifying.
 
+In the engineering world, an old trick to speed-up calculations is to use look-up tables instead of functions.  The idea is that even though we may know exactly what the governing equations are, producing lookup tables from these functions ahead of time and then applying gaussian interpolation in real time may be faster.  This is a *very* similar concept to the idea of pre-training a tranformer network to do symbolic regression.
+
+This paper has shown that high fidelity models can be constructed from "cheap" components (= arithmetic operators). Maybe *explainability* is overrated, and functions carefully built using symbolic regression may be competitive with old-man Gauss!
+
+If this turns out to be true, then symbolic regression will make the full circle and return to it roots. (:->)
+
 ### Conclusions
 
 In summary, we have explored Symbolic Regression using evolutionary
@@ -959,15 +965,17 @@ Our main conclusions are:
     the workflow until an equation that is more "explainable" than the
     others is generated.
 
-5.  Piping the "winning" equation through a symbolic mathematics package
+5.  The structure of an equation generated with symbolic regression withstand some noise.
+
+6.  Piping the "winning" equation through a symbolic mathematics package
     to simplify and consolidate it is a good idea.
 
-6.  This consolidation often introduces relationships between variables
+7.  This consolidation often introduces relationships between variables
     and constants that were not specified before the algorithm was
     started. This can nudge the human to reconsider relationships
     previously rejected.
 
-7.  All Symbolic Regression libraries using evolutionary algorithms are
+8.  All Symbolic Regression libraries using evolutionary algorithms are
     *not* created equal. Library comparison is beyond the scope of this
     report, but we can comment that `PySR`was one of the better ones.
 
