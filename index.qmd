@@ -1,8 +1,9 @@
 ---
-title: "Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids and ....health stuff"
+title: "Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids and ... health stuff"
 subtitle: "Advisor: Dr. A. Cohen"
 author: "Delanyce Rose & Richard Henry"
 date: '`r Sys.Date()`'
+toc: true
 format:
   html:
     code-fold: true
@@ -39,7 +40,7 @@ over the decades, and although consensus has been reached on *which*
 predictor variables should be chosen, there is still considerable
 variation in the *form* of the equation appearing in the literature.
 
-<u> Description of health challenge goes here </u>
+<p style="color:Tomato">Description of health stuff challenge goes here</p>
 
 Rapid progress in machine learning technologies in recent years has
 provided a new toolbox with which we can revisit the problem. One of
@@ -67,8 +68,7 @@ performance of a robotic arm when it is operated outside of its
 specifications. The hypothesis was that an equation-based
 *extrapolation* will fail less spectacularly than a black-box one.
 
-<u> A comment about applying Symbolic Regression to wildly different
-areas goes here </u>
+<p style="color:Tomato">A comment connecting health stuff to molecular mass goes here</p>
 
 ## Methods
 
@@ -78,7 +78,7 @@ to discover, from the data, an analytical expression $f(X)$ which we can
 use to predict values of $y$ for values of $X$ unseen by the algorithm
 during training. For example:
 
-$$\hat{y}_{23} \approx f(X_{23})$$
+$$\hat{y}_{23} \approx f(X_{23})$$ {#eq-gen}
 
 Neural networks allow us to make this prediction without first
 generating an analytical expression. Often, this is good enough, but we
@@ -88,17 +88,17 @@ In the case of a neural net, we can reclaim some of this explainability
 by performing a second prediction for a value of $X$ we really don't
 care about, but happens to be close to $X_{23}$:
 
-$$\hat{y}_{24} \approx f(X_{24})$$
+$$\hat{y}_{24} \approx f(X_{24})$$ {#eq-plus}
 
 And now we can make statements on whether $y$ increases or decreases
 with increasing $X$ in the neighbourhood of $X_{23}$:
 
-$$\frac{dy}{dX}|_{X_{23}}\approx \frac{\hat{y}_{24}-\hat{y}_{23}}{X_{24}-X_{23}}$$
+$$\frac{dy}{dX}|_{X_{23}}\approx \frac{\hat{y}_{24}-\hat{y}_{23}}{X_{24}-X_{23}}$$ {#eq-slope}
 
 The traditional alternative to neural networks which provides
 explainability is linear regression:
 
-$$\hat{y}_{23} \approx \beta_0 +\beta_1 \cdot X$$
+$$\hat{y}_{23} \approx \beta_0 +\beta_1 \cdot X$$ {#eq-line}
 
 In which we use the data to discover the best values of the constants
 $\beta_0$ and $\beta_1$.
@@ -107,15 +107,15 @@ However, this may not be the best functional form for this predictive
 equation. For example, maybe an exponential or a logarithmic
 relationship may be better:
 
-$$\hat{y}_{23} \approx \beta_2 +\beta_3 \cdot e^X$$
+$$\hat{y}_{23} \approx \beta_2 +\beta_3 \cdot e^X$$ {#eq-exp}
 
 or
 
-$$\hat{y}_{23} \approx \beta_4 +\beta_5 \cdot log(X)$$
+$$\hat{y}_{23} \approx \beta_4 +\beta_5 \cdot log(X)$$ {#eq-log}
 
 or maybe
 
-$$log(\hat{y}_{23}) \approx \beta_6 +\beta_7 \cdot log(X)$$
+$$log(\hat{y}_{23}) \approx \beta_6 +\beta_7 \cdot log(X)$$ {#eq-loglog}
 
 We can certainly investigate these, and hundreds of other possibilities
 by building multiple models and comparing the performance between them.
@@ -132,7 +132,7 @@ Although, as shown above, we can use linear regression to find
 non-linear relationships between variables, some relationships may be
 challenging, such as:
 
-$$\hat{y}\approx\frac{\beta_0+\beta_1x+\beta_2x^2}{\beta_3+\beta_4x}$$
+$$\hat{y}\approx\frac{\beta_0+\beta_1x+\beta_2x^2}{\beta_3+\beta_4x}$$ {#eq-ration}
 
 Rational fractions like this may require full-blown non-linear
 regression techniques which will require us to specify the form of the
@@ -199,7 +199,7 @@ that we know *exactly* what the generating equation is gives us a
 yardstick to compare our results against. Here is the equation for
 predicting API gravity from specific gravity:
 
-$$\gamma_{API}=\frac{141.5}{\gamma_{o}}-131.5$$
+$$\gamma_{API}=\frac{141.5}{\gamma_{o}}-131.5$$ {#eq-API}
 
 | Symbol         | Meaning          | Units      |
 |----------------|------------------|------------|
@@ -262,16 +262,16 @@ Next, if we like what we see, we can ask to inspect the final equation:
 And the evolutionary algorithm will typically present an output looking
 like this:
 
-$x_0-(x_0+0.013196754)+1.0131962+ \frac{x_0 (-132.5)- -141.5}{x_0}$
+$$x_0-(x_0+0.013196754)+1.0131962+ \frac{x_0 (-132.5)- -141.5}{x_0}$$ {#eq-toy-raw}
 
-This looks terrible, but we can clean it up using a symbolic mathematics
-library (or high-school algebra):
+This looks terrible, but we can clean it up using a symbolic
+mathematics library (or high-school algebra):
 
 `sym.simplify(myEq)`
 
 which produces a much better:
 
-$-131.500000554+\frac{141.5}{x_0}$
+$$-131.500000554+\frac{141.5}{x_0}$$ {#eq-toy-fit}
 
 ### Noisy Toy
 
@@ -288,7 +288,7 @@ handle noise:
 This was enough to throw-off the estimation of the constants a bit, but
 the form of the equation was preserved:
 
-$-132.05688+\frac{141.88547}{x_0}$
+$$-132.05688+\frac{141.88547}{x_0}$$ {#eq-toy-noise}
 
 ### Belly of the Beast
 
@@ -301,9 +301,9 @@ Here are a *few* of them:
 `binary_operators=["+","-","*","/"]`
 
 Here we choose which binary operators may appear in our equations. These
-operators work on two numbers, for example $a+b$. On first glance, this
+operators work on two numbers, for example $(a+b)$. On first glance, this
 may appear to be restrictive, but for example, the ternary operation
-$a+b+c$ can be chained as two binaries $a+(b+c)$.
+$(a+b+c)$ can be chained as two binaries $(a+(b+c))$.
 
 A more serious challenge is handling underflow and overflow. In
 particular, the classic "division-by-zero" error appear very easily when
@@ -312,7 +312,7 @@ constants. Every library will use a different coping mechanism, but
 common strategies include pre-assigning a value such as zero, one or
 positive infinity to a calculation that will generate errors.
 
-There are additional binary operators such as the power function ($a^b$)
+There are additional binary operators such as the power function $(a^b)$
 or the maximum and minimum functions.
 
 `unary_operators=None`
@@ -384,7 +384,7 @@ This switch says that occasionally equations generated during the search
 will be simplified. Superficially, it may appear to be a good idea to
 simplify the equations after *every* generation, to cut down on "bloat"
 or equations that are more complex than they need to be. For example,
-$x_0+5x_0-2x_0$ vs. just $4x_0$
+$(x_0+5x_0-2x_0)$ vs. just $(4x_0)$.
 
 However, the `PySR` developers found that allowing some bloat improved
 the search significantly.
@@ -436,7 +436,7 @@ This switch says that each population will have 27 individuals. Notice
 that the tournament size is smaller than this, so that there is more
 than one competition between individual equations.
 
-<u> Method description of health dataset goes here </u>
+<!-- Description of health stuff dataset goes here -->
 
 ### Alternatives to Evolution
 
@@ -475,13 +475,13 @@ model in real time.
 1.  Examine our dataset and describe some of the equations that have
     been used historically to calculate molecular mass.
 
-2.  <u> something about health goes here </u>
-
 3.  Look at the options for generating equations from data in the `PySR`
-    symbolic regression libray.
+    symbolic regression library.
 
 4.  Compare and contrast the equations that are generated by `PySR` for
     our dataset as the options are varied.
+    
+<p style="color:Tomato">next steps with health stuff goes here</p>
 
 ## Analysis and Results
 
@@ -621,59 +621,59 @@ Here are a few of them using the following nomenclature:
 
 ##### Hariu & Sage (1969)
 
-$$M_w = a_{00} + a_{01} K_w + a_{02} K_w^2 + a_{03} T_b K_w + a_04 T_b K_w^2 + a_{05} T_b^2 K_w + a_{06} T_b^2 K_w^2$$
+$$M_w = a_{00} + a_{01} K_w + a_{02} K_w^2 + a_{03} T_b K_w + a_04 T_b K_w^2 + a_{05} T_b^2 K_w + a_{06} T_b^2 K_w^2$$ {#eq-harlu}
 
-$$K_w =\frac{\sqrt[3]T_b}{\gamma_o}$$
+$$K_w =\frac{\sqrt[3]T_b}{\gamma_o}$$ {#eq-UOP}
 
 ##### Kesler & Lee (1976)
 
-$$M_w = X_0 + \frac{X_1}{T_b} + \frac{X_2}{T_b^2}$$
+$$M_w = X_0 + \frac{X_1}{T_b} + \frac{X_2}{T_b^2}$$ {#eq-kesler}
 
-$$X_0 = a_{00} + a_{01} γ_o+ \left (a_{02} + a_{03} γ_o \right ) T_b$$
+$$X_0 = a_{00} + a_{01} γ_o+ \left (a_{02} + a_{03} γ_o \right ) T_b$$ {#eq-kes-0}
 
-$$X_1 = \left (1+ a_{04} γ_o + a_{05}γ_o^2 \right ) \left (a_{06} + \frac{a_ {07}}{T_b} \right ) \cdot 10^7$$
+$$X_1 = \left (1+ a_{04} γ_o + a_{05}γ_o^2 \right ) \left (a_{06} + \frac{a_ {07}}{T_b} \right ) \cdot 10^7$$ {#eq-kes-1}
 
-$$X_2 = \left (1+ a_{08} γ_o+ a_{09} γ_o^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^{12}$$
+$$X_2 = \left (1+ a_{08} γ_o+ a_{09} γ_o^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^{12}$$ {#eq-kes-2}
 
 ##### American Petroleum Institute (1977)
 
-$$M_w = a_{00} e^ {\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^{a_{03}} γ_o^ {a_{04}}$$
+$$M_w = a_{00} e^ {\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^{a_{03}} γ_o^ {a_{04}}$$ {#eq-api-77}
 
 ##### Winn, Sim & Daubert (1980)
 
-$$M_w = a_{00} T_b^{a_ {01}} γ_o^{a_{02}}$$
+$$M_w = a_{00} T_b^{a_ {01}} γ_o^{a_{02}}$$ {#eq-win}
 
 ##### Riazi & Daubert (1980)
 
-$$M_w = a_{00} T_b^{a_ {01}}γ_o^{a_{02}}$$
+$$M_w = a_{00} T_b^{a_ {01}}γ_o^{a_{02}}$$ {#eq-riazi-80}
 
 ##### Rao & Bardon (1985)
 
-$$ln {M_w} = (a_{00} + a_{01} K_w) ln (\frac{T_b} {a_{02} + a_{03} K_w} )$$
+$$ln {M_w} = (a_{00} + a_{01} K_w) ln (\frac{T_b} {a_{02} + a_{03} K_w} )$$ {#eq-rao}
 
 $$K_w =\frac{\sqrt[3]T_b}{\gamma_o}$$
 
 ##### Riazi & Daubert (1987)
 
-$$M_w = a_{00} T_b^{a_{01}} γ_o^{a_{02}} e^{\left (a_{03} T_b + a_{04} γ_o + a_{05} T_b γ \right )}$$
+$$M_w = a_{00} T_b^{a_{01}} γ_o^{a_{02}} e^{\left (a_{03} T_b + a_{04} γ_o + a_{05} T_b γ \right )}$$ {#eq-riazi-87}
 
 ##### Goossens (1996)
 
-$$M_w = a_{00} T_b^{X_0}$$
+$$M_w = a_{00} T_b^{X_0}$$ {#eq-goossens}
 
-$$X_0 =\frac {a_{03} + a_{04} ln {\left (\frac{T_b}  {a_{05} - T_b} \right )}}  {a_{01} γ_o + a_{02}}$$
+$$X_0 =\frac {a_{03} + a_{04} ln {\left (\frac{T_b}  {a_{05} - T_b} \right )}}  {a_{01} γ_o + a_{02}}$$ {#eq-goo-0}
 
 ##### Linan (2011)
 
-$$M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^ {a_{03}} γ_o^{a_{04}}$$
+$$M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^ {a_{03}} γ_o^{a_{04}}$$ {#eq-linan}
 
 ##### Hosseinifar & Shahverdi (2021)
 
-$$M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ_o} {3-γ_o} \right )}^{\frac{a_{02}}{2}} + a_{03} T_b^{a_{04}} {\left (\frac{3+2γ_o}{3-γ_o} \right )}^{\frac{a_{05}}{2}} \right ]}^{a_{06}}$$
+$$M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ_o} {3-γ_o} \right )}^{\frac{a_{02}}{2}} + a_{03} T_b^{a_{04}} {\left (\frac{3+2γ_o}{3-γ_o} \right )}^{\frac{a_{05}}{2}} \right ]}^{a_{06}}$$ {#eq-hosseinifar}
 
 ##### Stratiev (2023)
 
-$$M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ_o^{a_{05}}} \right )} \right ]}$$
+$$M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ_o^{a_{05}}} \right )} \right ]}$$ {#eq-stratiev}
 
 The reader will notice that all the correlations are non-linear, and
 that only a few of them can be easily transformed into a linear
@@ -689,7 +689,7 @@ include:
 | cub      | unary  | expression cubed                              |
 | inv      | unary  | inverse of an expression                      |
 
-<u> Exploration of health dataset goes here </u>
+<p style="color:Tomato">Exploration of health stuff dataset goes here</p>
 
 ### Modeling and Results
 
@@ -699,7 +699,7 @@ Our first experiment is to run `PySR` with default parameters against
 our molecular mass dataset. The resulting equation looks nothing like
 the existing equations:
 
-$$M_w=a_{00}+\frac{a_{01}}{\gamma_o-a_{02}}+\frac{T_b(a_{03}T_b-a_{04})}{\gamma_o(a_{05}-\frac{a_{06}}{T_b})}$$
+$$M_w=a_{00}+\frac{a_{01}}{\gamma_o-a_{02}}+\frac{T_b(a_{03}T_b-a_{04})}{\gamma_o(a_{05}-\frac{a_{06}}{T_b})}$$ {#eq-res-def}
 
 But its performance is quite impressive considering its restricted
 grammar of addition, subtraction, multiplication and division:
@@ -728,20 +728,23 @@ Goosens paper:
 </style>
 ```
 
-+-------------------+----------+----------+----------+-----------+----------+
-|                   | Raw SG   | Raw TBP  | Raw MW   | Goossens\ | This\    |
-|                   |          |          |          | Equation  | Equation |
-+===================+==========+==========+==========+===========+==========+
-| Raw SG            | 1.000000 | 0.625218 | 0.334852 | 0.339126  | 0.337190 |
-+-------------------+----------+----------+----------+-----------+----------+
-| Raw TBP           | 0.625218 | 1.000000 | 0.869591 | 0.868486  | 0.871037 |
-+-------------------+----------+----------+----------+-----------+----------+
-| Raw MW            | 0.334852 | 0.869591 | 1.000000 | 0.999711  | 0.999847 |
-+-------------------+----------+----------+----------+-----------+----------+
-| Goossens Equation | 0.339126 | 0.868486 | 0.999711 | 1.000000  | 0.999798 |
-+-------------------+----------+----------+----------+-----------+----------+
-| This Equation     | 0.337190 | 0.871037 | 0.999847 | 0.999798  | 1.000000 |
-+-------------------+----------+----------+----------+-----------+----------+
++----------+----------+----------+----------+----------+----------+
+|          | Raw SG   | Raw TBP  | Raw MW   | G        | This\    |
+|          |          |          |          | oossens\ | Equation |
+|          |          |          |          | Equation |          |
++==========+==========+==========+==========+==========+==========+
+| Raw SG   | 1.000000 | 0.625218 | 0.334852 | 0.339126 | 0.337190 |
++----------+----------+----------+----------+----------+----------+
+| Raw TBP  | 0.625218 | 1.000000 | 0.869591 | 0.868486 | 0.871037 |
++----------+----------+----------+----------+----------+----------+
+| Raw MW   | 0.334852 | 0.869591 | 1.000000 | 0.999711 | 0.999847 |
++----------+----------+----------+----------+----------+----------+
+| Goossens | 0.339126 | 0.868486 | 0.999711 | 1.000000 | 0.999798 |
+| Equation |          |          |          |          |          |
++----------+----------+----------+----------+----------+----------+
+| This     | 0.337190 | 0.871037 | 0.999847 | 0.999798 | 1.000000 |
+| Equation |          |          |          |          |          |
++----------+----------+----------+----------+----------+----------+
 
 </div>
 
@@ -764,7 +767,7 @@ There is noticeable drop in the quality of the match visually:
 
 Although the equation has got simpler:
 
-$$M_w=a_{00} \cdot a_{01}^{\gamma_o^{-a_{02}} + a_{03} T_b} + a_{04}$$
+$$M_w=a_{00} \cdot a_{01}^{\gamma_o^{-a_{02}} + a_{03} T_b} + a_{04}$$ {#eq-res-pow}
 
 and the correlation coefficient has degraded slightly:
 
@@ -786,17 +789,19 @@ and the correlation coefficient has degraded slightly:
 </style>
 ```
 
-+---------------+----------+----------+----------+---------------+
-|               | Raw SG   | Raw TBP  | Raw MW   | This Equation |
-+===============+==========+==========+==========+===============+
-| Raw SG        | 1.000000 | 0.625218 | 0.334852 | 0.325151      |
-+---------------+----------+----------+----------+---------------+
-| Raw TBP       | 0.625218 | 1.000000 | 0.869591 | 0.868747      |
-+---------------+----------+----------+----------+---------------+
-| Raw MW        | 0.334852 | 0.869591 | 1.000000 | 0.997281      |
-+---------------+----------+----------+----------+---------------+
-| This Equation | 0.325151 | 0.868747 | 0.997281 | 1.000000      |
-+---------------+----------+----------+----------+---------------+
++-----------+-----------+-----------+-----------+-----------+
+|           | Raw SG    | Raw TBP   | Raw MW    | This      |
+|           |           |           |           | Equation  |
++===========+===========+===========+===========+===========+
+| Raw SG    | 1.000000  | 0.625218  | 0.334852  | 0.325151  |
++-----------+-----------+-----------+-----------+-----------+
+| Raw TBP   | 0.625218  | 1.000000  | 0.869591  | 0.868747  |
++-----------+-----------+-----------+-----------+-----------+
+| Raw MW    | 0.334852  | 0.869591  | 1.000000  | 0.997281  |
++-----------+-----------+-----------+-----------+-----------+
+| This      | 0.325151  | 0.868747  | 0.997281  | 1.000000  |
+| Equation  |           |           |           |           |
++-----------+-----------+-----------+-----------+-----------+
 
 </div>
 
@@ -813,11 +818,11 @@ logarithm and exponential operators. Our initial results were a major
 surprise as neither transcendental operator made it to the final
 equation:
 
-$$ M_w= - T_b \left(a_{00} T_b - a_{01}\right) \left(a_{02} \cdot 10^{-6} \left(a_{03} \gamma_o - 2 T_b \right) \left(T_b - a_{04}\right) - 1\right) + a_{05}$$
+$$ M_w= - T_b \left(a_{00} T_b - a_{01}\right) \left(a_{02} \cdot 10^{-6} \left(a_{03} \gamma_o - 2 T_b \right) \left(T_b - a_{04}\right) - 1\right) + a_{05}$$ {#eq-res-exp-1}
 
 Accordingly, we re-set the random number generator and tried again:
 
-$$ M_w= a_{00} T_b + a_{01} e^{- \gamma_o^{2} + a_{02} \gamma_o + a_{03} T_b}$$
+$$ M_w= a_{00} T_b + a_{01} e^{- \gamma_o^{2} + a_{02} \gamma_o + a_{03} T_b}$$ {#eq-res-exp-2}
 
 This is a dramatically different equation. This experience suggests that
 the *real* reason the deterministic algorithms are still under active
@@ -843,19 +848,22 @@ Our correlation coefficients are *still* not as good as the default run:
 </style>
 ```
 
-+-----------------+----------+----------+----------+--------------+--------------+
-|                 | Raw SG   | Raw TBP  | Raw MW   | 1st Equation | 2nd Equation |
-+=================+==========+==========+==========+==============+==============+
-| Raw SG          | 1.000000 | 0.625218 | 0.334852 | 0.348819     | 0.344733     |
-+-----------------+----------+----------+----------+--------------+--------------+
-| Raw TBP         | 0.625218 | 1.000000 | 0.869591 | 0.869577     | 0.867574     |
-+-----------------+----------+----------+----------+--------------+--------------+
-| Raw MW          | 0.334852 | 0.869591 | 1.000000 | 0.997705     | 0.998420     |
-+-----------------+----------+----------+----------+--------------+--------------+
-| First Equation  | 0.348819 | 0.869577 | 0.997705 | 1.000000     | 0.999497     |
-+-----------------+----------+----------+----------+--------------+--------------+
-| Second Equation | 0.344733 | 0.867574 | 0.998420 | 0.999497     | 1.000000     |
-+-----------------+----------+----------+----------+--------------+--------------+
++----------+----------+----------+----------+----------+----------+
+|          | Raw SG   | Raw TBP  | Raw MW   | 1st      | 2nd      |
+|          |          |          |          | Equation | Equation |
++==========+==========+==========+==========+==========+==========+
+| Raw SG   | 1.000000 | 0.625218 | 0.334852 | 0.348819 | 0.344733 |
++----------+----------+----------+----------+----------+----------+
+| Raw TBP  | 0.625218 | 1.000000 | 0.869591 | 0.869577 | 0.867574 |
++----------+----------+----------+----------+----------+----------+
+| Raw MW   | 0.334852 | 0.869591 | 1.000000 | 0.997705 | 0.998420 |
++----------+----------+----------+----------+----------+----------+
+| First    | 0.348819 | 0.869577 | 0.997705 | 1.000000 | 0.999497 |
+| Equation |          |          |          |          |          |
++----------+----------+----------+----------+----------+----------+
+| Second   | 0.344733 | 0.867574 | 0.998420 | 0.999497 | 1.000000 |
+| Equation |          |          |          |          |          |
++----------+----------+----------+----------+----------+----------+
 
 </div>
 
@@ -880,19 +888,19 @@ The answer appears to be *no*.
 
 Here is the first equation after a thousand iterations:
 
-$$ M_w=(a_{00}T_b-a_{01})e^{a_{02}\cdot 10^{-9}T_b^2(a_{03}\cdot \gamma_0 +a_{04}\cdot T_b)} $$
+$$ M_w=(a_{00}T_b-a_{01})e^{a_{02}\cdot 10^{-9}T_b^2(a_{03}\cdot \gamma_0 +a_{04}\cdot T_b)} $$ {#eq-res-eon-1}
 
 And the second equation:
 
-$$ M_w=-a_{00}\cdot \gamma_o+\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} +a_{02}\cdot T_b$$
+$$ M_w=-a_{00}\cdot \gamma_o+\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} +a_{02}\cdot T_b$$ {#eq-res-eon-2}
 
 The correlation coefficients, however, now rival the default run:
 
-|                 | Raw Mw   | First Equation | Second Equation |
+|                 |   Raw Mw | First Equation | Second Equation |
 |-----------------|---------:|---------------:|----------------:|
-| Raw Mw          | 1.000000 | 0.998880       | 0.999324        |
-| First Equation  | 0.998880 | 1.000000       | 0.998851        |
-| Second Equation | 0.999324 | 0.998851       | 1.000000        |
+| Raw Mw          | 1.000000 |       0.998880 |        0.999324 |
+| First Equation  | 0.998880 |       1.000000 |        0.998851 |
+| Second Equation | 0.999324 |       0.998851 |        1.000000 |
 
 The second equation is truly fascinating for two reasons. Neither the
 power operator $\left (a^b \right )$ nor the division operator
@@ -905,18 +913,36 @@ $\left( \frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} \right)$.
 As promised, we used the Hosseinifar dataset of 10 records (12.5%) to
 validate some of these equations:
 
-| |Raw<br>Mw|Default<br>Run|Goossens<br>Correlation|Power<br>Run|Exponential<br>Run #2|
-|------|---------:|---------:|---------:|---------:|---------:|
-|Raw Mw| 1.000000 | 0.999957 | 0.999939 | 0.996964 | 0.998954 |
++----------+----------+----------+----------+----------+----------+
+|          | R        | Defaul   | Goossen  | Powe     | Ex       |
+|          | aw<br>Mw | t<br>Run | s<br>Cor | r<br>Run | ponentia |
+|          |          |          | relation |          | l<br>Run |
+|          |          |          |          |          | #2       |
++==========+=========:+=========:+=========:+=========:+=========:+
+| Raw Mw   | 1.000000 | 0.999957 | 0.999939 | 0.996964 | 0.998954 |
++----------+----------+----------+----------+----------+----------+
 
-All of these are very good, with the validation coefficients exceeding the training coefficients.  We will resist the temptation to declare victory over overtraining, as the Hosseinifar dataset is far better behaved than the Goossens dataset.
+All of these are very good, with the validation coefficients exceeding
+the training coefficients. We will resist the temptation to declare
+victory over overtraining, as the Hosseinifar dataset is far better
+behaved than the Goossens dataset.
 
-A better approach is probably to start increasing `parsimony` or decreasing `maxsize` or `maxdepth` until the correlation coefficients start to deteriorate.
+A better approach is probably to start increasing `parsimony` or
+decreasing `maxsize` or `maxdepth` until the correlation coefficients
+start to deteriorate.
 
-
-<u> health dataset runs go here </u>
+<p style="color:Tomato">health stuff dataset runs go here</p>
 
 #### General Observations
+
+The "UOP Characterization Factor"
+$\left (K_w =\frac{\sqrt[3]T_b}{\gamma_o} \right)$ which (at least) two
+researchers decided was an important correlating variable for molecular
+mass, was not discovered by our symbolic regression model.
+
+In fairness, however, we dropped the division operator early in our
+experimentation, and never asked the model to consider a "cube root"
+unary operator.
 
 Replication is very challenging with these symbolic regression libraries
 that use evolutionary algorithms. Re-running the same dataset on the
@@ -934,11 +960,21 @@ equations. This is reassuring. Moving that same file to a modern desktop
 with a different processor but otherwise identical set-up produces
 *different* equations. This is terrifying.
 
-In the engineering world, an old trick to speed-up calculations is to use look-up tables instead of functions.  The idea is that even though we may know exactly what the governing equations are, producing lookup tables from these functions ahead of time and then applying gaussian interpolation in real time may be faster.  This is a *very* similar concept to the idea of pre-training a tranformer network to do symbolic regression.
+In the engineering world, an old trick to speed-up calculations is to
+use look-up tables instead of functions. The idea is that even though we
+may know exactly what the governing equations are, producing lookup
+tables from these functions ahead of time and then applying gaussian
+interpolation in real time may be faster. This is a *very* similar
+concept to the idea of pre-training a tranformer network to do symbolic
+regression.
 
-This paper has shown that high fidelity models can be constructed from "cheap" components (= arithmetic operators). Maybe *explainability* is overrated, and functions carefully built using symbolic regression may be competitive with old-man Gauss!
+This paper has shown that high fidelity models can be constructed from
+"cheap" components (= arithmetic operators). Maybe *explainability* is
+overrated, and functions carefully built using symbolic regression may
+be competitive with old-man Gauss!
 
-If this turns out to be true, then symbolic regression will make the full circle and return to it roots. (:->)
+If this turns out to be true, then symbolic regression will make the
+full circle and return to it roots. (:-\>)
 
 ### Conclusions
 
@@ -965,7 +1001,8 @@ Our main conclusions are:
     the workflow until an equation that is more "explainable" than the
     others is generated.
 
-5.  The structure of an equation generated with symbolic regression withstand some noise.
+5.  The structure of an equation generated with symbolic regression
+    *will* withstand some noise.
 
 6.  Piping the "winning" equation through a symbolic mathematics package
     to simplify and consolidate it is a good idea.
@@ -978,5 +1015,7 @@ Our main conclusions are:
 8.  All Symbolic Regression libraries using evolutionary algorithms are
     *not* created equal. Library comparison is beyond the scope of this
     report, but we can comment that `PySR`was one of the better ones.
+    
+<p style="color:Tomato">Health stuff conclusions go here</p>
 
 ## References

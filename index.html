@@ -9,7 +9,7 @@
 <meta name="author" content="Delanyce Rose &amp; Richard Henry">
 <meta name="dcterms.date" content="2025-07-23">
 
-<title>Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids and ….health stuff</title>
+<title>Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids and … health stuff</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -2331,15 +2331,40 @@ window.Quarto = {
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
+  <ul class="collapse">
+  <li><a href="#typical-workflow" id="toc-typical-workflow" class="nav-link" data-scroll-target="#typical-workflow">Typical Workflow</a></li>
+  <li><a href="#toy-dataset" id="toc-toy-dataset" class="nav-link" data-scroll-target="#toy-dataset">Toy Dataset</a></li>
+  <li><a href="#software-implementation" id="toc-software-implementation" class="nav-link" data-scroll-target="#software-implementation">Software Implementation</a></li>
+  <li><a href="#noisy-toy" id="toc-noisy-toy" class="nav-link" data-scroll-target="#noisy-toy">Noisy Toy</a></li>
+  <li><a href="#belly-of-the-beast" id="toc-belly-of-the-beast" class="nav-link" data-scroll-target="#belly-of-the-beast">Belly of the Beast</a></li>
+  <li><a href="#alternatives-to-evolution" id="toc-alternatives-to-evolution" class="nav-link" data-scroll-target="#alternatives-to-evolution">Alternatives to Evolution</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
+  </ul></li>
+  <li><a href="#analysis-and-results" id="toc-analysis-and-results" class="nav-link" data-scroll-target="#analysis-and-results">Analysis and Results</a>
+  <ul class="collapse">
+  <li><a href="#data-exploration-and-visualization" id="toc-data-exploration-and-visualization" class="nav-link" data-scroll-target="#data-exploration-and-visualization">Data Exploration and Visualization</a></li>
+  <li><a href="#modeling-and-results" id="toc-modeling-and-results" class="nav-link" data-scroll-target="#modeling-and-results">Modeling and Results</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids and ….health stuff</h1>
+<h1 class="title">Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids and … health stuff</h1>
 <p class="subtitle lead">Advisor: Dr. A. Cohen</p>
 </div>
 
@@ -2375,34 +2400,38 @@ window.Quarto = {
 <p>Molecular mass is an important parameter used to model the physical properties of hydrocarbon fluids. These fluids, such as gasoline and lubricating oil are essential for so many aspects of modern life, and although these end-products are homogenized to exacting standards, the feed stock properties from which they are made vary significantly from one source to another and from the same source over time.</p>
 <p>Unfortunately, molecular mass is expensive to measure accurately, so that it is common practice to use more easily measured parameters to estimate the value of molecular mass.</p>
 <p>Many of these correlations <span class="citation" data-cites="stratiev2023prediction">(<a href="#ref-stratiev2023prediction" role="doc-biblioref">Stratiev et al. 2023</a>)</span> have been published over the decades, and although consensus has been reached on <em>which</em> predictor variables should be chosen, there is still considerable variation in the <em>form</em> of the equation appearing in the literature.</p>
-<p><u> Description of health challenge goes here </u></p>
+<p style="color:Tomato">
+Description of health stuff challenge goes here
+</p>
 <p>Rapid progress in machine learning technologies in recent years has provided a new toolbox with which we can revisit the problem. One of these tools is <em>symbolic regression</em> <span class="citation" data-cites="koza1994genetic">(<a href="#ref-koza1994genetic" role="doc-biblioref">Koza 1994</a>)</span>, which had its origins in an early attempt to teach machines to code, but is now used to generate equations from data.</p>
 <p>This technology was famously used to recreate 100 equations from the Feynman Lectures in Physics <span class="citation" data-cites="udrescu2020ai">(<a href="#ref-udrescu2020ai" role="doc-biblioref">Udrescu and Tegmark 2020</a>)</span>, and made the jump to generating differential equations <span class="citation" data-cites="bongard2007automated">(<a href="#ref-bongard2007automated" role="doc-biblioref">Bongard and Lipson 2007</a>)</span> for describing engineering and biological systems. The story of Kepler discovering that the earth’s orbit around the sun was <em>not</em> circular based on data collected by Brahe, which upended Ptolemy’s conjecture made a thousand years previously <span class="citation" data-cites="brunton2016discovering">(<a href="#ref-brunton2016discovering" role="doc-biblioref">Brunton, Proctor, and Kutz 2016</a>)</span> is often repeated as an early example of symbolic regression. Like Kepler, if we are more interested in understanding the underlying relationships between variables than prediction accuracy in the presence of noise, then symbolic regression is a good place to start.</p>
 <p>A second use case for symbolic regression concerns predicting the behaviour of systems beyond the limits of the data collected on that behaviour. Researchers at the Institute of Science and Technology <span class="citation" data-cites="martius2016extrapolation">(<a href="#ref-martius2016extrapolation" role="doc-biblioref">Martius and Lampert 2016</a>)</span> in Austria were interested in predicting the performance of a robotic arm when it is operated outside of its specifications. The hypothesis was that an equation-based <em>extrapolation</em> will fail less spectacularly than a black-box one.</p>
-<p><u> A comment about applying Symbolic Regression to wildly different areas goes here </u></p>
+<p style="color:Tomato">
+A comment connecting health stuff to molecular mass goes here
+</p>
 </section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
 <p>Consider a dataset consisting of an independent variable <span class="math inline">\(X\)</span> and a dependent variable <span class="math inline">\(y\)</span>. Symbolic Regression <span class="citation" data-cites="koza1994genetic">(<a href="#ref-koza1994genetic" role="doc-biblioref">Koza 1994</a>)</span> allows us to discover, from the data, an analytical expression <span class="math inline">\(f(X)\)</span> which we can use to predict values of <span class="math inline">\(y\)</span> for values of <span class="math inline">\(X\)</span> unseen by the algorithm during training. For example:</p>
-<p><span class="math display">\[\hat{y}_{23} \approx f(X_{23})\]</span></p>
+<p><span id="eq-gen"><span class="math display">\[\hat{y}_{23} \approx f(X_{23}) \tag{1}\]</span></span></p>
 <p>Neural networks allow us to make this prediction without first generating an analytical expression. Often, this is good enough, but we give up a property called <em>explainability</em>.</p>
 <p>In the case of a neural net, we can reclaim some of this explainability by performing a second prediction for a value of <span class="math inline">\(X\)</span> we really don’t care about, but happens to be close to <span class="math inline">\(X_{23}\)</span>:</p>
-<p><span class="math display">\[\hat{y}_{24} \approx f(X_{24})\]</span></p>
+<p><span id="eq-plus"><span class="math display">\[\hat{y}_{24} \approx f(X_{24}) \tag{2}\]</span></span></p>
 <p>And now we can make statements on whether <span class="math inline">\(y\)</span> increases or decreases with increasing <span class="math inline">\(X\)</span> in the neighbourhood of <span class="math inline">\(X_{23}\)</span>:</p>
-<p><span class="math display">\[\frac{dy}{dX}|_{X_{23}}\approx \frac{\hat{y}_{24}-\hat{y}_{23}}{X_{24}-X_{23}}\]</span></p>
+<p><span id="eq-slope"><span class="math display">\[\frac{dy}{dX}|_{X_{23}}\approx \frac{\hat{y}_{24}-\hat{y}_{23}}{X_{24}-X_{23}} \tag{3}\]</span></span></p>
 <p>The traditional alternative to neural networks which provides explainability is linear regression:</p>
-<p><span class="math display">\[\hat{y}_{23} \approx \beta_0 +\beta_1 \cdot X\]</span></p>
+<p><span id="eq-line"><span class="math display">\[\hat{y}_{23} \approx \beta_0 +\beta_1 \cdot X \tag{4}\]</span></span></p>
 <p>In which we use the data to discover the best values of the constants <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
 <p>However, this may not be the best functional form for this predictive equation. For example, maybe an exponential or a logarithmic relationship may be better:</p>
-<p><span class="math display">\[\hat{y}_{23} \approx \beta_2 +\beta_3 \cdot e^X\]</span></p>
+<p><span id="eq-exp"><span class="math display">\[\hat{y}_{23} \approx \beta_2 +\beta_3 \cdot e^X \tag{5}\]</span></span></p>
 <p>or</p>
-<p><span class="math display">\[\hat{y}_{23} \approx \beta_4 +\beta_5 \cdot log(X)\]</span></p>
+<p><span id="eq-log"><span class="math display">\[\hat{y}_{23} \approx \beta_4 +\beta_5 \cdot log(X) \tag{6}\]</span></span></p>
 <p>or maybe</p>
-<p><span class="math display">\[log(\hat{y}_{23}) \approx \beta_6 +\beta_7 \cdot log(X)\]</span></p>
+<p><span id="eq-loglog"><span class="math display">\[log(\hat{y}_{23}) \approx \beta_6 +\beta_7 \cdot log(X) \tag{7}\]</span></span></p>
 <p>We can certainly investigate these, and hundreds of other possibilities by building multiple models and comparing the performance between them.</p>
 <p>Alternative Conditional Expectations <span class="citation" data-cites="breiman1985estimating">(<a href="#ref-breiman1985estimating" role="doc-biblioref">Breiman and Friedman 1985</a>)</span> is a technology that will automatically transform both the dependent and the independent variables such that the relationship between the dependent variable and a linear combination of the independent variables is as straight as possible. Accordingly, building and testing hundreds of linear regression models can be avoided. This is different from the Box-Cox transform, where the aim is to make the population more normal.</p>
 <p>Although, as shown above, we can use linear regression to find non-linear relationships between variables, some relationships may be challenging, such as:</p>
-<p><span class="math display">\[\hat{y}\approx\frac{\beta_0+\beta_1x+\beta_2x^2}{\beta_3+\beta_4x}\]</span></p>
+<p><span id="eq-ration"><span class="math display">\[\hat{y}\approx\frac{\beta_0+\beta_1x+\beta_2x^2}{\beta_3+\beta_4x} \tag{8}\]</span></span></p>
 <p>Rational fractions like this may require full-blown non-linear regression techniques which will require us to specify the form of the equation and then use the data to find the values of the constants.</p>
 <p>A very interesting recent development <span class="citation" data-cites="liu2024kan">(<a href="#ref-liu2024kan" role="doc-biblioref">Liu et al. 2024</a>)</span> in this space is the Kolmogorov-Arnold Network, in which the activation functions sit on the edges instead of the nodes. Like the weights they replace in a regular ANN, each one is different, and therefore by plotting the shapes of these activation functions, one could, if the network is small enough, intuit what is happening to the data as it goes through the network. Although this provides <em>explainability</em>, it does not serve up an equation.</p>
 <p>The promise of symbolic regression is to find the optimum functional form, which may <em>not</em> be linear, <em>and</em> the optimum values of the constants in the same workflow.</p>
@@ -2422,7 +2451,7 @@ window.Quarto = {
 <section id="toy-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="toy-dataset">Toy Dataset</h3>
 <p>We are going to build a toy dataset to demonstrate the workflow. In addition to its small size (one predictor variable, 21 rows) the fact that we know <em>exactly</em> what the generating equation is gives us a yardstick to compare our results against. Here is the equation for predicting API gravity from specific gravity:</p>
-<p><span class="math display">\[\gamma_{API}=\frac{141.5}{\gamma_{o}}-131.5\]</span></p>
+<p><span id="eq-API"><span class="math display">\[\gamma_{API}=\frac{141.5}{\gamma_{o}}-131.5 \tag{9}\]</span></span></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -2496,11 +2525,11 @@ window.Quarto = {
 <p>Next, if we like what we see, we can ask to inspect the final equation:</p>
 <p><code>myEq=myMod.sympy()</code></p>
 <p>And the evolutionary algorithm will typically present an output looking like this:</p>
-<p><span class="math inline">\(x_0-(x_0+0.013196754)+1.0131962+ \frac{x_0 (-132.5)- -141.5}{x_0}\)</span></p>
+<p><span id="eq-toy-raw"><span class="math display">\[x_0-(x_0+0.013196754)+1.0131962+ \frac{x_0 (-132.5)- -141.5}{x_0} \tag{10}\]</span></span></p>
 <p>This looks terrible, but we can clean it up using a symbolic mathematics library (or high-school algebra):</p>
 <p><code>sym.simplify(myEq)</code></p>
 <p>which produces a much better:</p>
-<p><span class="math inline">\(-131.500000554+\frac{141.5}{x_0}\)</span></p>
+<p><span id="eq-toy-fit"><span class="math display">\[-131.500000554+\frac{141.5}{x_0} \tag{11}\]</span></span></p>
 </section>
 <section id="noisy-toy" class="level3">
 <h3 class="anchored" data-anchor-id="noisy-toy">Noisy Toy</h3>
@@ -2514,7 +2543,7 @@ window.Quarto = {
 </figure>
 </div>
 <p>This was enough to throw-off the estimation of the constants a bit, but the form of the equation was preserved:</p>
-<p><span class="math inline">\(-132.05688+\frac{141.88547}{x_0}\)</span></p>
+<p><span id="eq-toy-noise"><span class="math display">\[-132.05688+\frac{141.88547}{x_0} \tag{12}\]</span></span></p>
 </section>
 <section id="belly-of-the-beast" class="level3">
 <h3 class="anchored" data-anchor-id="belly-of-the-beast">Belly of the Beast</h3>
@@ -2522,9 +2551,9 @@ window.Quarto = {
 <section id="step-1-encoding" class="level4">
 <h4 class="anchored" data-anchor-id="step-1-encoding">Step 1 (Encoding)</h4>
 <p><code>binary_operators=[&quot;+&quot;,&quot;-&quot;,&quot;*&quot;,&quot;/&quot;]</code></p>
-<p>Here we choose which binary operators may appear in our equations. These operators work on two numbers, for example <span class="math inline">\(a+b\)</span>. On first glance, this may appear to be restrictive, but for example, the ternary operation <span class="math inline">\(a+b+c\)</span> can be chained as two binaries <span class="math inline">\(a+(b+c)\)</span>.</p>
+<p>Here we choose which binary operators may appear in our equations. These operators work on two numbers, for example <span class="math inline">\((a+b)\)</span>. On first glance, this may appear to be restrictive, but for example, the ternary operation <span class="math inline">\((a+b+c)\)</span> can be chained as two binaries <span class="math inline">\((a+(b+c))\)</span>.</p>
 <p>A more serious challenge is handling underflow and overflow. In particular, the classic “division-by-zero” error appear very easily when we are randomly assembling equations using operators, variables and constants. Every library will use a different coping mechanism, but common strategies include pre-assigning a value such as zero, one or positive infinity to a calculation that will generate errors.</p>
-<p>There are additional binary operators such as the power function (<span class="math inline">\(a^b\)</span>) or the maximum and minimum functions.</p>
+<p>There are additional binary operators such as the power function <span class="math inline">\((a^b)\)</span> or the maximum and minimum functions.</p>
 <p><code>unary_operators=None</code></p>
 <p>Here we choose the unary operators that may appear in our equations. Some libraries call these “functions” instead. Examples include sine, cosine and square root, the latter capable of being represented by a power function mentioned above.</p>
 <p><code>maxsize=30</code></p>
@@ -2565,7 +2594,7 @@ window.Quarto = {
 <p><code>model_selection=&quot;best&quot;</code></p>
 <p>This switch says that the models selected will be a specified trade-off between accuracy and complexity. There are other formulations such as <code>score</code> involving log-loss derivatives or one could simply choose <code>accuracy</code>.</p>
 <p><code>should_simplify=True</code></p>
-<p>This switch says that occasionally equations generated during the search will be simplified. Superficially, it may appear to be a good idea to simplify the equations after <em>every</em> generation, to cut down on “bloat” or equations that are more complex than they need to be. For example, <span class="math inline">\(x_0+5x_0-2x_0\)</span> vs. just <span class="math inline">\(4x_0\)</span></p>
+<p>This switch says that occasionally equations generated during the search will be simplified. Superficially, it may appear to be a good idea to simplify the equations after <em>every</em> generation, to cut down on “bloat” or equations that are more complex than they need to be. For example, <span class="math inline">\((x_0+5x_0-2x_0)\)</span> vs. just <span class="math inline">\((4x_0)\)</span></p>
 <p>However, the <code>PySR</code> developers found that allowing some bloat improved the search significantly.</p>
 <p><code>Tournament_selection_n=15</code></p>
 <p>In a nod to evolutionary biology, this says that models compete in groups of 15 for selection. The larger this number, the fewer “winners” there are after every round.</p>
@@ -2586,7 +2615,7 @@ window.Quarto = {
 <p>In practice, however, some populations “go extinct” which in our context means that they fail to produce reasonable equations. <code>PySR</code> does allow some “immigration” between populations, which produces benefits in both directions. The “better” populations have some diversity injected into them, and the “worse” populations are given new opportunities to succeed.</p>
 <p><code>population_size=27</code></p>
 <p>This switch says that each population will have 27 individuals. Notice that the tournament size is smaller than this, so that there is more than one competition between individual equations.</p>
-<p><u> Method description of health dataset goes here </u></p>
+<!-- Description of health stuff dataset goes here -->
 </section>
 </section>
 <section id="alternatives-to-evolution" class="level3">
@@ -2600,10 +2629,12 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="next-steps">Next Steps</h3>
 <ol type="1">
 <li><p>Examine our dataset and describe some of the equations that have been used historically to calculate molecular mass.</p></li>
-<li><p><u> something about health goes here </u></p></li>
-<li><p>Look at the options for generating equations from data in the <code>PySR</code> symbolic regression libray.</p></li>
+<li><p>Look at the options for generating equations from data in the <code>PySR</code> symbolic regression library.</p></li>
 <li><p>Compare and contrast the equations that are generated by <code>PySR</code> for our dataset as the options are varied.</p></li>
 </ol>
+<p style="color:Tomato">
+next steps with health stuff goes here
+</p>
 </section>
 </section>
 <section id="analysis-and-results" class="level2">
@@ -2811,53 +2842,53 @@ window.Quarto = {
 </table>
 <section id="hariu-sage-1969" class="level5">
 <h5 class="anchored" data-anchor-id="hariu-sage-1969">Hariu &amp; Sage (1969)</h5>
-<p><span class="math display">\[M_w = a_{00} + a_{01} K_w + a_{02} K_w^2 + a_{03} T_b K_w + a_04 T_b K_w^2 + a_{05} T_b^2 K_w + a_{06} T_b^2 K_w^2\]</span></p>
-<p><span class="math display">\[K_w =\frac{\sqrt[3]T_b}{\gamma_o}\]</span></p>
+<p><span id="eq-harlu"><span class="math display">\[M_w = a_{00} + a_{01} K_w + a_{02} K_w^2 + a_{03} T_b K_w + a_04 T_b K_w^2 + a_{05} T_b^2 K_w + a_{06} T_b^2 K_w^2 \tag{13}\]</span></span></p>
+<p><span id="eq-UOP"><span class="math display">\[K_w =\frac{\sqrt[3]T_b}{\gamma_o} \tag{14}\]</span></span></p>
 </section>
 <section id="kesler-lee-1976" class="level5">
 <h5 class="anchored" data-anchor-id="kesler-lee-1976">Kesler &amp; Lee (1976)</h5>
-<p><span class="math display">\[M_w = X_0 + \frac{X_1}{T_b} + \frac{X_2}{T_b^2}\]</span></p>
-<p><span class="math display">\[X_0 = a_{00} + a_{01} γ_o+ \left (a_{02} + a_{03} γ_o \right ) T_b\]</span></p>
-<p><span class="math display">\[X_1 = \left (1+ a_{04} γ_o + a_{05}γ_o^2 \right ) \left (a_{06} + \frac{a_ {07}}{T_b} \right ) \cdot 10^7\]</span></p>
-<p><span class="math display">\[X_2 = \left (1+ a_{08} γ_o+ a_{09} γ_o^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^{12}\]</span></p>
+<p><span id="eq-kesler"><span class="math display">\[M_w = X_0 + \frac{X_1}{T_b} + \frac{X_2}{T_b^2} \tag{15}\]</span></span></p>
+<p><span id="eq-kes-0"><span class="math display">\[X_0 = a_{00} + a_{01} γ_o+ \left (a_{02} + a_{03} γ_o \right ) T_b \tag{16}\]</span></span></p>
+<p><span id="eq-kes-1"><span class="math display">\[X_1 = \left (1+ a_{04} γ_o + a_{05}γ_o^2 \right ) \left (a_{06} + \frac{a_ {07}}{T_b} \right ) \cdot 10^7 \tag{17}\]</span></span></p>
+<p><span id="eq-kes-2"><span class="math display">\[X_2 = \left (1+ a_{08} γ_o+ a_{09} γ_o^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^{12} \tag{18}\]</span></span></p>
 </section>
 <section id="american-petroleum-institute-1977" class="level5">
 <h5 class="anchored" data-anchor-id="american-petroleum-institute-1977">American Petroleum Institute (1977)</h5>
-<p><span class="math display">\[M_w = a_{00} e^ {\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^{a_{03}} γ_o^ {a_{04}}\]</span></p>
+<p><span id="eq-api-77"><span class="math display">\[M_w = a_{00} e^ {\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^{a_{03}} γ_o^ {a_{04}} \tag{19}\]</span></span></p>
 </section>
 <section id="winn-sim-daubert-1980" class="level5">
 <h5 class="anchored" data-anchor-id="winn-sim-daubert-1980">Winn, Sim &amp; Daubert (1980)</h5>
-<p><span class="math display">\[M_w = a_{00} T_b^{a_ {01}} γ_o^{a_{02}}\]</span></p>
+<p><span id="eq-win"><span class="math display">\[M_w = a_{00} T_b^{a_ {01}} γ_o^{a_{02}} \tag{20}\]</span></span></p>
 </section>
 <section id="riazi-daubert-1980" class="level5">
 <h5 class="anchored" data-anchor-id="riazi-daubert-1980">Riazi &amp; Daubert (1980)</h5>
-<p><span class="math display">\[M_w = a_{00} T_b^{a_ {01}}γ_o^{a_{02}}\]</span></p>
+<p><span id="eq-riazi-80"><span class="math display">\[M_w = a_{00} T_b^{a_ {01}}γ_o^{a_{02}} \tag{21}\]</span></span></p>
 </section>
 <section id="rao-bardon-1985" class="level5">
 <h5 class="anchored" data-anchor-id="rao-bardon-1985">Rao &amp; Bardon (1985)</h5>
-<p><span class="math display">\[ln {M_w} = (a_{00} + a_{01} K_w) ln (\frac{T_b} {a_{02} + a_{03} K_w} )\]</span></p>
+<p><span id="eq-rao"><span class="math display">\[ln {M_w} = (a_{00} + a_{01} K_w) ln (\frac{T_b} {a_{02} + a_{03} K_w} ) \tag{22}\]</span></span></p>
 <p><span class="math display">\[K_w =\frac{\sqrt[3]T_b}{\gamma_o}\]</span></p>
 </section>
 <section id="riazi-daubert-1987" class="level5">
 <h5 class="anchored" data-anchor-id="riazi-daubert-1987">Riazi &amp; Daubert (1987)</h5>
-<p><span class="math display">\[M_w = a_{00} T_b^{a_{01}} γ_o^{a_{02}} e^{\left (a_{03} T_b + a_{04} γ_o + a_{05} T_b γ \right )}\]</span></p>
+<p><span id="eq-riazi-87"><span class="math display">\[M_w = a_{00} T_b^{a_{01}} γ_o^{a_{02}} e^{\left (a_{03} T_b + a_{04} γ_o + a_{05} T_b γ \right )} \tag{23}\]</span></span></p>
 </section>
 <section id="goossens-1996" class="level5">
 <h5 class="anchored" data-anchor-id="goossens-1996">Goossens (1996)</h5>
-<p><span class="math display">\[M_w = a_{00} T_b^{X_0}\]</span></p>
-<p><span class="math display">\[X_0 =\frac {a_{03} + a_{04} ln {\left (\frac{T_b}  {a_{05} - T_b} \right )}}  {a_{01} γ_o + a_{02}}\]</span></p>
+<p><span id="eq-goossens"><span class="math display">\[M_w = a_{00} T_b^{X_0} \tag{24}\]</span></span></p>
+<p><span id="eq-goo-0"><span class="math display">\[X_0 =\frac {a_{03} + a_{04} ln {\left (\frac{T_b}  {a_{05} - T_b} \right )}}  {a_{01} γ_o + a_{02}} \tag{25}\]</span></span></p>
 </section>
 <section id="linan-2011" class="level5">
 <h5 class="anchored" data-anchor-id="linan-2011">Linan (2011)</h5>
-<p><span class="math display">\[M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^ {a_{03}} γ_o^{a_{04}}\]</span></p>
+<p><span id="eq-linan"><span class="math display">\[M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^ {a_{03}} γ_o^{a_{04}} \tag{26}\]</span></span></p>
 </section>
 <section id="hosseinifar-shahverdi-2021" class="level5">
 <h5 class="anchored" data-anchor-id="hosseinifar-shahverdi-2021">Hosseinifar &amp; Shahverdi (2021)</h5>
-<p><span class="math display">\[M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ_o} {3-γ_o} \right )}^{\frac{a_{02}}{2}} + a_{03} T_b^{a_{04}} {\left (\frac{3+2γ_o}{3-γ_o} \right )}^{\frac{a_{05}}{2}} \right ]}^{a_{06}}\]</span></p>
+<p><span id="eq-hosseinifar"><span class="math display">\[M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ_o} {3-γ_o} \right )}^{\frac{a_{02}}{2}} + a_{03} T_b^{a_{04}} {\left (\frac{3+2γ_o}{3-γ_o} \right )}^{\frac{a_{05}}{2}} \right ]}^{a_{06}} \tag{27}\]</span></span></p>
 </section>
 <section id="stratiev-2023" class="level5">
 <h5 class="anchored" data-anchor-id="stratiev-2023">Stratiev (2023)</h5>
-<p><span class="math display">\[M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ_o^{a_{05}}} \right )} \right ]}\]</span></p>
+<p><span id="eq-stratiev"><span class="math display">\[M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ_o^{a_{05}}} \right )} \right ]} \tag{28}\]</span></span></p>
 <p>The reader will notice that all the correlations are non-linear, and that only a few of them can be easily transformed into a linear relationship. Some of the additional operators we may want to consider include:</p>
 <table class="caption-top table">
 <thead>
@@ -2900,7 +2931,9 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p><u> Exploration of health dataset goes here </u></p>
+<p style="color:Tomato">
+Exploration of health stuff dataset goes here
+</p>
 </section>
 </section>
 </section>
@@ -2909,7 +2942,7 @@ window.Quarto = {
 <section id="default-run" class="level4">
 <h4 class="anchored" data-anchor-id="default-run">Default Run</h4>
 <p>Our first experiment is to run <code>PySR</code> with default parameters against our molecular mass dataset. The resulting equation looks nothing like the existing equations:</p>
-<p><span class="math display">\[M_w=a_{00}+\frac{a_{01}}{\gamma_o-a_{02}}+\frac{T_b(a_{03}T_b-a_{04})}{\gamma_o(a_{05}-\frac{a_{06}}{T_b})}\]</span></p>
+<p><span id="eq-res-def"><span class="math display">\[M_w=a_{00}+\frac{a_{01}}{\gamma_o-a_{02}}+\frac{T_b(a_{03}T_b-a_{04})}{\gamma_o(a_{05}-\frac{a_{06}}{T_b})} \tag{29}\]</span></span></p>
 <p>But its performance is quite impressive considering its restricted grammar of addition, subtraction, multiplication and division:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -2932,12 +2965,12 @@ text-align: right;
 </style>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 13%">
-<col style="width: 13%">
-<col style="width: 13%">
 <col style="width: 15%">
-<col style="width: 13%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -2945,7 +2978,7 @@ text-align: right;
 <th>Raw SG</th>
 <th>Raw TBP</th>
 <th>Raw MW</th>
-<th>Goossens<br>
+<th>G oossens<br>
 Equation</th>
 <th>This<br>
 Equation</th>
@@ -3008,7 +3041,7 @@ Equation</th>
 </figure>
 </div>
 <p>Although the equation has got simpler:</p>
-<p><span class="math display">\[M_w=a_{00} \cdot a_{01}^{\gamma_o^{-a_{02}} + a_{03} T_b} + a_{04}\]</span></p>
+<p><span id="eq-res-pow"><span class="math display">\[M_w=a_{00} \cdot a_{01}^{\gamma_o^{-a_{02}} + a_{03} T_b} + a_{04} \tag{30}\]</span></span></p>
 <p>and the correlation coefficient has degraded slightly:</p>
 <div>
 <style scoped>
@@ -3024,11 +3057,11 @@ text-align: right;
 </style>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 22%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 22%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -3076,9 +3109,9 @@ text-align: right;
 <section id="exponential-run" class="level4">
 <h4 class="anchored" data-anchor-id="exponential-run">Exponential Run</h4>
 <p>Our third experiment was to replace the binary power operator with unary logarithm and exponential operators. Our initial results were a major surprise as neither transcendental operator made it to the final equation:</p>
-<p><span class="math display">\[ M_w= - T_b \left(a_{00} T_b - a_{01}\right) \left(a_{02} \cdot 10^{-6} \left(a_{03} \gamma_o - 2 T_b \right) \left(T_b - a_{04}\right) - 1\right) + a_{05}\]</span></p>
+<p><span id="eq-res-exp-1"><span class="math display">\[ M_w= - T_b \left(a_{00} T_b - a_{01}\right) \left(a_{02} \cdot 10^{-6} \left(a_{03} \gamma_o - 2 T_b \right) \left(T_b - a_{04}\right) - 1\right) + a_{05} \tag{31}\]</span></span></p>
 <p>Accordingly, we re-set the random number generator and tried again:</p>
-<p><span class="math display">\[ M_w= a_{00} T_b + a_{01} e^{- \gamma_o^{2} + a_{02} \gamma_o + a_{03} T_b}\]</span></p>
+<p><span id="eq-res-exp-2"><span class="math display">\[ M_w= a_{00} T_b + a_{01} e^{- \gamma_o^{2} + a_{02} \gamma_o + a_{03} T_b} \tag{32}\]</span></span></p>
 <p>This is a dramatically different equation. This experience suggests that the <em>real</em> reason the deterministic algorithms are still under active development today is to avoid this kind of ambiguity.</p>
 <p>Our correlation coefficients are <em>still</em> not as good as the default run:</p>
 <div>
@@ -3095,12 +3128,12 @@ text-align: right;
 </style>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 21%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 17%">
-<col style="width: 17%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -3170,9 +3203,9 @@ text-align: right;
 <h4 class="anchored" data-anchor-id="aeon-run">Aeon Run</h4>
 <p>This fourth experiments is the same as the third experiment, except that we run it for ten times as long. Here, we are interested in whether different starting points will eventually converge to similar equations. The answer appears to be <em>no</em>.</p>
 <p>Here is the first equation after a thousand iterations:</p>
-<p><span class="math display">\[ M_w=(a_{00}T_b-a_{01})e^{a_{02}\cdot 10^{-9}T_b^2(a_{03}\cdot \gamma_0 +a_{04}\cdot T_b)} \]</span></p>
+<p><span id="eq-res-eon-1"><span class="math display">\[ M_w=(a_{00}T_b-a_{01})e^{a_{02}\cdot 10^{-9}T_b^2(a_{03}\cdot \gamma_0 +a_{04}\cdot T_b)}  \tag{33}\]</span></span></p>
 <p>And the second equation:</p>
-<p><span class="math display">\[ M_w=-a_{00}\cdot \gamma_o+\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} +a_{02}\cdot T_b\]</span></p>
+<p><span id="eq-res-eon-2"><span class="math display">\[ M_w=-a_{00}\cdot \gamma_o+\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} +a_{02}\cdot T_b \tag{34}\]</span></span></p>
 <p>The correlation coefficients, however, now rival the default run:</p>
 <table class="caption-top table">
 <thead>
@@ -3211,21 +3244,21 @@ text-align: right;
 <p>As promised, we used the Hosseinifar dataset of 10 records (12.5%) to validate some of these equations:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 10%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
 </colgroup>
 <thead>
 <tr class="header">
 <th></th>
-<th style="text-align: right;">Raw<br>Mw</th>
-<th style="text-align: right;">Default<br>Run</th>
-<th style="text-align: right;">Goossens<br>Correlation</th>
-<th style="text-align: right;">Power<br>Run</th>
-<th style="text-align: right;">Exponential<br>Run #2</th>
+<th style="text-align: right;">R aw<br>Mw</th>
+<th style="text-align: right;">Defaul t<br>Run</th>
+<th style="text-align: right;">Goossen s<br>Cor relation</th>
+<th style="text-align: right;">Powe r<br>Run</th>
+<th style="text-align: right;">Ex ponentia l<br>Run #2</th>
 </tr>
 </thead>
 <tbody>
@@ -3241,10 +3274,14 @@ text-align: right;
 </table>
 <p>All of these are very good, with the validation coefficients exceeding the training coefficients. We will resist the temptation to declare victory over overtraining, as the Hosseinifar dataset is far better behaved than the Goossens dataset.</p>
 <p>A better approach is probably to start increasing <code>parsimony</code> or decreasing <code>maxsize</code> or <code>maxdepth</code> until the correlation coefficients start to deteriorate.</p>
-<p><u> health dataset runs go here </u></p>
+<p style="color:Tomato">
+health stuff dataset runs go here
+</p>
 </section>
 <section id="general-observations" class="level4">
 <h4 class="anchored" data-anchor-id="general-observations">General Observations</h4>
+<p>The “UOP Characterization Factor” <span class="math inline">\(\left (K_w =\frac{\sqrt[3]T_b}{\gamma_o} \right)\)</span> which (at least) two researchers decided was an important correlating variable for molecular mass, was not discovered by our symbolic regression model.</p>
+<p>In fairness, however, we dropped the division operator early in our experimentation, and never asked the model to consider a “cube root” unary operator.</p>
 <p>Replication is very challenging with these symbolic regression libraries that use evolutionary algorithms. Re-running the same dataset on the same machine with the same libraries produces different equations. In many <code>Scikit-Learn</code> algorithms, answer variation can be minimized by seeding the random number generator the same way each time, but in <code>PySR</code> we also have to turn off the optimizations that allow Julia to run the calculations massively in parallel, which contributes to the criticism that these algorithms are slow.</p>
 <p>Interestingly, switching between the cloud-based compute service <a href="https://colab.research.google.com/">Google Colab</a> and an ancient laptop with a Jupyter notebook file that was suitably “locked down” produces the same equations. This is reassuring. Moving that same file to a modern desktop with a different processor but otherwise identical set-up produces <em>different</em> equations. This is terrifying.</p>
 <p>In the engineering world, an old trick to speed-up calculations is to use look-up tables instead of functions. The idea is that even though we may know exactly what the governing equations are, producing lookup tables from these functions ahead of time and then applying gaussian interpolation in real time may be faster. This is a <em>very</em> similar concept to the idea of pre-training a tranformer network to do symbolic regression.</p>
@@ -3261,11 +3298,14 @@ text-align: right;
 <li><p>Symbolic Regression will typically generate novel equations from the human point of view, but these equations can be as accurate than the ones created by humans.</p></li>
 <li><p>The “explainability” of the generated equations are probably overrated, unless enough guardrails are put up to constrain the space searched by the Symbolic Regression algorithm.</p></li>
 <li><p>The ability of Symbolic Regression to easily find alternative equations of about the same accuracy means that humans can repeat the workflow until an equation that is more “explainable” than the others is generated.</p></li>
-<li><p>The structure of an equation generated with symbolic regression withstand some noise.</p></li>
+<li><p>The structure of an equation generated with symbolic regression <em>will</em> withstand some noise.</p></li>
 <li><p>Piping the “winning” equation through a symbolic mathematics package to simplify and consolidate it is a good idea.</p></li>
 <li><p>This consolidation often introduces relationships between variables and constants that were not specified before the algorithm was started. This can nudge the human to reconsider relationships previously rejected.</p></li>
 <li><p>All Symbolic Regression libraries using evolutionary algorithms are <em>not</em> created equal. Library comparison is beyond the scope of this report, but we can comment that <code>PySR</code>was one of the better ones.</p></li>
 </ol>
+<p style="color:Tomato">
+Health stuff conclusions go here
+</p>
 </section>
 </section>
 <section id="references" class="level2 unnumbered">
