@@ -68,7 +68,9 @@ performance of a robotic arm when it is operated outside of its
 specifications. The hypothesis was that an equation-based
 *extrapolation* will fail less spectacularly than a black-box one.
 
-<p style="color:Tomato">A comment connecting health stuff to molecular mass goes here</p>
+<p style="color:Tomato">
+A comment connecting health stuff to molecular mass goes here
+</p>
 
 ## Methods
 
@@ -206,12 +208,19 @@ $$\gamma_{API}=\frac{141.5}{\gamma_{o}}-131.5$$ {#eq-API}
 | $\gamma_{API}$ | API Gravity      | \[degAPI\] |
 | $\gamma_o$     | specific gravity | \[1/wtr\]  |
 
+: Toy Variables {#tbl-API .striped .hover}
+
 And here is our dataset:
 
 ```{r}
+#| label: fig-toy
+# Generate Dataset
 x<-seq(from=0.55,to=1.075,by=0.025)
 y<-141.5/x-131.5
-plot(x,y,main="First Toy Dataset",xlab="Specific Gravity",ylab="API Gravity")
+# Draw Graph
+plot(x,y,main="Toy Dataset",
+    xlab="Specific Gravity",
+    ylab="API Gravity")
 grid()
 ```
 
@@ -246,12 +255,24 @@ The reader will notice that we have neglected to divide our dataset into
 `test` and `train` buckets for this demonstration.
 
 ```{r}
+#| label: fig-toy-fit
+# Mimic Results from synthDataSets.ipynb
 y_fit<-141.5/x-131.500000554
 y_raw<-141.5/x-131.5
-
-plot(x,y_raw,main="Toy Dataset Fit",xlab="Specific Gravity",ylab="API Gravity")
-lines(x,y_fit,type="l",lty=1,col="red")
-legend("topright",legend=c("Original","Predicted"),col=c("black","red"),lty=c(1,1),pch=c(1,1))
+# Draw Raw and Fit together
+plot(x,y_raw,
+    main="Toy Dataset Fit",
+    xlab="Specific Gravity",
+    ylab="API Gravity")
+lines(x,y_fit,
+    type="l",
+    lty=1,
+    col="red")
+legend("topright",
+    legend=c("Original","Predicted"),
+    col=c("black","red"),
+    lty=c(1,1),
+    pch=c(1,1))
 grid()
 ```
 
@@ -259,17 +280,17 @@ Next, if we like what we see, we can ask to inspect the final equation:
 
 `myEq=myMod.sympy()`
 
-And the evolutionary algorithm will typically present an output looking
-like this:
+And the evolutionary algorithm will typically present an output that
+looks like this:
 
 $$x_0-(x_0+0.013196754)+1.0131962+ \frac{x_0 (-132.5)- -141.5}{x_0}$$ {#eq-toy-raw}
 
-This looks terrible, but we can clean it up using a symbolic
-mathematics library (or high-school algebra):
+This looks bloated, but we put it on a diet using a symbolic mathematics
+ library (or high-school algebra):
 
 `sym.simplify(myEq)`
 
-which produces a much better:
+which produces a much slimmer:
 
 $$-131.500000554+\frac{141.5}{x_0}$$ {#eq-toy-fit}
 
@@ -283,7 +304,7 @@ will add some noise to our toy dataset:
 and re-run it to see whether symbolic regression is robust enough to
 handle noise:
 
-![Noisy Toy](/noisy_pysr_files/figure-html/cell-7-output-1.png)
+![Noisy Fit](/noisy_pysr_files/figure-html/cell-7-output-1.png){#fig-toy-noise}
 
 This was enough to throw-off the estimation of the constants a bit, but
 the form of the equation was preserved:
@@ -293,7 +314,8 @@ $$-132.05688+\frac{141.88547}{x_0}$$ {#eq-toy-noise}
 ### Belly of the Beast
 
 There are a large number of hyperparameters in a typical symbolic
-regression model that we have defaulted in the Toy dataset model above.
+regression model, and we defaulted all in the Toy dataset model above.
+
 Here are a *few* of them:
 
 #### Step 1 (Encoding)
@@ -331,6 +353,8 @@ equation has a length of five:
 |-------|--------|-------|------------------|-------|
 | minus | divide | 141.5 | specific gravity | 131.5 |
 
+: Toy Equation Length {#tbl-eqn-len .striped .hover}
+
 Notice that the `"best"` generated toy equation is significantly longer
 than this, and only shrinks to 5 after post-processing. Accordingly, we
 want to be liberal with this number.
@@ -345,7 +369,9 @@ became a status symbol in the engineering community well into the
 `maxdepth=None`
 
 This is the maximum depth of a generated equation. Our toy equation has
-a depth of three: ![Toy Tree](API_tree.png)
+a depth of three: 
+
+![Toy Equation Tree](API_tree.png){#fig-tree-toy}
 
 `None` in this case means that there are no restrictions on the depth of
 the equation.
@@ -436,7 +462,7 @@ This switch says that each population will have 27 individuals. Notice
 that the tournament size is smaller than this, so that there is more
 than one competition between individual equations.
 
-<!-- Description of health stuff dataset goes here -->
+<p style="color:Tomato">Description of health stuff dataset goes here</p>
 
 ### Alternatives to Evolution
 
@@ -491,6 +517,7 @@ Let us take a first look at the dataset from Goossens
 [@goossens1996prediction]:
 
 ```{r}
+# Read Goosens Dataset from flat file
 # Positron
 #df<-read.csv("./c694/goossens_raw.csv")
 # Quarto
@@ -505,6 +532,8 @@ We have 3 variables:
 | $SG$     | Specific Gravity   | independent |
 | $TBP$    | True Boiling Point | independent |
 
+: Goossens Variables {#tbl-goo-var .striped .hover}
+
 and 70 rows. This is a very small dataset by modern machine learning
 standards. However, due to the cost of acquiring the molecular mass
 data, this dataset will be considered "large" by chemical engineering
@@ -513,6 +542,9 @@ standards.
 Here is a summary of the dataset:
 
 ```{r}
+#| label: tbl-goo-sum
+#| tbl-cap: Goosens Dataset Summary
+# Summarize Goosens Dataset
 summary(df)
 ```
 
@@ -522,7 +554,11 @@ One of the questions we want to answer is whether datasets like this are
 Here is a plot of molecular mass vs. specific gravity:
 
 ```{r}
-plot(df$SG,df$MW,main="Goossens Dataset",xlab="Specific Gravity",ylab="Molecular Mass")
+#| label: fig-goo-mwXsg
+plot(df$SG,df$MW,
+    main="Goossens Dataset",
+    xlab="Specific Gravity",
+    ylab="Molecular Mass")
 grid()
 ```
 
@@ -533,7 +569,11 @@ heteroscedasticity explodes above a gravity of about 0.75.
 Here is a plot of molecular mass vs. true boiling point:
 
 ```{r}
-plot(df$TBP,df$MW,main="Goossens Dataset",xlab="True Boiling Point",ylab="Molecular Mass")
+#| label: fig-goo-mwXtb
+plot(df$TBP,df$MW,
+    main="Goossens Dataset",
+    xlab="True Boiling Point",
+    ylab="Molecular Mass")
 grid()
 ```
 
@@ -547,7 +587,11 @@ gravity on the prediction of molecular mass.
 Here we plot the two independent variables against one another:
 
 ```{r}
-plot(df$TBP,df$SG,main="Goossens Dataset",xlab="True Boiling Point",ylab="Specific Gravity")
+#| label: fig-goo-sgXtb
+plot(df$TBP,df$SG,
+    main="Goossens Dataset",
+    xlab="True Boiling Point",
+    ylab="Specific Gravity")
 grid()
 ```
 
@@ -561,11 +605,13 @@ There is a second, smaller independent dataset available publicly
 compare it to the Goossens dataset:
 
 ```{r}
+#| label: fig-hoss-mwXtb
+# Read Hosseinifar Dataset from flat file
 # Positron
 #dfh<-read.csv("./c694/hosseinifar_raw.csv")
 # Quarto
 dfh<-read.csv("./hosseinifar_raw.csv")
-
+# Plot Goossens and Hosseinifar together
 plot(df$TBP,df$MW,
      main="Goossens vs. Hosseinifar",
      xlab="True Boiling Point",
@@ -582,6 +628,8 @@ grid()
 ```
 
 ```{r}
+#| label: fig-hoss-mwXsg
+# Plot Goossens and Hosseinifar together
 plot(df$SG,df$MW,
      main="Goossens vs. Hosseinifar",
      xlab="Specific Gravity",
@@ -619,9 +667,13 @@ Here are a few of them using the following nomenclature:
 | $K_w$            | Characterization factor (intermediate value)      |
 | $X_0...X_3$      | Intermediate Variables                            |
 
+: Correlation Nomenclature {#tbl-cor-nom .striped .hover}
+
 ##### Hariu & Sage (1969)
 
-$$M_w = a_{00} + a_{01} K_w + a_{02} K_w^2 + a_{03} T_b K_w + a_04 T_b K_w^2 + a_{05} T_b^2 K_w + a_{06} T_b^2 K_w^2$$ {#eq-harlu}
+$$
+M_w = a_{00} + a_{01} K_w + a_{02} K_w^2 + a_{03} T_b K_w + a_04 T_b K_w^2 + a_{05} T_b^2 K_w + a_{06} T_b^2 K_w^2
+$$ {#eq-harlu}
 
 $$K_w =\frac{\sqrt[3]T_b}{\gamma_o}$$ {#eq-UOP}
 
@@ -631,13 +683,19 @@ $$M_w = X_0 + \frac{X_1}{T_b} + \frac{X_2}{T_b^2}$$ {#eq-kesler}
 
 $$X_0 = a_{00} + a_{01} γ_o+ \left (a_{02} + a_{03} γ_o \right ) T_b$$ {#eq-kes-0}
 
-$$X_1 = \left (1+ a_{04} γ_o + a_{05}γ_o^2 \right ) \left (a_{06} + \frac{a_ {07}}{T_b} \right ) \cdot 10^7$$ {#eq-kes-1}
+$$
+X_1 = \left (1+ a_{04} γ_o + a_{05}γ_o^2 \right ) \left (a_{06} + \frac{a_ {07}}{T_b} \right ) \cdot 10^7
+$$ {#eq-kes-1}
 
-$$X_2 = \left (1+ a_{08} γ_o+ a_{09} γ_o^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^{12}$$ {#eq-kes-2}
+$$
+X_2 = \left (1+ a_{08} γ_o+ a_{09} γ_o^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^{12}
+$$ {#eq-kes-2}
 
 ##### American Petroleum Institute (1977)
 
-$$M_w = a_{00} e^ {\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^{a_{03}} γ_o^ {a_{04}}$$ {#eq-api-77}
+$$
+M_w = a_{00} e^ {\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^{a_{03}} γ_o^ {a_{04}}
+$$ {#eq-api-77}
 
 ##### Winn, Sim & Daubert (1980)
 
@@ -655,17 +713,23 @@ $$K_w =\frac{\sqrt[3]T_b}{\gamma_o}$$
 
 ##### Riazi & Daubert (1987)
 
-$$M_w = a_{00} T_b^{a_{01}} γ_o^{a_{02}} e^{\left (a_{03} T_b + a_{04} γ_o + a_{05} T_b γ \right )}$$ {#eq-riazi-87}
+$$
+M_w = a_{00} T_b^{a_{01}} γ_o^{a_{02}} e^{\left (a_{03} T_b + a_{04} γ_o + a_{05} T_b γ \right )}
+$$ {#eq-riazi-87}
 
 ##### Goossens (1996)
 
 $$M_w = a_{00} T_b^{X_0}$$ {#eq-goossens}
 
-$$X_0 =\frac {a_{03} + a_{04} ln {\left (\frac{T_b}  {a_{05} - T_b} \right )}}  {a_{01} γ_o + a_{02}}$$ {#eq-goo-0}
+$$
+X_0 =\frac {a_{03} + a_{04} ln {\left (\frac{T_b}  {a_{05} - T_b} \right )}}  {a_{01} γ_o + a_{02}}
+$$ {#eq-goo-0}
 
 ##### Linan (2011)
 
-$$M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^ {a_{03}} γ_o^{a_{04}}$$ {#eq-linan}
+$$
+M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^ {a_{03}} γ_o^{a_{04}}
+$$ {#eq-linan}
 
 ##### Hosseinifar & Shahverdi (2021)
 
@@ -673,21 +737,25 @@ $$M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ_o} {3-γ_o} \right )}^{\
 
 ##### Stratiev (2023)
 
-$$M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ_o^{a_{05}}} \right )} \right ]}$$ {#eq-stratiev}
+$$
+M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ_o^{a_{05}}} \right )} \right ]}
+$$ {#eq-stratiev}
 
 The reader will notice that all the correlations are non-linear, and
 that only a few of them can be easily transformed into a linear
 relationship. Some of the additional operators we may want to consider
 include:
 
-| operator | type   | description                                   |
+| Operator | Type   | Description                                   |
 |----------|--------|-----------------------------------------------|
 | pow      | binary | one expression raised to the power of another |
 | log      | unary  | logarithm of an expression                    |
-| exp      | unary  | e raised to the power of an expression        |
+| exp      | unary  | antilogarithm of an expression                |
 | sqr      | unary  | expression squared                            |
 | cub      | unary  | expression cubed                              |
 | inv      | unary  | inverse of an expression                      |
+
+: Partial List of Addditional Operators {#tbl-ope-add .striped .hover}
 
 <p style="color:Tomato">Exploration of health stuff dataset goes here</p>
 
@@ -699,54 +767,37 @@ Our first experiment is to run `PySR` with default parameters against
 our molecular mass dataset. The resulting equation looks nothing like
 the existing equations:
 
-$$M_w=a_{00}+\frac{a_{01}}{\gamma_o-a_{02}}+\frac{T_b(a_{03}T_b-a_{04})}{\gamma_o(a_{05}-\frac{a_{06}}{T_b})}$$ {#eq-res-def}
+$$
+M_w=a_{00}+\frac{a_{01}}{\gamma_o-a_{02}}+\frac{T_b(a_{03}T_b-a_{04})}{\gamma_o(a_{05}-\frac{a_{06}}{T_b})}
+$$ {#eq-res-def}
 
 But its performance is quite impressive considering its restricted
 grammar of addition, subtraction, multiplication and division:
 
-![Default Params](moleDataSet_files/figure-html/cell-11-output-1.png)
+![Default Parameter Run](moleDataSet_files/figure-html/cell-11-output-1.png){#fig-res-def}
 
 It even has a (slightly) better correlation coefficient with the raw
 molecular mass data than the equation presented *with* this data in the
 Goosens paper:
 
-<div>
++----------+----------+----------+----------+-----------+----------+
+|          | Raw SG   | Raw TBP  | Raw MW   | Goossens\ | This\    |
+|          |          |          |          | Equation  | Equation |
++:=========+=========:+=========:+=========:+==========:+=========:+
+| Raw SG   | 1.000000 | 0.625218 | 0.334852 | 0.339126  | 0.337190 |
++----------+----------+----------+----------+-----------+----------+
+| Raw TBP  | 0.625218 | 1.000000 | 0.869591 | 0.868486  | 0.871037 |
++----------+----------+----------+----------+-----------+----------+
+| Raw MW   | 0.334852 | 0.869591 | 1.000000 | 0.999711  | 0.999847 |
++----------+----------+----------+----------+-----------+----------+
+| Goossens | 0.339126 | 0.868486 | 0.999711 | 1.000000  | 0.999798 |
+| Equation |          |          |          |           |          |
++----------+----------+----------+----------+-----------+----------+
+| This     | 0.337190 | 0.871037 | 0.999847 | 0.999798  | 1.000000 |
+| Equation |          |          |          |           |          |
++----------+----------+----------+----------+-----------+----------+
 
-```{=html}
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-```
-
-+----------+----------+----------+----------+----------+----------+
-|          | Raw SG   | Raw TBP  | Raw MW   | G        | This\    |
-|          |          |          |          | oossens\ | Equation |
-|          |          |          |          | Equation |          |
-+==========+==========+==========+==========+==========+==========+
-| Raw SG   | 1.000000 | 0.625218 | 0.334852 | 0.339126 | 0.337190 |
-+----------+----------+----------+----------+----------+----------+
-| Raw TBP  | 0.625218 | 1.000000 | 0.869591 | 0.868486 | 0.871037 |
-+----------+----------+----------+----------+----------+----------+
-| Raw MW   | 0.334852 | 0.869591 | 1.000000 | 0.999711 | 0.999847 |
-+----------+----------+----------+----------+----------+----------+
-| Goossens | 0.339126 | 0.868486 | 0.999711 | 1.000000 | 0.999798 |
-| Equation |          |          |          |          |          |
-+----------+----------+----------+----------+----------+----------+
-| This     | 0.337190 | 0.871037 | 0.999847 | 0.999798 | 1.000000 |
-| Equation |          |          |          |          |          |
-+----------+----------+----------+----------+----------+----------+
-
-</div>
+: Default Run Correlation Coefficients {#tbl-res-def .striped .hover}
 
 There are some challenges. The constant $a_{02}$ is only slightly larger
 than the largest $\gamma_o$ (specific gravity) in the dataset. This
@@ -763,7 +814,7 @@ existing correlations.
 
 There is noticeable drop in the quality of the match visually:
 
-![Power Params](around2_files/figure-html/cell-6-output-1.png)
+![Power Operator Run](around2_files/figure-html/cell-6-output-1.png){#fig-res-pow}
 
 Although the equation has got simpler:
 
@@ -771,28 +822,11 @@ $$M_w=a_{00} \cdot a_{01}^{\gamma_o^{-a_{02}} + a_{03} T_b} + a_{04}$$ {#eq-res-
 
 and the correlation coefficient has degraded slightly:
 
-<div>
-
-```{=html}
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-```
 
 +-----------+-----------+-----------+-----------+-----------+
 |           | Raw SG    | Raw TBP   | Raw MW    | This      |
 |           |           |           |           | Equation  |
-+===========+===========+===========+===========+===========+
++:==========+==========:+==========:+==========:+==========:+
 | Raw SG    | 1.000000  | 0.625218  | 0.334852  | 0.325151  |
 +-----------+-----------+-----------+-----------+-----------+
 | Raw TBP   | 0.625218  | 1.000000  | 0.869591  | 0.868747  |
@@ -803,7 +837,7 @@ and the correlation coefficient has degraded slightly:
 | Equation  |           |           |           |           |
 +-----------+-----------+-----------+-----------+-----------+
 
-</div>
+: Power Operator Run Correlation Coefficients {#tbl-res-pow .striped .hover}
 
 One can argue that nested exponents $\left (a^{b^c} \right )$ aren't
 very explainable. However the Stratiev correlation does this with
@@ -830,28 +864,10 @@ development today is to avoid this kind of ambiguity.
 
 Our correlation coefficients are *still* not as good as the default run:
 
-<div>
-
-```{=html}
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-```
-
 +----------+----------+----------+----------+----------+----------+
-|          | Raw SG   | Raw TBP  | Raw MW   | 1st      | 2nd      |
+|          | Raw SG   | Raw TBP  | Raw MW   | 1st\     | 2nd\     |
 |          |          |          |          | Equation | Equation |
-+==========+==========+==========+==========+==========+==========+
++:=========+=========:+=========:+=========:+=========:+=========:+
 | Raw SG   | 1.000000 | 0.625218 | 0.334852 | 0.348819 | 0.344733 |
 +----------+----------+----------+----------+----------+----------+
 | Raw TBP  | 0.625218 | 1.000000 | 0.869591 | 0.869577 | 0.867574 |
@@ -865,7 +881,7 @@ Our correlation coefficients are *still* not as good as the default run:
 | Equation |          |          |          |          |          |
 +----------+----------+----------+----------+----------+----------+
 
-</div>
+: Exponential Run Correlation Coefficients {#tbl-res-exp .striped .hover}
 
 *But* the risk of "division by zero" errors during extrapolation are
 negligible.
@@ -873,7 +889,7 @@ negligible.
 Also notable in this run is the absence of the logarithm function to
 linearize the relationship between these two variables:
 
-![Linearizing](around3_files/figure-html/cell-14-output-1.png)
+![Raw Data Scale Change](around3_files/figure-html/cell-14-output-1.png){#fig-res-hum}
 
 This "obvious" human observation appears not to be an optimum
 transformation, or was eliminated by the evolutionary algorithm before
@@ -888,19 +904,25 @@ The answer appears to be *no*.
 
 Here is the first equation after a thousand iterations:
 
-$$ M_w=(a_{00}T_b-a_{01})e^{a_{02}\cdot 10^{-9}T_b^2(a_{03}\cdot \gamma_0 +a_{04}\cdot T_b)} $$ {#eq-res-eon-1}
+$$
+M_w=(a_{00}T_b-a_{01})e^{a_{02}\cdot 10^{-9}T_b^2(a_{03}\cdot \gamma_0 +a_{04}\cdot T_b)}
+$$ {#eq-res-eon-1}
 
 And the second equation:
 
-$$ M_w=-a_{00}\cdot \gamma_o+\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} +a_{02}\cdot T_b$$ {#eq-res-eon-2}
+$$
+M_w=-a_{00}\cdot \gamma_o+\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} +a_{02}\cdot T_b
+$$ {#eq-res-eon-2}
 
 The correlation coefficients, however, now rival the default run:
 
 |                 |   Raw Mw | First Equation | Second Equation |
-|-----------------|---------:|---------------:|----------------:|
+|:----------------|---------:|---------------:|----------------:|
 | Raw Mw          | 1.000000 |       0.998880 |        0.999324 |
 | First Equation  | 0.998880 |       1.000000 |        0.998851 |
 | Second Equation | 0.999324 |       0.998851 |        1.000000 |
+
+: Aeon Run Correlation Coefficients {#tbl-res-eon .striped .hover}
 
 The second equation is truly fascinating for two reasons. Neither the
 power operator $\left (a^b \right )$ nor the division operator
@@ -913,14 +935,14 @@ $\left( \frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} \right)$.
 As promised, we used the Hosseinifar dataset of 10 records (12.5%) to
 validate some of these equations:
 
-+----------+----------+----------+----------+----------+----------+
-|          | R        | Defaul   | Goossen  | Powe     | Ex       |
-|          | aw<br>Mw | t<br>Run | s<br>Cor | r<br>Run | ponentia |
-|          |          |          | relation |          | l<br>Run |
-|          |          |          |          |          | #2       |
-+==========+=========:+=========:+=========:+=========:+=========:+
-| Raw Mw   | 1.000000 | 0.999957 | 0.999939 | 0.996964 | 0.998954 |
-+----------+----------+----------+----------+----------+----------+
++----------+----------+----------+------------+----------+--------------+
+|          | Raw\     | Default\ | Goossens\  | Power\   | Exponential\ |
+|          | Mw       | Run      | Correlation| Run      | Run #2       |
++:=========+=========:+=========:+===========:+=========:+=============:+
+| Raw Mw   | 1.000000 | 0.999957 | 0.999939   | 0.996964 | 0.998954     |
++----------+----------+----------+------------+----------+--------------+
+
+: Validation Run Correlation Coefficients {#tbl-res-val .striped .hover}
 
 All of these are very good, with the validation coefficients exceeding
 the training coefficients. We will resist the temptation to declare
