@@ -128,7 +128,8 @@ independent variables such that the relationship between the dependent
 variable and a linear combination of the independent variables is as
 straight as possible. Accordingly, building and testing hundreds of
 linear regression models can be avoided. This is different from the
-Box-Cox transform, where the aim is to make the population more normal.
+[Box-Cox transform](https://en.wikipedia.org/wiki/Power_transform),
+where the aim is to make the population more normal.
 
 Although, as shown above, we can use linear regression to find
 non-linear relationships between variables, some relationships may be
@@ -214,6 +215,7 @@ And here is our dataset:
 
 ```{r}
 #| label: fig-toy
+#| fig-cap: Pre-Fit
 # Generate Dataset
 x<-seq(from=0.55,to=1.075,by=0.025)
 y<-141.5/x-131.5
@@ -256,6 +258,7 @@ The reader will notice that we have neglected to divide our dataset into
 
 ```{r}
 #| label: fig-toy-fit
+#| fig-cap: Clean Fit
 # Mimic Results from synthDataSets.ipynb
 y_fit<-141.5/x-131.500000554
 y_raw<-141.5/x-131.5
@@ -306,14 +309,14 @@ handle noise:
 
 ![Noisy Fit](/noisy_pysr_files/figure-html/cell-7-output-1.png){#fig-toy-noise}
 
-This was enough to throw-off the estimation of the constants a bit, but
-the form of the equation was preserved:
+This uniformly distributed noise was enough to throw-off the estimation of the
+constants a bit, but the form of the equation was preserved:
 
 $$-132.05688+\frac{141.88547}{x_0}$$ {#eq-toy-noise}
 
 ### Belly of the Beast
 
-There are a large number of hyperparameters in a typical symbolic
+There are a large number of hyper parameters in a typical symbolic
 regression model, and we defaulted all in the Toy dataset model above.
 
 Here are a *few* of them:
@@ -355,7 +358,7 @@ equation has a length of five:
 
 : Toy Equation Length {#tbl-eqn-len .striped .hover}
 
-Notice that the `"best"` generated toy equation is significantly longer
+Notice that @eq-toy-raw generated toy equation is significantly longer
 than this, and only shrinks to 5 after post-processing. Accordingly, we
 want to be liberal with this number.
 
@@ -434,7 +437,8 @@ to produce the same result.
 This switch counts the number of equation evaluations performed, and
 stops the search after a specified number. Equation evaluations are a
 significant fraction of the run time, especially as the equations get
-longer and contain more transcendental functions.
+longer and contain more
+[transcendental](https://en.wikipedia.org/wiki/Transcendental_function) functions.
 
 `timeout_in_seconds=None`
 
@@ -545,7 +549,7 @@ Here is a summary of the dataset:
 #| label: tbl-goo-sum
 #| tbl-cap: Goosens Dataset Summary
 # Summarize Goosens Dataset
-summary(df)
+print(summary(df))
 ```
 
 One of the questions we want to answer is whether datasets like this are
@@ -555,10 +559,11 @@ Here is a plot of molecular mass vs. specific gravity:
 
 ```{r}
 #| label: fig-goo-mwXsg
+#| fig-cap: Molecular Mass vs Specific Gravity
 plot(df$SG,df$MW,
     main="Goossens Dataset",
     xlab="Specific Gravity",
-    ylab="Molecular Mass")
+    ylab="Apparent Molecular Mass")
 grid()
 ```
 
@@ -570,10 +575,11 @@ Here is a plot of molecular mass vs. true boiling point:
 
 ```{r}
 #| label: fig-goo-mwXtb
+#| fig-cap: Molecular Mass vs Boiling Point
 plot(df$TBP,df$MW,
     main="Goossens Dataset",
     xlab="True Boiling Point",
-    ylab="Molecular Mass")
+    ylab="Apparent Molecular Mass")
 grid()
 ```
 
@@ -588,6 +594,7 @@ Here we plot the two independent variables against one another:
 
 ```{r}
 #| label: fig-goo-sgXtb
+#| fig-cap: Specific Gravity vs Boiling Point
 plot(df$TBP,df$SG,
     main="Goossens Dataset",
     xlab="True Boiling Point",
@@ -606,6 +613,7 @@ compare it to the Goossens dataset:
 
 ```{r}
 #| label: fig-hoss-mwXtb
+#| fig-cap: Molecular Mass vs Boiling Point
 # Read Hosseinifar Dataset from flat file
 # Positron
 #dfh<-read.csv("./c694/hosseinifar_raw.csv")
@@ -629,6 +637,7 @@ grid()
 
 ```{r}
 #| label: fig-hoss-mwXsg
+#| fig-cap: Molecular Mass vs Specific Gravity
 # Plot Goossens and Hosseinifar together
 plot(df$SG,df$MW,
      main="Goossens vs. Hosseinifar",
@@ -664,7 +673,7 @@ Here are a few of them using the following nomenclature:
 | $T_b$            | Boiling Point Temperature at Atmospheric Pressure |
 | $\gamma_o$       | Specific Gravity (density compared to water)      |
 | $a_{00}..a_{09}$ | Empirical Constants                               |
-| $K_w$            | Characterization factor (intermediate value)      |
+| $K_w$            | Characterization Factor (intermediate value)      |
 | $X_0...X_3$      | Intermediate Variables                            |
 
 : Correlation Nomenclature {#tbl-cor-nom .striped .hover}
@@ -709,7 +718,7 @@ $$M_w = a_{00} T_b^{a_ {01}}γ_o^{a_{02}}$$ {#eq-riazi-80}
 
 $$ln {M_w} = (a_{00} + a_{01} K_w) ln (\frac{T_b} {a_{02} + a_{03} K_w} )$$ {#eq-rao}
 
-$$K_w =\frac{\sqrt[3]T_b}{\gamma_o}$$
+See @eq-UOP
 
 ##### Riazi & Daubert (1987)
 
@@ -750,12 +759,12 @@ include:
 |----------|--------|-----------------------------------------------|
 | pow      | binary | one expression raised to the power of another |
 | log      | unary  | logarithm of an expression                    |
-| exp      | unary  | antilogarithm of an expression                |
+| exp      | unary  | [antilogarithm](https://mathworld.wolfram.com/Antilogarithm.html) of an expression|
 | sqr      | unary  | expression squared                            |
 | cub      | unary  | expression cubed                              |
 | inv      | unary  | inverse of an expression                      |
 
-: Partial List of Addditional Operators {#tbl-ope-add .striped .hover}
+: Partial List of Additional Operators {#tbl-ope-add .striped .hover}
 
 <p style="color:Tomato">Exploration of health stuff dataset goes here</p>
 
@@ -777,8 +786,8 @@ grammar of addition, subtraction, multiplication and division:
 ![Default Parameter Run](moleDataSet_files/figure-html/cell-11-output-1.png){#fig-res-def}
 
 It even has a (slightly) better correlation coefficient with the raw
-molecular mass data than the equation presented *with* this data in the
-Goosens paper:
+molecular mass data than @eq-goossens presented *with* this data in the
+Goossens paper:
 
 +----------+----------+----------+----------+-----------+----------+
 |          | Raw SG   | Raw TBP  | Raw MW   | Goossens\ | This\    |
@@ -900,7 +909,7 @@ it could reach its full potential.
 This fourth experiments is the same as the third experiment, except that
 we run it for ten times as long. Here, we are interested in whether
 different starting points will eventually converge to similar equations.
-The answer appears to be *no*.
+<!-- The answer appears to be *no*. -->
 
 Here is the first equation after a thousand iterations:
 
@@ -924,6 +933,10 @@ The correlation coefficients, however, now rival the default run:
 
 : Aeon Run Correlation Coefficients {#tbl-res-eon .striped .hover}
 
+Both equations have evolved significantly by adding 900 iterations, but "similar,
+they are not" as [everyone's favourite 900 year old](https://en.wikipedia.org/wiki/Yoda)
+would say.
+
 The second equation is truly fascinating for two reasons. Neither the
 power operator $\left (a^b \right )$ nor the division operator
 $\left (\frac{a}{b} \right)$ were provided to the algorithm for this
@@ -946,7 +959,7 @@ validate some of these equations:
 
 All of these are very good, with the validation coefficients exceeding
 the training coefficients. We will resist the temptation to declare
-victory over overtraining, as the Hosseinifar dataset is far better
+victory over overfitting, as the Hosseinifar dataset is far better
 behaved than the Goossens dataset.
 
 A better approach is probably to start increasing `parsimony` or
@@ -957,8 +970,7 @@ start to deteriorate.
 
 #### General Observations
 
-The "UOP Characterization Factor"
-$\left (K_w =\frac{\sqrt[3]T_b}{\gamma_o} \right)$ which (at least) two
+The "UOP Characterization Factor" @eq-UOP which (at least) two
 researchers decided was an important correlating variable for molecular
 mass, was not discovered by our symbolic regression model.
 
@@ -984,10 +996,10 @@ with a different processor but otherwise identical set-up produces
 
 In the engineering world, an old trick to speed-up calculations is to
 use look-up tables instead of functions. The idea is that even though we
-may know exactly what the governing equations are, producing lookup
-tables from these functions ahead of time and then applying gaussian
+may know exactly what the governing equations are, producing look up
+tables from these functions ahead of time and then applying Gaussian
 interpolation in real time may be faster. This is a *very* similar
-concept to the idea of pre-training a tranformer network to do symbolic
+concept to the idea of pre-training a transformer network to do symbolic
 regression.
 
 This paper has shown that high fidelity models can be constructed from
