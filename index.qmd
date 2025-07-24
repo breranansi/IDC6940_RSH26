@@ -358,16 +358,12 @@ equation has a length of five:
 
 : Toy Equation Length {#tbl-eqn-len .striped .hover}
 
-Notice that @eq-toy-raw generated toy equation is significantly longer
+Notice that the generated toy equation @eq-toy-raw is significantly longer
 than this, and only shrinks to 5 after post-processing. Accordingly, we
 want to be liberal with this number.
 
 As a side note, this way of writing an equation is called "Polish
-Notation", and a post-fix variant was used on scientific calculators in
-the 1970's as it was more efficient. The learning curve, however, was
-brutal for mere mortals, so that owning one of these 'RPN' artifacts
-became a status symbol in the engineering community well into the
-1990's. Yeah, I know this is irrelevant.
+Notation"[^1].
 
 `maxdepth=None`
 
@@ -512,6 +508,12 @@ model in real time.
     our dataset as the options are varied.
     
 <p style="color:Tomato">next steps with health stuff goes here</p>
+
+[^1]: A post-fix variant was used on scientific calculators in
+the 1970's as it was more efficient. The learning curve, however, was
+brutal for mere mortals, so that owning one of these 'RPN' 
+[artifacts](https://en.wikipedia.org/wiki/HP-35) became a status symbol 
+in the engineering community well into the 1990's.
 
 ## Analysis and Results
 
