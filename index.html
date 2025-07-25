@@ -3358,7 +3358,7 @@ Figure 12: Raw Data Scale Change
 <p><span id="eq-res-eon-1"><span class="math display">\[
 M_w=(a_{00}T_b-a_{01})e^{a_{02}\cdot 10^{-9}T_b^2(a_{03}\cdot \gamma_0 +a_{04}\cdot T_b)}
 \tag{33}\]</span></span></p>
-<p>And the second equation:</p>
+<p>And the second equation<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:</p>
 <p><span id="eq-res-eon-2"><span class="math display">\[
 M_w=-a_{00}\cdot \gamma_o+\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} +a_{02}\cdot T_b
 \tag{34}\]</span></span></p>
@@ -3415,37 +3415,40 @@ Table 11: Validation Run Correlation Coefficients
 </figcaption>
 <div aria-describedby="tbl-res-val-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table-striped table-hover caption-top table">
-<colgroup>
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 17%">
-<col style="width: 14%">
-<col style="width: 19%">
-</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: right;">Raw<br>
-Mw</th>
-<th style="text-align: right;">Default<br>
-Run</th>
-<th style="text-align: right;">Goossens<br>
-Correlation</th>
-<th style="text-align: right;">Power<br>
-Run</th>
-<th style="text-align: right;">Exponential<br>
-Run #2</th>
+<th style="text-align: left;">Run</th>
+<th style="text-align: right;">Correlation Coefficient</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Raw Mw</td>
 <td style="text-align: right;">1.000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Default</td>
 <td style="text-align: right;">0.999957</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Goossens Correlation</td>
 <td style="text-align: right;">0.999939</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Power</td>
 <td style="text-align: right;">0.996964</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Exponential #2</td>
 <td style="text-align: right;">0.998954</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Aeon #1</td>
+<td style="text-align: right;">0.999973</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Aeon #2</td>
+<td style="text-align: right;">0.999921</td>
 </tr>
 </tbody>
 </table>
@@ -3553,6 +3556,7 @@ Udrescu, Silviu-Marian, and Max Tegmark. 2020. <span>“AI Feynman: A Physics-In
 
 <ol>
 <li id="fn1"><p>A post-fix variant was used on scientific calculators in the 1970’s as it was more efficient. The learning curve, however, was brutal for mere mortals, so that owning one of these ‘RPN’ <a href="https://en.wikipedia.org/wiki/HP-35">artifacts</a> became a status symbol in the engineering community well into the 1990’s.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>A quick note for humans on this second equation: <span class="math inline">\({log(T_b)}^3 = {(ln(T_b))}^3 \neq ln(T^3_b)\)</span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main>
 <!-- /main column -->

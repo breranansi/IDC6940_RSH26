@@ -1,0 +1,2226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>around4r3</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="around4r3_files/libs/clipboard/clipboard.min.js"></script>
+<script src="around4r3_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="around4r3_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="around4r3_files/libs/quarto-html/popper.min.js"></script>
+<script src="around4r3_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="around4r3_files/libs/quarto-html/anchor.min.js"></script>
+<link href="around4r3_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="around4r3_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="around4r3_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="around4r3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="around4r3_files/libs/bootstrap/bootstrap-58427a5cdc6db58bd8a7f543ac0b26a6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<p>This is a PySR run on the molecular mass dataset with the division operator removed and the logarithm and exponential operators added. Iterations increased to 1000. Random numbers switched.</p>
+<div id="530a5c28" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install <span class="op">-</span>U pysr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Requirement already satisfied: pysr in /home/richard/Documents/p312a/lib/python3.12/site-packages (1.5.9)
+Requirement already satisfied: click&lt;9.0.0,&gt;=7.0.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from pysr) (8.2.1)
+Requirement already satisfied: juliacall&lt;0.9.27,&gt;=0.9.24 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from pysr) (0.9.26)
+Requirement already satisfied: numpy&lt;3.0.0,&gt;=1.13.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from pysr) (2.3.1)
+Requirement already satisfied: pandas&lt;3.0.0,&gt;=0.21.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from pysr) (2.3.1)
+Requirement already satisfied: scikit-learn&lt;2.0.0,&gt;=1.0.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from pysr) (1.7.1)
+Requirement already satisfied: sympy&lt;2.0.0,&gt;=1.0.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from pysr) (1.14.0)
+Requirement already satisfied: typing-extensions&lt;5.0.0,&gt;=4.0.0 in /usr/share/positron/resources/app/extensions/positron-python/python_files/lib/ipykernel/py3 (from pysr) (4.13.2)
+Requirement already satisfied: juliapkg&lt;0.2,&gt;=0.1.17 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from juliacall&lt;0.9.27,&gt;=0.9.24-&gt;pysr) (0.1.17)
+Requirement already satisfied: python-dateutil&gt;=2.8.2 in /usr/share/positron/resources/app/extensions/positron-python/python_files/lib/ipykernel/py3 (from pandas&lt;3.0.0,&gt;=0.21.0-&gt;pysr) (2.9.0.post0)
+Requirement already satisfied: pytz&gt;=2020.1 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from pandas&lt;3.0.0,&gt;=0.21.0-&gt;pysr) (2025.2)
+Requirement already satisfied: tzdata&gt;=2022.7 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from pandas&lt;3.0.0,&gt;=0.21.0-&gt;pysr) (2025.2)
+Requirement already satisfied: scipy&gt;=1.8.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from scikit-learn&lt;2.0.0,&gt;=1.0.0-&gt;pysr) (1.16.0)
+Requirement already satisfied: joblib&gt;=1.2.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from scikit-learn&lt;2.0.0,&gt;=1.0.0-&gt;pysr) (1.5.1)
+Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from scikit-learn&lt;2.0.0,&gt;=1.0.0-&gt;pysr) (3.6.0)
+Requirement already satisfied: mpmath&lt;1.4,&gt;=1.1.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from sympy&lt;2.0.0,&gt;=1.0.0-&gt;pysr) (1.3.0)
+Requirement already satisfied: filelock&lt;4.0,&gt;=3.16 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from juliapkg&lt;0.2,&gt;=0.1.17-&gt;juliacall&lt;0.9.27,&gt;=0.9.24-&gt;pysr) (3.18.0)
+Requirement already satisfied: semver&lt;4.0,&gt;=3.0 in /home/richard/Documents/p312a/lib/python3.12/site-packages (from juliapkg&lt;0.2,&gt;=0.1.17-&gt;juliacall&lt;0.9.27,&gt;=0.9.24-&gt;pysr) (3.0.4)
+Requirement already satisfied: six&gt;=1.5 in /usr/share/positron/resources/app/extensions/positron-python/python_files/lib/ipykernel/py3 (from python-dateutil&gt;=2.8.2-&gt;pandas&lt;3.0.0,&gt;=0.21.0-&gt;pysr) (1.17.0)
+Note: you may need to restart the kernel to use updated packages.</code></pre>
+</div>
+</div>
+<div id="1c035556" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Call Libraries</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#from google.colab import drive</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pysr <span class="im">import</span> PySRRegressor</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#import math</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy <span class="im">as</span> sym</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="94320366" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colab</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#drive.mount('/content/drive')</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#df=pd.read_csv('/content/drive/MyDrive/goossens_raw.csv')</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Positron</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>pd.read_csv(<span class="st">'./goossens_raw.csv'</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Quarto</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#df=pd.read_csv('./c694/goossens_raw.csv')</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>y<span class="op">=</span>df[<span class="st">'MW'</span>]</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>x<span class="op">=</span>df[[<span class="st">'SG'</span>,<span class="st">'TBP'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="4bc8d9fd" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> time.time()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Log and Exp Functions</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>myMod<span class="op">=</span>PySRRegressor(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">11</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    deterministic<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    parallelism<span class="op">=</span><span class="st">'serial'</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    binary_operators<span class="op">=</span>[<span class="st">"+"</span>,<span class="st">"-"</span>,<span class="st">"*"</span>],</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    unary_operators<span class="op">=</span>[<span class="st">"exp"</span>,<span class="st">"log"</span>],</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    niterations<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>myMod.fit(x,y)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>y_pred<span class="op">=</span>myMod.predict(x)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"time to fit: "</span>,time.time() <span class="op">-</span> t0, <span class="st">'seconds'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/richard/Documents/p312a/lib/python3.12/site-packages/pysr/sr.py:2811: UserWarning: Note: it looks like you are running in Jupyter. The progress bar will be turned off.
+  warnings.warn(
+[ Info: Started!</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Expressions evaluated per second: 2.520e+05
+Progress: 1122 / 31000 total iterations (3.619%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+5           2.347e+04  1.116e-01  y = (TBP * 1.3999) - 500.62
+6           1.658e+04  3.446e-01  y = TBP * (log(TBP) + -5.8922)
+7           7.214e+03  8.313e-01  y = ((1.1829e-06 * TBP) * TBP) * TBP
+9           6.138e+03  8.050e-02  y = (TBP * ((TBP * 0.0032561) + -2.6519)) - -631.68
+11          4.928e+03  1.095e-01  y = ((TBP + -502.26) * ((TBP * TBP) * 2.2773e-06)) + 138.0...
+                                      3
+13          2.105e+03  4.250e-01  y = (((TBP * 2.2244e-06) * TBP) * (TBP + (SG * -497.23))) ...
+                                      + 94.722
+15          2.019e+03  2.070e-02  y = (TBP * ((TBP + -52.794) * (((SG * -511.52) + TBP) * 2....
+                                      3963e-06))) + 106.43
+16          1.880e+03  7.141e-02  y = ((TBP * (log(TBP) * ((TBP + (SG * -506.47)) * 3.286e-0...
+                                      7))) * TBP) + 103.97
+17          1.731e+03  8.270e-02  y = ((((SG * -564.49) + TBP) * 2.5488e-06) * ((TBP + -47.8...
+                                      88) * TBP)) + (SG * 157.56)
+18          1.713e+03  1.014e-02  y = (((TBP + (SG * -578.82)) * (TBP * (TBP * 2.4846e-06)))...
+                                       + exp(SG + 4.4433)) + -59.398
+20          1.413e+03  9.608e-02  y = ((TBP * ((((SG * -702.2) + TBP) * TBP) * 3.0508e-06)) ...
+                                      + exp((SG * 2.0266) + 3.7278)) - 14.618
+24          1.164e+03  4.836e-02  y = ((((((((SG * -568.66) + TBP) * (TBP + -155.69)) * TBP)...
+                                       * -5.914e-07) + 131.5) * -0.0045644) + exp(SG * -0.095962...
+                                      )) * TBP
+30          9.677e+02  3.083e-02  y = ((((TBP * (TBP * ((((TBP * ((TBP + 54.232) * 7.4941e-0...
+                                      7)) - SG) - -1.1539) * TBP))) * 1.2623e-06) - 104.54) + 15...
+                                      7.6) - ((log(TBP) * -1.9112) - SG)
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 3.050e+05
+Progress: 2199 / 31000 total iterations (7.094%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+5           1.858e+04  2.281e-01  y = TBP * (TBP * 0.00093598)
+6           1.658e+04  1.115e-01  y = (log(TBP) + -5.8922) * TBP
+7           7.214e+03  8.313e-01  y = ((TBP * 1.1818e-06) * TBP) * TBP
+9           6.138e+03  8.049e-02  y = (TBP * ((TBP * 0.0032561) + -2.6519)) - -631.68
+11          4.540e+03  1.504e-01  y = ((TBP * ((SG * -318.6) + TBP)) * 1.8297e-06) * TBP
+12          4.207e+03  7.562e-02  y = 406.92 + (TBP * (-2.2568 + ((TBP * 0.003023) - log(SG)...
+                                      )))
+13          2.102e+03  6.935e-01  y = (((TBP * 2.2332e-06) * TBP) * (TBP + (SG * -501.86))) ...
+                                      + 98.039
+15          9.914e+02  3.757e-01  y = (((TBP + (SG * -578.87)) * ((TBP * TBP) * 2.2879e-09))...
+                                       + 0.29151) * TBP
+17          7.989e+02  1.079e-01  y = TBP * (((TBP + (SG * -583.52)) * (TBP * ((TBP + -334.9...
+                                      9) * 3.4556e-09))) + 0.32217)
+19          4.927e+02  2.416e-01  y = (TBP * ((((TBP * 4.8897e-09) * (TBP + (SG * -684.91)))...
+                                       * (TBP + -507.68)) + 0.65395)) - 155.68
+21          4.924e+02  3.398e-04  y = (((TBP * ((4.8897e-09 * (TBP + (SG * -684.91))) * ((-1...
+                                      .6485 + TBP) + -507.68))) + 0.65395) * TBP) - 155.68
+22          4.923e+02  1.835e-04  y = ((((-507.68 + TBP) * (TBP * (4.8891e-09 * ((SG * -684....
+                                      91) + TBP)))) + 0.65395) * TBP) - (log(SG) + 155.68)
+23          4.922e+02  1.869e-04  y = (((((TBP + -507.68) * ((TBP * 4.8897e-09) * ((SG * -68...
+                                      4.91) + TBP))) + 0.65395) * (TBP - SG)) - 158.44) + 3.0811
+24          4.919e+02  4.206e-04  y = (((((TBP * ((-507.68 + TBP) * 4.8897e-09)) * ((-684.91...
+                                       * SG) + TBP)) + 0.65395) * TBP) - (155.68 + log(SG))) - S...
+                                      G
+25          4.309e+02  1.324e-01  y = (-27.745 + (((TBP * (((TBP + -546.86) * ((SG * -648.53...
+                                      ) + TBP)) * 4.8893e-09)) + 0.66104) * TBP)) - ((SG * 65.04...
+                                      ) + 80.19)
+27          4.306e+02  3.939e-04  y = ((-27.745 + ((((TBP * ((TBP + -546.86) * ((-648.53 * S...
+                                      G) + TBP))) * 4.8893e-09) + 0.66104) * TBP)) - ((SG * 65.0...
+                                      4) + 80.19)) + -0.4596
+28          4.302e+02  8.993e-04  y = ((TBP * (((((TBP + -546.86) * ((SG * -648.53) + TBP)) ...
+                                      * TBP) * 4.8893e-09) + 0.66104)) - ((log(SG) + 80.19) + (S...
+                                      G * 65.04))) + -28.185
+30          4.298e+02  4.666e-04  y = ((-27.745 + ((((TBP * (4.8893e-09 * (((SG * -648.53) +...
+                                       TBP) * (TBP + -546.86)))) + 0.66104) * TBP) - SG)) - ((SG...
+                                       * 65.04) + 80.19)) - log(SG)
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 3.250e+05
+Progress: 3283 / 31000 total iterations (10.590%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+5           1.858e+04  2.281e-01  y = TBP * (TBP * 0.00093598)
+6           1.658e+04  1.115e-01  y = (log(TBP) + -5.8922) * TBP
+7           7.054e+03  8.537e-01  y = ((TBP * 0.0021441) - SG) * TBP
+9           5.709e+03  1.055e-01  y = ((TBP * 0.0024945) - SG) * (TBP + -221.28)
+11          4.540e+03  1.142e-01  y = TBP * (TBP * (((SG * -318.6) + TBP) * 1.8299e-06))
+12          4.207e+03  7.562e-02  y = ((((TBP * 0.0030232) + -2.2569) - log(SG)) * TBP) + 40...
+                                      6.97
+13          2.102e+03  6.935e-01  y = ((TBP * 2.2332e-06) * (((SG * -501.86) + TBP) * TBP)) ...
+                                      + 98.084
+15          9.729e+02  3.851e-01  y = TBP * (((TBP + (-581.39 * SG)) * (TBP * (2.2651e-09 * ...
+                                      TBP))) + 0.30197)
+17          7.976e+02  9.930e-02  y = (((TBP * 3.4556e-09) * ((TBP + (SG * -583.52)) * (TBP ...
+                                      + -336.59))) + 0.32217) * TBP
+19          4.773e+02  2.567e-01  y = (TBP * ((((TBP + -513.63) * ((SG * -677.21) + TBP)) * ...
+                                      (TBP * 4.9024e-09)) + 0.6406)) - 150.04
+21          4.770e+02  3.005e-04  y = (((((((TBP + -513.63) * (TBP + (SG * -677.21))) * 4.90...
+                                      24e-09) * TBP) + 0.6406) * TBP) - 148.89) - SG
+22          4.767e+02  7.682e-04  y = ((TBP * (((TBP * (((SG * -677.21) + TBP) * (TBP + -513...
+                                      .84))) * 4.9024e-09) + 0.6406)) - 150.32) - log(SG)
+23          3.311e+02  3.643e-01  y = (((((((SG * -611.09) + TBP) * 5.7195e-09) * TBP) * (TB...
+                                      P + -566.61)) + 0.68354) * (TBP - (SG * 194.38))) + -62.17...
+                                      7
+25          3.311e+02  7.612e-05  y = (((TBP - (SG * 194.38)) * ((((TBP * (TBP + -566.61)) *...
+                                       ((SG * -611.09) + TBP)) * 5.7245e-09) + 0.68354)) + -61.2...
+                                      62) - SG
+26          3.292e+02  5.606e-03  y = ((TBP - (SG * 194.38)) * (((((TBP + (SG * -611.09)) * ...
+                                      TBP) * 5.8207e-09) * ((TBP - log(TBP)) + -566.61)) + 0.688...
+                                      46)) + -65.756
+28          3.268e+02  3.710e-03  y = (((TBP - (SG * 194.38)) * (((TBP * ((SG * -611.09) + T...
+                                      BP)) * (((TBP + -566.61) - log(TBP)) * 5.8207e-09)) + 0.68...
+                                      846)) + -65.756) + 1.4599
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 3.350e+05
+Progress: 4401 / 31000 total iterations (14.197%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+5           1.858e+04  2.281e-01  y = TBP * (TBP * 0.00093598)
+6           1.658e+04  1.115e-01  y = (log(TBP) + -5.8922) * TBP
+7           6.355e+03  9.580e-01  y = exp((log(TBP) + -4.8487) * 3.473)
+9           5.709e+03  5.335e-02  y = ((TBP * 0.0024987) - SG) * (TBP + -223.01)
+11          4.133e+03  1.612e-01  y = ((TBP + -488.73) * ((TBP * 0.003059) - SG)) + 127.54
+13          2.102e+03  3.378e-01  y = ((TBP * 2.2332e-06) * (((SG * -501.86) + TBP) * TBP)) ...
+                                      + 98.084
+15          9.729e+02  3.851e-01  y = TBP * (((((SG * -581.39) + TBP) * (TBP * 2.2651e-09)) ...
+                                      * TBP) + 0.30197)
+17          7.975e+02  9.937e-02  y = (((((TBP + -336.59) * (TBP + (SG * -583.52))) * 3.4556...
+                                      e-09) * TBP) + 0.32197) * TBP
+19          4.750e+02  2.591e-01  y = (TBP * (((TBP + (SG * -674.86)) * ((TBP * (TBP + -517....
+                                      4)) * 4.9013e-09)) + 0.6381)) - 148.54
+21          3.208e+02  1.962e-01  y = (((TBP + -593.05) * (((TBP + (SG * -589.13)) * 6.7003e...
+                                      -09) * TBP)) + 0.71871) * ((SG * -314.17) + TBP)
+23          2.747e+02  7.746e-02  y = ((TBP + -84.42) - (211.19 * SG)) * (((((TBP + -588.29)...
+                                       * (TBP + (SG * -611.13))) * 6.7766e-09) * TBP) + 0.7127)
+25          2.725e+02  4.038e-03  y = (((TBP + -82.79) - (SG * 216.52)) * ((TBP * (((TBP + (...
+                                      SG * -606.63)) * 6.7755e-09) * (TBP + -590.25))) + 0.71204...
+                                      )) + 3.0406
+27          2.705e+02  3.585e-03  y = ((0.71548 - ((((SG * -607.59) + TBP) * (TBP + -592.05)...
+                                      ) * (TBP * -6.8165e-09))) * ((TBP - ((SG * 218.5) + -0.811...
+                                      9)) + -84.395)) - -4.0546
+29          2.705e+02  1.386e-05  y = ((0.71548 - ((((SG * -607.59) + TBP) * (TBP + -592.05)...
+                                      ) * (TBP * -6.8165e-09))) * ((TBP - ((SG * 218.5) + -0.811...
+                                      9)) + -84.395)) + (0.96441 - -3.1755)
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 3.500e+05
+Progress: 5537 / 31000 total iterations (17.861%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+5           1.858e+04  2.281e-01  y = TBP * (TBP * 0.00093598)
+6           1.658e+04  1.115e-01  y = (log(TBP) + -5.8922) * TBP
+7           6.355e+03  9.580e-01  y = exp((log(TBP) + -4.8487) * 3.473)
+9           4.044e+03  2.258e-01  y = exp((log(TBP) + -5.4718) * 4.9599) + 110.28
+11          1.042e+03  6.778e-01  y = exp((6.0211 - SG) * (log(TBP) + -5.5061)) + 110.96
+12          9.348e+02  1.085e-01  y = exp((log(TBP) + -5.4071) * (4.6662 - log(SG))) + 99.65...
+                                      1
+14          9.323e+02  1.311e-03  y = exp((-5.4071 + log(TBP + SG)) * (4.6662 - log(SG))) + ...
+                                      98.748
+15          9.318e+02  5.102e-04  y = exp((log(TBP + exp(SG)) + -5.4138) * (4.6833 - log(SG)...
+                                      )) + 99.368
+16          9.316e+02  1.352e-04  y = exp((4.6833 - log(SG)) * (log((TBP + SG) + SG) + -5.41...
+                                      38)) + 99.368
+17          7.968e+02  1.563e-01  y = TBP * (((TBP + (SG * -581.27)) * (TBP * ((TBP + -338.3...
+                                      4) * 3.4513e-09))) + 0.32045)
+19          4.740e+02  2.596e-01  y = (((TBP * ((((SG * -674.34) + TBP) * 4.9013e-09) * (-51...
+                                      7.4 + TBP))) + 0.6381) * TBP) - 148.57
+21          3.208e+02  1.953e-01  y = (((TBP + -593.05) * (((TBP + (SG * -589.13)) * 6.7003e...
+                                      -09) * TBP)) + 0.71871) * ((SG * -314.17) + TBP)
+23          2.747e+02  7.755e-02  y = ((((SG * -611.13) + TBP) * (TBP * ((TBP + -588.29) * 6...
+                                      .7766e-09))) + 0.71334) * ((TBP + -84.42) - (SG * 211.19))
+25          2.679e+02  1.237e-02  y = (((-83.591 - (SG * 227.12)) + TBP) * (0.71804 - (((((S...
+                                      G * -604.34) + TBP) * -6.9227e-09) * TBP) * (TBP + -593.4)...
+                                      ))) + 7.7001
+27          2.659e+02  3.859e-03  y = (((-84.004 - ((SG * 222.39) + 1.3136)) + TBP) * (0.712...
+                                      69 - (((SG * -606.24) + TBP) * ((TBP * (TBP + -595.58)) * ...
+                                      -6.951e-09)))) + 8.9853
+28          2.642e+02  6.415e-03  y = log(TBP) + (3.1172 + (((TBP + -83.97) - (SG * 228.25))...
+                                       * (0.72085 - (TBP * ((-6.9444e-09 * (TBP + (SG * -605.89)...
+                                      )) * (TBP + -596.7))))))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 3.420e+05
+Progress: 6629 / 31000 total iterations (21.384%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+5           1.858e+04  2.281e-01  y = TBP * (TBP * 0.00093598)
+6           1.658e+04  1.115e-01  y = (log(TBP) + -5.8922) * TBP
+7           6.355e+03  9.580e-01  y = exp((log(TBP) + -4.8487) * 3.473)
+9           4.028e+03  2.278e-01  y = exp((log(TBP) + -5.4354) * 4.834) + 106.23
+10          2.858e+03  3.428e-01  y = exp(((log(TBP) + -4.9473) * 3.6172) - log(SG))
+11          9.133e+02  1.141e+00  y = exp((log(TBP) + -5.4084) * (5.6817 - SG)) + 99.703
+13          9.125e+02  3.740e-04  y = (exp((5.6817 - SG) * (log(TBP) + -5.4084)) + SG) + 98....
+                                      816
+14          7.965e+02  1.359e-01  y = exp((log(TBP) + -5.6251) * (5.3825 - log(SG))) + (0.25...
+                                      376 * TBP)
+16          7.883e+02  5.147e-03  y = ((TBP * 0.2234) + exp((5.4214 - log(SG)) * (log(TBP) +...
+                                       -5.6314))) + 18.489
+18          7.845e+02  2.405e-03  y = ((TBP * 0.2234) + (exp((5.4214 - log(SG)) * (log(TBP) ...
+                                      + -5.6314)) - SG)) + 18.489
+19          4.700e+02  5.122e-01  y = ((((((TBP + (SG * -666.08)) * TBP) * 4.9007e-09) * (-5...
+                                      19.09 + TBP)) + 0.62887) * TBP) - 146.42
+21          3.208e+02  1.910e-01  y = (((TBP + -593.05) * (((TBP + (SG * -589.13)) * 6.7003e...
+                                      -09) * TBP)) + 0.71871) * ((SG * -314.17) + TBP)
+23          2.630e+02  9.934e-02  y = (TBP + (-78.021 - (SG * 229.8))) * (0.74146 - ((-613.3...
+                                      1 + TBP) * (TBP * ((TBP + (SG * -609.37)) * -7.1665e-09)))...
+                                      )
+25          2.565e+02  1.247e-02  y = (((TBP + -85.11) - (SG * 228.87)) * (0.73084 - (((((SG...
+                                       * -606.98) + TBP) * TBP) * (TBP + -611.38)) * -7.2243e-09...
+                                      ))) + 9.143
+27          2.560e+02  9.573e-04  y = (((TBP - (SG * 228.87)) + -85.11) * (0.73084 - (((TBP ...
+                                      + -611.38) * ((TBP + -1.8153) * -7.2592e-09)) * ((SG * -60...
+                                      6.98) + TBP)))) + 8.8686
+30          2.559e+02  8.848e-05  y = (10.29 - log(2.5436)) + ((((TBP - SG) - (SG * 228.87))...
+                                       + -85.11) * (0.73084 - ((TBP * (-7.2592e-09 * (TBP + -611...
+                                      .38))) * (TBP + (-606.98 * SG)))))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 3.280e+05
+Progress: 7755 / 31000 total iterations (25.016%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           2.110e+04  3.292e-01  y = exp(0.0072047 * TBP)
+5           1.858e+04  1.251e-01  y = TBP * (TBP * 0.00093598)
+6           1.658e+04  1.115e-01  y = (log(TBP) + -5.8922) * TBP
+7           6.355e+03  9.580e-01  y = exp((log(TBP) + -4.8487) * 3.473)
+9           4.028e+03  2.278e-01  y = exp((log(TBP) + -5.4354) * 4.834) + 106.23
+10          2.858e+03  3.428e-01  y = exp(((log(TBP) + -4.9473) * 3.6172) - log(SG))
+11          9.133e+02  1.141e+00  y = exp((log(TBP) + -5.4084) * (5.6817 - SG)) + 99.651
+13          9.125e+02  3.734e-04  y = (exp((5.6817 - SG) * (log(TBP) + -5.4084)) + SG) + 98....
+                                      816
+14          7.958e+02  1.368e-01  y = exp((log(TBP) + -5.6366) * (5.4294 - log(SG))) + (0.25...
+                                      766 * TBP)
+16          7.204e+02  4.977e-02  y = exp((((log(TBP) + -5.7505) * 6.7467) - log(SG)) - SG) ...
+                                      + (TBP * 0.31033)
+18          5.222e+02  1.608e-01  y = ((TBP * 0.36486) + exp((((log(TBP) + -5.7402) * 6.6584...
+                                      ) - log(SG)) - SG)) + -27.082
+19          4.682e+02  1.091e-01  y = ((((TBP + -520.1) * ((4.8812e-09 * ((SG * -666.08) + T...
+                                      BP)) * TBP)) + 0.63005) * TBP) - 145.99
+21          2.902e+02  2.391e-01  y = (TBP + (SG * -317.57)) * (0.73894 - (((TBP + (SG * -56...
+                                      3.36)) * ((TBP + -615.47) * -6.6478e-09)) * TBP))
+23          2.562e+02  6.230e-02  y = (0.7982 - ((TBP + (SG * -613.87)) * ((TBP * -7.6519e-0...
+                                      9) * (TBP + -634.61)))) * (((SG * -281.3) + TBP) + -46.962...
+                                      )
+25          2.528e+02  6.739e-03  y = (((TBP + -78.765) - (SG * 243.96)) * (0.75069 - (((TBP...
+                                       + (SG * -601.45)) * -7.2266e-09) * (TBP * (TBP + -616.44)...
+                                      )))) + 9.6276
+27          2.526e+02  3.160e-04  y = (((TBP + -78.765) - (SG * (SG + 243.33))) * (0.75069 -...
+                                       (((TBP + (SG * -601.45)) * -7.2266e-09) * (TBP * (TBP + -...
+                                      616.44))))) + 9.6276
+30          2.523e+02  4.351e-04  y = (((((TBP + -78.186) - (SG * 243.33)) * (exp(-0.29137) ...
+                                      - (((TBP + -616.44) * TBP) * ((TBP + (-601.45 * SG)) * -7....
+                                      2266e-09)))) + 8.0815) - SG) - -2.3541
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 3.150e+05
+Progress: 8922 / 31000 total iterations (28.781%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.894e+04  4.372e-01  y = exp(TBP * 0.0073526)
+5           1.858e+04  1.697e-02  y = TBP * (TBP * 0.00093598)
+6           4.010e+03  1.532e+00  y = exp((TBP * 0.0046611) + 2.5521)
+8           6.839e+02  8.842e-01  y = exp(((TBP * 0.0046189) + 3.5293) - SG)
+10          6.691e+02  1.089e-02  y = exp(3.5293 + ((0.0046189 * (TBP - SG)) - SG))
+11          6.529e+02  2.447e-02  y = exp((((TBP * 0.0046198) + 2.5521) - log(SG)) - 0.05136...
+                                      4)
+12          5.792e+02  1.197e-01  y = (exp((TBP * 0.0048775) + (3.3324 - SG)) * 0.93378) + 2...
+                                      1.71
+14          5.790e+02  1.367e-04  y = ((exp((3.3324 - SG) + (TBP * 0.0048775)) * 0.93378) + ...
+                                      21.387) - SG
+16          5.721e+02  5.956e-03  y = (exp((3.3324 - SG) + (0.0048775 * ((TBP - 0.0048775) -...
+                                       0.76813))) * 0.93378) + 20.669
+17          3.974e+02  3.642e-01  y = (-59.019 + exp(((-5.7964 + log(TBP)) * 6.9928) - (SG *...
+                                       SG))) + (0.43653 * TBP)
+19          3.902e+02  9.213e-03  y = (TBP * 0.43639) + (-59.019 + exp(((-5.7964 + log(TBP -...
+                                       -1.6571)) * 6.9928) - (SG * SG)))
+20          3.872e+02  7.515e-03  y = exp((log(TBP * 0.31501) * (log(TBP) + -5.5603)) - (SG ...
+                                      * SG)) + ((TBP * 0.49874) + -100.48)
+21          2.873e+02  2.985e-01  y = (0.74403 - (((TBP + -618.75) * -6.684e-09) * (TBP * (T...
+                                      BP + (SG * -563.25))))) * (TBP + (SG * -318.92))
+23          2.539e+02  6.184e-02  y = ((SG * -281.3) + (TBP + -46.811)) * (0.7903 - (((TBP +...
+                                       (-613.87 * SG)) * ((TBP + -634.61) * TBP)) * -7.6961e-09)...
+                                      )
+25          2.466e+02  1.453e-02  y = ((SG * -274.75) + (TBP + -44.969)) * (0.77662 - (((TBP...
+                                       + -642.43) * (((TBP + SG) + (SG * -606.38)) * TBP)) * -7....
+                                      6833e-09))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 3.140e+05
+Progress: 10168 / 31000 total iterations (32.800%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.894e+04  4.372e-01  y = exp(TBP * 0.0073526)
+5           1.858e+04  1.697e-02  y = TBP * (TBP * 0.00093598)
+6           4.010e+03  1.532e+00  y = exp((TBP * 0.0046611) + 2.5521)
+8           6.724e+02  8.926e-01  y = exp((0.0046189 * TBP) + (3.5163 - SG))
+9           6.498e+02  3.423e-02  y = exp((2.5521 - log(SG)) + (TBP * 0.0045755))
+10          6.388e+02  1.688e-02  y = exp(((TBP * 0.0046189) + 3.5087) - SG) - -7.5002
+12          5.653e+02  6.116e-02  y = (exp(((TBP * 0.0048775) + 3.3276) - SG) + 24.692) * 0....
+                                      93378
+14          5.510e+02  1.276e-02  y = (exp(((TBP - 3.3324) * 0.0048775) + (3.3324 - SG)) + 2...
+                                      8.076) * 0.93378
+15          5.421e+02  1.618e-02  y = (exp(((TBP - exp(SG)) * 0.0048775) + (3.3324 - SG)) * ...
+                                      0.93378) + 25.164
+17          3.960e+02  1.570e-01  y = -66.597 + ((TBP * 0.45525) + exp(((log(TBP) + -5.8265)...
+                                       * 7.1855) - (SG * SG)))
+19          3.830e+02  1.670e-02  y = (exp(((log(TBP) + -5.7971) * 6.9966) - (SG * SG)) + (-...
+                                      58.938 + (TBP * 0.44971))) - 6.9928
+20          3.328e+02  1.403e-01  y = (-74.525 + exp(((log(TBP) + -5.5231) * log(TBP * 0.274...
+                                      37)) - (SG * SG))) + (TBP * 0.45257)
+21          2.807e+02  1.703e-01  y = (TBP + (SG * -327.12)) * (0.76941 - (((TBP + -635.87) ...
+                                      * TBP) * (-6.7334e-09 * ((SG * -546.26) + TBP))))
+23          2.360e+02  8.673e-02  y = (0.80631 - ((TBP + (SG * -590.54)) * ((-7.7e-09 * TBP)...
+                                       * (TBP + -655.45)))) * (TBP + (-43.3 + (SG * -286.8)))
+25          2.360e+02  2.021e-05  y = ((SG * -286.8) + (TBP + -43.3)) * (0.80631 - (((((SG *...
+                                       -590.54) + TBP) * TBP) * -7.7e-09) * ((TBP - 0.98135) + -...
+                                      654.71)))
+27          2.359e+02  1.513e-04  y = ((((SG * -286.8) + TBP) + -42.346) * (0.80631 - (((SG ...
+                                      * -590.54) + TBP) * (((TBP - 1.0552) + -654.71) * (TBP * -...
+                                      7.7e-09))))) - SG
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 3.110e+05
+Progress: 11307 / 31000 total iterations (36.474%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.894e+04  4.372e-01  y = exp(TBP * 0.0073526)
+5           1.858e+04  1.697e-02  y = TBP * (TBP * 0.00093598)
+6           3.980e+03  1.540e+00  y = exp((TBP * 0.0046189) + 2.5785)
+8           6.724e+02  8.889e-01  y = exp((0.0046189 * TBP) + (3.5163 - SG))
+9           6.498e+02  3.423e-02  y = exp((2.5521 - log(SG)) + (TBP * 0.0045755))
+10          6.388e+02  1.688e-02  y = exp(((TBP * 0.0046189) + 3.5087) - SG) - -7.5002
+12          4.909e+02  1.317e-01  y = exp((3.3324 - (SG * 1.089)) + (TBP * 0.0048775)) + 25....
+                                      115
+14          4.907e+02  1.761e-04  y = (exp((3.3324 - (SG * 1.089)) + (TBP * 0.0048775)) + 25...
+                                      .115) - SG
+17          3.946e+02  7.267e-02  y = ((TBP * 0.45649) + exp(((log(TBP) + -5.8265) * 7.1855)...
+                                       - (SG * SG))) + -67.286
+19          3.827e+02  1.527e-02  y = (exp(((log(TBP) + -5.7971) * 6.9966) - (SG * SG)) + ((...
+                                      TBP * 0.44971) - 7.465)) + -58.938
+20          3.328e+02  1.396e-01  y = (-74.525 + exp(((log(TBP) + -5.5231) * log(TBP * 0.274...
+                                      37)) - (SG * SG))) + (TBP * 0.45257)
+21          2.795e+02  1.746e-01  y = ((SG * -327.01) + TBP) * (0.76941 - (((SG * -546.26) +...
+                                       TBP) * (TBP * ((TBP + -637.03) * -6.7567e-09))))
+23          2.359e+02  8.471e-02  y = ((TBP + -42.755) + (SG * -285.89)) * (0.80142 - (((((S...
+                                      G * -589.3) + TBP) * TBP) * -7.6911e-09) * (TBP + -655.03)...
+                                      ))
+24          2.053e+02  1.389e-01  y = exp((log(TBP * 0.77987) * (log(TBP) + -5.7486)) - (SG ...
+                                      * SG)) + ((TBP * 0.56329) - ((SG * 89.591) + 44.119))
+25          1.852e+02  1.032e-01  y = (exp((log(TBP) * (log(TBP) + -5.8043)) - (SG * SG)) + ...
+                                      (TBP * 0.72509)) + (((SG + SG) * -115.14) - log(TBP))
+26          1.668e+02  1.044e-01  y = (exp(((log(TBP) + -5.7981) * log(TBP)) - (SG * SG)) + ...
+                                      (0.64916 * (TBP - 46.439))) - ((SG + SG) * (74.891 + SG))
+28          1.494e+02  5.526e-02  y = exp(((log(TBP) + -5.8004) * log(TBP)) - (SG * SG)) + (...
+                                      (((TBP - 27.325) * 0.69067) + (SG * -86.878)) - ((SG + SG)...
+                                       * 54.792))
+30          1.391e+02  3.545e-02  y = (exp(((log(TBP) + -5.7981) * log(TBP * 1.0213)) - (SG ...
+                                      * SG)) + ((0.64916 * (TBP - 46.439)) + -4.2434)) - ((SG + ...
+                                      SG) * (74.891 + SG))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 3.060e+05
+Progress: 12543 / 31000 total iterations (40.461%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.894e+04  4.372e-01  y = exp(TBP * 0.0073526)
+5           1.858e+04  1.697e-02  y = TBP * (TBP * 0.00093598)
+6           3.980e+03  1.540e+00  y = exp((TBP * 0.0046189) + 2.5785)
+8           6.724e+02  8.889e-01  y = exp((0.0046189 * TBP) + (3.5163 - SG))
+9           6.498e+02  3.423e-02  y = exp((2.5521 - log(SG)) + (TBP * 0.0045755))
+10          6.388e+02  1.688e-02  y = exp(((TBP * 0.0046189) + 3.5087) - SG) - -7.4955
+12          4.908e+02  1.318e-01  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3324) + 24....
+                                      764
+14          4.876e+02  3.286e-03  y = exp((3.3324 - (SG * 1.089)) + ((TBP - SG) * 0.0048775)...
+                                      ) + 25.996
+16          4.874e+02  1.552e-04  y = (exp((3.3324 - (SG * 1.089)) + ((TBP - SG) * 0.0048775...
+                                      )) + 26.641) - SG
+17          3.946e+02  2.113e-01  y = (exp(((log(TBP) + -5.8265) * 7.1855) - (SG * SG)) + (T...
+                                      BP * 0.45649)) + -67.42
+18          3.262e+02  1.902e-01  y = (TBP * 0.67721) + ((SG * -210.86) + exp(((log(TBP) + -...
+                                      5.7867) * log(TBP)) - SG))
+20          1.303e+02  4.589e-01  y = ((SG * -208.89) + exp((log(TBP) * (log(TBP) + -5.7968)...
+                                      ) - (SG * SG))) + (TBP * 0.6745)
+22          1.063e+02  1.016e-01  y = (exp(((log(TBP) + -5.8173) * log(TBP)) - (SG * (SG * 0...
+                                      .826))) + (TBP * 0.67196)) + (SG * -211.57)
+24          9.823e+01  3.965e-02  y = (exp(((log(TBP) + -5.8173) * log(TBP)) - ((SG * 0.826)...
+                                       * SG)) + ((TBP * 0.67196) + (SG * -211.57))) + 2.5226
+26          9.629e+01  9.975e-03  y = (TBP * 0.67255) + ((SG * -211.63) + ((exp(((log(TBP) +...
+                                       -5.8139) * log(TBP)) - (SG * (SG * 0.84734))) - 0.13722) ...
+                                      + 1.8842))
+28          9.622e+01  4.037e-04  y = ((TBP * 0.67255) + ((SG * -211.63) + ((exp(((log(TBP) ...
+                                      + -5.8139) * log(TBP)) - (SG * (SG * 0.84734))) - 0.13722)...
+                                       + 1.8842))) - -0.12328
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 2.980e+05
+Progress: 13729 / 31000 total iterations (44.287%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.891e+04  4.387e-01  y = exp(0.0073191 * TBP)
+5           1.858e+04  1.553e-02  y = TBP * (TBP * 0.00093598)
+6           3.980e+03  1.540e+00  y = exp((TBP * 0.0046189) + 2.5785)
+8           6.724e+02  8.889e-01  y = exp((0.0046189 * TBP) + (3.5163 - SG))
+9           6.498e+02  3.423e-02  y = exp((2.5521 - log(SG)) + (TBP * 0.0045755))
+10          6.388e+02  1.688e-02  y = exp(((TBP * 0.0046189) + 3.5087) - SG) - -7.4955
+12          4.908e+02  1.318e-01  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3324) + 24....
+                                      805
+14          4.665e+02  2.534e-02  y = (exp((TBP * 0.0048466) + (3.3448 - (SG * 1.1878))) * 1...
+                                      .1079) + 23.982
+16          4.649e+02  1.764e-03  y = (exp((0.0048466 * TBP) + (3.3448 - (SG * 1.1878))) * (...
+                                      1.1079 + 0.0048466)) + 23.204
+17          3.946e+02  1.640e-01  y = (exp(((log(TBP) + -5.8265) * 7.1855) - (SG * SG)) + (T...
+                                      BP * 0.45649)) + -67.42
+18          3.238e+02  1.976e-01  y = (SG * -208.69) + (exp((log(TBP) * (log(TBP) + -5.7856)...
+                                      ) - SG) + (TBP * 0.66885))
+20          1.303e+02  4.552e-01  y = (exp(((log(TBP) + -5.7968) * log(TBP)) - (SG * SG)) + ...
+                                      (TBP * 0.6745)) + (-208.69 * SG)
+22          9.903e+01  1.371e-01  y = exp(((log(TBP) + -5.8163) * log(TBP)) - ((SG * SG) * 0...
+                                      .83576)) + ((SG * -211.92) + (TBP * 0.67704))
+24          9.396e+01  2.627e-02  y = ((TBP * 0.66159) + (exp(((log(TBP) + -5.8146) * log(TB...
+                                      P)) - ((SG * SG) * 0.83568)) - -7.7001)) + (SG * -211.63)
+26          9.393e+01  1.952e-04  y = (((TBP * 0.66159) + (exp(((log(TBP) + -5.8146) * log(T...
+                                      BP)) - ((SG * SG) * 0.83568)) - -5.8146)) + 2.066) + (SG *...
+                                       -211.63)
+28          9.387e+01  2.698e-04  y = (((exp(((-5.8146 + log(TBP)) * log(TBP)) - ((SG * 0.83...
+                                      568) * SG)) - SG) + (SG * -211.63)) - -5.8139) + ((0.66159...
+                                       * TBP) + 2.9072)
+30          9.373e+01  7.653e-04  y = ((TBP * 0.66159) + (exp(((log(TBP) + -5.8146) * log(TB...
+                                      P)) - ((SG * SG) * 0.83568)) - (SG * SG))) + (((SG * -211....
+                                      63) - -5.8139) + 2.9072)
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 2.840e+05
+Progress: 14886 / 31000 total iterations (48.019%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.891e+04  4.387e-01  y = exp(0.0073191 * TBP)
+5           1.858e+04  1.553e-02  y = TBP * (TBP * 0.00093598)
+6           3.980e+03  1.540e+00  y = exp((TBP * 0.0046189) + 2.5785)
+8           6.724e+02  8.889e-01  y = exp((0.0046189 * TBP) + (3.5163 - SG))
+9           6.498e+02  3.423e-02  y = exp((2.5521 - log(SG)) + (TBP * 0.0045755))
+10          6.388e+02  1.688e-02  y = exp(((TBP * 0.0046189) + 3.5087) - SG) + 7.4566
+12          4.908e+02  1.318e-01  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3324) + 24....
+                                      805
+14          4.647e+02  2.732e-02  y = (exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) * 1...
+                                      .1127) + 22.75
+16          4.643e+02  3.764e-04  y = ((SG + exp((3.3448 - (SG * 1.1878)) + (TBP * 0.0048466...
+                                      ))) * 1.1127) + 21.883
+17          3.946e+02  1.628e-01  y = (TBP * 0.45649) + (exp(((log(TBP) + -5.8265) * 7.1855)...
+                                       - (SG * SG)) + -67.42)
+18          3.210e+02  2.064e-01  y = (SG * -212.54) + (exp(((log(TBP) + -5.7856) * log(TBP)...
+                                      ) - SG) + (TBP * 0.67704))
+20          1.303e+02  4.508e-01  y = (exp(((log(TBP) + -5.7968) * log(TBP)) - (SG * SG)) + ...
+                                      (TBP * 0.6745)) + (-208.69 * SG)
+22          9.903e+01  1.371e-01  y = exp(((log(TBP) + -5.8163) * log(TBP)) - ((SG * SG) * 0...
+                                      .83576)) + ((SG * -211.92) + (TBP * 0.67704))
+24          9.396e+01  2.627e-02  y = ((TBP * 0.66159) + (exp(((log(TBP) + -5.8146) * log(TB...
+                                      P)) - ((SG * SG) * 0.83568)) - -7.7001)) + (SG * -211.63)
+26          9.393e+01  1.952e-04  y = (((TBP * 0.66159) + (exp(((log(TBP) + -5.8146) * log(T...
+                                      BP)) - ((SG * SG) * 0.83568)) - -5.8146)) + 2.066) + (SG *...
+                                       -211.63)
+28          9.372e+01  1.086e-03  y = ((exp((log(TBP) * (log(TBP) + -5.8146)) - (SG * (SG * ...
+                                      0.83568))) - -5.8146) + (TBP * 0.66159)) + (((-211.63 - SG...
+                                      ) * SG) + 2.8193)
+30          9.372e+01  -0.000e+00  y = (((TBP * 0.66159) + (exp(((log(TBP) + -5.8146) * log(...
+                                       TBP)) - (SG * (SG * 0.83568))) - -5.8146)) + ((SG * (-211...
+                                       .63 - SG)) + 2.066)) - -0.75331
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 2.780e+05
+Progress: 16101 / 31000 total iterations (51.939%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.890e+04  4.391e-01  y = exp(TBP * 0.0073212)
+5           1.858e+04  1.510e-02  y = TBP * (TBP * 0.00093598)
+6           3.980e+03  1.540e+00  y = exp((TBP * 0.0046189) + 2.5785)
+8           6.704e+02  8.904e-01  y = exp(((TBP * 0.0045755) + 3.5593) - SG)
+9           6.475e+02  3.469e-02  y = exp(((TBP * 0.0045755) + 2.5493) - log(SG))
+10          6.388e+02  1.334e-02  y = exp(((TBP * 0.0046189) + 3.5087) - SG) + 7.4612
+12          4.908e+02  1.318e-01  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3324) + 24....
+                                      805
+14          4.647e+02  2.732e-02  y = (exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) * 1...
+                                      .1127) + 22.771
+16          4.643e+02  3.788e-04  y = ((exp((TBP * 0.0048466) + (3.3448 - (SG * 1.1878))) + ...
+                                      SG) * 1.1127) + 21.839
+17          3.946e+02  1.628e-01  y = (TBP * 0.45649) + (exp(((log(TBP) + -5.8265) * 7.1855)...
+                                       - (SG * SG)) + -67.42)
+18          3.204e+02  2.080e-01  y = (TBP * 0.67703) + (exp(((log(TBP) + -5.7857) * log(TBP...
+                                      )) - SG) + (SG * -213.31))
+20          1.303e+02  4.500e-01  y = (exp(((log(TBP) + -5.7968) * log(TBP)) - (SG * SG)) + ...
+                                      (TBP * 0.6745)) + (-208.69 * SG)
+22          9.903e+01  1.372e-01  y = ((SG * -211.88) + (TBP * 0.67704)) + exp(((log(TBP) + ...
+                                      -5.8163) * log(TBP)) - ((SG * SG) * 0.83576))
+24          9.396e+01  2.624e-02  y = ((TBP * 0.66159) + (exp(((log(TBP) + -5.8146) * log(TB...
+                                      P)) - ((SG * SG) * 0.83568)) - -7.7001)) + (SG * -211.63)
+26          9.388e+01  4.478e-04  y = (SG * -212.52) + (((TBP * 0.66159) + (exp(((log(TBP) +...
+                                       -5.8146) * log(TBP)) - ((SG * 0.83568) * SG)) - -5.8146))...
+                                       + 2.8193)
+27          9.381e+01  7.366e-04  y = ((TBP * 0.66159) + (exp((log(TBP) * (log(TBP) + -5.814...
+                                      6)) - ((SG * SG) * 0.83568)) - -7.7001)) + (SG * (-211.63 ...
+                                      - log(SG)))
+28          9.372e+01  9.233e-04  y = (((-211.64 - SG) * SG) + 2.8193) + ((TBP * 0.66159) + ...
+                                      (exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.83568) *...
+                                       SG)) - -5.8146))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 2.730e+05
+Progress: 17254 / 31000 total iterations (55.658%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.890e+04  4.391e-01  y = exp(TBP * 0.0073212)
+5           1.858e+04  1.510e-02  y = TBP * (TBP * 0.00093598)
+6           3.980e+03  1.540e+00  y = exp((TBP * 0.0046189) + 2.5785)
+8           6.704e+02  8.904e-01  y = exp(((TBP * 0.0045755) + 3.5593) - SG)
+9           6.475e+02  3.469e-02  y = exp(((TBP * 0.0045755) + 2.5493) - log(SG))
+10          6.388e+02  1.334e-02  y = exp(((TBP * 0.0046189) + 3.5087) - SG) + 7.4677
+12          4.908e+02  1.318e-01  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3324) + 24....
+                                      805
+14          4.647e+02  2.732e-02  y = (exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) * 1...
+                                      .1127) + 22.771
+16          4.643e+02  3.788e-04  y = ((exp((TBP * 0.0048466) + (3.3448 - (SG * 1.1878))) + ...
+                                      SG) * 1.1127) + 21.839
+17          3.946e+02  1.628e-01  y = (TBP * 0.45649) + (exp(((log(TBP) + -5.8265) * 7.1855)...
+                                       - (SG * SG)) + -67.42)
+18          3.204e+02  2.080e-01  y = (TBP * 0.67703) + (exp(((log(TBP) + -5.7857) * log(TBP...
+                                      )) - SG) + (SG * -213.31))
+20          1.303e+02  4.500e-01  y = (SG * -208.69) + (exp(((log(TBP) + -5.7968) * log(TBP)...
+                                      ) - (SG * SG)) + (TBP * 0.6745))
+22          9.903e+01  1.372e-01  y = ((SG * -211.88) + (TBP * 0.67704)) + exp(((log(TBP) + ...
+                                      -5.8163) * log(TBP)) - ((SG * SG) * 0.83576))
+24          9.395e+01  2.628e-02  y = (SG * -211.6) + ((TBP * 0.66159) + (exp(((log(TBP) + -...
+                                      5.8146) * log(TBP)) - (SG * (SG * 0.83568))) - -7.7001))
+26          9.387e+01  4.548e-04  y = ((exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * SG) *...
+                                       0.83568)) - -7.7001) + (TBP * 0.66159)) + (SG * (-210.97 ...
+                                      - SG))
+27          9.381e+01  6.276e-04  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - (SG * (SG * 0...
+                                      .83568))) + ((TBP * 0.66159) - -7.7001)) + (SG * (-211.63 ...
+                                      - log(SG)))
+28          9.367e+01  1.444e-03  y = (SG * ((SG * -1.4494) + -210.18)) + ((exp((log(TBP) * ...
+                                      (log(TBP) + -5.8146)) - (SG * (SG * 0.83568))) - -7.7001) ...
+                                      + (TBP * 0.66159))
+30          9.335e+01  1.702e-03  y = ((0.66159 * TBP) + (exp(((log(TBP) + -5.8146) * log(TB...
+                                      P)) - (0.83568 * (SG * SG))) - -7.7001)) + (SG * (-211.63 ...
+                                      - (exp(SG) * log(SG))))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 2.740e+05
+Progress: 18465 / 31000 total iterations (59.565%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.890e+04  4.391e-01  y = exp(TBP * 0.0073212)
+5           1.858e+04  1.510e-02  y = TBP * (TBP * 0.00093598)
+6           3.980e+03  1.540e+00  y = exp((TBP * 0.0046189) + 2.5785)
+8           6.704e+02  8.904e-01  y = exp(((TBP * 0.0045755) + 3.5593) - SG)
+9           6.475e+02  3.469e-02  y = exp(((TBP * 0.0045755) + 2.5493) - log(SG))
+10          6.388e+02  1.334e-02  y = exp(((TBP * 0.0046189) + 3.5087) - SG) + 7.4677
+11          6.381e+02  1.126e-03  y = exp((2.5493 + (TBP * 0.0045755)) - (log(SG) * 1.1421))
+12          4.908e+02  2.624e-01  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3324) + 24....
+                                      805
+14          4.647e+02  2.732e-02  y = (exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) * 1...
+                                      .1127) + 22.771
+16          4.643e+02  3.784e-04  y = ((exp((TBP * 0.0048466) + (3.3448 - (SG * 1.1878))) + ...
+                                      SG) * 1.1127) + 21.839
+17          3.946e+02  1.628e-01  y = (TBP * 0.45649) + (exp(((log(TBP) + -5.8265) * 7.1855)...
+                                       - (SG * SG)) + -67.42)
+18          3.204e+02  2.080e-01  y = (TBP * 0.67703) + (exp(((log(TBP) + -5.7857) * log(TBP...
+                                      )) - SG) + (SG * -213.31))
+20          1.303e+02  4.500e-01  y = (SG * -208.69) + (exp(((log(TBP) + -5.7968) * log(TBP)...
+                                      ) - (SG * SG)) + (TBP * 0.6745))
+22          9.809e+01  1.419e-01  y = exp((log(TBP) * (log(TBP) + -5.8159)) - (SG * (SG * 0....
+                                      83327))) + ((TBP * 0.67352) + (SG * -210.18))
+24          9.394e+01  2.158e-02  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.8356...
+                                      8) * SG)) + ((TBP * 0.66159) - -7.7001)) + (SG * -211.43)
+26          9.375e+01  9.878e-04  y = ((exp((log(TBP) * (log(TBP) + -5.8146)) - (SG * (SG * ...
+                                      0.83568))) - -7.7001) + (TBP * 0.66159)) + (SG * (-210.47 ...
+                                      - SG))
+28          9.351e+01  1.309e-03  y = (exp(((log(TBP) + -5.8146) * log(TBP)) - (0.83568 * (S...
+                                      G * SG))) + ((TBP * 0.66159) - -7.7001)) + (SG * (-210.85 ...
+                                      - (SG * SG)))
+29          9.332e+01  2.040e-03  y = ((TBP * 0.66159) + (exp((log(TBP) * (-5.8146 + log(TBP...
+                                      ))) - ((0.83568 * SG) * SG)) - -7.7001)) + (SG * (-210.18 ...
+                                      - exp(SG * SG)))
+30          9.316e+01  1.705e-03  y = (exp(((log(TBP) + -5.8146) * log(TBP)) - (0.83568 * (S...
+                                      G * SG))) + ((TBP * 0.66159) - -7.7001)) + (SG * (-210.85 ...
+                                      - ((SG * SG) * SG)))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 2.750e+05
+Progress: 19597 / 31000 total iterations (63.216%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.890e+04  4.391e-01  y = exp(TBP * 0.0073212)
+5           1.858e+04  1.510e-02  y = TBP * (TBP * 0.00093598)
+6           3.980e+03  1.540e+00  y = exp((TBP * 0.0046189) + 2.5785)
+8           6.704e+02  8.904e-01  y = exp(((TBP * 0.0045755) + 3.5593) - SG)
+9           6.474e+02  3.478e-02  y = exp(2.549 + ((TBP * 0.0045755) - log(SG)))
+10          6.388e+02  1.325e-02  y = exp(((TBP * 0.0046189) + 3.5087) - SG) + 7.4677
+11          6.209e+02  2.838e-02  y = exp((2.5493 + (TBP * 0.0045755)) - (log(SG) * 1.0703))
+12          4.908e+02  2.351e-01  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3324) + 24....
+                                      805
+14          4.647e+02  2.732e-02  y = (exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) * 1...
+                                      .1127) + 22.771
+16          4.643e+02  3.786e-04  y = ((exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) + ...
+                                      SG) * 1.1127) + 21.819
+17          3.946e+02  1.628e-01  y = (TBP * 0.45649) + (exp(((log(TBP) + -5.8265) * 7.1855)...
+                                       - (SG * SG)) + -67.42)
+18          3.204e+02  2.080e-01  y = (TBP * 0.67703) + (exp(((log(TBP) + -5.7857) * log(TBP...
+                                      )) - SG) + (SG * -213.31))
+20          1.303e+02  4.500e-01  y = (SG * -208.69) + (exp(((log(TBP) + -5.7968) * log(TBP)...
+                                      ) - (SG * SG)) + (TBP * 0.6745))
+22          9.703e+01  1.473e-01  y = (exp(((log(TBP) + -5.8147) * log(TBP)) - (SG * (SG * 0...
+                                      .83569))) + (TBP * 0.6635)) + (SG * -204.89)
+24          9.394e+01  1.618e-02  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.8356...
+                                      8) * SG)) + ((TBP * 0.66159) - -7.7001)) + (SG * -211.43)
+26          9.375e+01  1.008e-03  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.8356...
+                                      8) * SG)) - -7.7001) + ((TBP * 0.66159) + (SG * (-210.5 - ...
+                                      SG)))
+27          9.342e+01  3.489e-03  y = (exp(((log(TBP) + -5.8147) * log(TBP)) - (SG * (0.8356...
+                                      9 * SG))) + (TBP * 0.6635)) + (((-210.18 - exp(SG)) * SG) ...
+                                      - -7.7)
+29          9.253e+01  4.823e-03  y = (((TBP * 0.66299) + (SG * (-210.18 - exp(SG * SG)))) +...
+                                       exp(((-5.8146 + log(TBP)) * log(TBP)) - ((SG * SG) * 0.83...
+                                      568))) - -7.7001
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 2.730e+05
+Progress: 20776 / 31000 total iterations (67.019%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.890e+04  4.391e-01  y = exp(TBP * 0.0073212)
+5           1.858e+04  1.510e-02  y = TBP * (TBP * 0.00093598)
+6           3.980e+03  1.540e+00  y = exp((TBP * 0.0046189) + 2.5785)
+8           6.704e+02  8.904e-01  y = exp(((TBP * 0.0045755) + 3.5593) - SG)
+9           6.474e+02  3.478e-02  y = exp(2.549 + ((TBP * 0.0045755) - log(SG)))
+10          6.388e+02  1.325e-02  y = exp(((TBP * 0.0046189) + 3.5087) - SG) + 7.4677
+11          6.209e+02  2.838e-02  y = exp((2.5493 + (TBP * 0.0045755)) - (log(SG) * 1.0703))
+12          4.908e+02  2.351e-01  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3324) + 24....
+                                      805
+14          4.647e+02  2.732e-02  y = (exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) * 1...
+                                      .1127) + 22.771
+16          4.643e+02  3.786e-04  y = ((exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) + ...
+                                      SG) * 1.1127) + 21.819
+17          3.946e+02  1.628e-01  y = (TBP * 0.45649) + (exp(((log(TBP) + -5.8265) * 7.1855)...
+                                       - (SG * SG)) + -67.417)
+18          3.204e+02  2.080e-01  y = (0.67703 * TBP) + ((-213.32 * SG) + exp((log(TBP) * (-...
+                                      5.7857 + log(TBP))) - SG))
+20          1.303e+02  4.500e-01  y = (SG * -208.69) + (exp(((log(TBP) + -5.7968) * log(TBP)...
+                                      ) - (SG * SG)) + (TBP * 0.6745))
+22          9.619e+01  1.517e-01  y = (SG * -204.28) + (exp((log(TBP) * (log(TBP) + -5.815))...
+                                       - (SG * (SG * 0.83525))) + (TBP * 0.66446))
+24          9.394e+01  1.180e-02  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.8356...
+                                      8) * SG)) + ((TBP * 0.66159) - -7.7001)) + (SG * -211.43)
+26          9.375e+01  1.008e-03  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.8356...
+                                      8) * SG)) - -7.7001) + ((TBP * 0.66159) + (SG * (-210.5 - ...
+                                      SG)))
+27          9.342e+01  3.489e-03  y = (exp(((log(TBP) + -5.8147) * log(TBP)) - (SG * (0.8356...
+                                      9 * SG))) + (TBP * 0.6635)) + (((-210.18 - exp(SG)) * SG) ...
+                                      - -7.7)
+29          9.252e+01  4.869e-03  y = exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.83559...
+                                      ) * SG)) + ((TBP * 0.66314) + ((SG * (-210.18 - exp(SG * S...
+                                      G))) - -7.7002))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 2.740e+05
+Progress: 21957 / 31000 total iterations (70.829%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.890e+04  4.391e-01  y = exp(TBP * 0.0073212)
+5           1.858e+04  1.510e-02  y = TBP * (TBP * 0.00093598)
+6           3.980e+03  1.540e+00  y = exp((TBP * 0.0046189) + 2.5785)
+8           6.704e+02  8.904e-01  y = exp(((TBP * 0.0045755) + 3.5593) - SG)
+9           6.474e+02  3.478e-02  y = exp(2.549 + ((TBP * 0.0045755) - log(SG)))
+10          6.388e+02  1.325e-02  y = exp(((TBP * 0.0046189) + 3.5087) - SG) + 7.4677
+11          6.206e+02  2.890e-02  y = exp((2.5493 + (TBP * 0.0045755)) - (log(SG) * 1.078))
+12          4.902e+02  2.358e-01  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3275) + 26....
+                                      198
+14          4.647e+02  2.671e-02  y = (exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) * 1...
+                                      .1127) + 22.771
+16          4.643e+02  3.786e-04  y = ((exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) + ...
+                                      SG) * 1.1127) + 21.819
+17          3.946e+02  1.628e-01  y = (TBP * 0.45649) + (exp(((log(TBP) + -5.8265) * 7.1855)...
+                                       - (SG * SG)) + -67.417)
+18          3.204e+02  2.080e-01  y = (0.67703 * TBP) + ((-213.32 * SG) + exp((log(TBP) * (-...
+                                      5.7857 + log(TBP))) - SG))
+20          1.303e+02  4.500e-01  y = (SG * -208.69) + (exp(((log(TBP) + -5.7968) * log(TBP)...
+                                      ) - (SG * SG)) + (TBP * 0.6745))
+22          9.610e+01  1.521e-01  y = (exp((log(TBP) * (log(TBP) + -5.8149)) - ((SG * 0.8354...
+                                      1) * SG)) + (TBP * 0.66352)) + (SG * -203.84)
+24          9.394e+01  1.138e-02  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.8356...
+                                      8) * SG)) + ((TBP * 0.66159) - -7.7001)) + (SG * -211.43)
+26          9.375e+01  1.008e-03  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.8356...
+                                      8) * SG)) - -7.7001) + ((TBP * 0.66159) + (SG * (-210.5 - ...
+                                      SG)))
+27          9.342e+01  3.490e-03  y = (exp((log(TBP) * (log(TBP) + -5.8147)) - (SG * (SG * 0...
+                                      .83569))) - -7.7) + ((TBP * 0.6635) + (SG * (-210.18 - exp...
+                                      (SG))))
+29          9.252e+01  4.869e-03  y = exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.83559...
+                                      ) * SG)) + ((TBP * 0.66314) + ((SG * (-210.18 - exp(SG * S...
+                                      G))) - -7.7002))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 2.730e+05
+Progress: 23139 / 31000 total iterations (74.642%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.890e+04  4.391e-01  y = exp(TBP * 0.0073212)
+5           1.858e+04  1.510e-02  y = TBP * (TBP * 0.00093598)
+6           3.980e+03  1.540e+00  y = exp((TBP * 0.0046189) + 2.5785)
+8           6.704e+02  8.904e-01  y = exp(((TBP * 0.0045755) + 3.5593) - SG)
+9           6.474e+02  3.478e-02  y = exp(2.549 + ((TBP * 0.0045755) - log(SG)))
+10          6.388e+02  1.325e-02  y = exp(((TBP * 0.0046189) + 3.5087) - SG) + 7.4677
+11          6.206e+02  2.890e-02  y = exp((2.5493 + (TBP * 0.0045755)) - (log(SG) * 1.078))
+12          4.902e+02  2.358e-01  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3275) + 26....
+                                      198
+14          4.647e+02  2.671e-02  y = (exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) * 1...
+                                      .1127) + 22.771
+16          4.643e+02  3.786e-04  y = ((exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) + ...
+                                      SG) * 1.1127) + 21.819
+17          3.946e+02  1.628e-01  y = (TBP * 0.45649) + (exp(((log(TBP) + -5.8265) * 7.1855)...
+                                       - (SG * SG)) + -67.417)
+18          3.204e+02  2.080e-01  y = (0.67703 * TBP) + ((-213.32 * SG) + exp((log(TBP) * (-...
+                                      5.7857 + log(TBP))) - SG))
+20          1.303e+02  4.500e-01  y = (SG * -208.69) + (exp(((log(TBP) + -5.7968) * log(TBP)...
+                                      ) - (SG * SG)) + (TBP * 0.6745))
+22          9.610e+01  1.521e-01  y = (exp((log(TBP) * (log(TBP) + -5.8149)) - ((SG * 0.8354...
+                                      1) * SG)) + (TBP * 0.66352)) + (SG * -203.84)
+24          9.394e+01  1.138e-02  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.8356...
+                                      8) * SG)) + ((TBP * 0.66159) - -7.7001)) + (SG * -211.43)
+26          9.375e+01  1.020e-03  y = ((exp((log(TBP) * (log(TBP) + -5.8146)) - (SG * (SG * ...
+                                      0.83568))) - -7.7001) + (SG * (-210.54 - SG))) + (TBP * 0....
+                                      66159)
+27          9.341e+01  3.630e-03  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - (SG * (SG * 0...
+                                      .83559))) + (((-210.18 - exp(SG)) * SG) + (TBP * 0.66314))...
+                                      ) - -7.8349
+29          9.252e+01  4.786e-03  y = exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.83559...
+                                      ) * SG)) + ((TBP * 0.66314) + ((SG * (-210.18 - exp(SG * S...
+                                      G))) - -7.7002))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 2.720e+05
+Progress: 24316 / 31000 total iterations (78.439%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.890e+04  4.391e-01  y = exp(TBP * 0.0073212)
+5           1.858e+04  1.510e-02  y = TBP * (TBP * 0.00093598)
+6           3.947e+03  1.548e+00  y = exp((TBP * 0.0045755) + 2.6401)
+8           6.704e+02  8.863e-01  y = exp(((TBP * 0.0045755) + 3.5593) - SG)
+9           6.474e+02  3.478e-02  y = exp(2.549 + ((TBP * 0.0045755) - log(SG)))
+10          6.388e+02  1.325e-02  y = exp(((TBP * 0.0046189) + 3.5087) - SG) + 7.4677
+11          6.094e+02  4.715e-02  y = exp(((TBP * 0.0045755) + 2.5445) - (log(SG) * 1.078))
+12          4.902e+02  2.176e-01  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3275) + 26....
+                                      198
+14          4.647e+02  2.671e-02  y = (exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) * 1...
+                                      .1127) + 22.771
+16          4.643e+02  3.786e-04  y = ((exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) + ...
+                                      SG) * 1.1127) + 21.819
+17          3.946e+02  1.628e-01  y = (TBP * 0.45649) + (exp(((log(TBP) + -5.8265) * 7.1855)...
+                                       - (SG * SG)) + -67.417)
+18          3.204e+02  2.080e-01  y = (0.67703 * TBP) + ((-213.32 * SG) + exp((log(TBP) * (-...
+                                      5.7857 + log(TBP))) - SG))
+20          1.303e+02  4.500e-01  y = (SG * -208.69) + (exp(((log(TBP) + -5.7968) * log(TBP)...
+                                      ) - (SG * SG)) + (TBP * 0.6745))
+22          9.610e+01  1.521e-01  y = (exp((log(TBP) * (log(TBP) + -5.8149)) - ((SG * 0.8354...
+                                      1) * SG)) + (TBP * 0.66352)) + (SG * -203.84)
+24          9.394e+01  1.138e-02  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.8356...
+                                      8) * SG)) + ((TBP * 0.66159) - -7.7001)) + (SG * -211.43)
+26          9.375e+01  1.020e-03  y = (SG * (-210.54 - SG)) + ((exp((log(TBP) * (log(TBP) + ...
+                                      -5.8146)) - ((SG * SG) * 0.83568)) - -7.7001) + (TBP * 0.6...
+                                      6159))
+27          9.341e+01  3.629e-03  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - (SG * (SG * 0...
+                                      .83559))) + (((-210.18 - exp(SG)) * SG) + (TBP * 0.66314))...
+                                      ) - -7.8349
+29          9.252e+01  4.786e-03  y = exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.83559...
+                                      ) * SG)) + ((TBP * 0.66314) + ((SG * (-210.18 - exp(SG * S...
+                                      G))) - -7.7002))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 2.730e+05
+Progress: 25479 / 31000 total iterations (82.190%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.890e+04  4.391e-01  y = exp(TBP * 0.0073212)
+5           1.858e+04  1.510e-02  y = TBP * (TBP * 0.00093598)
+6           3.947e+03  1.548e+00  y = exp((TBP * 0.0045755) + 2.6401)
+8           6.704e+02  8.863e-01  y = exp(((TBP * 0.0045755) + 3.5593) - SG)
+9           6.474e+02  3.478e-02  y = exp(2.549 + ((TBP * 0.0045755) - log(SG)))
+10          6.388e+02  1.325e-02  y = exp(((TBP * 0.0046189) + 3.5087) - SG) + 7.4677
+11          6.094e+02  4.715e-02  y = exp(((TBP * 0.0045755) + 2.5445) - (log(SG) * 1.078))
+12          4.902e+02  2.176e-01  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3275) + 26....
+                                      198
+14          4.647e+02  2.671e-02  y = (exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) * 1...
+                                      .1127) + 22.771
+16          4.643e+02  3.786e-04  y = ((exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) + ...
+                                      SG) * 1.1127) + 21.819
+17          3.946e+02  1.628e-01  y = (TBP * 0.45649) + (exp(((log(TBP) + -5.8265) * 7.1855)...
+                                       - (SG * SG)) + -67.417)
+18          3.204e+02  2.080e-01  y = (0.67703 * TBP) + ((-213.32 * SG) + exp((log(TBP) * (-...
+                                      5.7857 + log(TBP))) - SG))
+20          1.303e+02  4.500e-01  y = (SG * -208.69) + (exp(((log(TBP) + -5.7968) * log(TBP)...
+                                      ) - (SG * SG)) + (TBP * 0.6745))
+22          9.609e+01  1.522e-01  y = (exp(((log(TBP) + -5.8148) * log(TBP)) - ((SG * 0.8354...
+                                      2) * SG)) + (SG * -203.74)) + (TBP * 0.66349)
+24          9.394e+01  1.129e-02  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.8356...
+                                      8) * SG)) + ((TBP * 0.66159) - -7.7001)) + (SG * -211.43)
+26          9.375e+01  1.020e-03  y = (SG * (-210.54 - SG)) + ((exp((log(TBP) * (log(TBP) + ...
+                                      -5.8146)) - ((SG * SG) * 0.83568)) - -7.7001) + (TBP * 0.6...
+                                      6159))
+27          9.341e+01  3.633e-03  y = ((TBP * 0.66314) - -7.8609) + (exp(((log(TBP) + -5.814...
+                                      6) * log(TBP)) - ((SG * SG) * 0.83559)) + ((-210.18 - exp(...
+                                      SG)) * SG))
+29          9.252e+01  4.784e-03  y = exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.83559...
+                                      ) * SG)) + ((TBP * 0.66314) + ((SG * (-210.18 - exp(SG * S...
+                                      G))) - -7.7002))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 2.720e+05
+Progress: 26623 / 31000 total iterations (85.881%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.890e+04  4.391e-01  y = exp(TBP * 0.0073212)
+5           1.858e+04  1.510e-02  y = TBP * (TBP * 0.00093598)
+6           3.947e+03  1.548e+00  y = exp((TBP * 0.0045755) + 2.6401)
+8           6.704e+02  8.863e-01  y = exp(((TBP * 0.0045755) + 3.5593) - SG)
+9           6.474e+02  3.478e-02  y = exp(2.549 + ((TBP * 0.0045755) - log(SG)))
+10          6.067e+02  6.496e-02  y = exp(((TBP * 0.0045755) - (SG * 1.1527)) + 3.707)
+12          4.902e+02  1.065e-01  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3275) + 26....
+                                      198
+14          4.647e+02  2.671e-02  y = (exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) * 1...
+                                      .1127) + 22.771
+16          4.643e+02  3.786e-04  y = ((exp(((TBP * 0.0048466) - (SG * 1.1878)) + 3.3448) + ...
+                                      SG) * 1.1127) + 21.819
+17          3.946e+02  1.628e-01  y = (TBP * 0.45649) + (exp(((log(TBP) + -5.8265) * 7.1855)...
+                                       - (SG * SG)) + -67.417)
+18          3.204e+02  2.080e-01  y = (0.67703 * TBP) + ((-213.32 * SG) + exp((log(TBP) * (-...
+                                      5.7857 + log(TBP))) - SG))
+20          1.303e+02  4.500e-01  y = (SG * -208.69) + (exp(((log(TBP) + -5.7968) * log(TBP)...
+                                      ) - (SG * SG)) + (TBP * 0.6745))
+22          9.609e+01  1.522e-01  y = (SG * -203.74) + (exp(((log(TBP) + -5.8149) * log(TBP)...
+                                      ) - (SG * (SG * 0.83542))) + (TBP * 0.66349))
+24          9.394e+01  1.128e-02  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.8356...
+                                      8) * SG)) + ((TBP * 0.66159) - -7.7001)) + (SG * -211.43)
+26          9.375e+01  1.026e-03  y = (((SG * (-210.62 - SG)) + exp(((log(TBP) + -5.8146) * ...
+                                      log(TBP)) - (SG * (SG * 0.83568)))) + (TBP * 0.66159)) - -...
+                                      7.7228
+27          9.341e+01  3.622e-03  y = ((TBP * 0.66314) - -7.8609) + (exp(((log(TBP) + -5.814...
+                                      6) * log(TBP)) - ((SG * SG) * 0.83559)) + ((-210.18 - exp(...
+                                      SG)) * SG))
+29          9.252e+01  4.784e-03  y = exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.83559...
+                                      ) * SG)) + ((TBP * 0.66314) + ((SG * (-210.18 - exp(SG * S...
+                                      G))) - -7.7002))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 2.710e+05
+Progress: 27719 / 31000 total iterations (89.416%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.890e+04  4.391e-01  y = exp(TBP * 0.0073212)
+5           1.858e+04  1.510e-02  y = TBP * (TBP * 0.00093598)
+6           3.947e+03  1.548e+00  y = exp((TBP * 0.0045755) + 2.6401)
+8           6.704e+02  8.863e-01  y = exp(((TBP * 0.0045755) + 3.5593) - SG)
+9           6.474e+02  3.478e-02  y = exp(2.549 + ((TBP * 0.0045755) - log(SG)))
+10          6.067e+02  6.496e-02  y = exp(((TBP * 0.0045755) - (SG * 1.1527)) + 3.707)
+12          4.902e+02  1.065e-01  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3275) + 26....
+                                      198
+14          4.646e+02  2.676e-02  y = (exp(((TBP * 0.0048466) - (SG * 1.1889)) + 3.3448) * 1...
+                                      .1127) + 22.999
+16          4.643e+02  3.635e-04  y = ((exp(((TBP * 0.0048466) - (SG * 1.1889)) + 3.3448) + ...
+                                      SG) * 1.1127) + 22.375
+17          3.856e+02  1.856e-01  y = -75.602 + (exp((7.1896 * (log(TBP) + -5.8281)) - (SG *...
+                                       SG)) + (TBP * 0.47193))
+18          3.204e+02  1.851e-01  y = ((0.67703 * TBP) + exp((log(TBP) * (-5.7857 + log(TBP)...
+                                      )) - SG)) + (-213.32 * SG)
+20          1.303e+02  4.500e-01  y = (SG * -208.7) + (exp(((log(TBP) + -5.7968) * log(TBP))...
+                                       - (SG * SG)) + (TBP * 0.6745))
+22          9.609e+01  1.522e-01  y = (SG * -203.74) + (exp(((log(TBP) + -5.8149) * log(TBP)...
+                                      ) - (SG * (SG * 0.83542))) + (TBP * 0.66349))
+24          9.394e+01  1.128e-02  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - (SG * (SG * 0...
+                                      .83568))) + ((TBP * 0.66159) - -7.733)) + (SG * -211.43)
+26          9.375e+01  1.026e-03  y = (((SG * (-210.62 - SG)) + exp(((log(TBP) + -5.8146) * ...
+                                      log(TBP)) - (SG * (SG * 0.83568)))) + (TBP * 0.66159)) - -...
+                                      7.7228
+27          9.341e+01  3.623e-03  y = (exp(((log(TBP) + -5.8147) * log(TBP)) - (SG * (0.8355...
+                                      9 * SG))) + (((-210.18 - exp(SG)) * SG) + (TBP * 0.66314))...
+                                      ) - -7.8609
+29          9.252e+01  4.784e-03  y = exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.83559...
+                                      ) * SG)) + ((TBP * 0.66314) + ((SG * (-210.18 - exp(SG * S...
+                                      G))) - -7.7002))
+30          9.216e+01  3.878e-03  y = exp((log(TBP) * (log(TBP) + -5.8147)) - ((SG * SG) * 0...
+                                      .83559)) + ((SG * (-210.18 - (exp(exp(SG)) * 0.17225))) + ...
+                                      ((TBP * 0.66314) - -7.7002))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 2.680e+05
+Progress: 28800 / 31000 total iterations (92.903%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.889e+04  4.400e-01  y = exp(TBP * 0.0073275)
+5           1.858e+04  1.420e-02  y = TBP * (TBP * 0.00093598)
+6           3.947e+03  1.548e+00  y = exp((TBP * 0.0045755) + 2.6401)
+8           6.704e+02  8.863e-01  y = exp(((TBP * 0.0045755) + 3.5593) - SG)
+9           6.474e+02  3.478e-02  y = exp(2.549 + ((TBP * 0.0045755) - log(SG)))
+10          5.954e+02  8.364e-02  y = exp((3.707 + (TBP * 0.0045755)) - (SG * 1.1569))
+12          4.902e+02  9.721e-02  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3275) + 26....
+                                      19
+14          4.646e+02  2.677e-02  y = (exp(((TBP * 0.0048466) - (SG * 1.1889)) + 3.3448) * 1...
+                                      .1127) + 23.083
+16          4.642e+02  4.210e-04  y = ((exp((TBP * 0.0048466) + (3.3448 - (SG * 1.1889))) + ...
+                                      SG) * 1.1127) + 22.085
+17          3.856e+02  1.856e-01  y = (exp(((log(TBP) + -5.8281) * 7.1896) - (SG * SG)) + (T...
+                                      BP * 0.47193)) + -75.461
+18          3.204e+02  1.850e-01  y = ((0.67703 * TBP) + exp((log(TBP) * (-5.7857 + log(TBP)...
+                                      )) - SG)) + (-213.32 * SG)
+20          1.303e+02  4.500e-01  y = (SG * -208.7) + ((0.67401 * TBP) + exp(((log(TBP) + -5...
+                                      .7968) * log(TBP)) - (SG * SG)))
+22          9.609e+01  1.522e-01  y = ((TBP * 0.66349) + exp(((log(TBP) + -5.8149) * log(TBP...
+                                      )) - ((SG * SG) * 0.83542))) + (SG * -203.74)
+24          9.394e+01  1.128e-02  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - (SG * (SG * 0...
+                                      .83568))) + ((TBP * 0.66159) - -7.733)) + (SG * -211.43)
+26          9.372e+01  1.154e-03  y = ((-211.43 - SG) * SG) + ((TBP * 0.66159) + (exp((log(T...
+                                      BP) * (log(TBP) + -5.8146)) - ((SG * SG) * 0.83568)) - -8....
+                                      4624))
+27          9.341e+01  3.367e-03  y = (exp(((log(TBP) + -5.8147) * log(TBP)) - (SG * (0.8355...
+                                      9 * SG))) + (((-210.18 - exp(SG)) * SG) + (TBP * 0.66314))...
+                                      ) - -7.8609
+29          9.252e+01  4.784e-03  y = exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.83559...
+                                      ) * SG)) + ((TBP * 0.66314) + ((SG * (-210.18 - exp(SG * S...
+                                      G))) - -7.7002))
+30          9.216e+01  3.878e-03  y = exp((log(TBP) * (log(TBP) + -5.8147)) - ((SG * SG) * 0...
+                                      .83559)) + ((SG * (-210.18 - (exp(exp(SG)) * 0.17225))) + ...
+                                      ((TBP * 0.66314) - -7.7002))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 2.660e+05
+Progress: 29853 / 31000 total iterations (96.300%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.889e+04  4.400e-01  y = exp(TBP * 0.0073275)
+5           1.858e+04  1.420e-02  y = TBP * (TBP * 0.00093598)
+6           3.947e+03  1.548e+00  y = exp((TBP * 0.0045755) + 2.6401)
+8           6.704e+02  8.863e-01  y = exp(((TBP * 0.0045755) + 3.5593) - SG)
+9           6.474e+02  3.478e-02  y = exp(2.549 + ((TBP * 0.0045755) - log(SG)))
+10          5.954e+02  8.364e-02  y = exp((3.707 + (TBP * 0.0045755)) - (SG * 1.1569))
+12          4.902e+02  9.721e-02  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3275) + 26....
+                                      19
+14          4.646e+02  2.677e-02  y = (exp(((TBP * 0.0048466) - (SG * 1.1889)) + 3.3448) * 1...
+                                      .1127) + 23.083
+16          4.642e+02  4.210e-04  y = ((exp((TBP * 0.0048466) + (3.3448 - (SG * 1.1889))) + ...
+                                      SG) * 1.1127) + 22.085
+17          3.856e+02  1.856e-01  y = (exp(((log(TBP) + -5.8281) * 7.1896) - (SG * SG)) + (T...
+                                      BP * 0.47193)) + -75.461
+18          3.185e+02  1.912e-01  y = ((TBP + exp(((log(TBP) + -5.7318) * log(TBP)) - SG)) *...
+                                       0.68513) + (SG * -215.9)
+20          1.303e+02  4.469e-01  y = (SG * -208.7) + ((0.67401 * TBP) + exp(((log(TBP) + -5...
+                                      .7968) * log(TBP)) - (SG * SG)))
+22          9.608e+01  1.522e-01  y = ((TBP * 0.6635) + (SG * -203.58)) + exp((log(TBP) * (l...
+                                      og(TBP) + -5.8149)) - (SG * (SG * 0.83542)))
+24          9.394e+01  1.127e-02  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - (SG * (SG * 0...
+                                      .83568))) + ((TBP * 0.66159) - -7.733)) + (SG * -211.43)
+26          9.372e+01  1.154e-03  y = ((-211.43 - SG) * SG) + ((TBP * 0.66159) + (exp((log(T...
+                                      BP) * (log(TBP) + -5.8146)) - ((SG * SG) * 0.83568)) - -8....
+                                      4624))
+27          9.341e+01  3.367e-03  y = (exp(((log(TBP) + -5.8147) * log(TBP)) - (SG * (0.8355...
+                                      9 * SG))) + (((-210.18 - exp(SG)) * SG) + (TBP * 0.66314))...
+                                      ) - -7.8609
+29          9.252e+01  4.784e-03  y = exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.83559...
+                                      ) * SG)) + ((TBP * 0.66314) + ((SG * (-210.18 - exp(SG * S...
+                                      G))) - -7.7002))
+30          9.216e+01  3.878e-03  y = exp((log(TBP) * (log(TBP) + -5.8147)) - ((SG * SG) * 0...
+                                      .83559)) + ((SG * (-210.18 - (exp(exp(SG)) * 0.17225))) + ...
+                                      ((TBP * 0.66314) - -7.7002))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 2.630e+05
+Progress: 30893 / 31000 total iterations (99.655%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.889e+04  4.400e-01  y = exp(TBP * 0.0073275)
+5           1.858e+04  1.420e-02  y = TBP * (TBP * 0.00093598)
+6           3.947e+03  1.548e+00  y = exp((TBP * 0.0045755) + 2.6401)
+8           6.704e+02  8.863e-01  y = exp(((TBP * 0.0045755) + 3.5593) - SG)
+9           6.474e+02  3.478e-02  y = exp(2.549 + ((TBP * 0.0045755) - log(SG)))
+10          5.954e+02  8.364e-02  y = exp((3.707 + (TBP * 0.0045755)) - (SG * 1.1569))
+12          4.902e+02  9.721e-02  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3275) + 26....
+                                      19
+14          4.646e+02  2.677e-02  y = (exp(((TBP * 0.0048466) - (SG * 1.1889)) + 3.3448) * 1...
+                                      .1127) + 23.083
+16          4.642e+02  4.210e-04  y = ((exp((TBP * 0.0048466) + (3.3448 - (SG * 1.1889))) + ...
+                                      SG) * 1.1127) + 22.085
+17          3.851e+02  1.867e-01  y = exp(((log(TBP) + -5.8281) * 7.1896) - (SG * SG)) + ((T...
+                                      BP * 0.47303) + -75.957)
+18          3.172e+02  1.941e-01  y = (0.68513 * (exp(((log(TBP) + -5.7318) * log(TBP)) - SG...
+                                      ) + TBP)) + (SG * -216.59)
+20          1.302e+02  4.451e-01  y = (TBP * 0.67401) + (exp(((log(TBP) + -5.7968) * log(TBP...
+                                      )) - (SG * SG)) + (SG * -208.49))
+22          9.608e+01  1.520e-01  y = ((TBP * 0.6635) + (SG * -203.58)) + exp((log(TBP) * (l...
+                                      og(TBP) + -5.8149)) - (SG * (SG * 0.83542)))
+24          9.394e+01  1.127e-02  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - (SG * (SG * 0...
+                                      .83568))) + ((TBP * 0.66159) - -7.733)) + (SG * -211.43)
+26          9.372e+01  1.154e-03  y = ((-211.43 - SG) * SG) + ((TBP * 0.66159) + (exp((log(T...
+                                      BP) * (log(TBP) + -5.8146)) - ((SG * SG) * 0.83568)) - -8....
+                                      4624))
+27          9.341e+01  3.367e-03  y = (exp(((log(TBP) + -5.8147) * log(TBP)) - (SG * (0.8355...
+                                      9 * SG))) + (((-210.18 - exp(SG)) * SG) + (TBP * 0.66314))...
+                                      ) - -7.8609
+29          9.252e+01  4.784e-03  y = exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.83559...
+                                      ) * SG)) + ((TBP * 0.66314) + ((SG * (-210.18 - exp(SG * S...
+                                      G))) - -7.7002))
+30          9.216e+01  3.878e-03  y = exp((log(TBP) * (log(TBP) + -5.8147)) - ((SG * SG) * 0...
+                                      .83559)) + ((SG * (-210.18 - (exp(exp(SG)) * 0.17225))) + ...
+                                      ((TBP * 0.66314) - -7.7002))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP - 270.62
+4           1.889e+04  4.400e-01  y = exp(TBP * 0.0073275)
+5           1.858e+04  1.420e-02  y = TBP * (TBP * 0.00093598)
+6           3.947e+03  1.548e+00  y = exp((TBP * 0.0045755) + 2.6401)
+8           6.704e+02  8.863e-01  y = exp(((TBP * 0.0045755) + 3.5593) - SG)
+9           6.474e+02  3.478e-02  y = exp(2.549 + ((TBP * 0.0045755) - log(SG)))
+10          5.954e+02  8.364e-02  y = exp((3.707 + (TBP * 0.0045755)) - (SG * 1.1569))
+12          4.902e+02  9.721e-02  y = exp(((TBP * 0.0048775) - (SG * 1.089)) + 3.3275) + 26....
+                                      19
+14          4.646e+02  2.677e-02  y = (exp(((TBP * 0.0048466) - (SG * 1.1889)) + 3.3448) * 1...
+                                      .1127) + 23.083
+16          4.642e+02  4.210e-04  y = ((exp((TBP * 0.0048466) + (3.3448 - (SG * 1.1889))) + ...
+                                      SG) * 1.1127) + 22.085
+17          3.851e+02  1.867e-01  y = exp(((log(TBP) + -5.8281) * 7.1896) - (SG * SG)) + ((T...
+                                      BP * 0.47303) + -75.957)
+18          3.172e+02  1.941e-01  y = (0.68513 * (exp(((log(TBP) + -5.7318) * log(TBP)) - SG...
+                                      ) + TBP)) + (SG * -216.59)
+20          1.302e+02  4.451e-01  y = (TBP * 0.67401) + (exp(((log(TBP) + -5.7968) * log(TBP...
+                                      )) - (SG * SG)) + (SG * -208.49))
+22          9.608e+01  1.520e-01  y = ((TBP * 0.6635) + (SG * -203.58)) + exp((log(TBP) * (l...
+                                      og(TBP) + -5.8149)) - (SG * (SG * 0.83542)))
+24          9.394e+01  1.127e-02  y = (exp((log(TBP) * (log(TBP) + -5.8146)) - (SG * (SG * 0...
+                                      .83568))) + ((TBP * 0.66159) - -7.733)) + (SG * -211.43)
+26          9.372e+01  1.154e-03  y = ((-211.43 - SG) * SG) + ((TBP * 0.66159) + (exp((log(T...
+                                      BP) * (log(TBP) + -5.8146)) - ((SG * SG) * 0.83568)) - -8....
+                                      4624))
+27          9.341e+01  3.367e-03  y = (exp(((log(TBP) + -5.8147) * log(TBP)) - (SG * (0.8355...
+                                      9 * SG))) + (((-210.18 - exp(SG)) * SG) + (TBP * 0.66314))...
+                                      ) - -7.8609
+29          9.252e+01  4.784e-03  y = exp((log(TBP) * (log(TBP) + -5.8146)) - ((SG * 0.83559...
+                                      ) * SG)) + ((TBP * 0.66314) + ((SG * (-210.18 - exp(SG * S...
+                                      G))) - -7.7002))
+30          9.216e+01  3.878e-03  y = exp((log(TBP) * (log(TBP) + -5.8147)) - ((SG * SG) * 0...
+                                      .83559)) + ((SG * (-210.18 - (exp(exp(SG)) * 0.17225))) + ...
+                                      ((TBP * 0.66314) - -7.7002))
+───────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[ Info: Final population:
+[ Info: Results saved to:</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>time to fit:  135.82664799690247 seconds
+  - outputs/20250724_160256_9u8IzT/hall_of_fame.csv</code></pre>
+</div>
+</div>
+<div id="ee6454f7" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.plot(y,y_pred,marker<span class="op">=</span><span class="st">"o"</span>,linestyle<span class="op">=</span><span class="st">"None"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'True Molecular Mass'</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Predicted Molecular Mass'</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Molecular Mass vs Predicted Molecular Mass'</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="around4r3_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="6ab9ad81" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull Out Equation</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>myEq<span class="op">=</span>myMod.sympy()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean-Up Equation</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>sym.simplify(myEq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle - 208.49345 SG + \frac{e^{- SG^{2} + \log{\left(TBP \right)}^{2}}}{TBP^{5.7967854}} + 0.6740138 TBP^{1.0}\)</span></p>
+</div>
+</div>
+<div id="d7424ec7" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(myMod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>PySRRegressor.equations_ = [
+        pick     score                                           equation          loss  complexity
+    0         0.000000                                          304.55478  96270.340000           1
+    1         0.592876                                    TBP - 270.62198  29412.145000           3
+    2         0.443028                            exp(TBP * 0.0073274574)  18885.219000           4
+    3         0.016186                         TBP * (TBP * 0.0009359772)  18582.010000           5
+    4         1.549157                exp((TBP * 0.004575491) + 2.640126)   3947.320000           6
+    5         0.886483        exp(((TBP * 0.0045754914) + 3.559349) - SG)    670.367700           8
+    6         0.034848  exp(2.5490043 + ((TBP * 0.0045754914) - log(SG)))    647.409100           9
+    7         0.083702  exp((3.7070484 + (TBP * 0.0045754914)) - (SG *...    595.425700          10
+    8         0.097229  exp(((TBP * 0.0048775324) - (SG * 1.0890131)) ...    490.202900          12
+    9         0.026784  (exp(((TBP * 0.0048465957) - (SG * 1.1889434))...    464.634800          14
+    10        0.000436  ((exp((TBP * 0.0048465957) + (3.3447747 - (SG ...    464.229520          16
+    11        0.186756  exp(((log(TBP) + -5.8281097) * 7.1895766) - (S...    385.146400          17
+    12        0.194180  (0.6851262 * (exp(((log(TBP) + -5.7318177) * l...    317.171880          18
+    13  &gt;&gt;&gt;&gt;  0.445127  (TBP * 0.6740138) + (exp(((log(TBP) + -5.79678...    130.215480          20
+    14        0.151987  ((TBP * 0.6634971) + (SG * -203.58493)) + exp(...     96.083460          22
+    15        0.011276  (exp((log(TBP) * (log(TBP) + -5.814556)) - (SG...     93.940760          24
+    16        0.001157  ((-211.42554 - SG) * SG) + ((TBP * 0.6615917) ...     93.723564          26
+    17        0.003375  (exp(((log(TBP) + -5.814656) * log(TBP)) - (SG...     93.407770          27
+    18        0.004788  exp((log(TBP) * (log(TBP) + -5.8146496)) - ((S...     92.517624          29
+    19        0.003886  exp((log(TBP) * (log(TBP) + -5.814657)) - ((SG...     92.158840          30
+]</code></pre>
+</div>
+</div>
+<div id="8ca2f516" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Hosseinifar dataset</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Colab</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#drive.mount('/content/drive')</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#df=pd.read_csv('/content/drive/MyDrive/hosseinifar_raw.csv')</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Positron</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>dfh<span class="op">=</span>pd.read_csv(<span class="st">'./hosseinifar_raw.csv'</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Quarto</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#df=pd.read_csv('./c694/hosseinifar_raw.csv')</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>yh<span class="op">=</span>dfh[<span class="st">'MW'</span>]</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>xh<span class="op">=</span>dfh[[<span class="st">'SG'</span>,<span class="st">'TBP'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="dedba828" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> time.time()</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-Run with new random seed</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>urMod<span class="op">=</span>PySRRegressor(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">7</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    deterministic<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    parallelism<span class="op">=</span><span class="st">'serial'</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    binary_operators<span class="op">=</span>[<span class="st">"+"</span>,<span class="st">"-"</span>,<span class="st">"*"</span>],</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    unary_operators<span class="op">=</span>[<span class="st">"exp"</span>,<span class="st">"log"</span>],</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    timeout_in_seconds<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#    niterations=1000,</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>urMod.fit(x,y)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>z_pred<span class="op">=</span>urMod.predict(x)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"time to fit: "</span>,time.time() <span class="op">-</span> t0, <span class="st">'seconds'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/richard/Documents/p312a/lib/python3.12/site-packages/pysr/sr.py:2811: UserWarning: Note: it looks like you are running in Jupyter. The progress bar will be turned off.
+  warnings.warn(
+[ Info: Started!</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Expressions evaluated per second: 2.820e+05
+Progress: 1034 / 3100 total iterations (33.355%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP + -270.61
+5           1.858e+04  2.281e-01  y = (TBP * 0.00093598) * TBP
+6           1.658e+04  1.115e-01  y = TBP * (log(TBP) + -5.8922)
+7           1.090e+04  4.186e-01  y = ((TBP * 0.0016541) + -0.54181) * TBP
+9           6.138e+03  2.865e-01  y = (TBP * ((TBP * 0.0032561) + -2.6518)) + 631.67
+11          4.551e+03  1.493e-01  y = ((TBP * TBP) * 1.7955e-06) * ((SG * -310.59) + TBP)
+13          2.102e+03  3.859e-01  y = ((TBP * 2.235e-06) * ((TBP + (SG * -502.32)) * TBP)) +...
+                                       98.301
+15          1.766e+03  8.715e-02  y = (((TBP - 219.86) * 2.8843e-06) * (((SG * -496.99) + TB...
+                                      P) * TBP)) + 107.24
+17          1.757e+03  2.416e-03  y = (((((TBP + -234.14) * TBP) * 2.886e-06) * (TBP + (SG *...
+                                       -486.13))) + 103.14) - -0.64102
+18          1.446e+03  1.949e-01  y = 105.86 - ((TBP + -400.13) * (TBP * (((TBP + -380.88) -...
+                                       (log(SG) * 753.49)) * -2.9703e-06)))
+20          5.741e+02  4.616e-01  y = (((((TBP + -754.93) * -0.0020488) + log(SG)) * (TBP + ...
+                                      -500.56)) + -204.71) * ((TBP + -266.52) * -0.0037593)
+22          5.657e+02  7.298e-03  y = (-262.42 + (TBP - 5.3906)) * ((((((-760.71 + TBP) * -0...
+                                      .0020417) + log(SG)) * (-497.27 + TBP)) + -200.77) * -0.00...
+                                      38588)
+24          5.655e+02  1.461e-04  y = (((TBP + 0.53135) - 5.2774) + -262.71) * ((((((TBP + -...
+                                      760.96) * -0.002044) + log(SG)) * (TBP + -497.32)) + -201....
+                                      12) * -0.0038559)
+26          5.636e+02  1.688e-03  y = ((((TBP + -497.54) * (log(SG) + ((TBP + -761.03) * -0....
+                                      0020379))) + -201.1) * -0.003866) * ((TBP - 4.733) + (-261...
+                                      .77 - (SG + SG)))
+27          5.128e+02  9.445e-02  y = ((((TBP + -430.93) * (((TBP + -847.26) * -0.0033896) +...
+                                       log(SG))) + -427.16) * ((TBP - ((SG * 31.816) * exp(SG)))...
+                                       + -240.85)) * -0.0026266
+29          5.117e+02  1.007e-03  y = ((((TBP + -239.25) - (exp(SG) * (SG * 33.467))) * -0.0...
+                                      026264) * (((((TBP + -846.11) * -0.0033841) + log(SG)) * (...
+                                      TBP + -429.74)) + -426.02)) - -2.2015
+30          5.117e+02  8.482e-05  y = ((((((TBP + -846.11) * -0.0033662) + log(SG)) * (TBP +...
+                                       -429.78)) + -425.55) * (((TBP - ((SG * exp(SG)) * 33.117)...
+                                      ) + -237.82) * -0.0026286)) + log(SG)
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[ Info: Final population:
+[ Info: Results saved to:</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Expressions evaluated per second: 2.970e+05
+Progress: 2014 / 3100 total iterations (64.968%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP + -270.61
+5           1.858e+04  2.281e-01  y = (TBP * TBP) * 0.00093598
+6           1.658e+04  1.115e-01  y = TBP * (log(TBP) + -5.8922)
+7           7.214e+03  8.313e-01  y = ((TBP * TBP) * 1.1819e-06) * TBP
+9           6.138e+03  8.049e-02  y = (TBP * ((TBP * 0.0032561) + -2.6518)) + 631.67
+11          4.540e+03  1.504e-01  y = (TBP + (SG * -318.9)) * ((TBP * 1.8307e-06) * TBP)
+12          4.190e+03  7.978e-02  y = (((TBP * (TBP * 1.2477e-06)) - log(SG)) * TBP) - 100.4...
+                                      5
+13          2.102e+03  6.893e-01  y = (((SG * -501.92) + TBP) * ((TBP * TBP) * 2.2333e-06)) ...
+                                      + 98.113
+15          1.727e+03  9.825e-02  y = ((TBP + (SG * -484.15)) * (((TBP - 282.57) * 3.0774e-0...
+                                      6) * TBP)) + 110.32
+17          1.449e+03  8.778e-02  y = ((((TBP * 1.6119e-09) * TBP) * ((SG * (SG * -344.67)) ...
+                                      + TBP)) + 0.1919) * TBP
+18          1.272e+03  1.300e-01  y = 154.3 - (((((-363.94 - (log(SG) * 852.05)) + TBP) * (T...
+                                      BP + -513.19)) * TBP) * -3.4342e-06)
+20          5.634e+02  4.070e-01  y = (TBP + -269.55) * (-0.0038215 * (((((TBP + -767.19) * ...
+                                      -0.0020753) + log(SG)) * (TBP + -492.39)) + -207.04))
+22          5.586e+02  4.321e-03  y = (((TBP + -278.33) * (((TBP + -489.37) * (((TBP + -765....
+                                      19) * -0.0020902) + log(SG))) + -205.03)) * -0.00381) + 10...
+                                      .441
+24          5.581e+02  4.125e-04  y = (((TBP + -278.13) * ((((TBP + -489.31) * (((TBP + -765...
+                                      .35) * -0.0021033) + log(SG))) + -205) * -0.0037955)) + 10...
+                                      .808) - -0.48907
+25          5.569e+02  2.083e-03  y = (((TBP - exp(SG + SG)) + -264.2) * (((((TBP + -760.28)...
+                                       * -0.0020659) + log(SG)) * (TBP + -498.41)) + -203.86)) *...
+                                       -0.0038288
+27          5.119e+02  4.207e-02  y = ((TBP + (-237.97 - ((exp(SG) * SG) * 33.112))) * (((((...
+                                      TBP + -845.57) * -0.0033692) + log(SG)) * (TBP + -429.81))...
+                                       + -425.87)) * -0.0026234
+29          5.116e+02  2.774e-04  y = ((((-239.15 - (SG * (exp(SG) * 32.995))) + TBP) * (((T...
+                                      BP + -429.75) * (log(SG) + ((TBP + -845.4) * -0.0033799)))...
+                                       + -425.69)) * -0.0026214) - -1.3416
+30          5.107e+02  1.787e-03  y = ((-237.83 - ((exp(SG) * SG) * 33.273)) + TBP) * ((((((...
+                                      (TBP + -845.36) * -0.0033824) + log(SG)) * (TBP + -429.82)...
+                                      ) + -425.48) - exp(SG)) * -0.0026121)
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 3.080e+05
+Progress: 3023 / 3100 total iterations (97.516%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP + -270.61
+5           1.858e+04  2.281e-01  y = (TBP * TBP) * 0.00093598
+6           1.658e+04  1.115e-01  y = TBP * (log(TBP) + -5.8922)
+7           7.214e+03  8.313e-01  y = ((TBP * TBP) * 1.1819e-06) * TBP
+9           6.138e+03  8.049e-02  y = (TBP * ((TBP * 0.0032561) + -2.6518)) + 631.67
+11          4.540e+03  1.504e-01  y = (TBP * 1.8307e-06) * (TBP * ((SG * -318.9) + TBP))
+12          3.364e+03  2.994e-01  y = ((TBP * (TBP * 1.402e-06)) - log(SG - -0.2424)) * TBP
+13          2.102e+03  4.700e-01  y = (((SG * -501.92) + TBP) * ((TBP * TBP) * 2.2333e-06)) ...
+                                      + 98.113
+15          9.822e+02  3.804e-01  y = ((((TBP * (TBP + (SG * -563.09))) * 2.2026e-09) * TBP)...
+                                       + 0.29124) * TBP
+17          9.723e+02  5.005e-03  y = (((TBP * TBP) * (((SG * -347.44) + (TBP * 0.60056)) * ...
+                                      3.7493e-09)) + 0.30071) * TBP
+19          9.096e+02  3.333e-02  y = ((((TBP * TBP) * 3.7417e-09) * ((SG * -398.14) + (TBP ...
+                                      * 0.67602))) + 0.40038) * (TBP + -126.2)
+20          5.632e+02  4.793e-01  y = ((TBP + -269.12) * -0.0038008) * (((TBP + -492.28) * (...
+                                      log(SG) + ((TBP + -767.31) * -0.0020857))) + -208.04)
+22          5.582e+02  4.385e-03  y = ((((TBP + -489.31) * (log(SG) + ((TBP + -765.35) * -0....
+                                      0021033))) + -205) * ((TBP + -278.13) * -0.0037955)) + 10....
+                                      947
+24          5.145e+02  4.078e-02  y = (((TBP + -232.32) - (SG * 73.115)) * -0.0028354) * (((...
+                                      TBP + -405.76) * (((TBP + -864.17) * -0.0030112) + log(SG)...
+                                      )) + -402.55)
+26          5.098e+02  4.536e-03  y = (TBP + (-226.41 - (SG * 80.453))) * ((((TBP + -402.39)...
+                                       * (log(SG) + ((TBP + -867.28) * -0.0029223))) + (SG - 393...
+                                      .25)) * -0.0029318)
+27          5.088e+02  1.857e-03  y = ((((TBP + -437.89) * (((TBP + -837.08) * -0.0033315) +...
+                                       log(SG))) + -411.34) * -0.0026475) * (TBP + (-236.11 - (e...
+                                      xp(SG) * (SG * 34.041))))
+29          5.078e+02  9.758e-04  y = (((((TBP + -438.11) - SG) * (log(SG) + ((TBP + -836.55...
+                                      ) * -0.0033395))) + -411.06) * -0.0026453) * ((TBP - ((SG ...
+                                      * exp(SG)) * 33.838)) + -236.61)
+30          5.064e+02  2.696e-03  y = (((TBP + -236.73) - (exp(SG) * (SG * 34.06))) * -0.002...
+                                      6476) * (((log(SG) + ((TBP + -836.55) * -0.0033517)) * (TB...
+                                      P + (-438.06 - exp(SG)))) + -411.09)
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           9.627e+04  0.000e+00  y = 304.55
+3           2.941e+04  5.897e-01  y = TBP + -270.61
+5           1.858e+04  2.281e-01  y = (TBP * TBP) * 0.00093598
+6           1.658e+04  1.115e-01  y = TBP * (log(TBP) + -5.8922)
+7           7.214e+03  8.313e-01  y = ((TBP * TBP) * 1.1819e-06) * TBP
+9           6.138e+03  8.049e-02  y = (TBP * ((TBP * 0.0032561) + -2.6518)) + 631.67
+11          3.532e+03  2.761e-01  y = TBP * (((TBP * TBP) * 1.4195e-06) - (SG - 0.76247))
+12          3.364e+03  4.839e-02  y = ((TBP * (TBP * 1.402e-06)) - log(SG - -0.2424)) * TBP
+13          2.102e+03  4.700e-01  y = (((SG * -501.92) + TBP) * ((TBP * TBP) * 2.2333e-06)) ...
+                                      + 98.113
+15          9.822e+02  3.804e-01  y = ((((TBP * (TBP + (SG * -563.09))) * 2.2026e-09) * TBP)...
+                                       + 0.29124) * TBP
+17          9.723e+02  5.005e-03  y = (((TBP * TBP) * (((SG * -347.44) + (TBP * 0.60056)) * ...
+                                      3.7493e-09)) + 0.30071) * TBP
+19          9.096e+02  3.333e-02  y = ((((TBP * TBP) * 3.7417e-09) * ((SG * -398.14) + (TBP ...
+                                      * 0.67602))) + 0.40038) * (TBP + -126.2)
+20          5.631e+02  4.794e-01  y = (((((TBP + -767.48) * -0.0020865) + log(SG)) * (TBP + ...
+                                      -492.23)) + -208.17) * ((TBP + -269.26) * -0.0038012)
+22          5.582e+02  4.352e-03  y = ((((TBP + -489.31) * (log(SG) + ((TBP + -765.35) * -0....
+                                      0021033))) + -205) * ((TBP + -278.13) * -0.0037955)) + 10....
+                                      947
+24          5.145e+02  4.078e-02  y = (((TBP + -232.32) - (SG * 73.115)) * -0.0028354) * (((...
+                                      TBP + -405.76) * (((TBP + -864.17) * -0.0030112) + log(SG)...
+                                      )) + -402.55)
+26          5.098e+02  4.536e-03  y = (TBP + (-226.41 - (SG * 80.453))) * ((((TBP + -402.39)...
+                                       * (log(SG) + ((TBP + -867.28) * -0.0029223))) + (SG - 393...
+                                      .25)) * -0.0029318)
+27          5.088e+02  1.857e-03  y = ((((TBP + -437.89) * (((TBP + -837.08) * -0.0033315) +...
+                                       log(SG))) + -411.34) * -0.0026475) * (TBP + (-236.11 - (e...
+                                      xp(SG) * (SG * 34.041))))
+29          5.078e+02  9.758e-04  y = (((((TBP + -438.11) - SG) * (log(SG) + ((TBP + -836.55...
+                                      ) * -0.0033395))) + -411.06) * -0.0026453) * ((TBP - ((SG ...
+                                      * exp(SG)) * 33.838)) + -236.61)
+30          5.064e+02  2.696e-03  y = (((TBP + -236.73) - (exp(SG) * (SG * 34.06))) * -0.002...
+                                      6476) * (((log(SG) + ((TBP + -836.55) * -0.0033517)) * (TB...
+                                      P + (-438.06 - exp(SG)))) + -411.09)
+───────────────────────────────────────────────────────────────────────────────────────────────────
+time to fit:  15.590062856674194 seconds
+  - outputs/20250724_160512_URlRTE/hall_of_fame.csv</code></pre>
+</div>
+</div>
+<div id="4c7711ee" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replot with new predictions</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>plt.plot(y,z_pred,marker<span class="op">=</span><span class="st">"o"</span>,linestyle<span class="op">=</span><span class="st">"None"</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'True Molecular Mass'</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Predicted Molecular Mass'</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Molecular Mass vs Predicted Molecular Mass'</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="around4r3_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="055d98ee" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull Out New Equation</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>urEq<span class="op">=</span>urMod.sympy()</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean-Up Equation</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>sym.simplify(urEq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle - \left(0.0038011975 TBP - 1.02352207051435\right) \left(\left(TBP - 492.23026\right) \left(- 0.0020865065 TBP + \log{\left(SG \right)} + 1.60135630682339\right) - 208.1731\right)\)</span></p>
+</div>
+</div>
+<div id="79bbb791" class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add New Predictions to training Dataframe</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Fit_Mw_11'</span>]<span class="op">=</span>y_pred</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Fit_Mw_7'</span>]<span class="op">=</span>z_pred</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Correlation Coefficient between columns</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>df.corr()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">SG</th>
+<th data-quarto-table-cell-role="th">TBP</th>
+<th data-quarto-table-cell-role="th">MW</th>
+<th data-quarto-table-cell-role="th">Fit_Mw_11</th>
+<th data-quarto-table-cell-role="th">Fit_Mw_7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">SG</td>
+<td>1.000000</td>
+<td>0.625218</td>
+<td>0.334852</td>
+<td>0.331159</td>
+<td>0.344175</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">TBP</td>
+<td>0.625218</td>
+<td>1.000000</td>
+<td>0.869591</td>
+<td>0.870264</td>
+<td>0.872532</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">MW</td>
+<td>0.334852</td>
+<td>0.869591</td>
+<td>1.000000</td>
+<td>0.999324</td>
+<td>0.997072</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Fit_Mw_11</td>
+<td>0.331159</td>
+<td>0.870264</td>
+<td>0.999324</td>
+<td>1.000000</td>
+<td>0.997365</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Fit_Mw_7</td>
+<td>0.344175</td>
+<td>0.872532</td>
+<td>0.997072</td>
+<td>0.997365</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="bd5ada2b" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print (Old) Equation before clean-up</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(myEq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-208.49345*SG + 0.6740138*TBP + exp(-SG**2 + (log(TBP) - 5.7967854)*log(TBP))</code></pre>
+</div>
+</div>
+<div id="db99bf30" class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate testing Predictions</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>y_h1<span class="op">=</span>myMod.predict(xh)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>y_h2<span class="op">=</span>urMod.predict(xh)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="72f1be15" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Predictions to testing Dataframe</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>dfh[<span class="st">'Fit_Mw_11'</span>]<span class="op">=</span>y_h1</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>dfh[<span class="st">'Fit_Mw_7'</span>]<span class="op">=</span>y_h2</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Correlation Coefficient between columns</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>dfh.corr()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">SG</th>
+<th data-quarto-table-cell-role="th">TBP</th>
+<th data-quarto-table-cell-role="th">MW</th>
+<th data-quarto-table-cell-role="th">Fit_Mw_11</th>
+<th data-quarto-table-cell-role="th">Fit_Mw_7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">SG</td>
+<td>1.000000</td>
+<td>0.985561</td>
+<td>0.954145</td>
+<td>0.956396</td>
+<td>0.957559</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">TBP</td>
+<td>0.985561</td>
+<td>1.000000</td>
+<td>0.990235</td>
+<td>0.991440</td>
+<td>0.990434</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">MW</td>
+<td>0.954145</td>
+<td>0.990235</td>
+<td>1.000000</td>
+<td>0.999921</td>
+<td>0.999003</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Fit_Mw_11</td>
+<td>0.956396</td>
+<td>0.991440</td>
+<td>0.999921</td>
+<td>1.000000</td>
+<td>0.999050</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Fit_Mw_7</td>
+<td>0.957559</td>
+<td>0.990434</td>
+<td>0.999003</td>
+<td>0.999050</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

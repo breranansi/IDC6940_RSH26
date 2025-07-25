@@ -919,7 +919,7 @@ $$
 M_w=(a_{00}T_b-a_{01})e^{a_{02}\cdot 10^{-9}T_b^2(a_{03}\cdot \gamma_0 +a_{04}\cdot T_b)}
 $$ {#eq-res-eon-1}
 
-And the second equation:
+And the second equation[^2]:
 
 $$
 M_w=-a_{00}\cdot \gamma_o+\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} +a_{02}\cdot T_b
@@ -950,12 +950,15 @@ $\left( \frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} \right)$.
 As promised, we used the Hosseinifar dataset of 10 records (12.5%) to
 validate some of these equations:
 
-+----------+----------+----------+------------+----------+--------------+
-|          | Raw\     | Default\ | Goossens\  | Power\   | Exponential\ |
-|          | Mw       | Run      | Correlation| Run      | Run #2       |
-+:=========+=========:+=========:+===========:+=========:+=============:+
-| Raw Mw   | 1.000000 | 0.999957 | 0.999939   | 0.996964 | 0.998954     |
-+----------+----------+----------+------------+----------+--------------+
+| Run | Correlation Coefficient|
+|:---|---:|
+| Raw Mw   | 1.000000 |
+| Default | 0.999957 |
+| Goossens Correlation| 0.999939 |
+| Power | 0.996964 |
+| Exponential #2 | 0.998954 |
+| Aeon #1 | 0.999973 |
+| Aeon #2 | 0.999921 |
 
 : Validation Run Correlation Coefficients {#tbl-res-val .striped .hover}
 
@@ -1053,5 +1056,7 @@ Our main conclusions are:
     report, but we can comment that `PySR`was one of the better ones.
     
 <p style="color:Tomato">Health stuff conclusions go here</p>
+
+[^2]: A quick note for humans on this second equation: ${log(T_b)}^3 = {(ln(T_b))}^3 \neq ln(T^3_b)$
 
 ## References
