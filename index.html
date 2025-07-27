@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Delanyce Rose &amp; Richard Henry">
-<meta name="dcterms.date" content="2025-07-26">
+<meta name="dcterms.date" content="2025-07-27">
 
 <title>Using Symbolic Regression to Model Molecular Mass in Naturally Occurring Hydrocarbon Fluids</title>
 <style>
@@ -2347,6 +2347,7 @@ window.Quarto = {
   <li><a href="#software-implementation" id="toc-software-implementation" class="nav-link" data-scroll-target="#software-implementation">Software Implementation</a></li>
   <li><a href="#noisy-toy" id="toc-noisy-toy" class="nav-link" data-scroll-target="#noisy-toy">Noisy Toy</a></li>
   <li><a href="#belly-of-the-beast" id="toc-belly-of-the-beast" class="nav-link" data-scroll-target="#belly-of-the-beast">Belly of the Beast</a></li>
+  <li><a href="#quiet-toy" id="toc-quiet-toy" class="nav-link" data-scroll-target="#quiet-toy">Quiet Toy</a></li>
   <li><a href="#alternatives-to-evolution" id="toc-alternatives-to-evolution" class="nav-link" data-scroll-target="#alternatives-to-evolution">Alternatives to Evolution</a></li>
   <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
   </ul></li>
@@ -2382,7 +2383,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 26, 2025</p>
+      <p class="date">July 27, 2025</p>
     </div>
   </div>
   
@@ -2669,10 +2670,87 @@ Figure 4: Toy Equation Tree
 <p>This switch says that each population will have 27 individuals. Notice that the tournament size is smaller than this, so that there is more than one competition between individual equations.</p>
 </section>
 </section>
+<section id="quiet-toy" class="level3">
+<h3 class="anchored" data-anchor-id="quiet-toy">Quiet Toy</h3>
+<p>The <code>PySR</code> library is silent over control of constants. In its implementation, the equation forms are generated first, which for our toy example would be:</p>
+<p><span id="eq-toy-blank"><span class="math display">\[ \frac{a_{00}}{x}+a_{01} \tag{13}\]</span></span></p>
+<p>and randomly generated numbers used to fill the constants (<span class="math inline">\(a_{00},a_{01}\)</span>). Then in a second step, the values of these constants are tuned to minimize errors. In more theoretically rigorous implementations of the evolutionary algorithm, such as <code>gramEvol</code>, (<span class="citation" data-cites="noorian2016gramevol">Noorian, Silva, and Leong (<a href="#ref-noorian2016gramevol" role="doc-biblioref">2016</a>)</span>) these constants, like the operators, have to be specified up front, and are selected based on fitness.</p>
+<p>For our toy problem, we can supply a list of constants, of which only two are correct like this:</p>
+<p><code>w&lt;-seq(from=121.5,to=161.5, by=10)</code></p>
+<p>and then the set-up for the problem would look like this:</p>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import Library</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;gramEvol&quot;</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># List of constants</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>w<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="at">from=</span><span class="fl">121.5</span>,<span class="at">to=</span><span class="fl">161.5</span>, <span class="at">by=</span><span class="dv">10</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the rules</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>ruleDef <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">expr =</span> <span class="fu">grule</span>(<span class="fu">op</span>(expr, expr), var,con),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">op =</span> <span class="fu">grule</span>(<span class="st">&#39;+&#39;</span>, <span class="st">&#39;-&#39;</span>, <span class="st">&#39;*&#39;</span>,<span class="st">&#39;/&#39;</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">var =</span> <span class="fu">grule</span>(x),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">con =</span> <span class="fu">gvrule</span>(w))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the Grammar</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>grammarDef <span class="ot">&lt;-</span> <span class="fu">CreateGrammar</span>(ruleDef)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print Backus-Naur version</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>grammarDef</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-backus" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-backus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table 3: Backus-Naur Description of Toy Problem
+</figcaption>
+<div aria-describedby="tbl-backus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;expr&gt; ::= &lt;op&gt;(&lt;expr&gt;, &lt;expr&gt;) | &lt;var&gt; | &lt;con&gt;
+&lt;op&gt;   ::= &quot;+&quot; | &quot;-&quot; | &quot;*&quot; | &quot;/&quot;
+&lt;var&gt;  ::= x
+&lt;con&gt;  ::= 121.5 | 131.5 | 141.5 | 151.5 | 161.5</code></pre>
+</div>
+</div>
+</figure>
+</div>
+<p>Then we can supply other important hyper parameters (e.g. fitness function, number of iterations, complexity limits) and <code>gramEvol</code> will find our function after about 1500 generations:</p>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitness Function</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>SymRegFitFunc <span class="ot">&lt;-</span> <span class="cf">function</span>(expr) {</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">eval</span>(expr)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">any</span>(<span class="fu">is.nan</span>(result)))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">Inf</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span> (<span class="fu">mean</span>(<span class="fu">log</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">abs</span>(y <span class="sc">-</span> result))))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Random Number Generator</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">13</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Call to main function</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>ge <span class="ot">&lt;-</span> <span class="fu">GrammaticalEvolution</span>(grammarDef,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                           SymRegFitFunc,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                           <span class="at">terminationCost =</span> <span class="fl">0.1</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                           <span class="at">iterations =</span> <span class="dv">2500</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                           <span class="at">max.depth =</span> <span class="dv">10</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>ge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-gramEvol" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-gramEvol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table 4: gramEvol Results
+</figcaption>
+<div aria-describedby="tbl-gramEvol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-stdout">
+<pre><code>Grammatical Evolution Search Results:
+  No. Generations:  1531 
+  Best Expression:  141.5/x - 131.5 
+  Best Cost:        0 </code></pre>
+</div>
+</div>
+</figure>
+</div>
+<p>This approach is clearly useful when our constants can only assume specific values, for example the freezing point of water at atmospheric pressure (<span class="math inline">\(273.15 K\)</span>) but less useful when we don’t know enough to define all our relevant constants ahead of time.</p>
+<p><span class="citation" data-cites="virgolin2022coefficient">Virgolin and Bosman (<a href="#ref-virgolin2022coefficient" role="doc-biblioref">2022</a>)</span> present two algorithms that adjust the value of the constants as an integral part of the evolutionary process, but conclud that “coefficient mutation does not always make a difference”. This is disappointing.</p>
+</section>
 <section id="alternatives-to-evolution" class="level3">
 <h3 class="anchored" data-anchor-id="alternatives-to-evolution">Alternatives to Evolution</h3>
 <p>Although genetic programming has proven to be most popular approach to Symbolic Regression <span class="citation" data-cites="dong2025recent">(<a href="#ref-dong2025recent" role="doc-biblioref">Dong and Zhong 2025</a>)</span>, it has been criticized for being slow and producing bloated equations.</p>
-<p>Deterministic methods such as brute-force search <span class="citation" data-cites="udrescu2020ai">(<a href="#ref-udrescu2020ai" role="doc-biblioref">Udrescu and Tegmark 2020</a>)</span>, mathematical programming <span class="citation" data-cites="austel2017globally">(<a href="#ref-austel2017globally" role="doc-biblioref">Austel et al. 2017</a>)</span> and sparse regresion <span class="citation" data-cites="muthyala2025symantic">(<a href="#ref-muthyala2025symantic" role="doc-biblioref">Muthyala et al. 2025</a>)</span> have been employed. The latter is particularly good at removing variables that don’t materially contribute to the prediction. Typically, they don’t solve the speed problem, but are thought to produce more interpretable equations.</p>
+<p>Deterministic methods such as brute-force search <span class="citation" data-cites="udrescu2020ai">(<a href="#ref-udrescu2020ai" role="doc-biblioref">Udrescu and Tegmark 2020</a>)</span>, mathematical programming <span class="citation" data-cites="austel2017globally">(<a href="#ref-austel2017globally" role="doc-biblioref">Austel et al. 2017</a>)</span> and sparse regression <span class="citation" data-cites="muthyala2025symantic">(<a href="#ref-muthyala2025symantic" role="doc-biblioref">Muthyala et al. 2025</a>)</span> have been employed. The latter is particularly good at removing variables that don’t materially contribute to the prediction. Typically, they don’t solve the speed problem, but are thought to produce more easily interpreted equations.</p>
 <p>Methods which rely on information technology have also been used, especially of late. The idea here is to replace the random changes to the equations that are the heart of the evolutionary approach with changes based on what we know about th data. Sometimes this information is learned from the data <span class="citation" data-cites="anthes2025transformer">(<a href="#ref-anthes2025transformer" role="doc-biblioref">Anthes, Sobania, and Rothlauf 2025</a>)</span>, and other times it is supplied externally <span class="citation" data-cites="keren2023computational">(<a href="#ref-keren2023computational" role="doc-biblioref">Keren, Liberzon, and Lazebnik 2023</a>)</span> as “human experience”. In the latter case, there is the risk that the search space may become so restricted that nothing new can be learned.</p>
 <p>Neural Network methods have also made an appearance. An early approach <span class="citation" data-cites="martius2016extrapolation">(<a href="#ref-martius2016extrapolation" role="doc-biblioref">Martius and Lampert 2016</a>)</span> replaced the activation functions in an ANN with trancendental functions such as sine and log. The main idea here is that each layer would host multiple kinds of functions instead of just one. The more recent approaches <span class="citation" data-cites="kamienny2022end">(<a href="#ref-kamienny2022end" role="doc-biblioref">Kamienny et al. 2022</a>)</span> pre-train a transformer model to learn the relationships between data and equations using synthetic data. The major advantage here is that if we ignore the pre-training phase, the training phase may be quick enough to use the model in real time.</p>
 </section>
@@ -2680,9 +2758,8 @@ Figure 4: Toy Equation Tree
 <h3 class="anchored" data-anchor-id="next-steps">Next Steps</h3>
 <ol type="1">
 <li><p>Examine our dataset and describe some of the equations that have been used historically to calculate molecular mass.</p></li>
-<li><p>Look at the options for generating equations from data in the <code>PySR</code> symbolic regression library.</p></li>
-<li><p>Compare and contrast the equations that are generated by <code>PySR</code> for our dataset as the options are varied.</p></li>
-<li><p>Compare and contrast the equations that are generated by evolutionary algorithms vs. deterministic algorithms.</p></li>
+<li><p>Compare the equations that are generated by <code>PySR</code> for our dataset as the options are varied.</p></li>
+<li><p>Compare the equations that are generated by evolutionary algorithms vs. deterministic algorithms.</p></li>
 </ol>
 </section>
 </section>
@@ -2694,18 +2771,18 @@ Figure 4: Toy Equation Tree
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read Goosens Dataset from flat file</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Positron</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#df&lt;-read.csv(&quot;./c694/goossens_raw.csv&quot;)</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Quarto</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">&quot;./goossens_raw.csv&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read Goosens Dataset from flat file</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Positron</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#df&lt;-read.csv(&quot;./c694/goossens_raw.csv&quot;)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Quarto</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">&quot;./goossens_raw.csv&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>We have 3 variables:</p>
 <div id="tbl-goo-var" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-goo-var-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 3: Goossens Variables
+Table 5: Goossens Variables
 </figcaption>
 <div aria-describedby="tbl-goo-var-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table-striped table-hover caption-top table">
@@ -2741,13 +2818,13 @@ Table 3: Goossens Variables
 <p>Here is a summary of the dataset:</p>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize Goosens Dataset</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize Goosens Dataset</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div id="tbl-goo-sum" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-goo-sum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 4: Goosens Dataset Summary
+Table 6: Goosens Dataset Summary
 </figcaption>
 <div aria-describedby="tbl-goo-sum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-stdout">
@@ -2767,11 +2844,11 @@ Table 4: Goosens Dataset Summary
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>SG,df<span class="sc">$</span>MW,</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">main=</span><span class="st">&quot;Goossens Dataset&quot;</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab=</span><span class="st">&quot;Specific Gravity&quot;</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab=</span><span class="st">&quot;Apparent Molecular Mass&quot;</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>SG,df<span class="sc">$</span>MW,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">main=</span><span class="st">&quot;Goossens Dataset&quot;</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab=</span><span class="st">&quot;Specific Gravity&quot;</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab=</span><span class="st">&quot;Apparent Molecular Mass&quot;</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-goo-mwXsg" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2791,11 +2868,11 @@ Figure 5: Molecular Mass vs Specific Gravity
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>TBP,df<span class="sc">$</span>MW,</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">main=</span><span class="st">&quot;Goossens Dataset&quot;</span>,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab=</span><span class="st">&quot;True Boiling Point&quot;</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab=</span><span class="st">&quot;Apparent Molecular Mass&quot;</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>TBP,df<span class="sc">$</span>MW,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">main=</span><span class="st">&quot;Goossens Dataset&quot;</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab=</span><span class="st">&quot;True Boiling Point&quot;</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab=</span><span class="st">&quot;Apparent Molecular Mass&quot;</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-goo-mwXtb" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2816,11 +2893,11 @@ Figure 6: Molecular Mass vs Boiling Point
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>TBP,df<span class="sc">$</span>SG,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">main=</span><span class="st">&quot;Goossens Dataset&quot;</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab=</span><span class="st">&quot;True Boiling Point&quot;</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab=</span><span class="st">&quot;Specific Gravity&quot;</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>TBP,df<span class="sc">$</span>SG,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">main=</span><span class="st">&quot;Goossens Dataset&quot;</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab=</span><span class="st">&quot;True Boiling Point&quot;</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab=</span><span class="st">&quot;Specific Gravity&quot;</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-goo-sgXtb" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2840,25 +2917,25 @@ Figure 7: Specific Gravity vs Boiling Point
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read Hosseinifar Dataset from flat file</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Positron</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#dfh&lt;-read.csv(&quot;./c694/hosseinifar_raw.csv&quot;)</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Quarto</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>dfh<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">&quot;./hosseinifar_raw.csv&quot;</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Goossens and Hosseinifar together</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>TBP,df<span class="sc">$</span>MW,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Goossens vs. Hosseinifar&quot;</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;True Boiling Point&quot;</span>,</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Molecular Mass&quot;</span>,</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(dfh<span class="sc">$</span>TBP,dfh<span class="sc">$</span>MW,</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="st">&quot;red&quot;</span>,</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="dv">2</span>)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>,</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;Goossens&quot;</span>,<span class="st">&quot;Hosseinifar&quot;</span>),</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>),</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read Hosseinifar Dataset from flat file</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Positron</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#dfh&lt;-read.csv(&quot;./c694/hosseinifar_raw.csv&quot;)</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Quarto</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>dfh<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">&quot;./hosseinifar_raw.csv&quot;</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Goossens and Hosseinifar together</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>TBP,df<span class="sc">$</span>MW,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Goossens vs. Hosseinifar&quot;</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;True Boiling Point&quot;</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Molecular Mass&quot;</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(dfh<span class="sc">$</span>TBP,dfh<span class="sc">$</span>MW,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="st">&quot;red&quot;</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="dv">2</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;Goossens&quot;</span>,<span class="st">&quot;Hosseinifar&quot;</span>),</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>),</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-hoss-mwXtb" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2876,20 +2953,20 @@ Figure 8: Molecular Mass vs Boiling Point
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Goossens and Hosseinifar together</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>SG,df<span class="sc">$</span>MW,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Goossens vs. Hosseinifar&quot;</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Specific Gravity&quot;</span>,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Molecular Mass&quot;</span>,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(dfh<span class="sc">$</span>SG,dfh<span class="sc">$</span>MW,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="st">&quot;red&quot;</span>,</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="dv">2</span>)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>,</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;Goossens&quot;</span>,<span class="st">&quot;Hosseinifar&quot;</span>),</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>),</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Goossens and Hosseinifar together</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>SG,df<span class="sc">$</span>MW,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Goossens vs. Hosseinifar&quot;</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Specific Gravity&quot;</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Molecular Mass&quot;</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(dfh<span class="sc">$</span>SG,dfh<span class="sc">$</span>MW,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="st">&quot;red&quot;</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="dv">2</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;Goossens&quot;</span>,<span class="st">&quot;Hosseinifar&quot;</span>),</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>),</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-hoss-mwXsg" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2912,7 +2989,7 @@ Figure 9: Molecular Mass vs Specific Gravity
 <div id="tbl-cor-nom" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cor-nom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 5: Correlation Nomenclature
+Table 7: Correlation Nomenclature
 </figcaption>
 <div aria-describedby="tbl-cor-nom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table-striped table-hover caption-top table">
@@ -2956,72 +3033,72 @@ Table 5: Correlation Nomenclature
 <h5 class="anchored" data-anchor-id="hariu-sage-1969">Hariu &amp; Sage (1969)</h5>
 <p><span id="eq-harlu"><span class="math display">\[
 M_w = a_{00} + a_{01} K_w + a_{02} K_w^2 + a_{03} T_b K_w + a_04 T_b K_w^2 + a_{05} T_b^2 K_w + a_{06} T_b^2 K_w^2
-\tag{13}\]</span></span></p>
-<p><span id="eq-UOP"><span class="math display">\[K_w =\frac{\sqrt[3]T_b}{\gamma_o} \tag{14}\]</span></span></p>
+\tag{14}\]</span></span></p>
+<p><span id="eq-UOP"><span class="math display">\[K_w =\frac{\sqrt[3]T_b}{\gamma_o} \tag{15}\]</span></span></p>
 </section>
 <section id="kesler-lee-1976" class="level5">
 <h5 class="anchored" data-anchor-id="kesler-lee-1976">Kesler &amp; Lee (1976)</h5>
-<p><span id="eq-kesler"><span class="math display">\[M_w = X_0 + \frac{X_1}{T_b} + \frac{X_2}{T_b^2} \tag{15}\]</span></span></p>
-<p><span id="eq-kes-0"><span class="math display">\[X_0 = a_{00} + a_{01} γ_o+ \left (a_{02} + a_{03} γ_o \right ) T_b \tag{16}\]</span></span></p>
+<p><span id="eq-kesler"><span class="math display">\[M_w = X_0 + \frac{X_1}{T_b} + \frac{X_2}{T_b^2} \tag{16}\]</span></span></p>
+<p><span id="eq-kes-0"><span class="math display">\[X_0 = a_{00} + a_{01} γ_o+ \left (a_{02} + a_{03} γ_o \right ) T_b \tag{17}\]</span></span></p>
 <p><span id="eq-kes-1"><span class="math display">\[
 X_1 = \left (1+ a_{04} γ_o + a_{05}γ_o^2 \right ) \left (a_{06} + \frac{a_ {07}}{T_b} \right ) \cdot 10^7
-\tag{17}\]</span></span></p>
+\tag{18}\]</span></span></p>
 <p><span id="eq-kes-2"><span class="math display">\[
 X_2 = \left (1+ a_{08} γ_o+ a_{09} γ_o^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^{12}
-\tag{18}\]</span></span></p>
+\tag{19}\]</span></span></p>
 </section>
 <section id="american-petroleum-institute-1977" class="level5">
 <h5 class="anchored" data-anchor-id="american-petroleum-institute-1977">American Petroleum Institute (1977)</h5>
 <p><span id="eq-api-77"><span class="math display">\[
 M_w = a_{00} e^ {\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^{a_{03}} γ_o^ {a_{04}}
-\tag{19}\]</span></span></p>
+\tag{20}\]</span></span></p>
 </section>
 <section id="winn-sim-daubert-1980" class="level5">
 <h5 class="anchored" data-anchor-id="winn-sim-daubert-1980">Winn, Sim &amp; Daubert (1980)</h5>
-<p><span id="eq-win"><span class="math display">\[M_w = a_{00} T_b^{a_ {01}} γ_o^{a_{02}} \tag{20}\]</span></span></p>
+<p><span id="eq-win"><span class="math display">\[M_w = a_{00} T_b^{a_ {01}} γ_o^{a_{02}} \tag{21}\]</span></span></p>
 </section>
 <section id="riazi-daubert-1980" class="level5">
 <h5 class="anchored" data-anchor-id="riazi-daubert-1980">Riazi &amp; Daubert (1980)</h5>
-<p><span id="eq-riazi-80"><span class="math display">\[M_w = a_{00} T_b^{a_ {01}}γ_o^{a_{02}} \tag{21}\]</span></span></p>
+<p><span id="eq-riazi-80"><span class="math display">\[M_w = a_{00} T_b^{a_ {01}}γ_o^{a_{02}} \tag{22}\]</span></span></p>
 </section>
 <section id="rao-bardon-1985" class="level5">
 <h5 class="anchored" data-anchor-id="rao-bardon-1985">Rao &amp; Bardon (1985)</h5>
-<p><span id="eq-rao"><span class="math display">\[ln {M_w} = (a_{00} + a_{01} K_w) ln (\frac{T_b} {a_{02} + a_{03} K_w} ) \tag{22}\]</span></span></p>
-<p>See <a href="#eq-UOP" class="quarto-xref">Equation 14</a></p>
+<p><span id="eq-rao"><span class="math display">\[ln {M_w} = (a_{00} + a_{01} K_w) ln (\frac{T_b} {a_{02} + a_{03} K_w} ) \tag{23}\]</span></span></p>
+<p>See <a href="#eq-UOP" class="quarto-xref">Equation 15</a></p>
 </section>
 <section id="riazi-daubert-1987" class="level5">
 <h5 class="anchored" data-anchor-id="riazi-daubert-1987">Riazi &amp; Daubert (1987)</h5>
 <p><span id="eq-riazi-87"><span class="math display">\[
 M_w = a_{00} T_b^{a_{01}} γ_o^{a_{02}} e^{\left (a_{03} T_b + a_{04} γ_o + a_{05} T_b γ \right )}
-\tag{23}\]</span></span></p>
+\tag{24}\]</span></span></p>
 </section>
 <section id="goossens-1996" class="level5">
 <h5 class="anchored" data-anchor-id="goossens-1996">Goossens (1996)</h5>
-<p><span id="eq-goossens"><span class="math display">\[M_w = a_{00} T_b^{X_0} \tag{24}\]</span></span></p>
+<p><span id="eq-goossens"><span class="math display">\[M_w = a_{00} T_b^{X_0} \tag{25}\]</span></span></p>
 <p><span id="eq-goo-0"><span class="math display">\[
 X_0 =\frac {a_{03} + a_{04} ln {\left (\frac{T_b}  {a_{05} - T_b} \right )}}  {a_{01} γ_o + a_{02}}
-\tag{25}\]</span></span></p>
+\tag{26}\]</span></span></p>
 </section>
 <section id="linan-2011" class="level5">
 <h5 class="anchored" data-anchor-id="linan-2011">Linan (2011)</h5>
 <p><span id="eq-linan"><span class="math display">\[
 M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^ {a_{03}} γ_o^{a_{04}}
-\tag{26}\]</span></span></p>
+\tag{27}\]</span></span></p>
 </section>
 <section id="hosseinifar-shahverdi-2021" class="level5">
 <h5 class="anchored" data-anchor-id="hosseinifar-shahverdi-2021">Hosseinifar &amp; Shahverdi (2021)</h5>
-<p><span id="eq-hosseinifar"><span class="math display">\[M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ_o} {3-γ_o} \right )}^{\frac{a_{02}}{2}} + a_{03} T_b^{a_{04}} {\left (\frac{3+2γ_o}{3-γ_o} \right )}^{\frac{a_{05}}{2}} \right ]}^{a_{06}} \tag{27}\]</span></span></p>
+<p><span id="eq-hosseinifar"><span class="math display">\[M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ_o} {3-γ_o} \right )}^{\frac{a_{02}}{2}} + a_{03} T_b^{a_{04}} {\left (\frac{3+2γ_o}{3-γ_o} \right )}^{\frac{a_{05}}{2}} \right ]}^{a_{06}} \tag{28}\]</span></span></p>
 </section>
 <section id="stratiev-2023" class="level5">
 <h5 class="anchored" data-anchor-id="stratiev-2023">Stratiev (2023)</h5>
 <p><span id="eq-stratiev"><span class="math display">\[
 M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ_o^{a_{05}}} \right )} \right ]}
-\tag{28}\]</span></span></p>
+\tag{29}\]</span></span></p>
 <p>The reader will notice that all the correlations are non-linear, and that only a few of them can be easily transformed into a linear relationship. Some of the additional operators we may want to consider include:</p>
 <div id="tbl-ope-add" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ope-add-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 6: Partial List of Additional Operators
+Table 8: Partial List of Additional Operators
 </figcaption>
 <div aria-describedby="tbl-ope-add-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table-striped table-hover caption-top table">
@@ -3078,7 +3155,7 @@ Table 6: Partial List of Additional Operators
 <p>Our first experiment is to run <code>PySR</code> with default parameters against our molecular mass dataset. The resulting equation looks nothing like the existing equations:</p>
 <p><span id="eq-res-def"><span class="math display">\[
 M_w=a_{00}+\frac{a_{01}}{\gamma_o-a_{02}}+\frac{T_b\cdot (a_{03}\cdot T_b-a_{04})}{\gamma_o\cdot (a_{05}-\frac{a_{06}}{T_b})}
-\tag{29}\]</span></span></p>
+\tag{30}\]</span></span></p>
 <p>But its performance is quite impressive considering its restricted grammar of addition, subtraction, multiplication and division:</p>
 <div id="fig-res-def" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -3090,11 +3167,11 @@ Figure 10: Default Parameter Run
 </figcaption>
 </figure>
 </div>
-<p>It even has a (slightly) better correlation coefficient with the raw molecular mass data than <a href="#eq-goossens" class="quarto-xref">Equation 24</a> presented with this data in the Goossens paper:</p>
+<p>It even has a (slightly) better correlation coefficient with the raw molecular mass data than <a href="#eq-goossens" class="quarto-xref">Equation 25</a> presented with this data in the Goossens paper:</p>
 <div id="tbl-res-def" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-res-def-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 7: Default Run Correlation Coefficients
+Table 9: Default Run Correlation Coefficients
 </figcaption>
 <div aria-describedby="tbl-res-def-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table-striped table-hover caption-top table">
@@ -3181,12 +3258,12 @@ Figure 11: Power Operator Run
 </figure>
 </div>
 <p>Although the equation has got simpler:</p>
-<p><span id="eq-res-pow"><span class="math display">\[M_w=a_{00} \cdot a_{01}^{\gamma_o^{-a_{02}} + a_{03} \cdot T_b} + a_{04} \tag{30}\]</span></span></p>
+<p><span id="eq-res-pow"><span class="math display">\[M_w=a_{00} \cdot a_{01}^{\gamma_o^{-a_{02}} + a_{03} \cdot T_b} + a_{04} \tag{31}\]</span></span></p>
 <p>and the correlation coefficient has degraded slightly:</p>
 <div id="tbl-res-pow" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-res-pow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 8: Power Operator Run Correlation Coefficients
+Table 10: Power Operator Run Correlation Coefficients
 </figcaption>
 <div aria-describedby="tbl-res-pow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table-striped table-hover caption-top table">
@@ -3245,15 +3322,15 @@ Table 8: Power Operator Run Correlation Coefficients
 <section id="exponential-run" class="level4">
 <h4 class="anchored" data-anchor-id="exponential-run">Exponential Run</h4>
 <p>Our third experiment was to replace the binary power operator with unary logarithm and exponential operators. Our initial results were a major surprise as neither transcendental operator made it to the final equation:</p>
-<p><span id="eq-res-exp-1"><span class="math display">\[ M_w= - T_b \cdot \left(a_{00} \cdot T_b - a_{01}\right) \left(a_{02} \cdot 10^{-6} \left(a_{03} \cdot \gamma_o - 2 \cdot T_b \right) \left(T_b - a_{04}\right) - 1\right) + a_{05} \tag{31}\]</span></span></p>
+<p><span id="eq-res-exp-1"><span class="math display">\[ M_w= - T_b \cdot \left(a_{00} \cdot T_b - a_{01}\right) \left(a_{02} \cdot 10^{-6} \left(a_{03} \cdot \gamma_o - 2 \cdot T_b \right) \left(T_b - a_{04}\right) - 1\right) + a_{05} \tag{32}\]</span></span></p>
 <p>Accordingly, we re-set the random number generator and tried again:</p>
-<p><span id="eq-res-exp-2"><span class="math display">\[ M_w= a_{00}\cdot T_b + a_{01} \cdot e^{- \gamma_o^{2} + a_{02}\cdot \gamma_o + a_{03} \cdot T_b} \tag{32}\]</span></span></p>
+<p><span id="eq-res-exp-2"><span class="math display">\[ M_w= a_{00}\cdot T_b + a_{01} \cdot e^{- \gamma_o^{2} + a_{02}\cdot \gamma_o + a_{03} \cdot T_b} \tag{33}\]</span></span></p>
 <p>This is a dramatically different equation. This experience suggests that the <em>real</em> reason the deterministic algorithms are still under active development today is to avoid this kind of ambiguity.</p>
 <p>Our correlation coefficients are <em>still</em> not as good as the default run:</p>
 <div id="tbl-res-exp" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-res-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 9: Exponential Run Correlation Coefficients
+Table 11: Exponential Run Correlation Coefficients
 </figcaption>
 <div aria-describedby="tbl-res-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table-striped table-hover caption-top table">
@@ -3343,16 +3420,16 @@ Figure 12: Raw Data Scale Change
 <p>Here is the first equation after a thousand iterations:</p>
 <p><span id="eq-res-eon-1"><span class="math display">\[
 M_w=(a_{00}\cdot T_b-a_{01})e^{a_{02}\cdot 10^{-9}T_b^2(a_{03}\cdot \gamma_0 +a_{04}\cdot T_b)}
-\tag{33}\]</span></span></p>
+\tag{34}\]</span></span></p>
 <p>And the second equation<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:</p>
 <p><span id="eq-res-eon-2"><span class="math display">\[
 M_w=-a_{00}\cdot \gamma_o+\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} +a_{02}\cdot T_b
-\tag{34}\]</span></span></p>
+\tag{35}\]</span></span></p>
 <p>The correlation coefficients, however, now rival the default run:</p>
 <div id="tbl-res-eon" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-res-eon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 10: Aeon Run Correlation Coefficients
+Table 12: Aeon Run Correlation Coefficients
 </figcaption>
 <div aria-describedby="tbl-res-eon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table-striped table-hover caption-top table">
@@ -3393,13 +3470,13 @@ Table 10: Aeon Run Correlation Coefficients
 </section>
 <section id="first-sparse-run" class="level4">
 <h4 class="anchored" data-anchor-id="first-sparse-run">First Sparse Run</h4>
-<p>It would seem remiss to not <em>at least</em> look at one of the deterministic models. The first library to work without requiring long depreciated versions of Python is <code>SyMANTIC</code> (<span class="citation" data-cites="muthyala2025symantic">Muthyala et al. (<a href="#ref-muthyala2025symantic" role="doc-biblioref">2025</a>)</span>) so we set up the run to be equivalent the the <em>Default Run</em> above. Our “winning” equation is:</p>
-<p><span id="eq-res-mth-1"><span class="math display">\[ M_w=-a_{00} \cdot \gamma_o +\frac{a_{01}\cdot \gamma_o}{T_b}+a_{03}\cdot T_b -a_{04} \tag{35}\]</span></span></p>
-<p>Compare this to <a href="#eq-res-eon-2" class="quarto-xref">Equation 34</a>. Similar, but much simpler. The quality of the fit, however, is disappointing:</p>
+<p>It would seem remiss to not <em>at least</em> look at one of the deterministic models. The first library to work without requiring long-depreciated versions of Python is <code>SyMANTIC</code> (<span class="citation" data-cites="muthyala2025symantic">Muthyala et al. (<a href="#ref-muthyala2025symantic" role="doc-biblioref">2025</a>)</span>) so we set up the run to be equivalent the the <em>Default Run</em> above. Our “winning” equation is:</p>
+<p><span id="eq-res-mth-1"><span class="math display">\[ M_w=-a_{00} \cdot \gamma_o +\frac{a_{01}\cdot \gamma_o}{T_b}+a_{02}\cdot T_b -a_{03} \tag{36}\]</span></span></p>
+<p>Compare this to <a href="#eq-res-eon-2" class="quarto-xref">Equation 35</a>. Similar, but much simpler. The quality of the fit, however, is disappointing:</p>
 <div id="tbl-res-mth-1" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-res-mth-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 11: First Sparse Run Correlation Coefficients
+Table 13: First Sparse Run Correlation Coefficients
 </figcaption>
 <div aria-describedby="tbl-res-mth-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table-striped table-hover caption-top table">
@@ -3431,12 +3508,12 @@ Table 11: First Sparse Run Correlation Coefficients
 <section id="second-sparse-run" class="level4">
 <h4 class="anchored" data-anchor-id="second-sparse-run">Second Sparse Run</h4>
 <p>This leads to a second experiment, in which we add the logarithm and exponential functions, but leave the division operator in place. Our new equation is <em>not</em> complex either:</p>
-<p><span id="eq-res-mth-2"><span class="math display">\[ M_w=-a_{00}\cdot \gamma_o\cdot T_b +a_{01}\cdot T^2_b +a_{02}\cdot e^{\gamma_o} +a_{03} \tag{36}\]</span></span></p>
+<p><span id="eq-res-mth-2"><span class="math display">\[ M_w=-a_{00}\cdot \gamma_o\cdot T_b +a_{01}\cdot T^2_b +a_{02}\cdot e^{\gamma_o} +a_{03} \tag{37}\]</span></span></p>
 <p>And our fit improves slightly:</p>
 <div id="tbl-res-mth-2" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-res-mth-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 12: Second Sparse Run Correlation Coefficients
+Table 14: Second Sparse Run Correlation Coefficients
 </figcaption>
 <div aria-describedby="tbl-res-mth-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table-striped table-hover caption-top table">
@@ -3486,7 +3563,7 @@ Figure 13: Second Sparse Run
 <div id="tbl-res-val" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-res-val-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 13: Validation Run Correlation Coefficients
+Table 15: Validation Run Correlation Coefficients
 </figcaption>
 <div aria-describedby="tbl-res-val-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table-striped table-hover caption-top table">
@@ -3544,7 +3621,7 @@ Table 13: Validation Run Correlation Coefficients
 </section>
 <section id="general-observations" class="level4">
 <h4 class="anchored" data-anchor-id="general-observations">General Observations</h4>
-<p>The “UOP Characterization Factor” <a href="#eq-UOP" class="quarto-xref">Equation 14</a> which (at least) two researchers decided was an important correlating variable for molecular mass, was not discovered by our symbolic regression model.</p>
+<p>The “UOP Characterization Factor” <a href="#eq-UOP" class="quarto-xref">Equation 15</a> which (at least) two researchers decided was an important correlating variable for molecular mass, was not discovered by our symbolic regression model.</p>
 <p>In fairness, however, we dropped the division operator early in our experimentation, and never asked the model to consider a “cube root” unary operator.</p>
 <p>Replication is very challenging with these symbolic regression libraries that use evolutionary algorithms. Re-running the same dataset on the same machine with the same libraries produces different equations. In many <code>Scikit-Learn</code> algorithms, answer variation can be minimized by seeding the random number generator the same way each time, but in <code>PySR</code> we also have to turn off the optimizations that allow Julia to run the calculations massively in parallel, which contributes to the criticism that these algorithms are slow.</p>
 <p>The deterministic symbolic regression libraries don’t need random number seeds, and the answers stay the same between runs. The equations are definitely more <em>explainable</em>, but appear to be less accurate. Does this accuracy matter? Is it real? The answer to these questions depend on how good we think our measurements are!</p>
@@ -3622,6 +3699,9 @@ Martius, Georg, and Christoph H Lampert. 2016. <span>“Extrapolation and Learni
 <div id="ref-muthyala2025symantic" class="csl-entry" role="listitem">
 Muthyala, Madhav R, Farshud Sorourifar, You Peng, and Joel A Paulson. 2025. <span>“SyMANTIC: An Efficient Symbolic Regression Method for Interpretable and Parsimonious Model Discovery in Science and Beyond.”</span> <em>Industrial &amp; Engineering Chemistry Research</em> 64 (6): 3354–69.
 </div>
+<div id="ref-noorian2016gramevol" class="csl-entry" role="listitem">
+Noorian, Farzad, Anthony M de Silva, and Philip HW Leong. 2016. <span>“gramEvol: Grammatical Evolution in r.”</span> <em>Journal of Statistical Software</em> 71: 1–26.
+</div>
 <div id="ref-sahoo2018learning" class="csl-entry" role="listitem">
 Sahoo, Subham, Christoph Lampert, and Georg Martius. 2018. <span>“Learning Equations for Extrapolation and Control.”</span> In <em>International Conference on Machine Learning</em>, 4442–50. Pmlr.
 </div>
@@ -3630,6 +3710,9 @@ Stratiev, Dicho, Sotir Sotirov, Evdokia Sotirova, Svetoslav Nenov, Rosen Dinkov,
 </div>
 <div id="ref-udrescu2020ai" class="csl-entry" role="listitem">
 Udrescu, Silviu-Marian, and Max Tegmark. 2020. <span>“AI Feynman: A Physics-Inspired Method for Symbolic Regression.”</span> <em>Science Advances</em> 6 (16): eaay2631.
+</div>
+<div id="ref-virgolin2022coefficient" class="csl-entry" role="listitem">
+Virgolin, Marco, and Peter AN Bosman. 2022. <span>“Coefficient Mutation in the Gene-Pool Optimal Mixing Evolutionary Algorithm for Symbolic Regression.”</span> In <em>Proceedings of the Genetic and Evolutionary Computation Conference Companion</em>, 2289–97.
 </div>
 </div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
