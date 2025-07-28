@@ -593,18 +593,78 @@ standards. However, due to the cost of acquiring the molecular mass
 data, this dataset will be considered "large" by chemical engineering
 standards.
 
+One of the questions we want to answer is whether datasets like this are
+"too small" for symbolic regression.
+
+#### Univariate Analysis
 Here is a summary of the dataset:
 
 ```{r}
 #| label: tbl-goo-sum
 #| tbl-cap: Goosens Dataset Summary
-# Summarize Goosens Dataset
+# Summarize Goossens Dataset
 print(summary(df))
 ```
 
-One of the questions we want to answer is whether datasets like this are
-"too small" for symbolic regression.
+The reader will notice that the specific gravity value range is small compared to the boiling point and molecular mass ranges.  Also, the mean of the Molecular Mass data is nowhere near its median.  Lets take a closer look:
+```{r}
+#| label: fig-his_mw
+#| fig-cap: Raw Molecular Mass Histogram
+hist(df$MW,
+     main="",
+     xlab="Molecular Mass")
+```
+The reader will notice a strongly right-skewed distribution with an empty "bucket" near the top.  Lets take a peek at the box plots:
+```{r}
+#| label: fig-box_mw
+#| fig-cap: Raw Molecular Mass Box-and-Whiskers Plot
+boxplot(df$MW,
+        horizontal=TRUE)
+```
 
+The reader will notice that all the values greater than about 600 would be considered outliers if the molecular masses were normally distributed.
+
+Turning to the True Boiling Point variable:
+
+```{r}
+#| label: fig-box_tbp
+#| fig-cap: Raw Boiling Point Box-and-Whiskers Plot
+boxplot(df$TBP,
+        horizontal=TRUE,
+        col="lightblue")
+```
+We appear to have no outliers for this variable, but this variable is not normally distributed either.  Lets check:
+
+```{r}
+#| label: fig-his_tbp
+#| fig-cap: Raw Boiling Point Histogram
+hist(df$TBP,
+     main="",
+     xlab="True Boiling Point",
+     col="lightblue")
+```
+We appear to have a bimodal distribution here.  Lets compare this with the other predictor, specific gravity:
+
+```{r}
+#| label: fig-his_sgo
+#| fig-cap: Raw Specific Gravity Histogram
+hist(df$SG,
+     main="",
+     xlab="Specific Gravity",
+     col="lightgreen")
+```
+This distribution is skewed to the right, but not as strongly as molecular mass.  No signs of a bi modal distribution here.  Let take a peek at the box plot:
+
+```{r}
+#| label: fig-box_sg
+#| fig-cap: Raw Specific Gravity Box-and-Whiskers Plot
+boxplot(df$SG,
+        horizontal=TRUE,
+        col="lightgreen")
+```
+It is interesting that the largest specific gravity values appear to be outliers, even though this variable appears to be the "most normally distributed" of the three.
+
+#### Bivariate Analysis
 Here is a plot of molecular mass vs. specific gravity:
 
 ```{r}
@@ -621,6 +681,10 @@ Although there appears to be a clear linear relationship between
 molecular mass and specific gravity at low gravity numbers, the
 heteroscedasticity explodes above a gravity of about 0.75.
 
+Notice that the molecular mass "outliers" appear to be different from the specific gravity "outliers".  A reasonable assumption going in was for these two variables to be (more) positively correlated, placing both "outlier" groups in the upper right corner of the plot.
+
+Notice that the largest variation in molecular mass corresponds to the specific gravity range 0.8-0.9, which, acording to @fig-his_sgo is our mode.
+
 Here is a plot of molecular mass vs. true boiling point:
 
 ```{r}
@@ -633,12 +697,9 @@ plot(df$TBP,df$MW,
 grid()
 ```
 
-There seems to be a monotonically increasing relationship between
-molecular mass and true boiling point, with a possible "pole" around the
-boiling point of 1000.
+There seems to be a monotonically increasing relationship between molecular mass and true boiling point, which matches the expectation going in, unlike @fig-goo-mwXsg.  There is a possible "pole" around the boiling point of 1000, which we will discuss in our results.
 
-At this point, it may be tempting to ignore the effect of specific
-gravity on the prediction of molecular mass.
+At this point, it may be tempting to ignore the effect of specific gravity on the prediction of molecular mass.
 
 Here we plot the two independent variables against one another:
 
