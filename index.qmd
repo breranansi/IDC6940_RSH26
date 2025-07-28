@@ -653,7 +653,7 @@ hist(df$SG,
      xlab="Specific Gravity",
      col="lightgreen")
 ```
-This distribution is skewed to the right, but not as strongly as molecular mass.  No signs of a bi modal distribution here.  Let take a peek at the box plot:
+This distribution is skewed to the right, but not as strongly as molecular mass.  No signs of a bimodal distribution here.  Let take a peek at the box plot:
 
 ```{r}
 #| label: fig-box_sg
@@ -923,6 +923,35 @@ limits the extrapolation power of this equation to higher specific
 gravities than seen in this dataset. Extrapolation is one of the
 strengths of Symbolic Regression [@sahoo2018learning]
 
+Next, we look at the residuals, plotted against the raw molecular mass:
+
+![Default Run Residuals](moleDataSet_files/figure-html/cell-17-output-1.png){#fig-res-def-res}
+
+Visually, the residuals *appear* to be normally distributed, but running the Shapiro-Wilk test reveals a probability of only 0.001 of the residuals being normally distributed.  So much for eye-balling!
+
+Let us see how *bad* it is:
+```{r}
+#| label: fig-defrun-resid
+#| fig-cap: Q-Q Plot for the Default Run Residuals
+# Read Goossens Default Run results from flat file
+# Positron
+#df<-read.csv("./c694/default_output.csv")
+# Quarto
+dfd<-read.csv("./default_output.csv")
+# Generate QQPlot
+qqnorm(dfd$Fit_Resid)
+qqline(dfd$Fit_Resid, col="red")
+grid()
+```
+
+The plot suggests that small residuals (say $\pm 2.5$) are normally distributed, but the large residuals are not.
+
+Out of mere curiosity, let us examine the residuals from the Goossens correlation (@eq-goossens):
+
+![Goossens Correlation Residuals](moleDataSet_files/figure-html/cell-19-output-1.png){#fig-res-def-goo}
+
+This looks largely similar to the default-run residuals, until it is noticed that the zero line does not bisect the plot.  The Shapiro-Wilk test p-value is zero to *six* significant figures.
+
 #### Power Run
 
 Our Second experiment is to drop the "division" binary operator
@@ -958,7 +987,7 @@ and the correlation coefficient has degraded slightly:
 : Power Operator Run Correlation Coefficients {#tbl-res-pow .striped .hover}
 
 One can argue that nested exponents $\left (a^{b^c} \right )$ aren't
-very explainable. However the Stratiev correlation does this with
+very explainable. However the Stratiev correlation (@eq-stratiev) does this with
 Euler's number $\left ( a \cdot e^{b \cdot e^{c}} \right )$. In the
 hydrocarbon flow literature, nested logarithms $ln(ln(a))$ are more
 common.
@@ -1068,6 +1097,12 @@ Compare this to @eq-res-eon-2. Similar, but much simpler.  The quality of the fi
 : First Sparse Run Correlation Coefficients {#tbl-res-mth-1 .striped .hover}
 
 A pleasant surprise is that we will have no "division by zero" problems with this equation as $T_b$ is in Kelvin.
+
+A sparse regression model, "under the hood" is just a linear regression model.  Accordingly, even though we are not thrilled with the fit, maybe the residuals are normal...
+
+![1st Sparse Run Residuals](around7a_files/figure-html/cell-12-output-1.png){#fig-res-spa-res}
+
+Never mind. Moving right along...
 
 #### Second Sparse Run
 This leads to a second experiment, in which we add the logarithm and exponential functions, but leave the division operator in place. Our new equation is *not* complex either:
