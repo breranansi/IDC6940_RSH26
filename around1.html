@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>around1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="around1_files/libs/clipboard/clipboard.min.js"></script>
+<script src="around1_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="around1_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="around1_files/libs/quarto-html/popper.min.js"></script>
+<script src="around1_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="around1_files/libs/quarto-html/anchor.min.js"></script>
+<link href="around1_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="around1_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="around1_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="around1_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="around1_files/libs/bootstrap/bootstrap-58427a5cdc6db58bd8a7f543ac0b26a6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<p>This is a PySR run on the molecular mass dataset with the logarithm and exponential operators added. Iterations at 100. Box-Cox Transform.</p>
+<div id="530a5c28" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974251661,&quot;user_tz&quot;:300,&quot;elapsed&quot;:6780,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="e08ce3ce-d023-47af-eca4-f944243b0a66" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install <span class="op">-</span>U pysr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Requirement already satisfied: pysr in /usr/local/lib/python3.11/dist-packages (1.5.9)
+Requirement already satisfied: click&lt;9.0.0,&gt;=7.0.0 in /usr/local/lib/python3.11/dist-packages (from pysr) (8.2.1)
+Requirement already satisfied: juliacall&lt;0.9.27,&gt;=0.9.24 in /usr/local/lib/python3.11/dist-packages (from pysr) (0.9.26)
+Requirement already satisfied: numpy&lt;3.0.0,&gt;=1.13.0 in /usr/local/lib/python3.11/dist-packages (from pysr) (2.0.2)
+Requirement already satisfied: pandas&lt;3.0.0,&gt;=0.21.0 in /usr/local/lib/python3.11/dist-packages (from pysr) (2.2.2)
+Requirement already satisfied: scikit-learn&lt;2.0.0,&gt;=1.0.0 in /usr/local/lib/python3.11/dist-packages (from pysr) (1.6.1)
+Requirement already satisfied: sympy&lt;2.0.0,&gt;=1.0.0 in /usr/local/lib/python3.11/dist-packages (from pysr) (1.13.1)
+Requirement already satisfied: typing-extensions&lt;5.0.0,&gt;=4.0.0 in /usr/local/lib/python3.11/dist-packages (from pysr) (4.14.1)
+Requirement already satisfied: juliapkg&lt;0.2,&gt;=0.1.17 in /usr/local/lib/python3.11/dist-packages (from juliacall&lt;0.9.27,&gt;=0.9.24-&gt;pysr) (0.1.17)
+Requirement already satisfied: python-dateutil&gt;=2.8.2 in /usr/local/lib/python3.11/dist-packages (from pandas&lt;3.0.0,&gt;=0.21.0-&gt;pysr) (2.9.0.post0)
+Requirement already satisfied: pytz&gt;=2020.1 in /usr/local/lib/python3.11/dist-packages (from pandas&lt;3.0.0,&gt;=0.21.0-&gt;pysr) (2025.2)
+Requirement already satisfied: tzdata&gt;=2022.7 in /usr/local/lib/python3.11/dist-packages (from pandas&lt;3.0.0,&gt;=0.21.0-&gt;pysr) (2025.2)
+Requirement already satisfied: scipy&gt;=1.6.0 in /usr/local/lib/python3.11/dist-packages (from scikit-learn&lt;2.0.0,&gt;=1.0.0-&gt;pysr) (1.16.0)
+Requirement already satisfied: joblib&gt;=1.2.0 in /usr/local/lib/python3.11/dist-packages (from scikit-learn&lt;2.0.0,&gt;=1.0.0-&gt;pysr) (1.5.1)
+Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3.11/dist-packages (from scikit-learn&lt;2.0.0,&gt;=1.0.0-&gt;pysr) (3.6.0)
+Requirement already satisfied: mpmath&lt;1.4,&gt;=1.1.0 in /usr/local/lib/python3.11/dist-packages (from sympy&lt;2.0.0,&gt;=1.0.0-&gt;pysr) (1.3.0)
+Requirement already satisfied: filelock&lt;4.0,&gt;=3.16 in /usr/local/lib/python3.11/dist-packages (from juliapkg&lt;0.2,&gt;=0.1.17-&gt;juliacall&lt;0.9.27,&gt;=0.9.24-&gt;pysr) (3.18.0)
+Requirement already satisfied: semver&lt;4.0,&gt;=3.0 in /usr/local/lib/python3.11/dist-packages (from juliapkg&lt;0.2,&gt;=0.1.17-&gt;juliacall&lt;0.9.27,&gt;=0.9.24-&gt;pysr) (3.0.4)
+Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.11/dist-packages (from python-dateutil&gt;=2.8.2-&gt;pandas&lt;3.0.0,&gt;=0.21.0-&gt;pysr) (1.17.0)</code></pre>
+</div>
+</div>
+<div id="1c035556" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974251683,&quot;user_tz&quot;:300,&quot;elapsed&quot;:19,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Call Libraries</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google.colab <span class="im">import</span> drive</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pysr <span class="im">import</span> PySRRegressor</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy <span class="im">as</span> sym</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> shapiro</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> kstest</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="94320366" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974260739,&quot;user_tz&quot;:300,&quot;elapsed&quot;:9052,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="1bf217ee-51a7-402b-c14f-ca5eec711d66" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colab</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>drive.mount(<span class="st">'/content/drive'</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>pd.read_csv(<span class="st">'/content/drive/MyDrive/goossens_raw.csv'</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Positron</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#df=pd.read_csv('./goossens_raw.csv')</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Quarto</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#df=pd.read_csv('./c694/goossens_raw.csv')</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>y<span class="op">=</span>df[<span class="st">'MW'</span>]</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>x<span class="op">=</span>df[[<span class="st">'SG'</span>,<span class="st">'TBP'</span>]]</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>y_bc,bc<span class="op">=</span>stats.boxcox(y)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Mounted at /content/drive
+-0.36241569290615483</code></pre>
+</div>
+</div>
+<div id="41354696" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974261489,&quot;user_tz&quot;:300,&quot;elapsed&quot;:747,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="c7fa7eb9-2d9c-4476-c54e-bb534f268c49" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>v<span class="op">=</span>np.linspace(y.<span class="bu">min</span>(),y.<span class="bu">max</span>())</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>v_bc<span class="op">=</span>((np.<span class="bu">pow</span>(v,bc)<span class="op">-</span><span class="fl">1.0</span>)<span class="op">/</span>bc)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>v_ln<span class="op">=</span>np.log(v)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>v_sq<span class="op">=</span><span class="dv">1</span><span class="op">/</span>np.sqrt(v)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.scatter(v,v_bc,c<span class="op">=</span><span class="st">"lightblue"</span>,edgecolors<span class="op">=</span><span class="st">"darkblue"</span>, label<span class="op">=</span><span class="st">"Box-Cox"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.scatter(v,v_ln,c<span class="op">=</span><span class="st">"lightgreen"</span>,edgecolors<span class="op">=</span><span class="st">"darkgreen"</span>, label<span class="op">=</span><span class="st">"Logarithm"</span>,marker<span class="op">=</span><span class="st">"s"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.scatter(v,v_sq,c<span class="op">=</span><span class="st">"red"</span>,edgecolors<span class="op">=</span><span class="st">"darkred"</span>, label<span class="op">=</span><span class="st">"inverse-square-root"</span>,marker<span class="op">=</span><span class="st">"v"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Transform Comparison"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Molecular Mass"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Transformed Molecular Mass"</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="around1_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="de664b20" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974261538,&quot;user_tz&quot;:300,&quot;elapsed&quot;:24,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build Reverse Box-Cox Transform</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> unBox(zee,lam):</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># zee = transformed variable</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># lam = box-cox parameter</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (lam  <span class="op">!=</span> <span class="fl">0.0</span>):</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.<span class="bu">pow</span>((lam<span class="op">*</span>zee<span class="op">+</span><span class="fl">1.0</span>),(<span class="fl">1.0</span><span class="op">/</span>lam))</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.exp(zee)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Build Forward Box-Cox Transform</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> reBox(why,lam):</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># why = untransformed variable</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># lam = box-cox parameter</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (lam  <span class="op">!=</span> <span class="fl">0.0</span>):</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (np.<span class="bu">pow</span>(why,lam)<span class="op">-</span><span class="fl">1.0</span>)<span class="op">/</span>lam</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.log(why)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="9b9240f0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974261769,&quot;user_tz&quot;:300,&quot;elapsed&quot;:228,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="c45cd36b-28c8-499c-cd57-6faccbacef91" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plt.hist(y_bc,edgecolor<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Transformed Molecular Mass"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="around1_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="4bc8d9fd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974322539,&quot;user_tz&quot;:300,&quot;elapsed&quot;:60773,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="562e33e4-fc6c-48bd-c7b4-caf71b10922e" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> time.time()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Log and Exp Functions</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>myMod<span class="op">=</span>PySRRegressor(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">7</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    deterministic<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    parallelism<span class="op">=</span><span class="st">'serial'</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#myMod=PySRRegressor(</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    binary_operators<span class="op">=</span>[<span class="st">"+"</span>,<span class="st">"-"</span>,<span class="st">"*"</span>,<span class="st">"/"</span>],</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    unary_operators<span class="op">=</span>[<span class="st">"exp"</span>,<span class="st">"log"</span>],</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    niterations<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>myMod.fit(x,y_bc)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"time to fit: "</span>,time.time() <span class="op">-</span> t0, <span class="st">'seconds'</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>y_pred<span class="op">=</span>myMod.predict(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/usr/local/lib/python3.11/dist-packages/pysr/sr.py:2811: UserWarning: Note: it looks like you are running in Jupyter. The progress bar will be turned off.
+  warnings.warn(
+Compiling Julia backend...
+INFO:pysr.sr:Compiling Julia backend...
+[ Info: Started!</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Expressions evaluated per second: 7.770e+04
+Progress: 420 / 3100 total iterations (13.548%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           1.148e-02  0.000e+00  y = 2.3504
+4           1.014e-02  4.135e-02  y = log(SG + 9.6369)
+5           3.849e-04  3.271e+00  y = (TBP * 0.00054649) + 2.036
+6           2.094e-04  6.087e-01  y = (log(TBP) * 0.31332) + 0.37705
+8           2.012e-04  1.990e-02  y = (log(TBP) * 0.39938) + (SG * -0.19553)
+10          2.140e-05  1.121e+00  y = 0.2705 + ((0.34934 * log(TBP)) + (SG * -0.14202))
+18          1.977e-05  9.895e-03  y = ((SG * -0.31873) + (log(TBP) * ((SG * 0.027215) + 0.32...
+                                      931))) + ((TBP * -4.5549e-07) + 0.40055)
+21          1.960e-05  2.888e-03  y = ((TBP * -4.1541e-05) + (log(TBP) * (((log(TBP) * (SG *...
+                                       0.009169)) + 0.34625) + (SG * -0.08143)))) + 0.31804
+23          1.753e-05  5.577e-02  y = ((log(TBP) * (((SG * -0.0061649) * log(TBP)) + 0.39252...
+                                      )) + ((TBP * -0.00011331) + (SG * (TBP * 0.00017957)))) + ...
+                                      0.063151
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 8.440e+04
+Progress: 960 / 3100 total iterations (30.968%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           1.148e-02  0.000e+00  y = 2.3504
+4           6.197e-04  9.730e-01  y = log(TBP) * 0.37301
+5           1.987e-04  1.137e+00  y = exp(log(TBP) * 0.1355)
+6           1.970e-04  8.650e-03  y = log(TBP + 86.095) * 0.36429
+8           1.947e-04  5.967e-03  y = (log(TBP - -151.54) * 0.40307) - 0.29127
+9           4.998e-05  1.360e+00  y = log(TBP) * ((log(SG) * -0.026304) + 0.36865)
+10          2.140e-05  8.484e-01  y = 0.2705 + ((0.34934 * log(TBP)) + (SG * -0.14202))
+12          2.140e-05  4.590e-06  y = ((log(TBP + 0.018834) * 0.34935) + 0.27042) + (SG * -0...
+                                      .14202)
+13          2.129e-05  5.081e-03  y = (0.35265 * log(TBP + log(TBP))) + (0.24525 + (SG * -0....
+                                      14188))
+14          1.969e-05  7.809e-02  y = ((SG * -0.31512) + 0.40582) + (((SG * 0.026912) + 0.32...
+                                      821) * log(TBP))
+15          1.657e-05  1.722e-01  y = (((SG * -0.046345) + ((log(SG) * TBP) * 3.4669e-05)) +...
+                                       0.4155) * log(TBP)
+17          1.594e-05  1.955e-02  y = (log(TBP) * (((SG * -0.041297) + 0.40444) + ((TBP * 2....
+                                      8007e-05) * log(SG)))) + 0.039131
+19          1.593e-05  1.064e-04  y = (log(TBP) * (((((TBP - -2.198) * 2.8007e-05) * log(SG)...
+                                      ) + (SG * -0.041359)) + 0.4045)) + 0.039169
+20          1.593e-05  2.706e-05  y = (log(TBP) * (((SG * -0.041278) + 0.40442) + (log(SG) *...
+                                       ((TBP - log(SG)) * 2.7982e-05)))) + 0.039139
+21          1.593e-05  1.726e-04  y = ((((TBP - (-2.3952 / SG)) * (2.7944e-05 * log(SG))) + ...
+                                      ((-0.041278 * SG) + 0.40442)) * log(TBP)) + 0.039139
+22          1.592e-05  8.850e-04  y = ((((SG * -0.0437) + 0.40477) + (log(SG) * (((TBP - log...
+                                      (SG)) * 2.6815e-05) + 0.0032629))) * log(TBP)) + 0.052855
+24          1.576e-05  4.973e-03  y = (((((TBP - (-2.3952 / log(SG / 0.60557))) * 2.7944e-05...
+                                      ) * log(SG)) + ((-0.041278 * SG) + 0.40442)) * log(TBP)) +...
+                                       0.039139
+25          1.498e-05  5.084e-02  y = ((log(TBP + (SG * (TBP * 0.12331))) + TBP) - TBP) * ((...
+                                      (((TBP * 4.2467e-05) + -0.057776) * SG) * log(SG)) + 0.362...
+                                      67)
+27          1.497e-05  2.480e-04  y = ((log(SG) * (((TBP * 4.2467e-05) + -0.057776) * SG)) +...
+                                       0.36267) * ((log(TBP + (SG * ((TBP + -0.51919) * 0.12331)...
+                                      )) + TBP) - TBP)
+29          1.497e-05  1.291e-04  y = (((((TBP * 4.2467e-05) + -0.057776) * SG) * log(SG)) +...
+                                       0.36267) * ((log(TBP + (SG * ((TBP + (-0.69106 * 1.6952))...
+                                       * 0.12331))) + TBP) - TBP)
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 8.960e+04
+Progress: 1532 / 3100 total iterations (49.419%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           1.148e-02  0.000e+00  y = 2.3504
+4           6.197e-04  9.730e-01  y = log(TBP) * 0.37301
+5           1.987e-04  1.137e+00  y = exp(log(TBP) * 0.13551)
+6           1.970e-04  8.532e-03  y = log(TBP + 86.095) * 0.36429
+8           6.812e-05  5.310e-01  y = ((SG * -0.028732) + 0.39761) * log(TBP)
+9           3.740e-05  5.995e-01  y = ((log(SG) * -0.43114) + log(TBP)) * 0.3687
+10          2.140e-05  5.585e-01  y = 0.2705 + ((0.34934 * log(TBP)) + (SG * -0.14202))
+12          2.123e-05  3.881e-03  y = (log(TBP + 10.798) * 0.35631) + ((SG * -0.14106) + 0.2...
+                                      1835)
+14          1.969e-05  3.771e-02  y = ((SG * -0.31512) + 0.40582) + (((SG * 0.026912) + 0.32...
+                                      821) * log(TBP))
+15          1.657e-05  1.722e-01  y = log(TBP) * (((SG * -0.046338) + ((TBP * log(SG)) * 3.4...
+                                      654e-05)) + 0.41549)
+17          1.594e-05  1.955e-02  y = (log(TBP) * (((SG * -0.041297) + 0.40444) + ((TBP * 2....
+                                      8007e-05) * log(SG)))) + 0.039131
+19          1.460e-05  4.372e-02  y = (((log(SG) * ((TBP * 3.915e-05) + -0.049635)) * SG) + ...
+                                      0.36436) * log(TBP + (TBP * 0.087688))
+21          1.460e-05  1.300e-04  y = ((((TBP * 3.8502e-05) + -0.049083) * (SG * log(SG))) +...
+                                       0.36326) * log(TBP + ((TBP * 0.11129) - 1.0178))
+23          1.454e-05  2.012e-03  y = ((((TBP * 3.9596e-05) + -0.051721) * (((TBP * -0.00011...
+                                      265) + SG) * log(SG))) + 0.36439) * log(TBP + (TBP * 0.087...
+                                      594))
+27          1.454e-05  9.163e-05  y = log(((TBP - (-0.65318 - 0.89571)) * 0.087594) + TBP) *...
+                                       ((((TBP * 3.9596e-05) + -0.051721) * (((TBP * -0.00011265...
+                                      ) + SG) * log(SG))) + 0.36439)
+29          1.454e-05  4.441e-06  y = log(TBP + ((TBP - ((0.030496 - SG) - 0.89571)) * 0.087...
+                                      594)) * ((((TBP * 3.9596e-05) + -0.051721) * ((SG + (TBP *...
+                                       -0.00011265)) * log(SG))) + 0.36439)
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 9.060e+04
+Progress: 2043 / 3100 total iterations (65.903%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           1.148e-02  0.000e+00  y = 2.3504
+4           6.197e-04  9.730e-01  y = log(TBP) * 0.37301
+5           1.987e-04  1.137e+00  y = exp(log(TBP) * 0.13551)
+6           1.970e-04  8.532e-03  y = log(TBP + 86.095) * 0.36429
+8           6.812e-05  5.310e-01  y = ((SG * -0.028732) + 0.39761) * log(TBP)
+9           3.740e-05  5.995e-01  y = (log(SG) * -0.15884) + (log(TBP) * 0.3687)
+10          2.140e-05  5.585e-01  y = 0.2705 + ((0.34934 * log(TBP)) + (SG * -0.14202))
+12          2.123e-05  3.899e-03  y = ((log(TBP + 11.186) * 0.35654) + (SG * -0.1411)) + 0.2...
+                                      1668
+14          1.969e-05  3.769e-02  y = ((SG * -0.31512) + 0.40582) + (((SG * 0.026912) + 0.32...
+                                      821) * log(TBP))
+15          1.510e-05  2.655e-01  y = ((SG * (((TBP * 4.5275e-05) + -0.05463) * log(SG))) + ...
+                                      0.36901) * log(TBP)
+17          1.471e-05  1.285e-02  y = ((((TBP * 4.0523e-05) + -0.050937) * (SG * log(SG))) +...
+                                       0.36864) * log(TBP + 4.8149)
+19          1.460e-05  3.810e-03  y = (((log(SG) * ((TBP * 3.8626e-05) + -0.049201)) * SG) +...
+                                       0.36396) * log((0.095695 * TBP) + TBP)
+21          1.460e-05  2.408e-04  y = ((((TBP * 3.8987e-05) + -0.049421) * (SG * log(SG))) +...
+                                       0.36295) * log(((TBP * 0.11922) - 2.1438) + TBP)
+23          1.453e-05  2.192e-03  y = log(TBP + (TBP * 0.087706)) * (((log(SG) * ((TBP * 3.9...
+                                      98e-05) + -0.052178)) * ((TBP * -0.00012837) + SG)) + 0.36...
+                                      44)
+24          1.402e-05  3.605e-02  y = ((log(SG) * (SG * (-0.048698 + (TBP * 3.8011e-05)))) +...
+                                       0.36346) * log(((TBP - (0.50282 / log(SG))) * 0.10579) + ...
+                                      TBP)
+26          1.393e-05  3.124e-03  y = (((log(SG) * ((TBP * 3.9408e-05) + -0.049736)) * SG) +...
+                                       0.36351) * log(((TBP - (0.56896 / log(SG))) * 0.10584) + ...
+                                      (TBP + -1.4009))
+27          1.393e-05  2.369e-04  y = ((log(SG) * (SG * ((3.9408e-05 * TBP) + -0.049736))) +...
+                                       0.36351) * log(((TBP - (log(1.6114) / log(SG))) * 0.10584...
+                                      ) + (TBP + -1.4009))
+28          1.392e-05  2.001e-04  y = (((((TBP * 3.9408e-05) + -0.049736) * SG) * log(SG)) +...
+                                       0.36351) * log((((TBP - ((-0.33986 / -0.62971) / log(SG))...
+                                      ) * 0.10584) + TBP) + -1.4009)
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 9.380e+04
+Progress: 2548 / 3100 total iterations (82.194%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           1.148e-02  0.000e+00  y = 2.3504
+4           6.197e-04  9.730e-01  y = log(TBP) * 0.37301
+5           1.987e-04  1.137e+00  y = exp(log(TBP) * 0.13551)
+6           1.970e-04  8.532e-03  y = log(TBP + 86.095) * 0.36429
+8           6.812e-05  5.310e-01  y = ((SG * -0.028732) + 0.39761) * log(TBP)
+9           3.740e-05  5.995e-01  y = (log(SG) * -0.15884) + (log(TBP) * 0.3687)
+10          2.140e-05  5.585e-01  y = ((log(TBP) * 0.34934) + (SG * -0.14203)) + 0.27048
+12          2.123e-05  3.949e-03  y = ((SG * -0.14089) + 0.20747) + (log(TBP + 13.017) * 0.3...
+                                      5777)
+14          1.964e-05  3.877e-02  y = ((log(TBP) * ((SG * 0.02969) + 0.32602)) + 0.41988) + ...
+                                      (SG * -0.33299)
+15          1.510e-05  2.633e-01  y = ((SG * (((TBP * 4.5275e-05) + -0.05463) * log(SG))) + ...
+                                      0.36901) * log(TBP)
+17          1.460e-05  1.670e-02  y = ((((log(SG) * ((TBP * 3.9402e-05) + -0.050063)) * SG) ...
+                                      + 0.36403) * log(TBP)) - -0.032764
+21          1.460e-05  1.004e-04  y = ((((TBP * 3.8987e-05) + -0.049421) * (SG * log(SG))) +...
+                                       0.36295) * log(((TBP * 0.11922) - 2.1438) + TBP)
+23          1.453e-05  2.192e-03  y = log(TBP + (TBP * 0.087706)) * (((log(SG) * ((TBP * 3.9...
+                                      98e-05) + -0.052178)) * ((TBP * -0.00012837) + SG)) + 0.36...
+                                      44)
+24          1.402e-05  3.605e-02  y = ((log(SG) * (SG * (-0.048698 + (TBP * 3.8011e-05)))) +...
+                                       0.36346) * log(((TBP - (0.50282 / log(SG))) * 0.10579) + ...
+                                      TBP)
+26          1.392e-05  3.457e-03  y = ((log(SG) * (((3.9947e-05 * TBP) + -0.050174) * SG)) +...
+                                       0.36375) * log(((TBP - (0.52767 / log(SG))) * 0.1014) + (...
+                                      -1.7482 + TBP))
+28          1.392e-05  6.557e-05  y = (((log(SG) * ((TBP * 4.0007e-05) + -0.050213)) * SG) +...
+                                       0.36375) * log((TBP + ((TBP - (0.58004 / log(log(exp(SG))...
+                                      ))) * 0.10141)) + -1.7482)
+30          1.392e-05  1.145e-04  y = ((log(SG) * (SG * ((3.9947e-05 * TBP) + -0.050174))) +...
+                                       0.36375) * log((TBP + -1.7482) + (((TBP - -0.78707) - (0....
+                                      52767 / log(log(exp(SG))))) * 0.1014))
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+
+Expressions evaluated per second: 9.020e+04
+Progress: 2952 / 3100 total iterations (95.226%)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           1.148e-02  0.000e+00  y = 2.3504
+4           6.197e-04  9.730e-01  y = log(TBP) * 0.37301
+5           1.987e-04  1.137e+00  y = exp(log(TBP) * 0.13551)
+6           1.970e-04  8.532e-03  y = log(TBP + 86.095) * 0.36429
+8           4.744e-05  7.120e-01  y = log(TBP) * ((0.02281 / SG) + 0.34581)
+9           3.740e-05  2.376e-01  y = (log(SG) * -0.15884) + (log(TBP) * 0.3687)
+10          2.140e-05  5.585e-01  y = ((log(TBP) * 0.34934) + (SG * -0.14203)) + 0.27048
+12          2.123e-05  3.949e-03  y = ((SG * -0.14089) + 0.20747) + (log(TBP + 13.017) * 0.3...
+                                      5777)
+14          1.964e-05  3.877e-02  y = ((SG * -0.33299) + 0.41988) + (((SG * 0.029684) + 0.32...
+                                      602) * log(TBP))
+15          1.510e-05  2.633e-01  y = ((SG * (((TBP * 4.5275e-05) + -0.05463) * log(SG))) + ...
+                                      0.36901) * log(TBP)
+17          1.460e-05  1.670e-02  y = ((((log(SG) * ((TBP * 3.9402e-05) + -0.050063)) * SG) ...
+                                      + 0.36403) * log(TBP)) - -0.032764
+19          1.460e-05  5.662e-07  y = (log(TBP) * ((log(SG) * (((TBP * SG) * 3.9402e-05) + (...
+                                      SG * -0.050063))) + 0.36403)) - -0.032764
+20          1.424e-05  2.493e-02  y = log(TBP + (-0.053804 / log(SG))) * (((SG * log(SG)) * ...
+                                      ((TBP * 4.5483e-05) + -0.054747)) + 0.36897)
+24          1.402e-05  3.977e-03  y = ((log(SG) * (SG * (-0.048698 + (TBP * 3.8011e-05)))) +...
+                                       0.36346) * log(((TBP - (0.50282 / log(SG))) * 0.10579) + ...
+                                      TBP)
+26          1.392e-05  3.654e-03  y = ((log(SG) * (((TBP * 4.0007e-05) + -0.050213) * SG)) +...
+                                       0.36375) * log(TBP + (((TBP - (0.5281 / log(SG))) * 0.101...
+                                      41) + -1.7482))
+28          1.391e-05  9.239e-06  y = ((SG * (((TBP * 3.9916e-05) + -0.050146) * log(SG))) +...
+                                       0.36375) * log(((((TBP - -0.78707) - (0.52767 / log(SG)))...
+                                       * 0.10141) + TBP) + -1.7482)
+───────────────────────────────────────────────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Press 'q' and then &lt;enter&gt; to stop execution early.
+───────────────────────────────────────────────────────────────────────────────────────────────────
+Complexity  Loss       Score      Equation
+1           1.148e-02  0.000e+00  y = 2.3504
+4           6.197e-04  9.730e-01  y = log(TBP) * 0.37301
+5           1.987e-04  1.137e+00  y = exp(log(TBP) * 0.13551)
+6           1.970e-04  8.532e-03  y = log(TBP + 86.095) * 0.36429
+8           4.744e-05  7.120e-01  y = log(TBP) * ((0.02281 / SG) + 0.34581)
+9           3.740e-05  2.376e-01  y = (log(SG) * -0.15884) + (log(TBP) * 0.3687)
+10          2.140e-05  5.585e-01  y = ((log(TBP) * 0.34934) + (SG * -0.14203)) + 0.27048
+12          2.123e-05  3.949e-03  y = ((SG * -0.14089) + 0.20747) + (log(TBP + 13.017) * 0.3...
+                                      5777)
+14          1.964e-05  3.877e-02  y = (SG * -0.33299) + (0.41988 + (((SG * 0.029684) + 0.326...
+                                      02) * log(TBP)))
+15          1.510e-05  2.633e-01  y = ((SG * (((TBP * 4.5275e-05) + -0.05463) * log(SG))) + ...
+                                      0.36901) * log(TBP)
+17          1.460e-05  1.670e-02  y = ((((log(SG) * ((TBP * 3.9402e-05) + -0.050063)) * SG) ...
+                                      + 0.36403) * log(TBP)) - -0.032764
+19          1.460e-05  5.662e-07  y = (log(TBP) * ((log(SG) * (((TBP * SG) * 3.9402e-05) + (...
+                                      SG * -0.050063))) + 0.36403)) - -0.032764
+20          1.424e-05  2.493e-02  y = log(TBP + (-0.053804 / log(SG))) * (((SG * log(SG)) * ...
+                                      ((TBP * 4.5483e-05) + -0.054747)) + 0.36897)
+22          1.424e-05  1.816e-04  y = ((SG * (log(SG) * ((TBP * 4.5416e-05) + -0.054692))) -...
+                                       -0.36897) * log(((-0.053818 / SG) / log(SG)) + TBP)
+24          1.402e-05  7.773e-03  y = ((log(SG) * (SG * (-0.048698 + (TBP * 3.8011e-05)))) +...
+                                       0.36346) * log(((TBP - (0.50282 / log(SG))) * 0.10579) + ...
+                                      TBP)
+26          1.391e-05  3.663e-03  y = ((((3.9993e-05 * TBP) + -0.050212) * (log(SG) * SG)) +...
+                                       0.36375) * log(TBP + (((TBP - (0.5281 / log(SG))) * 0.101...
+                                      41) + -1.7482))
+28          1.391e-05  2.682e-07  y = ((SG * (((TBP * 3.9916e-05) + -0.050146) * log(SG))) +...
+                                       0.36375) * log(((((TBP - -0.78707) - (0.52767 / log(SG)))...
+                                       * 0.10141) + TBP) + -1.7482)
+30          1.391e-05  2.936e-05  y = ((((TBP * 3.9993e-05) + -0.050212) * (log(SG) * SG)) +...
+                                       0.36375) * log((TBP + (((SG - 0.60607) + (TBP - (0.5281 /...
+                                       log(SG)))) * 0.10141)) + -1.7482)
+───────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[ Info: Final population:
+[ Info: Results saved to:</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>time to fit:  60.768468379974365 seconds
+  - outputs/20250731_150421_k0nrYf/hall_of_fame.csv</code></pre>
+</div>
+</div>
+<div id="ee6454f7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974322734,&quot;user_tz&quot;:300,&quot;elapsed&quot;:196,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="9999bf86-c4ec-4c19-90bc-b49d5a233b8b" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit plot</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>plt.plot(y_bc,y_pred,marker<span class="op">=</span><span class="st">"o"</span>,linestyle<span class="op">=</span><span class="st">"None"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Box-Cox Molecular Mass'</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Predicted Box-Cox Molecular Mass'</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Molecular Mass vs Predicted Molecular Mass'</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="around1_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="6ab9ad81" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974322755,&quot;user_tz&quot;:300,&quot;elapsed&quot;:23,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="51f44b54-500e-4d1a-b44f-183d078a25f7" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull Out Equation</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>myEq<span class="op">=</span>myMod.sympy()</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Print (Old) Equation before clean-up</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(myEq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(SG*(4.5274992e-5*TBP - 0.054629795)*log(SG) + 0.36901343)*log(TBP)</code></pre>
+</div>
+</div>
+<div id="15a6f49a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974323024,&quot;user_tz&quot;:300,&quot;elapsed&quot;:268,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="09d56ebc-4aa7-4dab-8353-2be49425e793" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean-Up Equation</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>sym.simplify(myEq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>(SG*(4.5274992e-5*TBP - 0.054629795)*log(SG) + 0.36901343)*log(TBP)</code></pre>
+</div>
+</div>
+<div id="7950e969" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974323024,&quot;user_tz&quot;:300,&quot;elapsed&quot;:11,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="35d882d3-2f90-4a7b-8fe8-6d3c2d9009aa" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate  Residuals</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ydel<span class="op">=</span>y_pred<span class="op">-</span>y_bc</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Minimum"</span>,ydel.<span class="bu">min</span>())</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Maximum"</span>,ydel.<span class="bu">max</span>())</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Average"</span>,ydel.mean())</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Median"</span>,np.median(ydel))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Minimum -0.010359957524449737
+Maximum 0.013075734342925749
+Average -1.6483135152047168e-05
+Median -0.000324815962935876</code></pre>
+</div>
+</div>
+<div id="d7424ec7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974323140,&quot;user_tz&quot;:300,&quot;elapsed&quot;:119,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="7978a08c-095a-4c63-fbc0-62f0b044e290" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Raw Residuals Plot</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>plt.plot(y_bc,ydel,marker<span class="op">=</span><span class="st">"o"</span>,linestyle<span class="op">=</span><span class="st">"None"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Box-Cox Molecular Mass'</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Box-Cox Residuals'</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Residuals'</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="around1_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="b1c21a9a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974323321,&quot;user_tz&quot;:300,&quot;elapsed&quot;:163,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="3c3acc4d-9af1-490b-835a-652399b199f1" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normality Test #1</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>plt.hist(ydel,edgecolor<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Box-Cox Residuals"</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Residual Error"</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="around1_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="bdc23ee1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974323423,&quot;user_tz&quot;:300,&quot;elapsed&quot;:104,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="8ffd343c-d46a-4d1d-a16a-5645117b7900" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normality Test #2</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> sm.qqplot(ydel, line<span class="op">=</span><span class="st">'45'</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Theoretical Quantiles (Normal)"</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Sample Quantiles"</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="around1_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="fa8e977f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974323442,&quot;user_tz&quot;:300,&quot;elapsed&quot;:18,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="3679224c-d134-4db0-aa1e-0e9d1bc056a9" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normality Test #3</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>shapiro(ydel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>ShapiroResult(statistic=np.float64(0.9655009252747575), pvalue=np.float64(0.05075056014211319))</code></pre>
+</div>
+</div>
+<div id="e3053f48" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974323463,&quot;user_tz&quot;:300,&quot;elapsed&quot;:20,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="098d8bff-987f-43da-d021-edfa32aba10d" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normality Test #4</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>kstest(ydel,<span class="st">'norm'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>KstestResult(statistic=np.float64(0.4958670488511923), pvalue=np.float64(2.0164035288708485e-16), statistic_location=np.float64(-0.010359957524449737), statistic_sign=np.int8(-1))</code></pre>
+</div>
+</div>
+<div id="c5bddd9e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974323497,&quot;user_tz&quot;:300,&quot;elapsed&quot;:32,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="eb9a44fc-d794-47a2-84cb-d737e7fad333" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reverse Transform on Predicted Values</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>y_unt<span class="op">=</span>unBox(y_pred,bc)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Minimum"</span>,y_unt.<span class="bu">min</span>())</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Maximum"</span>,y_unt.<span class="bu">max</span>())</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Average"</span>,y_unt.mean())</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Median"</span>,np.median(y_unt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Minimum 74.18572575373912
+Maximum 1451.8586308287918
+Average 302.44788743808454
+Median 220.6880556910935</code></pre>
+</div>
+</div>
+<div id="135cc1e4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974323652,&quot;user_tz&quot;:300,&quot;elapsed&quot;:153,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="1c0791ae-5bf9-401a-b99d-6e0512aa8548" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit plot</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>plt.plot(y,y_unt,marker<span class="op">=</span><span class="st">"o"</span>,linestyle<span class="op">=</span><span class="st">"None"</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Apparent Molecular Mass'</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Predicted Molecular Mass'</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Untransformed vs. Original Molecular Mass'</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="around1_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="35abe23c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974323801,&quot;user_tz&quot;:300,&quot;elapsed&quot;:152,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="3f6b81a0-f6a8-4dc7-f092-e3bbb15c56bc" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>ydelunt<span class="op">=</span>y_unt<span class="op">-</span>y</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Untransformed Residuals Plot</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>plt.plot(y,ydelunt,marker<span class="op">=</span><span class="st">"o"</span>,linestyle<span class="op">=</span><span class="st">"None"</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Raw Molecular Mass'</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Raw Residuals'</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Residuals'</span>)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="around1_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="21f9b21c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974323897,&quot;user_tz&quot;:300,&quot;elapsed&quot;:108,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="b91675d1-5446-4306-aafa-462ca89c59ae" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normality Test #1</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>plt.hist(ydelunt,edgecolor<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Box-Cox Residuals"</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Residual Error"</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="around1_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="a600a7a2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974324035,&quot;user_tz&quot;:300,&quot;elapsed&quot;:137,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="dd5aab5b-838f-4d40-b2a5-f178329624b0" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normality Test #2</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> sm.qqplot(ydelunt, line<span class="op">=</span><span class="st">'45'</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Theoretical Quantiles"</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Sample Quantiles"</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="around1_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="79bbb791" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974324044,&quot;user_tz&quot;:300,&quot;elapsed&quot;:6,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="26b2b963-ab82-42be-c7d7-19113a12421a" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add New Predictions to training Dataframe</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Fit_Mw'</span>]<span class="op">=</span>y_unt</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate Correlation Coefficient between columns</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>df.corr()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<div id="df-8161f745-cc8b-4379-a997-4b75238fc4b5" class="colab-df-container">
+    <div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">SG</th>
+<th data-quarto-table-cell-role="th">TBP</th>
+<th data-quarto-table-cell-role="th">MW</th>
+<th data-quarto-table-cell-role="th">Fit_Mw</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">SG</td>
+<td>1.000000</td>
+<td>0.625218</td>
+<td>0.334852</td>
+<td>0.354662</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">TBP</td>
+<td>0.625218</td>
+<td>1.000000</td>
+<td>0.869591</td>
+<td>0.894181</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">MW</td>
+<td>0.334852</td>
+<td>0.869591</td>
+<td>1.000000</td>
+<td>0.995895</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Fit_Mw</td>
+<td>0.354662</td>
+<td>0.894181</td>
+<td>0.995895</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-8161f745-cc8b-4379-a997-4b75238fc4b5')" title="Convert this dataframe to an interactive table." style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-8161f745-cc8b-4379-a997-4b75238fc4b5 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-8161f745-cc8b-4379-a997-4b75238fc4b5');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+    <div id="df-13d2592a-2b39-43a1-93e1-35fe0b080496">
+      <button class="colab-df-quickchart" onclick="quickchart('df-13d2592a-2b39-43a1-93e1-35fe0b080496')" title="Suggest charts" style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"></path>
+    </g>
+</svg>
+      </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+      <script>
+        async function quickchart(key) {
+          const quickchartButtonEl =
+            document.querySelector('#' + key + ' button');
+          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+          quickchartButtonEl.classList.add('colab-df-spinner');
+          try {
+            const charts = await google.colab.kernel.invokeFunction(
+                'suggestCharts', [key], {});
+          } catch (error) {
+            console.error('Error during call to suggestCharts:', error);
+          }
+          quickchartButtonEl.classList.remove('colab-df-spinner');
+          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+        }
+        (() => {
+          let quickchartButtonEl =
+            document.querySelector('#df-13d2592a-2b39-43a1-93e1-35fe0b080496 button');
+          quickchartButtonEl.style.display =
+            google.colab.kernel.accessAllowed ? 'block' : 'none';
+        })();
+      </script>
+    </div>
+
+    </div>
+  </div>
+</div>
+</div>
+<div id="8ca2f516" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974324423,&quot;user_tz&quot;:300,&quot;elapsed&quot;:376,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Hosseinifar dataset</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Colab</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co">#drive.mount('/content/drive')</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>dfh<span class="op">=</span>pd.read_csv(<span class="st">'/content/drive/MyDrive/hosseinifar_raw.csv'</span>)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Positron</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co">#dfh=pd.read_csv('./hosseinifar_raw.csv')</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Quarto</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co">#df=pd.read_csv('./c694/hosseinifar_raw.csv')</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>yh<span class="op">=</span>dfh[<span class="st">'MW'</span>]</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>yhbc<span class="op">=</span>reBox(yh,bc)</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>xh<span class="op">=</span>dfh[[<span class="st">'SG'</span>,<span class="st">'TBP'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="db99bf30" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974324425,&quot;user_tz&quot;:300,&quot;elapsed&quot;:5,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate testing Predictions</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>y_h1<span class="op">=</span>unBox(myMod.predict(xh),bc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="72f1be15" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1753974324447,&quot;user_tz&quot;:300,&quot;elapsed&quot;:22,&quot;user&quot;:{&quot;displayName&quot;:&quot;Richard Henry&quot;,&quot;userId&quot;:&quot;12926619101509154418&quot;}}}" data-outputid="cf3d1b5a-31f4-4aa7-8459-f3394509803c" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Predictions to testing Dataframe</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>dfh[<span class="st">'Fit_Mw'</span>]<span class="op">=</span>y_h1</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Correlation Coefficient between columns</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>dfh.corr()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<div id="df-58461804-01f1-46af-823b-bc91e3ac6d23" class="colab-df-container">
+    <div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">SG</th>
+<th data-quarto-table-cell-role="th">TBP</th>
+<th data-quarto-table-cell-role="th">MW</th>
+<th data-quarto-table-cell-role="th">Fit_Mw</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">SG</td>
+<td>1.000000</td>
+<td>0.985561</td>
+<td>0.954145</td>
+<td>0.946584</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">TBP</td>
+<td>0.985561</td>
+<td>1.000000</td>
+<td>0.990235</td>
+<td>0.986523</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">MW</td>
+<td>0.954145</td>
+<td>0.990235</td>
+<td>1.000000</td>
+<td>0.999696</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Fit_Mw</td>
+<td>0.946584</td>
+<td>0.986523</td>
+<td>0.999696</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-58461804-01f1-46af-823b-bc91e3ac6d23')" title="Convert this dataframe to an interactive table." style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-58461804-01f1-46af-823b-bc91e3ac6d23 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-58461804-01f1-46af-823b-bc91e3ac6d23');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+    <div id="df-c3ffb246-80e5-4b77-8619-2d42448ada22">
+      <button class="colab-df-quickchart" onclick="quickchart('df-c3ffb246-80e5-4b77-8619-2d42448ada22')" title="Suggest charts" style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"></path>
+    </g>
+</svg>
+      </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+      <script>
+        async function quickchart(key) {
+          const quickchartButtonEl =
+            document.querySelector('#' + key + ' button');
+          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+          quickchartButtonEl.classList.add('colab-df-spinner');
+          try {
+            const charts = await google.colab.kernel.invokeFunction(
+                'suggestCharts', [key], {});
+          } catch (error) {
+            console.error('Error during call to suggestCharts:', error);
+          }
+          quickchartButtonEl.classList.remove('colab-df-spinner');
+          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+        }
+        (() => {
+          let quickchartButtonEl =
+            document.querySelector('#df-c3ffb246-80e5-4b77-8619-2d42448ada22 button');
+          quickchartButtonEl.style.display =
+            google.colab.kernel.accessAllowed ? 'block' : 'none';
+        })();
+      </script>
+    </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
