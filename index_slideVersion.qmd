@@ -1,0 +1,1082 @@
+---
+title: "Symbolic Regression"
+subtitle: "Modeling Molecular Mass"
+author: "Delanyce Rose & Richard Henry"
+date: '`r Sys.Date()`'
+toc: False
+format:
+  revealjs:
+    code-fold: true
+    transition: fade
+    theme: sky
+    
+course: Capstone Projects in Data Science
+bibliography: references.bib # file contains bibtex for references
+#always_allow_html: true # this allows to get PDF with HTML features
+self-contained: true
+execute: 
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+
+## Outline {.scrollable}
+
+::: {.panel-tabset}
+
+###
+
+### Introduction
+
+- Symbolic Regression
+- Molecular Mass
+
+### Methods
+
+- Typical Workflow
+- Toy Dataset
+- Software Implementation
+- Noisy Toy
+- Belly of the Beast
+- Quiet Toy
+- Alternatives to Evolution
+
+### Analysis & Results
+
+- Data Exploration
+- Modeling and Results
+- Conclusions
+
+:::
+
+# Methods
+
+## Definition
+
+::: {.incremental}
+
+- independent variable $X$
+- dependent variable $y$ 
+- analytical expression $f(X)$
+- $$\hat{y}_{23} \approx f(X_{23})$$
+
+:::
+
+## Alternatives - I
+::::: {.columns}
+
+:::: {.incremental}
+
+::: {.column}
+
+- neural networks
+- $$\frac{dy}{dX}|_{X_{23}}\approx \frac{\hat{y}_{24}-\hat{y}_{23}}{X_{24}-X_{23}}$$
+- linear regression
+- $$\hat{y}_{23} \approx \beta_0 +\beta_1 \cdot X$$
+- best form?
+- $$\hat{y}_{23} \approx \beta_2 +\beta_3 \cdot e^X$$
+
+:::
+
+::: {.column}
+
+- $$\hat{y}_{23} \approx \beta_4 +\beta_5 \cdot log(X)$$
+- $$log(\hat{y}_{23}) \approx \beta_6 +\beta_7 \cdot log(X)$$
+- Alternating Conditional Expectations
+- $$\hat{y}\approx\frac{\beta_0+\beta_1x+\beta_2x^2}{\beta_3+\beta_4x}$$
+- Kolmogorov-Arnold Network
+
+:::
+
+::::
+
+:::::
+
+## Typical Workflow
+
+::: {.incremental}
+
+- what
+- how
+- when
+- initial population
+- fitness evaluation
+- stop ??
+- new population
+
+:::
+
+## Toy Dataset {.smaller}
+
+::: {.columns}
+:::: {.column}
+$$\gamma_{API}=\frac{141.5}{\gamma_{o}}-131.5$$
+
+| Symbol         | Meaning          | Units      |
+|----------------|------------------|------------|
+| $\gamma_{API}$ | API Gravity      | \[degAPI\] |
+| $\gamma_o$     | specific gravity | \[1/wtr\]  |
+
+::::
+
+:::: {.column}
+
+```{r}
+# Generate Dataset
+x<-seq(from=0.55,to=1.075,by=0.025)
+y<-141.5/x-131.5
+# Draw Graph
+plot(x,y,main="Toy Dataset",
+    xlab="Specific Gravity",
+    ylab="API Gravity")
+grid()
+```
+::::
+:::
+
+## Software Implementation 
+::: {.fragment .fade-out}
+
+`from pysr import PySRRegressor()`
+
+`myMod=PySRRegressor()`
+
+`myMod.fit(x.reshape(-1, 1),y)`
+
+`y_pred=myMod.predict(x.reshape(-1, 1))`
+
+:::
+::: {.fragment .fade-in .absolute top=60}
+```{r}
+# Mimic Results from synthDataSets.ipynb
+y_fit<-141.5/x-131.500000554
+y_raw<-141.5/x-131.5
+# Draw Raw and Fit together
+plot(x,y_raw,
+    main="Toy Dataset Fit",
+    xlab="Specific Gravity",
+    ylab="API Gravity")
+lines(x,y_fit,
+    type="l",
+    lty=1,
+    col="red")
+legend("topright",
+    legend=c("Original","Predicted"),
+    col=c("black","red"),
+    lty=c(1,1),
+    pch=c(1,1))
+grid()
+```
+
+:::
+## Software Implementation - II
+::: {.fragment}
+`myEq=myMod.sympy()`
+::: 
+::: {.fragment .fade-in}
+$$x_0-(x_0+0.013196754)+1.0131962+ \frac{x_0 (-132.5)- -141.5}{x_0}$$ {#eq-toy-raw}
+:::
+::: {.fragment .fade-in}
+`sym.simplify(myEq)`
+:::
+::: {.fragment .fade-in}
+$$-131.500000554+\frac{141.5}{x_0}$$
+:::
+
+## Noisy Toy
+::::: {.columns}
+:::: {.column}
+:::{.fragment}
+`w=(random.rand(21)-0.5)*2.5`
+:::
+::: {.fragment}
+$$-132.05688+\frac{141.88547}{x_0}$$
+:::
+::::
+::::{.column}
+:::{.fragment}
+![](/noisy_pysr_files/figure-html/cell-7-output-1.png)
+:::
+::::
+:::::
+## Belly of the Beast (Encoding)
+
+`binary_operators=["+","-","*","/"]`
+
+`unary_operators=None`
+
+`maxsize=30`
+
+
+| 1     | 2      | 3     | 4                | 5     |
+|-------|--------|-------|------------------|-------|
+| minus | divide | 141.5 | specific gravity | 131.5 |
+
+
+`maxdepth=None`
+
+
+![](API_tree.png)
+
+## Belly of the Beast (Fitness) {.scrollable}
+
+`elemtwise_loss="L2DistLoss()"`
+
+$$ \frac{1}{n} \sum_{k=1}^{n}{\left(\hat{y}_k-y_k \right)}^2$$
+
+$$ \frac{1}{n} \sum_{k=1}^{n}{\left|\hat{y}_k-y_k \right|}$$
+
+`parsimony=0.0`
+
+`model_selection="best"`
+
+`should_simplify=True`
+
+`Tournament_selection_n=15`
+
+
+## Belly of the Beast - III
+::::{.columns}
+:::{.column}
+### Stopping
+`niterations=100`
+
+`max_evals=None`
+
+`timeout_in_seconds=None`
+:::
+::: {.column}
+### Population
+`populations=31`
+
+`population_size=27`
+:::
+::::
+
+## Quiet Toy
+
+
+$$ \frac{a_{00}}{x}+a_{01}$$
+
+`w<-seq(from=121.5,to=161.5, by=10)`
+
+
+```{r}
+#| label: tbl-backus
+#| tbl-cap: Backus-Naur Description of Toy Problem
+# Import Library
+library("gramEvol")
+# List of constants
+w<-seq(from=121.5,to=161.5, by=10)
+# Define the rules
+ruleDef <- list(expr = grule(op(expr, expr), var,con),
+                op = grule('+', '-', '*','/'),
+                var = grule(x),
+                con = gvrule(w))
+# Create the Grammar
+grammarDef <- CreateGrammar(ruleDef)
+# Print Backus-Naur version
+grammarDef
+```
+
+
+```{r}
+#| label: tbl-gramEvol
+#| tbl-cap: gramEvol Results
+# Fitness Function
+SymRegFitFunc <- function(expr) {
+  result <- eval(expr)
+  if (any(is.nan(result)))
+    return(Inf)
+  return (mean(log(1 + abs(y - result))))
+}
+# Random Number Generator
+set.seed(13)
+# Call to main function
+ge <- GrammaticalEvolution(grammarDef,
+                           SymRegFitFunc,
+                           terminationCost = 0.1,
+                           iterations = 2500,
+                           max.depth = 10)
+ge
+```
+
+
+## Alternatives to Evolution
+
+Although genetic programming has proven to be most popular approach to
+Symbolic Regression [@dong2025recent], it has been criticized for being
+slow and producing bloated equations.
+
+Deterministic methods such as brute-force search [@udrescu2020ai],
+mathematical programming [@austel2017globally] and sparse regression
+[@muthyala2025symantic] have been employed. The latter is particularly
+good at removing variables that don't materially contribute to the
+prediction. Typically, they don't solve the speed problem, but are
+thought to produce more easily interpreted equations.
+
+Methods which rely on information technology have also been used,
+especially of late. The idea here is to replace the random changes to
+the equations that are the heart of the evolutionary approach with
+changes based on what we know about th data. Sometimes this information
+is learned from the data [@anthes2025transformer], and other times it is
+supplied externally [@keren2023computational] as "human experience". In
+the latter case, there is the risk that the search space may become so
+restricted that nothing new can be learned.
+
+Neural Network methods have also made an appearance. An early approach
+[@martius2016extrapolation] replaced the activation functions in an ANN
+with trancendental functions such as sine and log. The main idea here is
+that each layer would host multiple kinds of functions instead of just
+one. The more recent approaches [@kamienny2022end] pre-train a
+transformer model to learn the relationships between data and equations
+using synthetic data. The major advantage here is that if we ignore the
+pre-training phase, the training phase may be quick enough to use the
+model in real time.
+
+### Next Steps
+
+1.  Examine our dataset and describe some of the equations that have
+    been used historically to calculate molecular mass.
+
+2.  Compare the equations that are generated by `PySR` for
+    our dataset as the options are varied.
+    
+3.  Compare the equations that are generated by evolutionary algorithms vs. deterministic algorithms.
+
+
+[^1]: A post-fix variant was used on scientific calculators in
+the 1970's as it was more efficient. The learning curve, however, was
+brutal for mere mortals, so that owning one of these 'RPN' 
+[artifacts](https://en.wikipedia.org/wiki/HP-35) became a status symbol 
+in the engineering community well into the 1990's.
+
+## Analysis and Results
+
+### Data Exploration and Visualization
+
+Let us take a first look at the dataset from Goossens
+[@goossens1996prediction]:
+
+```{r}
+# Read Goosens Dataset from flat file
+# Positron
+#df<-read.csv("./c694/goossens_raw.csv")
+# Quarto
+df<-read.csv("./goossens_raw.csv")
+```
+
+We have 3 variables:
+
+| Variable | Description        | Designation |
+|----------|--------------------|-------------|
+| $Mw$     | Molecular Mass     | dependent   |
+| $SG$     | Specific Gravity   | independent |
+| $TBP$    | True Boiling Point | independent |
+
+: Goossens Variables {#tbl-goo-var .striped .hover}
+
+and 70 rows. 
+
+*Molecular Mass* is a proxy for the size of the molecule.  For those of you who remember your high school chemistry, it is the mass of the substance per unit mole. *Specific Gravity* is the density of the substance divided by the density of water. Again, for those of you who remember your high school physics, density is mass per unit volume, so we are expecting these two to be related somehow.  *True Boiling Point* is the temperature at which the substance boils at atmospheric pressure.  The true boiling point of water is 100 C.
+
+This is a very small dataset by modern machine learning
+standards. However, due to the cost of acquiring the molecular mass
+data, this dataset will be considered "large" by chemical engineering
+standards.
+
+One of the questions we want to answer is whether datasets like this are
+"too small" for symbolic regression.
+
+#### Univariate Analysis
+Here is a summary of the dataset:
+
+```{r}
+#| label: tbl-goo-sum
+#| tbl-cap: Goosens Dataset Summary
+# Summarize Goossens Dataset
+print(summary(df))
+```
+
+The reader will notice that the specific gravity value range is small compared to the boiling point and molecular mass ranges.  Also, the mean of the molecular mass data is nowhere near its median.  Lets take a closer look:
+```{r}
+#| label: fig-his_mw
+#| fig-cap: Raw Molecular Mass Histogram
+hist(df$MW,
+     main="",
+     xlab="Molecular Mass")
+```
+
+The reader will notice a strongly right-skewed distribution with an empty "bucket" near the top.  Lets take a peek at the box plots:
+
+```{r}
+#| label: fig-box_mw
+#| fig-cap: Raw Molecular Mass Box-and-Whiskers Plot
+boxplot(df$MW,
+        horizontal=TRUE)
+```
+
+The reader will notice that all the values greater than about 600 would be considered outliers if the molecular masses were normally distributed.
+
+Turning to the True Boiling Point variable:
+
+```{r}
+#| label: fig-box_tbp
+#| fig-cap: Raw Boiling Point Box-and-Whiskers Plot
+boxplot(df$TBP,
+        horizontal=TRUE,
+        col="lightblue")
+```
+
+We appear to have no outliers for this variable, but this variable is not normally distributed either.  Lets check:
+
+```{r}
+#| label: fig-his_tbp
+#| fig-cap: Raw Boiling Point Histogram
+hist(df$TBP,
+     main="",
+     xlab="True Boiling Point",
+     col="lightblue")
+```
+
+We appear to have a bimodal distribution here.  Lets compare this with the other predictor, specific gravity:
+
+```{r}
+#| label: fig-his_sgo
+#| fig-cap: Raw Specific Gravity Histogram
+hist(df$SG,
+     main="",
+     xlab="Specific Gravity",
+     col="lightgreen")
+```
+
+This distribution is skewed to the right, but not as strongly as molecular mass.  No signs of a bimodal distribution here.  Here is the box plot:
+
+```{r}
+#| label: fig-box_sg
+#| fig-cap: Raw Specific Gravity Box-and-Whiskers Plot
+boxplot(df$SG,
+        horizontal=TRUE,
+        col="lightgreen")
+```
+
+It is interesting that the largest specific gravity values appear to be outliers, even though this variable appears to be the "most normally distributed" of the three.
+
+#### Bivariate Analysis
+Here is a plot of molecular mass vs. specific gravity:
+
+```{r}
+#| label: fig-goo-mwXsg
+#| fig-cap: Molecular Mass vs Specific Gravity Goossens Data
+plot(df$SG,df$MW,
+    main="Goossens Dataset",
+    xlab="Specific Gravity",
+    ylab="Apparent Molecular Mass")
+grid()
+```
+
+Although there appears to be a clear linear relationship between
+molecular mass and specific gravity at low gravity numbers, the
+heteroscedasticity explodes above a gravity of about 0.75.
+
+Notice that the molecular mass "outliers" appear to be different from the specific gravity "outliers".  A reasonable assumption going in was for these two variables to be (more) positively correlated, placing both "outlier" groups in the upper right corner of the plot.
+
+Notice that the largest variation in molecular mass corresponds to the specific gravity range 0.8-0.9, which, according to @fig-his_sgo is our mode.
+
+Here is the molecular mass vs. true boiling point scatter plot:
+
+```{r}
+#| label: fig-goo-mwXtb
+#| fig-cap: Molecular Mass vs Boiling Point Goossens Data
+plot(df$TBP,df$MW,
+    main="Goossens Dataset",
+    xlab="True Boiling Point",
+    ylab="Apparent Molecular Mass")
+grid()
+```
+
+There seems to be a monotonically increasing relationship between molecular mass and true boiling point, which matches the expectation going in, unlike @fig-goo-mwXsg.  There is a possible "pole" around the boiling point of 1000, which we will discuss in our results.
+
+At this point, it may be tempting to ignore the effect of specific gravity on the prediction of molecular mass.
+
+Here we plot the two independent variables against one another:
+
+```{r}
+#| label: fig-goo-sgXtb
+#| fig-cap: Specific Gravity vs Boiling Point Goossens Data
+plot(df$TBP,df$SG,
+    main="Goossens Dataset",
+    xlab="True Boiling Point",
+    ylab="Specific Gravity")
+grid()
+```
+
+This plot suggests that the correlation is poor between true boiling
+point and specific gravity. Presumably, the specific gravity helps to
+reduce the scatter around the trend of molecular weight vs. true boiling
+point.
+
+There is a second, smaller independent dataset available publicly
+[@hosseinifar2021predictive] which we can use for verification. Let us
+compare it to the Goossens dataset:
+
+```{r}
+#| label: fig-hoss-mwXtb
+#| fig-cap: Molecular Mass vs Boiling Point. Both Datasets
+# Read Hosseinifar Dataset from flat file
+# Positron
+#dfh<-read.csv("./c694/hosseinifar_raw.csv")
+# Quarto
+dfh<-read.csv("./hosseinifar_raw.csv")
+# Plot Goossens and Hosseinifar together
+plot(df$TBP,df$MW,
+     main="Goossens vs. Hosseinifar",
+     xlab="True Boiling Point",
+     ylab="Molecular Mass",
+     col="blue")
+points(dfh$TBP,dfh$MW,
+       col="red",
+       pch=2)
+legend("topleft",
+       legend=c("Goossens","Hosseinifar"),
+       col=c("blue","red"),
+       pch=c(1,2))
+grid()
+```
+
+```{r}
+#| label: fig-hoss-mwXsg
+#| fig-cap: Molecular Mass vs Specific Gravity. Both Datasets
+# Plot Goossens and Hosseinifar together
+plot(df$SG,df$MW,
+     main="Goossens vs. Hosseinifar",
+     xlab="Specific Gravity",
+     ylab="Molecular Mass",
+     col="blue")
+points(dfh$SG,dfh$MW,
+       col="red",
+       pch=2)
+legend("topleft",
+       legend=c("Goossens","Hosseinifar"),
+       col=c("blue","red"),
+       pch=c(1,2))
+grid()
+```
+
+The two datasets appear to be compatible, even though the variation of
+the Hosseinifar dataset is significantly smaller.
+
+#### Existing Correlations
+
+The existing correlations available for estimating molecular mass from
+true boiling point and specific gravity provide hints as to what kind of
+equations we expect to see from the algorithm. Many of them predate
+symbolic regression and therefore were developed by people using
+intuition and experimentation.
+
+Here are a few of them using the following nomenclature:
+
+| Symbol           | Meaning                                           |
+|------------------|---------------------------------------------------|
+| $M_w$            | Apparent Molecular Mass                           |
+| $T_b$            | True Boiling Point Temperature                    |
+| $\gamma_o$       | Specific Gravity                                  |
+| $a_{00}..a_{09}$ | Empirical Constants                               |
+| $K_w$            | Characterization Factor (intermediate value)      |
+| $X_0...X_3$      | Intermediate Variables                            |
+
+: Correlation Nomenclature {#tbl-cor-nom .striped .hover}
+
+##### Hariu & Sage (1969)
+
+$$
+M_w = a_{00} + a_{01} K_w + a_{02} K_w^2 + a_{03} T_b K_w + a_04 T_b K_w^2 + a_{05} T_b^2 K_w + a_{06} T_b^2 K_w^2
+$$ {#eq-harlu}
+
+$$K_w =\frac{\sqrt[3]T_b}{\gamma_o}$$ {#eq-UOP}
+
+##### Kesler & Lee (1976)
+
+$$M_w = X_0 + \frac{X_1}{T_b} + \frac{X_2}{T_b^2}$$ {#eq-kesler}
+
+$$X_0 = a_{00} + a_{01} γ_o+ \left (a_{02} + a_{03} γ_o \right ) T_b$$ {#eq-kes-0}
+
+$$
+X_1 = \left (1+ a_{04} γ_o + a_{05}γ_o^2 \right ) \left (a_{06} + \frac{a_ {07}}{T_b} \right ) \cdot 10^7
+$$ {#eq-kes-1}
+
+$$
+X_2 = \left (1+ a_{08} γ_o+ a_{09} γ_o^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^{12}
+$$ {#eq-kes-2}
+
+##### American Petroleum Institute (1977)
+
+$$
+M_w = a_{00} e^ {\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^{a_{03}} γ_o^ {a_{04}}
+$$ {#eq-api-77}
+
+##### Winn, Sim & Daubert (1980)
+
+$$M_w = a_{00} T_b^{a_ {01}} γ_o^{a_{02}}$$ {#eq-win}
+
+##### Riazi & Daubert (1980)
+
+$$M_w = a_{00} T_b^{a_ {01}}γ_o^{a_{02}}$$ {#eq-riazi-80}
+
+##### Rao & Bardon (1985)
+
+$$ln {M_w} = (a_{00} + a_{01} K_w) ln (\frac{T_b} {a_{02} + a_{03} K_w} )$$ {#eq-rao}
+
+See @eq-UOP
+
+##### Riazi & Daubert (1987)
+
+$$
+M_w = a_{00} T_b^{a_{01}} γ_o^{a_{02}} e^{\left (a_{03} T_b + a_{04} γ_o + a_{05} T_b γ \right )}
+$$ {#eq-riazi-87}
+
+##### Goossens (1996)
+
+$$M_w = a_{00} T_b^{X_0}$$ {#eq-goossens}
+
+$$
+X_0 =\frac {a_{03} + a_{04} ln {\left (\frac{T_b}  {a_{05} - T_b} \right )}}  {a_{01} γ_o + a_{02}}
+$$ {#eq-goo-0}
+
+##### Linan (2011)
+
+$$
+M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^ {a_{03}} γ_o^{a_{04}}
+$$ {#eq-linan}
+
+##### Hosseinifar & Shahverdi (2021)
+
+$$M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ_o} {3-γ_o} \right )}^{\frac{a_{02}}{2}} + a_{03} T_b^{a_{04}} {\left (\frac{3+2γ_o}{3-γ_o} \right )}^{\frac{a_{05}}{2}} \right ]}^{a_{06}}$$ {#eq-hosseinifar}
+
+##### Stratiev (2023)
+
+$$
+M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ_o^{a_{05}}} \right )} \right ]}
+$$ {#eq-stratiev}
+
+The reader will notice that all the correlations are non-linear, and
+that only a few of them can be easily transformed into a linear
+relationship. Some of the additional operators we may want to consider from an inspection of these equations
+include:
+
+| Operator | Type   | Description                                   |
+|----------|--------|-----------------------------------------------|
+| pow      | binary | one expression raised to the power of another |
+| log      | unary  | logarithm of an expression                    |
+| exp      | unary  | [antilogarithm](https://mathworld.wolfram.com/Antilogarithm.html) of an expression|
+| sqr      | unary  | expression squared                            |
+| cub      | unary  | expression cubed                              |
+| inv      | unary  | inverse of an expression                      |
+
+: Partial List of Additional Operators {#tbl-ope-add .striped .hover}
+
+### Modeling and Results
+
+In this sub-section, we will apply a series of symbolic regression models to our Goossens dataset, and look at the structure and performance of each generated equation.
+
+#### Default Run
+
+Our first experiment is to run `PySR` with default parameters against
+our molecular mass dataset. The resulting equation looks nothing like
+the existing equations:
+
+$$
+M_w=a_{00}+\frac{a_{01}}{\gamma_o-a_{02}}+\frac{T_b\cdot (a_{03}\cdot T_b-a_{04})}{\gamma_o\cdot (a_{05}-\frac{a_{06}}{T_b})}
+$$ {#eq-res-def}
+
+But its performance is quite impressive considering its restricted
+grammar of addition, subtraction, multiplication and division:
+
+![Default Parameter Run](moleDataSet_files/figure-html/cell-11-output-1.png){#fig-res-def}
+
+It even has a (slightly) better correlation coefficient with the raw
+molecular mass data than @eq-goossens presented with this data in the
+Goossens paper:
+
++----------+----------+----------+----------+-----------+----------+
+|          | Raw SG   | Raw TBP  | Raw MW   | Goossens\ | This\    |
+|          |          |          |          | Equation  | Equation |
++:=========+=========:+=========:+=========:+==========:+=========:+
+| Raw SG   | 1.000000 | 0.625218 | 0.334852 | 0.339126  | 0.337190 |
++----------+----------+----------+----------+-----------+----------+
+| Raw TBP  | 0.625218 | 1.000000 | 0.869591 | 0.868486  | 0.871037 |
++----------+----------+----------+----------+-----------+----------+
+| Raw MW   | 0.334852 | 0.869591 | 1.000000 | 0.999711  | 0.999847 |
++----------+----------+----------+----------+-----------+----------+
+| Goossens | 0.339126 | 0.868486 | 0.999711 | 1.000000  | 0.999798 |
+| Equation |          |          |          |           |          |
++----------+----------+----------+----------+-----------+----------+
+| This     | 0.337190 | 0.871037 | 0.999847 | 0.999798  | 1.000000 |
+| Equation |          |          |          |           |          |
++----------+----------+----------+----------+-----------+----------+
+
+: Default Run Correlation Coefficients {#tbl-res-def .striped .hover}
+
+There are some challenges. The constant $a_{02}$ is only slightly larger
+than the largest $\gamma_o$ (specific gravity) in the dataset. This
+limits the extrapolation power of this equation to higher specific
+gravities than seen in this dataset. Extrapolation is one of the
+strengths of Symbolic Regression [@sahoo2018learning]
+
+Next, we look at the residuals, plotted against the raw molecular mass:
+
+![Default Run Residuals](moleDataSet_files/figure-html/cell-17-output-1.png){#fig-res-def-res}
+
+Visually, the residuals *appear* to be normally distributed, but running the Shapiro-Wilk test reveals a probability of only 0.001 of the residuals being normally distributed.  So much for eye-balling!
+
+Let us see how *bad* it is:
+```{r}
+#| label: fig-defrun-resid
+#| fig-cap: Q-Q Plot for the Default Run Residuals
+# Read Goossens Default Run results from flat file
+# Positron
+#df<-read.csv("./c694/default_output.csv")
+# Quarto
+dfd<-read.csv("./default_output.csv")
+# Generate QQPlot
+qqnorm(dfd$Fit_Resid)
+qqline(dfd$Fit_Resid, col="red")
+grid()
+```
+
+The plot suggests that small residuals (say $\pm 2.5$) are normally distributed, but the large residuals are not.
+
+Out of mere curiosity, let us examine the residuals from the Goossens correlation (@eq-goossens):
+
+![Goossens Correlation Residuals](moleDataSet_files/figure-html/cell-19-output-1.png){#fig-res-def-goo}
+
+This looks largely similar to the default-run residuals, until it is noticed that the zero line does not bisect the plot.  The Shapiro-Wilk test p-value is zero to *six* significant figures.
+
+#### Power Run
+
+Our Second experiment is to drop the "division" binary operator
+$\left (\frac{a}{b} \right )$ and add the "power" binary operator
+$\left (a^b \right )$ as the latter is a popular component of the
+existing correlations.
+
+There is noticeable drop in the quality of the match visually:
+
+![Power Operator Run](around2_files/figure-html/cell-6-output-1.png){#fig-res-pow}
+
+Although the equation has got simpler:
+
+$$M_w=a_{00} \cdot a_{01}^{\gamma_o^{-a_{02}} + a_{03} \cdot T_b} + a_{04}$$ {#eq-res-pow}
+
+and the correlation coefficient has degraded slightly:
+
+
++-----------+-----------+-----------+-----------+-----------+
+|           | Raw SG    | Raw TBP   | Raw MW    | This      |
+|           |           |           |           | Equation  |
++:==========+==========:+==========:+==========:+==========:+
+| Raw SG    | 1.000000  | 0.625218  | 0.334852  | 0.325151  |
++-----------+-----------+-----------+-----------+-----------+
+| Raw TBP   | 0.625218  | 1.000000  | 0.869591  | 0.868747  |
++-----------+-----------+-----------+-----------+-----------+
+| Raw MW    | 0.334852  | 0.869591  | 1.000000  | 0.997281  |
++-----------+-----------+-----------+-----------+-----------+
+| This      | 0.325151  | 0.868747  | 0.997281  | 1.000000  |
+| Equation  |           |           |           |           |
++-----------+-----------+-----------+-----------+-----------+
+
+: Power Operator Run Correlation Coefficients {#tbl-res-pow .striped .hover}
+
+One can argue that nested exponents $\left (a^{b^c} \right )$ aren't
+very explainable. However the Stratiev correlation (@eq-stratiev) does this with
+Euler's number $\left ( a \cdot e^{b \cdot e^{c}} \right )$. In the
+hydrocarbon flow literature, nested logarithms $ln(ln(a))$ are more
+common.
+
+#### Exponential Run
+
+Our third experiment was to replace the binary power operator with unary
+logarithm and exponential operators. Our initial results were a major
+surprise as neither transcendental operator made it to the final
+equation:
+
+$$ M_w= - T_b \cdot \left(a_{00} \cdot T_b - a_{01}\right) \left(a_{02} \cdot 10^{-6} \left(a_{03} \cdot \gamma_o - 2 \cdot T_b \right) \left(T_b - a_{04}\right) - 1\right) + a_{05}$$ {#eq-res-exp-1}
+
+Accordingly, we re-set the random number generator and tried again:
+
+$$ M_w= a_{00}\cdot T_b + a_{01} \cdot e^{- \gamma_o^{2} + a_{02}\cdot \gamma_o + a_{03} \cdot T_b}$$ {#eq-res-exp-2}
+
+This is a dramatically different equation. This experience suggests that
+the *real* reason the deterministic algorithms are still under active
+development today is to avoid this kind of ambiguity.
+
+Our correlation coefficients are *still* not as good as the default run:
+
++----------+----------+----------+----------+----------+----------+
+|          | Raw SG   | Raw TBP  | Raw MW   | 1st\     | 2nd\     |
+|          |          |          |          | Equation | Equation |
++:=========+=========:+=========:+=========:+=========:+=========:+
+| Raw SG   | 1.000000 | 0.625218 | 0.334852 | 0.348819 | 0.344733 |
++----------+----------+----------+----------+----------+----------+
+| Raw TBP  | 0.625218 | 1.000000 | 0.869591 | 0.869577 | 0.867574 |
++----------+----------+----------+----------+----------+----------+
+| Raw MW   | 0.334852 | 0.869591 | 1.000000 | 0.997705 | 0.998420 |
++----------+----------+----------+----------+----------+----------+
+| First    | 0.348819 | 0.869577 | 0.997705 | 1.000000 | 0.999497 |
+| Equation |          |          |          |          |          |
++----------+----------+----------+----------+----------+----------+
+| Second   | 0.344733 | 0.867574 | 0.998420 | 0.999497 | 1.000000 |
+| Equation |          |          |          |          |          |
++----------+----------+----------+----------+----------+----------+
+
+: Exponential Run Correlation Coefficients {#tbl-res-exp .striped .hover}
+
+*But* the risk of "division by zero" errors during extrapolation are
+negligible.
+
+Also notable in this run is the absence of the logarithm function to
+linearize the relationship between these two variables:
+
+![Raw Data Scale Change](around3_files/figure-html/cell-14-output-1.png){#fig-res-hum}
+
+This "obvious" human observation appears not to be an optimum
+transformation, or was eliminated by the evolutionary algorithm before
+it could reach its full potential.
+
+#### Aeon Run
+
+The fourth experiment is the same as the third experiment, except that
+we run it for ten times as long. Here, we are interested in whether
+different starting points will eventually converge to similar equations.
+
+Here is the first equation after a thousand iterations:
+
+$$
+M_w=(a_{00}\cdot T_b-a_{01})e^{a_{02}\cdot 10^{-9}T_b^2(a_{03}\cdot \gamma_0 +a_{04}\cdot T_b)}
+$$ {#eq-res-eon-1}
+
+And the second equation[^2]:
+
+$$
+M_w=-a_{00}\cdot \gamma_o+\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} +a_{02}\cdot T_b
+$$ {#eq-res-eon-2}
+
+The correlation coefficients, however, now rival the default run:
+
+|                 |   Raw Mw | First Equation | Second Equation |
+|:----------------|---------:|---------------:|----------------:|
+| Raw Mw          | 1.000000 |       0.998880 |        0.999324 |
+| First Equation  | 0.998880 |       1.000000 |        0.998851 |
+| Second Equation | 0.999324 |       0.998851 |        1.000000 |
+
+: Aeon Run Correlation Coefficients {#tbl-res-eon .striped .hover}
+
+Both equations have evolved significantly by adding 900 iterations, but "similar,
+they are not" as [everyone's favourite 900 year old](https://en.wikipedia.org/wiki/Yoda)
+would say.
+
+The second equation is truly fascinating for two reasons. Neither the
+power operator $\left (a^b \right )$ nor the division operator
+$\left (\frac{a}{b} \right)$ were provided to the algorithm for this
+run, and yet we have found the middle expression
+$\left( \frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} \right)$.
+
+#### Box-Cox Run
+
+The reader may remember that our molecular mass (@fig-his_mw) was *not* normally distributed.  Accordingly, here we transform our dependent variable to see if this improves the distribution of our residuals.  Our optimum exponent works out to be $-0.3624$ according to the python `stats` library, which is fairly close to zero.
+
+Our transformed molecular mass distribution is hardly normal:
+
+![transformed molecular mass histogram](around1_files/figure-html/cell-6-output-1.png){#fig-yraw-trans}
+
+The other thing the reader may have noticed in @fig-yraw-trans is that the transformed variable range is much narrower.  If we round-up to an exponent of zero, then our transform will now be logarithmic:
+
+![transformed molecular mass](box-cox_files/figure-html/cell-5-output-1.png){#fig-ytrans-log}
+
+This expands the range of the dependent variable but probably makes it less Gaussian.  Let us go in the opposite direction and round-down to an inverse square root:
+
+![transformed molecular mass](box-cox_files/figure-html/cell-4-output-1.png){#fig-ytrans-sqrt}
+
+This appears to compress the range of the transformed variable even more. Let us stay with $\lambda=-0.3624$ and press on.  Using all four basic binary operators (like the default case) and adding exponentials and logarithms (like the exponential case), our fit looks quite good in Box-Cox space:
+
+![transformed prediced vs. actual, Box-Cox Run](around1_files/figure-html/cell-8-output-1.png){#fig-fit-boxcox}
+
+The residuals in Box-Cox space are more spread-out:
+
+![transformed Residuals, Box-Cox Run](around1_files/figure-html/cell-11-output-1.png){#fig-resid-boxcox}
+
+And the Shapiro-Wilk test calculates the probability of the residuals being normal to 0.0507, which although higher, is barely over a level of significance of 0.05.  When we untransform the predictions, and compare them to the measured molecular masses, the fit looks a little smoother:
+
+![Untransformed prediced vs. actual, Box-Cox Run](around1_files/figure-html/cell-19-output-1.png){#fig-fit-unboxcox}
+
+This run produced the same equation structure at 100, 500 and 1000 iterations, which was *not* the case for the `PySR` runs in the Aeon experiment above:
+
+$$ M_w^t = \left (\gamma_o \left(a_{00} T_b -a_{01} \right) log{(\gamma_o)} + a_{02} \right) log{(T_b)} $$ {#eq-res-boxcox}
+
+We do need to remember to reverse the Box-Cox transform:
+
+$$ M_w = {\left(\lambda M_w^t +1 \right)}^{\frac{1}{\lambda}} $$ {#eq-unboxcox}
+
+The correlation coefficient for the longest run (1000 iterations) is in line with the Aeon runs discussed earlier:
+
+|               | Raw Mw  | This Equation |
+|:--------------|--------:|--------------:|
+| Raw Mw        | 1.000000|       0.995897|
+| This Equation | 0.995897|       1.000000|
+
+: Box-Cox Run Correlation Coefficients (Transform Reversed) {#tbl-res-boxcox .striped .hover}
+
+A quick look at the residuals between the Reverse-Transformed predictions and the raw molecular masses tell the story:
+
+![Residuals outside of Box-Cox Space, Box-Cox Run](around1_files/figure-html/cell-20-output-1.png){#fig-resid-unboxcox}
+
+Residuals are small for molecular masses below about 350, but explode above 1000.  Statistically speaking, this may be good if we are more uncertain about the accuracy of the larger molecular masses, but the engineering point of view is different for exactly the same reason. Larger deviation from existing datapoints in regions where the datapoints are scarce is risky business.
+
+#### First Sparse Run
+It would seem remiss to not *at least* look at one of the deterministic models.  The first library to work without requiring long-depreciated versions of Python is `SyMANTIC` (@muthyala2025symantic) so we set up the run to be equivalent the the *Default Run* above.  Our "winning" equation is:
+
+$$ M_w=-a_{00} \cdot \gamma_o +\frac{a_{01}\cdot \gamma_o}{T_b}+a_{02}\cdot T_b -a_{03}$$ {#eq-res-mth-1}
+
+Compare this to @eq-res-eon-2. Similar, but much simpler.  The quality of the fit, however, is disappointing:
+
+
+|               | Raw Mw  | This Equation |
+|:--------------|--------:|--------------:|
+| Raw Mw        | 1.000000|       0.970451|
+| This Equation | 0.970451|       1.000000|
+
+: First Sparse Run Correlation Coefficients {#tbl-res-mth-1 .striped .hover}
+
+A pleasant surprise is that we will have no "division by zero" problems with this equation as $T_b$ is in Kelvin.
+
+A sparse regression model, "under the hood" is just a linear regression model.  Accordingly, even though we are not thrilled with the fit, maybe the residuals are normal...
+
+![1st Sparse Run Residuals](around7a_files/figure-html/cell-12-output-1.png){#fig-res-spa-res}
+
+Never mind. Even if these residuals are normal (*they are not*) they are *definitely not* random. Moving right along...
+
+#### Second Sparse Run
+This leads to a second deterministic experiment, in which we add the logarithm and exponential functions, but leave the division operator in place. These is the same operator set used in the Box-Cox run above. 
+
+Our new equation is *not* complex either:
+
+$$ M_w=-a_{00}\cdot \gamma_o\cdot T_b +a_{01}\cdot T^2_b +a_{02}\cdot e^{\gamma_o} +a_{03}$$ {#eq-res-mth-2}
+
+And our fit improves slightly:
+
+| | Raw Mw |
+|:---|---:|---:|
+| Raw Mw|1.000000|
+| 1st Run Equation | 0.970451 |
+| 2nd Run Equation | 0.985800 |
+
+: Second Sparse Run Correlation Coefficients {#tbl-res-mth-2 .striped .hover}
+
+But our plot of measured molecular mass versus predicted molecular mass is not impressive at all:
+
+![Second Sparse Run](around8_files/figure-html/cell-11-output-1.png){#fig-res-mth-2}
+
+#### Validation Runs
+
+As promised, we used the Hosseinifar dataset of 10 records (12.5%) to
+validate some of these equations:
+
+| Run | Correlation Coefficient|
+|:---|---:|
+| Raw Mw   | 1.000000 |
+| Default | 0.999957 |
+| Goossens Correlation| 0.999939 |
+| Power | 0.996964 |
+| Exponential #2 | 0.998954 |
+| Aeon #1 | 0.999973 |
+| Aeon #2 | 0.999921 |
+| Box-Cox | 0.999696 |
+| Sparse #1| 0.992303 |
+| Sparse #2| 0.996331 |
+
+: Validation Run Correlation Coefficients {#tbl-res-val .striped .hover}
+
+All of these are very good, with the validation coefficients exceeding
+the training coefficients. We will resist the temptation to declare
+victory over overfitting, as the Hosseinifar dataset is far better
+behaved than the Goossens dataset.
+
+A better approach with the evolutionary model is probably to start increasing `parsimony` or decreasing `maxsize` or `maxdepth` until the correlation coefficients
+start to deteriorate.
+
+A different approach is warranted with the deterministic models.  It is possible that these are *underfit*, meaning that we can expand the number of unique terms the algorithm initially considers, or the number of terms we want to keep.
+
+#### General Observations
+
+The "UOP Characterization Factor" @eq-UOP which (at least) two
+researchers decided was an important correlating variable for molecular
+mass, was not discovered by our symbolic regression model.
+
+In fairness, however, we dropped the division operator early in our
+experimentation, and never asked the model to consider a "cube root"
+unary operator.
+
+Replication is very challenging with these symbolic regression libraries
+that use evolutionary algorithms. Re-running the same dataset on the
+same machine with the same libraries produces different equations. In
+many `Scikit-Learn` algorithms, answer variation can be minimized by
+seeding the random number generator the same way each time, but in
+`PySR` we also have to turn off the optimizations that allow Julia to
+run the calculations massively in parallel, which contributes to the
+criticism that these algorithms are slow.
+
+The deterministic symbolic regression libraries don't need random number seeds, and the answers stay the same between runs.  The equations are definitely more *explainable*, but appear to be less accurate.  Does this accuracy matter?  Is it real?  The answer to these questions depend on how good we think our measurements are!
+
+In the engineering world, an old trick to speed-up calculations is to
+use look-up tables instead of functions. The idea is that even though we
+may know exactly what the governing equations are, producing look up
+tables from these functions ahead of time and then applying Gaussian
+interpolation in real time may be faster. This is a *very* similar
+concept to the idea of pre-training a transformer network to do symbolic
+regression.
+
+This paper has shown that high fidelity models can be constructed from
+"cheap" components (i.e. arithmetic operators). Maybe *explainability* is overrated, and functions carefully built using symbolic regression may be competitive with old-man Gauss!
+
+If this turns out to be true, then symbolic regression will make the
+full circle and return to it roots.
+
+### Conclusions
+
+In summary, we have explored Symbolic Regression using evolutionary and deterministic algorithms on our molecular mass dataset. We have not spent much time on different kinds of engines (e.g. neural networks, mathematical programming) or tested the extrapolation chops of this technology.
+
+Our main conclusions are:
+
+1.  Symbolic Regression can generate reasonable predictions when trained
+    on datasets too small for neural networks.
+
+2.  Evolutionary Symbolic Regression will typically generate novel equations from the human point of view, but these equations can be as accurate than the ones created by humans.
+
+3.  The "explainability" of the generated equations are probably
+    overrated, unless enough guardrails are put up to constrain the
+    space searched by the evolutionary Symbolic Regression algorithm.
+
+4.  The ability of Evolutionary Symbolic Regression to easily find alternative equations of about the same accuracy means that humans can repeat the workflow until an equation that is more "explainable" than the others is generated.
+
+5.  The structure of an equation generated with symbolic regression
+    *will* withstand some noise.
+
+6.  Piping the "winning" equation through a symbolic mathematics package
+    to simplify and consolidate it is a good idea.  The effect on the deterministic equations is very slight.
+
+7.  This consolidation often introduces relationships between variables
+    and constants that were not specified before the algorithm was
+    started. This can nudge the human to reconsider relationships
+    previously rejected.
+
+8.  All Symbolic Regression libraries using evolutionary algorithms are
+    *not* created equal. Library comparison is beyond the scope of this
+    report, but we can comment that `PySR`was one of the better ones.
+
+9.  Running both evolutionary and deterministic models on the same problem is *also* a good idea.
+
+[^2]: A quick note for humans on this second equation: ${log(T_b)}^3 = {(ln(T_b))}^3 \neq ln(T^3_b)$  This was made clear by inspecting the Polish Notation version of the equation.  Just sayin'.
+
+## References
