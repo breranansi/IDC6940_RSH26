@@ -904,6 +904,8 @@ include:
 
 ### Modeling and Results
 
+In this sub-section, we will apply a series of symbolic regression models to our Goossens dataset, and look at the structure and performance of each generated equation.
+
 #### Default Run
 
 Our first experiment is to run `PySR` with default parameters against
@@ -1069,10 +1071,9 @@ it could reach its full potential.
 
 #### Aeon Run
 
-This fourth experiments is the same as the third experiment, except that
+The fourth experiment is the same as the third experiment, except that
 we run it for ten times as long. Here, we are interested in whether
 different starting points will eventually converge to similar equations.
-<!-- The answer appears to be *no*. -->
 
 Here is the first equation after a thousand iterations:
 
@@ -1108,7 +1109,7 @@ $\left( \frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} \right)$.
 
 #### Box-Cox Run
 
-The reader may remember that our molecular mass was *not* normally distributed.  Accordingly, here we transform our dependent variable to see if this improves the distribution of our residuals.  Our optimum exponent works out to be $-0.3624$ according to the python `stats` library, which is fairly close to zero.
+The reader may remember that our molecular mass (@fig-his_mw) was *not* normally distributed.  Accordingly, here we transform our dependent variable to see if this improves the distribution of our residuals.  Our optimum exponent works out to be $-0.3624$ according to the python `stats` library, which is fairly close to zero.
 
 Our transformed molecular mass distribution is hardly normal:
 
@@ -1134,15 +1135,15 @@ And the Shapiro-Wilk test calculates the probability of the residuals being norm
 
 ![Untransformed prediced vs. actual, Box-Cox Run](around1_files/figure-html/cell-19-output-1.png){#fig-fit-unboxcox}
 
-This run produced the same equation form at 100, 500 and 1000 iterations, which was unusual for the `PySR` runs so far:
+This run produced the same equation structure at 100, 500 and 1000 iterations, which was *not* the case for the `PySR` runs in the Aeon experiment above:
 
 $$ M_w^t = \left (\gamma_o \left(a_{00} T_b -a_{01} \right) log{(\gamma_o)} + a_{02} \right) log{(T_b)} $$ {#eq-res-boxcox}
 
-But we need to remember to the reverse Box-Cox transform:
+We do need to remember to reverse the Box-Cox transform:
 
 $$ M_w = {\left(\lambda M_w^t +1 \right)}^{\frac{1}{\lambda}} $$ {#eq-unboxcox}
 
-The correlation coefficient for the longest run (1000 iterations) is in line with the Aeon runs discussed above:
+The correlation coefficient for the longest run (1000 iterations) is in line with the Aeon runs discussed earlier:
 
 |               | Raw Mw  | This Equation |
 |:--------------|--------:|--------------:|
@@ -1155,7 +1156,7 @@ A quick look at the residuals between the Reverse-Transformed predictions and th
 
 ![Residuals outside of Box-Cox Space, Box-Cox Run](around1_files/figure-html/cell-20-output-1.png){#fig-resid-unboxcox}
 
-Residuals are small for molecular masses below about 350, but explode above 1000.  Statistically speaking, this may be good if we are more uncertain about the accuracy of the larger molecular masses, but from an engineering point of view this equation is a disaster for exactly the same reason.
+Residuals are small for molecular masses below about 350, but explode above 1000.  Statistically speaking, this may be good if we are more uncertain about the accuracy of the larger molecular masses, but the engineering point of view is different for exactly the same reason. Larger deviation from existing datapoints in regions where the datapoints are scarce is risky business.
 
 #### First Sparse Run
 It would seem remiss to not *at least* look at one of the deterministic models.  The first library to work without requiring long-depreciated versions of Python is `SyMANTIC` (@muthyala2025symantic) so we set up the run to be equivalent the the *Default Run* above.  Our "winning" equation is:
@@ -1181,7 +1182,9 @@ A sparse regression model, "under the hood" is just a linear regression model.  
 Never mind. Even if these residuals are normal (*they are not*) they are *definitely not* random. Moving right along...
 
 #### Second Sparse Run
-This leads to a second deterministic experiment, in which we add the logarithm and exponential functions, but leave the division operator in place. Our new equation is *not* complex either:
+This leads to a second deterministic experiment, in which we add the logarithm and exponential functions, but leave the division operator in place. These is the same operator set used in the Box-Cox run above. 
+
+Our new equation is *not* complex either:
 
 $$ M_w=-a_{00}\cdot \gamma_o\cdot T_b +a_{01}\cdot T^2_b +a_{02}\cdot e^{\gamma_o} +a_{03}$$ {#eq-res-mth-2}
 
@@ -1262,7 +1265,7 @@ This paper has shown that high fidelity models can be constructed from
 "cheap" components (i.e. arithmetic operators). Maybe *explainability* is overrated, and functions carefully built using symbolic regression may be competitive with old-man Gauss!
 
 If this turns out to be true, then symbolic regression will make the
-full circle and return to it roots. (:-\>)
+full circle and return to it roots.
 
 ### Conclusions
 

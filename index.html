@@ -3322,6 +3322,7 @@ Table 9: Partial List of Additional Operators
 </section>
 <section id="modeling-and-results" class="level3">
 <h3 class="anchored" data-anchor-id="modeling-and-results">Modeling and Results</h3>
+<p>In this sub-section, we will apply a series of symbolic regression models to our Goossens dataset, and look at the structure and performance of each generated equation.</p>
 <section id="default-run" class="level4">
 <h4 class="anchored" data-anchor-id="default-run">Default Run</h4>
 <p>Our first experiment is to run <code>PySR</code> with default parameters against our molecular mass dataset. The resulting equation looks nothing like the existing equations:</p>
@@ -3640,7 +3641,7 @@ Figure 21: Raw Data Scale Change
 </section>
 <section id="aeon-run" class="level4">
 <h4 class="anchored" data-anchor-id="aeon-run">Aeon Run</h4>
-<p>This fourth experiments is the same as the third experiment, except that we run it for ten times as long. Here, we are interested in whether different starting points will eventually converge to similar equations. <!-- The answer appears to be *no*. --></p>
+<p>The fourth experiment is the same as the third experiment, except that we run it for ten times as long. Here, we are interested in whether different starting points will eventually converge to similar equations.</p>
 <p>Here is the first equation after a thousand iterations:</p>
 <p><span id="eq-res-eon-1"><span class="math display">\[
 M_w=(a_{00}\cdot T_b-a_{01})e^{a_{02}\cdot 10^{-9}T_b^2(a_{03}\cdot \gamma_0 +a_{04}\cdot T_b)}
@@ -3694,7 +3695,7 @@ Table 13: Aeon Run Correlation Coefficients
 </section>
 <section id="box-cox-run" class="level4">
 <h4 class="anchored" data-anchor-id="box-cox-run">Box-Cox Run</h4>
-<p>The reader may remember that our molecular mass was <em>not</em> normally distributed. Accordingly, here we transform our dependent variable to see if this improves the distribution of our residuals. Our optimum exponent works out to be <span class="math inline">\(-0.3624\)</span> according to the python <code>stats</code> library, which is fairly close to zero.</p>
+<p>The reader may remember that our molecular mass (<a href="#fig-his_mw" class="quarto-xref">Figure 5</a>) was <em>not</em> normally distributed. Accordingly, here we transform our dependent variable to see if this improves the distribution of our residuals. Our optimum exponent works out to be <span class="math inline">\(-0.3624\)</span> according to the python <code>stats</code> library, which is fairly close to zero.</p>
 <p>Our transformed molecular mass distribution is hardly normal:</p>
 <div id="fig-yraw-trans" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -3761,11 +3762,11 @@ Figure 27: Untransformed prediced vs. actual, Box-Cox Run
 </figcaption>
 </figure>
 </div>
-<p>This run produced the same equation form at 100, 500 and 1000 iterations, which was unusual for the <code>PySR</code> runs so far:</p>
+<p>This run produced the same equation structure at 100, 500 and 1000 iterations, which was <em>not</em> the case for the <code>PySR</code> runs in the Aeon experiment above:</p>
 <p><span id="eq-res-boxcox"><span class="math display">\[ M_w^t = \left (\gamma_o \left(a_{00} T_b -a_{01} \right) log{(\gamma_o)} + a_{02} \right) log{(T_b)}  \tag{38}\]</span></span></p>
-<p>But we need to remember to the reverse Box-Cox transform:</p>
+<p>We do need to remember to reverse the Box-Cox transform:</p>
 <p><span id="eq-unboxcox"><span class="math display">\[ M_w = {\left(\lambda M_w^t +1 \right)}^{\frac{1}{\lambda}}  \tag{39}\]</span></span></p>
-<p>The correlation coefficient for the longest run (1000 iterations) is in line with the Aeon runs discussed above:</p>
+<p>The correlation coefficient for the longest run (1000 iterations) is in line with the Aeon runs discussed earlier:</p>
 <div id="tbl-res-boxcox" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-res-boxcox-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -3807,7 +3808,7 @@ Figure 28: Residuals outside of Box-Cox Space, Box-Cox Run
 </figcaption>
 </figure>
 </div>
-<p>Residuals are small for molecular masses below about 350, but explode above 1000. Statistically speaking, this may be good if we are more uncertain about the accuracy of the larger molecular masses, but from an engineering point of view this equation is a disaster for exactly the same reason.</p>
+<p>Residuals are small for molecular masses below about 350, but explode above 1000. Statistically speaking, this may be good if we are more uncertain about the accuracy of the larger molecular masses, but the engineering point of view is different for exactly the same reason. Larger deviation from existing datapoints in regions where the datapoints are scarce is risky business.</p>
 </section>
 <section id="first-sparse-run" class="level4">
 <h4 class="anchored" data-anchor-id="first-sparse-run">First Sparse Run</h4>
@@ -3860,7 +3861,8 @@ Figure 29: 1st Sparse Run Residuals
 </section>
 <section id="second-sparse-run" class="level4">
 <h4 class="anchored" data-anchor-id="second-sparse-run">Second Sparse Run</h4>
-<p>This leads to a second deterministic experiment, in which we add the logarithm and exponential functions, but leave the division operator in place. Our new equation is <em>not</em> complex either:</p>
+<p>This leads to a second deterministic experiment, in which we add the logarithm and exponential functions, but leave the division operator in place. These is the same operator set used in the Box-Cox run above.</p>
+<p>Our new equation is <em>not</em> complex either:</p>
 <p><span id="eq-res-mth-2"><span class="math display">\[ M_w=-a_{00}\cdot \gamma_o\cdot T_b +a_{01}\cdot T^2_b +a_{02}\cdot e^{\gamma_o} +a_{03} \tag{41}\]</span></span></p>
 <p>And our fit improves slightly:</p>
 <div id="tbl-res-mth-2" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
@@ -3984,7 +3986,7 @@ Table 17: Validation Run Correlation Coefficients
 <p>The deterministic symbolic regression libraries don’t need random number seeds, and the answers stay the same between runs. The equations are definitely more <em>explainable</em>, but appear to be less accurate. Does this accuracy matter? Is it real? The answer to these questions depend on how good we think our measurements are!</p>
 <p>In the engineering world, an old trick to speed-up calculations is to use look-up tables instead of functions. The idea is that even though we may know exactly what the governing equations are, producing look up tables from these functions ahead of time and then applying Gaussian interpolation in real time may be faster. This is a <em>very</em> similar concept to the idea of pre-training a transformer network to do symbolic regression.</p>
 <p>This paper has shown that high fidelity models can be constructed from “cheap” components (i.e. arithmetic operators). Maybe <em>explainability</em> is overrated, and functions carefully built using symbolic regression may be competitive with old-man Gauss!</p>
-<p>If this turns out to be true, then symbolic regression will make the full circle and return to it roots. (:-&gt;)</p>
+<p>If this turns out to be true, then symbolic regression will make the full circle and return to it roots.</p>
 </section>
 </section>
 <section id="conclusions" class="level3">
