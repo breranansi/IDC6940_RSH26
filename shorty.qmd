@@ -1,0 +1,760 @@
+---
+title: "Symbolic Regression"
+subtitle: "Modeling Molecular Mass"
+author: "Delanyce Rose & Richard Henry"
+date: '`r Sys.Date()`'
+toc: False
+format:
+  revealjs:
+    code-fold: true
+    transition: fade
+    theme: sky
+    
+course: Capstone Projects in Data Science
+bibliography: references.bib # file contains bibtex for references
+#always_allow_html: true # this allows to get PDF with HTML features
+self-contained: true
+execute: 
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+
+## Outline {.scrollable}
+
+::: {.panel-tabset}
+
+###
+
+### Introduction
+
+- Symbolic Regression
+- Molecular Mass
+
+### Methods
+
+- Typical Workflow
+- Toy Dataset
+- Software Implementation
+- Noisy Toy
+- Belly of the Beast
+- Quiet Toy
+- Alternatives to Evolution
+
+### Analysis & Results
+
+- Data Exploration
+- Modeling and Results
+- Conclusions
+
+:::
+
+# Methods
+
+## Definition
+
+::: {.incremental}
+
+- independent variable $X$
+- dependent variable $y$ 
+- analytical expression $f(X)$
+- $$\hat{y}_{23} \approx f(X_{23})$$
+
+:::
+
+## Implementation
+
+![](dna-strand.png)
+
+<a href="https://www.flaticon.com/free-icons/gene" title="gene icons">Gene icons created by Talha Dogar - Flaticon</a>
+
+## Symbolic Regression Alternatives {.smaller}
+::::: {.columns}
+
+:::: {.incremental}
+
+::: {.column}
+
+- neural networks
+- $\frac{dy}{dX}|_{X_{23}}\approx \frac{\hat{y}_{24}-\hat{y}_{23}}{X_{24}-X_{23}}$
+- linear regression
+- $\hat{y}_{23} \approx \beta_0 +\beta_1 \cdot X$
+- best form?
+
+:::
+
+::: {.column}
+
+- $\hat{y}_{23} \approx \beta_2 +\beta_3 \cdot e^X$
+- $\hat{y}_{23} \approx \beta_4 +\beta_5 \cdot log(X)$
+- $log(\hat{y}_{23}) \approx \beta_6 +\beta_7 \cdot log(X)$
+- $\hat{y}\approx\frac{\beta_0+\beta_1x+\beta_2x^2}{\beta_3+\beta_4x}$
+- Alternating Conditional Expectations
+- Kolmogorov-Arnold Network
+
+:::
+
+::::
+
+:::::
+
+## Typical Workflow
+
+::: {.incremental}
+
+- what
+- how
+- when
+- initial population
+- fitness evaluation
+- stop ??
+- new population
+
+:::
+<!--
+## Toy Dataset {.smaller}
+
+::: {.columns}
+:::: {.column}
+$$\gamma_{API}=\frac{141.5}{\gamma_{o}}-131.5$$
+
+| Symbol         | Meaning          | Units      |
+|----------------|------------------|------------|
+| $\gamma_{API}$ | API Gravity      | \[degAPI\] |
+| $\gamma_o$     | specific gravity | \[1/wtr\]  |
+
+::::
+
+:::: {.column}
+
+```{r}
+# Generate Dataset
+x<-seq(from=0.55,to=1.075,by=0.025)
+y<-141.5/x-131.5
+# Draw Graph
+plot(x,y,main="Toy Dataset",
+    xlab="Specific Gravity",
+    ylab="API Gravity")
+grid()
+```
+::::
+:::
+
+## Software Implementation 
+::: {.fragment .fade-out}
+
+`from pysr import PySRRegressor()`
+
+`myMod=PySRRegressor()`
+
+`myMod.fit(x.reshape(-1, 1),y)`
+
+`y_pred=myMod.predict(x.reshape(-1, 1))`
+
+:::
+::: {.fragment .fade-in .absolute top=60}
+```{r}
+# Mimic Results from synthDataSets.ipynb
+y_fit<-141.5/x-131.500000554
+y_raw<-141.5/x-131.5
+# Draw Raw and Fit together
+plot(x,y_raw,
+    main="Toy Dataset Fit",
+    xlab="Specific Gravity",
+    ylab="API Gravity")
+lines(x,y_fit,
+    type="l",
+    lty=1,
+    col="red")
+legend("topright",
+    legend=c("Original","Predicted"),
+    col=c("black","red"),
+    lty=c(1,1),
+    pch=c(1,1))
+grid()
+```
+
+:::
+## Software Implementation
+::: {.fragment}
+`myEq=myMod.sympy()`
+::: 
+::: {.fragment .fade-in}
+
+$x_0-(x_0+0.013196754)+1.0131962+ \frac{x_0 (-132.5)- -141.5}{x_0}$
+
+:::
+::: {.fragment .fade-in}
+`sym.simplify(myEq)`
+:::
+::: {.fragment .fade-in}
+$-131.500000554+\frac{141.5}{x_0}$
+:::
+
+## Noisy Toy
+::::: {.columns}
+:::: {.column width=55%}
+:::{.fragment}
+`w=(random.rand(21)-0.5)*2.5`
+:::
+::: {.fragment}
+$$-132.05688+\frac{141.88547}{x_0}$$
+:::
+::::
+::::{.column}
+:::{.fragment}
+![](/noisy_pysr_files/figure-html/cell-7-output-1.png)
+:::
+::::
+:::::
+## Belly of the Beast (Encoding)
+
+`binary_operators=["+","-","*","/"]`
+
+`unary_operators=None`
+
+`maxsize=30`
+
+
+| 1     | 2      | 3     | 4                | 5     |
+|-------|--------|-------|------------------|-------|
+| minus | divide | 141.5 | specific gravity | 131.5 |
+
+
+`maxdepth=None`
+
+
+![](API_tree.png)
+
+## Belly of the Beast (Fitness) {.scrollable}
+
+`elemtwise_loss="L2DistLoss()"`
+
+$$ \frac{1}{n} \sum_{k=1}^{n}{\left(\hat{y}_k-y_k \right)}^2$$
+
+$$ \frac{1}{n} \sum_{k=1}^{n}{\left|\hat{y}_k-y_k \right|}$$
+
+`parsimony=0.0`
+
+`model_selection="best"`
+
+`should_simplify=True`
+
+`Tournament_selection_n=15`
+
+
+## Belly of the Beast
+::::{.columns}
+:::{.column}
+### Stopping
+`niterations=100`
+
+`max_evals=None`
+
+`timeout_in_seconds=None`
+:::
+::: {.column}
+### Population
+`populations=31`
+
+`population_size=27`
+:::
+::::
+
+## Quiet Toy
+
+
+$$ \frac{a_{00}}{x}+a_{01}$$
+
+`w<-seq(from=121.5,to=161.5, by=10)`
+
+
+```{r}
+#| tbl-cap: Backus-Naur Description of Toy Problem
+# Import Library
+library("gramEvol")
+# List of constants
+w<-seq(from=121.5,to=161.5, by=10)
+# Define the rules
+ruleDef <- list(expr = grule(op(expr, expr), var,con),
+                op = grule('+', '-', '*','/'),
+                var = grule(x),
+                con = gvrule(w))
+# Create the Grammar
+grammarDef <- CreateGrammar(ruleDef)
+# Print Backus-Naur version
+grammarDef
+```
+
+
+```{r}
+#| tbl-cap: gramEvol Results
+# Fitness Function
+SymRegFitFunc <- function(expr) {
+  result <- eval(expr)
+  if (any(is.nan(result)))
+    return(Inf)
+  return (mean(log(1 + abs(y - result))))
+}
+# Random Number Generator
+set.seed(13)
+# Call to main function
+ge <- GrammaticalEvolution(grammarDef,
+                           SymRegFitFunc,
+                           terminationCost = 0.1,
+                           iterations = 2500,
+                           max.depth = 10)
+ge
+```
+
+-->
+## Alternatives to Evolution
+- Deterministic
+- Information Technology
+- Neural Networks
+
+## Alternatives to Evolution {.smaller}
+- Deterministic
+  - Brute Force
+  - Mathematical Programming
+  - Sparse Regression
+- Information Technology
+  - data-centric
+  - expert-centric
+- Neural Networks
+  - Transformers
+  - Equation-Builders
+
+# Analysis and Results
+
+## Data Exploration / Visualization
+
+```{r}
+# Read Goosens Dataset from flat file
+# Positron
+#df<-read.csv("./c694/goossens_raw.csv")
+# Quarto
+df<-read.csv("./goossens_raw.csv")
+```
+::: {.fragment}
+
+| Variable | Description        | Designation |
+|----------|--------------------|-------------|
+| $Mw$     | Molecular Mass     | dependent   |
+| $SG$     | Specific Gravity   | independent |
+| $TBP$    | True Boiling Point | independent |
+:::
+::: {.fragment}
+```{r}
+#| tbl-cap: Goosens Dataset Summary
+# Summarize Goossens Dataset
+print(summary(df))
+```
+:::
+
+## Univariate Analysis
+```{r}
+#| fig-cap: Raw Molecular Mass Histogram
+hist(df$MW,
+     main="",
+     xlab="Molecular Mass")
+```
+## Univariate Analysis
+```{r}
+#| fig-cap: Raw Molecular Mass Box-and-Whiskers Plot
+boxplot(df$MW,
+        horizontal=TRUE)
+```
+## Univariate Analysis
+```{r}
+#| fig-cap: Raw Boiling Point Box-and-Whiskers Plot
+boxplot(df$TBP,
+        horizontal=TRUE,
+        col="lightblue")
+```
+## Univariate Analysis
+```{r}
+#| fig-cap: Raw Boiling Point Histogram
+hist(df$TBP,
+     main="",
+     xlab="True Boiling Point",
+     col="lightblue")
+```
+## Univariate Analysis
+```{r}
+#| fig-cap: Raw Specific Gravity Histogram
+hist(df$SG,
+     main="",
+     xlab="Specific Gravity",
+     col="lightgreen")
+```
+# Univariate Analysis
+```{r}
+#| fig-cap: Raw Specific Gravity Box-and-Whiskers Plot
+boxplot(df$SG,
+        horizontal=TRUE,
+        col="lightgreen")
+```
+## Bivariate Analysis
+```{r}
+#| fig-cap: Molecular Mass vs Specific Gravity Goossens Data
+plot(df$SG,df$MW,
+    main="Goossens Dataset",
+    xlab="Specific Gravity",
+    ylab="Apparent Molecular Mass")
+grid()
+```
+## Bivariate Analysis
+```{r}
+#| fig-cap: Molecular Mass vs Boiling Point Goossens Data
+plot(df$TBP,df$MW,
+    main="Goossens Dataset",
+    xlab="True Boiling Point",
+    ylab="Apparent Molecular Mass")
+grid()
+```
+## Bivariate Analysis
+```{r}
+#| fig-cap: Specific Gravity vs Boiling Point Goossens Data
+plot(df$TBP,df$SG,
+    main="Goossens Dataset",
+    xlab="True Boiling Point",
+    ylab="Specific Gravity")
+grid()
+```
+## Test vs. Train
+```{r}
+#| fig-cap: Molecular Mass vs Boiling Point. Both Datasets
+# Read Hosseinifar Dataset from flat file
+# Positron
+#dfh<-read.csv("./c694/hosseinifar_raw.csv")
+# Quarto
+dfh<-read.csv("./hosseinifar_raw.csv")
+# Plot Goossens and Hosseinifar together
+plot(df$TBP,df$MW,
+     main="Goossens vs. Hosseinifar",
+     xlab="True Boiling Point",
+     ylab="Molecular Mass",
+     col="blue")
+points(dfh$TBP,dfh$MW,
+       col="red",
+       pch=2)
+legend("topleft",
+       legend=c("Goossens","Hosseinifar"),
+       col=c("blue","red"),
+       pch=c(1,2))
+grid()
+```
+## Test vs. Train
+```{r}
+#| fig-cap: Molecular Mass vs Specific Gravity. Both Datasets
+# Plot Goossens and Hosseinifar together
+plot(df$SG,df$MW,
+     main="Goossens vs. Hosseinifar",
+     xlab="Specific Gravity",
+     ylab="Molecular Mass",
+     col="blue")
+points(dfh$SG,dfh$MW,
+       col="red",
+       pch=2)
+legend("topleft",
+       legend=c("Goossens","Hosseinifar"),
+       col=c("blue","red"),
+       pch=c(1,2))
+grid()
+```
+
+## Existing Correlations
+
+| Symbol           | Meaning                                           |
+|------------------|---------------------------------------------------|
+| $M_w$            | Apparent Molecular Mass                           |
+| $T_b$            | True Boiling Point Temperature                    |
+| $\gamma_o$       | Specific Gravity                                  |
+| $a_{00}..a_{09}$ | Empirical Constants                               |
+| $K_w$            | Characterization Factor (intermediate value)      |
+| $X_0...X_3$      | Intermediate Variables                            |
+
+## Existing Correlations {.smaller .scrollable} 
+
+Hariu & Sage (1969)
+
+$$
+M_w = a_{00} + a_{01} K_w + a_{02} K_w^2 + a_{03} T_b K_w + a_04 T_b K_w^2 + a_{05} T_b^2 K_w + a_{06} T_b^2 K_w^2
+$$
+
+$$K_w =\frac{\sqrt[3]T_b}{\gamma_o}$$
+
+Kesler & Lee (1976)
+
+$$M_w = X_0 + \frac{X_1}{T_b} + \frac{X_2}{T_b^2}$$
+
+$$X_0 = a_{00} + a_{01} γ_o+ \left (a_{02} + a_{03} γ_o \right ) T_b$$
+
+$$
+X_1 = \left (1+ a_{04} γ_o + a_{05}γ_o^2 \right ) \left (a_{06} + \frac{a_ {07}}{T_b} \right ) \cdot 10^7
+$$
+
+$$
+X_2 = \left (1+ a_{08} γ_o+ a_{09} γ_o^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^{12}
+$$
+
+American Petroleum Institute (1977)
+
+$$
+M_w = a_{00} e^ {\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^{a_{03}} γ_o^ {a_{04}}
+$$
+
+Winn, Sim & Daubert (1980)
+
+$$M_w = a_{00} T_b^{a_ {01}} γ_o^{a_{02}}$$
+
+Riazi & Daubert (1980)
+
+$$M_w = a_{00} T_b^{a_ {01}}γ_o^{a_{02}}$$
+
+Rao & Bardon (1985)
+
+$$ln {M_w} = (a_{00} + a_{01} K_w) ln (\frac{T_b} {a_{02} + a_{03} K_w} )$$
+
+Riazi & Daubert (1987)
+
+$$
+M_w = a_{00} T_b^{a_{01}} γ_o^{a_{02}} e^{\left (a_{03} T_b + a_{04} γ_o + a_{05} T_b γ \right )}
+$$
+
+Goossens (1996)
+
+$$M_w = a_{00} T_b^{X_0}$$
+
+$$
+X_0 =\frac {a_{03} + a_{04} ln {\left (\frac{T_b}  {a_{05} - T_b} \right )}}  {a_{01} γ_o + a_{02}}
+$$
+
+Linan (2011)
+
+$$
+M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^ {a_{03}} γ_o^{a_{04}}
+$$
+
+Hosseinifar & Shahverdi (2021)
+
+$$M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ_o} {3-γ_o} \right )}^{\frac{a_{02}}{2}} + a_{03} T_b^{a_{04}} {\left (\frac{3+2γ_o}{3-γ_o} \right )}^{\frac{a_{05}}{2}} \right ]}^{a_{06}}$$
+
+Stratiev (2023)
+
+$$
+M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ_o^{a_{05}}} \right )} \right ]}
+$$
+
+## Operators to Consider
+
+| Operator | Type   | Description                                   |
+|----------|--------|-----------------------------------------------|
+| pow      | binary | one expression raised to the power of another |
+| log      | unary  | logarithm of an expression                    |
+| exp      | unary  | [antilogarithm](https://mathworld.wolfram.com/Antilogarithm.html) of an expression|
+| sqr      | unary  | expression squared                            |
+| cub      | unary  | expression cubed                              |
+| inv      | unary  | inverse of an expression                      |
+
+: Partial List { .striped .hover}
+
+# Modeling and Results
+
+## Default Run {.scrollable}
+
+$$
+M_w=a_{00}+\frac{a_{01}}{\gamma_o-a_{02}}+\frac{T_b\cdot (a_{03}\cdot T_b-a_{04})}{\gamma_o\cdot (a_{05}-\frac{a_{06}}{T_b})}
+$$
+
+
+![](moleDataSet_files/figure-html/cell-11-output-1.png)
+
++----------+----------+-----------+----------+
+|          | Raw MW   | Goossens\ | This\    |
+|          |          | Equation  | Equation |
++:=========+=========:+==========:+=========:+
+| Raw MW   | 1.000000 | 0.999711  | 0.999847 |
++----------+----------+-----------+----------+
+| Goossens | 0.999711 | 1.000000  | 0.999798 |
+| Equation |          |           |          |
++----------+----------+-----------+----------+
+| This     | 0.999847 | 0.999798  | 1.000000 |
+| Equation |          |           |          |
++----------+----------+-----------+----------+
+
+: Correlation Coefficients {.striped .hover}
+
+![](moleDataSet_files/figure-html/cell-17-output-1.png)
+
+```{r}
+#| fig-cap: Q-Q Plot for the Default Run Residuals
+# Read Goossens Default Run results from flat file
+# Positron
+#df<-read.csv("./c694/default_output.csv")
+# Quarto
+dfd<-read.csv("./default_output.csv")
+# Generate QQPlot
+qqnorm(dfd$Fit_Resid)
+qqline(dfd$Fit_Resid, col="red")
+grid()
+```
+
+
+![](moleDataSet_files/figure-html/cell-19-output-1.png)
+
+## Power Run
+
+$$M_w=a_{00} \cdot a_{01}^{\gamma_o^{-a_{02}} + a_{03} \cdot T_b} + a_{04}$$
+
++-----------+-----------+-----------+
+|           | Raw MW    | This      |
+|           |           | Equation  |
++:==========+==========:+==========:+
+| Raw MW    | 1.000000  | 0.997281  |
++-----------+-----------+-----------+
+| This      | 0.997281  | 1.000000  |
+| Equation  |           |           |
++-----------+-----------+-----------+
+
+: Correlation Coefficients {.striped .hover}
+
+## Power Run
+![](around2_files/figure-html/cell-6-output-1.png)
+
+
+
+## Exponential Run {.smaller}
+
+$$ M_w= - T_b \cdot \left(a_{00} \cdot T_b - a_{01}\right) \left(a_{02} \cdot 10^{-6} \left(a_{03} \cdot \gamma_o - 2 \cdot T_b \right) \left(T_b - a_{04}\right) - 1\right) + a_{05}$$
+
+$$ M_w= a_{00}\cdot T_b + a_{01} \cdot e^{- \gamma_o^{2} + a_{02}\cdot \gamma_o + a_{03} \cdot T_b}$$
+
++----------+----------+----------+----------+
+|          | Raw MW   | 1st\     | 2nd\     |
+|          |          | Equation | Equation |
++:=========+=========:+=========:+=========:+
+| Raw MW   | 1.000000 | 0.997705 | 0.998420 |
++----------+----------+----------+----------+
+| First    | 0.997705 | 1.000000 | 0.999497 |
+| Equation |          |          |          |
++----------+----------+----------+----------+
+| Second   | 0.998420 | 0.999497 | 1.000000 |
+| Equation |          |          |          |
++----------+----------+----------+----------+
+
+: Correlation Coefficients { .striped .hover}
+
+##
+![Raw Data Scale Change](around3_files/figure-html/cell-14-output-1.png)
+
+## Aeon Run {.scrollable}
+
+$$
+M_w=(a_{00}\cdot T_b-a_{01})e^{a_{02}\cdot 10^{-9}T_b^2(a_{03}\cdot \gamma_0 +a_{04}\cdot T_b)}
+$$ 
+
+$$
+M_w=-a_{00}\cdot \gamma_o+\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} +a_{02}\cdot T_b
+$$
+
+|                 |   Raw Mw | First Equation | Second Equation |
+|:----------------|---------:|---------------:|----------------:|
+| Raw Mw          | 1.000000 |       0.998880 |        0.999324 |
+| First Equation  | 0.998880 |       1.000000 |        0.998851 |
+| Second Equation | 0.999324 |       0.998851 |        1.000000 |
+
+: Correlation Coefficients { .striped .hover}
+
+## Box-Cox Run {.scrollable}
+
+$\lambda=-0.3624$
+
+![transformed molecular mass histogram](around1_files/figure-html/cell-6-output-1.png)
+
+![Log vs Box-Cox Transform](box-cox_files/figure-html/cell-5-output-1.png)
+
+![Box-Cox vs. Inv. Sqr. Root](box-cox_files/figure-html/cell-4-output-1.png)
+
+![transformed fit](around1_files/figure-html/cell-8-output-1.png)
+
+![transformed residuals](around1_files/figure-html/cell-11-output-1.png)
+
+Shapiro-Wilk p-value $0.0507$
+
+![untransformed fit](around1_files/figure-html/cell-19-output-1.png)
+$$ M_w^t = \left (\gamma_o \left(a_{00} T_b -a_{01} \right) log{(\gamma_o)} + a_{02} \right) log{(T_b)} $$
+
+Reverse the Box-Cox transform:
+
+$$ M_w = {\left(\lambda M_w^t +1 \right)}^{\frac{1}{\lambda}} $$
+
+
+|               | Raw Mw  | This Equation |
+|:--------------|--------:|--------------:|
+| Raw Mw        | 1.000000|       0.995897|
+| This Equation | 0.995897|       1.000000|
+
+: Correlation Coefficients (Transform Reversed) { .striped .hover}
+
+
+![Residuals outside of Box-Cox Space](around1_files/figure-html/cell-20-output-1.png)
+
+## First Sparse Run
+
+$$ M_w=-a_{00} \cdot \gamma_o +\frac{a_{01}\cdot \gamma_o}{T_b}+a_{02}\cdot T_b -a_{03}$$
+
+|               | Raw Mw  | This Equation |
+|:--------------|--------:|--------------:|
+| Raw Mw        | 1.000000|       0.970451|
+| This Equation | 0.970451|       1.000000|
+
+: Correlation Coefficients {.striped .hover}
+
+## First Sparse Run
+![](around7a_files/figure-html/cell-12-output-1.png)
+
+
+## Second Sparse Run
+
+$$ M_w=-a_{00}\cdot \gamma_o\cdot T_b +a_{01}\cdot T^2_b +a_{02}\cdot e^{\gamma_o} +a_{03}$$
+
+| | Raw Mw |
+|:---|---:|---:|
+| Raw Mw|1.000000|
+| 1st Run Equation | 0.970451 |
+| 2nd Run Equation | 0.985800 |
+
+: Correlation Coefficients { .striped .hover}
+
+## Second Sparse Run
+![](around8_files/figure-html/cell-11-output-1.png)
+
+## Validation Runs {.smaller}
+
+| Run | Correlation Coefficient|
+|:---|---:|
+| Raw Mw   | 1.000000 |
+| Default | 0.999957 |
+| Goossens Correlation| 0.999939 |
+| Power | 0.996964 |
+| Exponential #2 | 0.998954 |
+| Aeon #1 | 0.999973 |
+| Aeon #2 | 0.999921 |
+| Box-Cox | 0.999696 |
+| Sparse #1| 0.992303 |
+| Sparse #2| 0.996331 |
+
+
+## General Observations
+
+- UOP Characterization Factor
+- Replication
+- Explainability
+- Table Look-Up
+
+## Conclusion
