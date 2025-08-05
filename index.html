@@ -2424,7 +2424,7 @@ window.Quarto = {
 <p>or maybe</p>
 <p><span id="eq-loglog"><span class="math display">\[log(\hat{y}_{23}) \approx \beta_6 +\beta_7 \cdot log(X) \tag{7}\]</span></span></p>
 <p>We can certainly investigate these, and hundreds of other possibilities by building multiple models and comparing the performance between them.</p>
-<p>Alternative Conditional Expectations <span class="citation" data-cites="breiman1985estimating">(<a href="#ref-breiman1985estimating" role="doc-biblioref">Breiman and Friedman 1985</a>)</span> is a technology that will automatically transform both the dependent and the independent variables such that the relationship between the dependent variable and a linear combination of the independent variables is as straight as possible. Accordingly, building and testing hundreds of linear regression models can be avoided. This is different from the <a href="https://en.wikipedia.org/wiki/Power_transform">Box-Cox transform</a>, where the aim is to make the population more normal.</p>
+<p>Alternative Conditional Expectations <span class="citation" data-cites="breiman1985estimating">(<a href="#ref-breiman1985estimating" role="doc-biblioref">Breiman and Friedman 1985</a>)</span> is a technology that will automatically transform both the dependent and the independent variables such that the relationship between the dependent variable and a linear combination of the independent variables is as straight as possible. Accordingly, building and testing hundreds of linear regression models can be avoided. This is different from the <a href="https://en.wikipedia.org/wiki/Power_transform">Box-Cox transform</a>, <span class="citation" data-cites="box1964analysis">Box and Cox (<a href="#ref-box1964analysis" role="doc-biblioref">1964</a>)</span> where the aim is to make the population more normal.</p>
 <p>Although, as shown above, we can use linear regression to find non-linear relationships between variables, some relationships may be challenging, such as:</p>
 <p><span id="eq-ration"><span class="math display">\[\hat{y}\approx\frac{\beta_0+\beta_1x+\beta_2x^2}{\beta_3+\beta_4x} \tag{8}\]</span></span></p>
 <p>Rational fractions like this may require full-blown non-linear regression techniques which will require us to specify the form of the equation and then use the data to find the values of the constants.</p>
@@ -4021,6 +4021,9 @@ Austel, Vernon, Sanjeeb Dash, Oktay Gunluk, Lior Horesh, Leo Liberti, Giacomo Na
 </div>
 <div id="ref-bongard2007automated" class="csl-entry" role="listitem">
 Bongard, Josh, and Hod Lipson. 2007. <span>“Automated Reverse Engineering of Nonlinear Dynamical Systems.”</span> <em>Proceedings of the National Academy of Sciences</em> 104 (24): 9943–48.
+</div>
+<div id="ref-box1964analysis" class="csl-entry" role="listitem">
+Box, George EP, and David R Cox. 1964. <span>“An Analysis of Transformations.”</span> <em>Journal of the Royal Statistical Society Series B: Statistical Methodology</em> 26 (2): 211–43.
 </div>
 <div id="ref-breiman1985estimating" class="csl-entry" role="listitem">
 Breiman, Leo, and Jerome H Friedman. 1985. <span>“Estimating Optimal Transformations for Multiple Regression and Correlation.”</span> <em>Journal of the American Statistical Association</em> 80 (391): 580–98.

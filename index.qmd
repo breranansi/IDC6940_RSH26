@@ -121,7 +121,7 @@ independent variables such that the relationship between the dependent
 variable and a linear combination of the independent variables is as
 straight as possible. Accordingly, building and testing hundreds of
 linear regression models can be avoided. This is different from the
-[Box-Cox transform](https://en.wikipedia.org/wiki/Power_transform),
+[Box-Cox transform](https://en.wikipedia.org/wiki/Power_transform), @box1964analysis
 where the aim is to make the population more normal.
 
 Although, as shown above, we can use linear regression to find
