@@ -121,7 +121,7 @@ independent variables such that the relationship between the dependent
 variable and a linear combination of the independent variables is as
 straight as possible. Accordingly, building and testing hundreds of
 linear regression models can be avoided. This is different from the
-[Box-Cox transform](https://en.wikipedia.org/wiki/Power_transform), @box1964analysis
+[Box-Cox transform](https://en.wikipedia.org/wiki/Power_transform), (@box1964analysis)
 where the aim is to make the population more normal.
 
 Although, as shown above, we can use linear regression to find
@@ -560,6 +560,37 @@ using synthetic data. The major advantage here is that if we ignore the
 pre-training phase, the training phase may be quick enough to use the
 model in real time.
 
+### Sparse Toy
+
+When sparse regression is used in symbolic regression, a large number of potential terms are generated using combinations of the independent variables.  Technically, the resulting equation is only *sparse* if the number of terms exceeds the number of rows in the dataset, but usually this is not a problem.  Then regularization is applied to force *most* of the generated terms to zero, dramatically shortening the length of the equation.
+
+As later in this paper we will be comparing an algorithm based on sparse regression against one based on evolution, we provide this quick recount of an informal experiment we made on our toy dataset.
+
+We tried to fit the following equation to the toy dataset using vanilla linear regression:
+
+$$ \hat{y} \approx \beta_{00}+\beta_{01}x_0+\beta_{02}x_0^2+\beta_{03}x_0^3$$ {#eq-spa-cub}
+
+and got a very good fit. We then added an inverse term:
+
+$$ \hat{y} \approx \beta_{00}+\beta_{01}x_0+\beta_{02}x_0^2+\beta_{03}x_0^3+\frac{\beta_{04}}{x_0}$$ {#eq-spa-inv}
+
+and without even using regularization, all the terms except $\beta_{00},\beta_{04}$ were reduced to zero and we obtained a perfect fit.
+
+This encouraged us to add some exponential and logarithmic terms:
+
+$$ \hat{y} \approx \beta_{00}+\beta_{01}x_0+\beta_{02}x_0^2+\beta_{03}x_0^3+\frac{\beta_{04}}{x_0}+\beta_{05}log(x_0)+\beta_{06}e^{x_0}$$ {#eq-spa-exp}
+
+and we were quite disappointed when $\beta_{06}\neq 0$
+
+This showed us that the regularization *was* needed when vanilla linear regression is used for symbolic regression.
+
+### AI Statement
+
+No generative AI products were used in the writing of this paper.  Accordingly, the reader will encounter a shameless mixture of American and British spelling and idioms.
+
+However, AI *was* used to coax recalcitrant libraries to stop throwing error codes and actually produce something useful.  Fortunately for the reader, this was only partially successful, or this paper would be a lot longer.
+
+
 ### Next Steps
 
 1.  Examine our dataset and describe some of the equations that have
@@ -971,6 +1002,20 @@ grid()
 ```
 
 The plot suggests that small residuals (say $\pm 2.5$) are normally distributed, but the large residuals are not.
+
+Maybe it is appropriate at this juncture to include a formal statistical test:
+
+$H_0$:  The residuals created by using @eq-res-def to predict the molecular masses in the Goossens dataset are normally distributed.
+
+$H_1$: The residuals are not normally distributed.
+
+Level of Significance: 0.05
+
+Shapiro-Wilk Statistic: 0.932714
+
+Shapiro-Wilk p-Value: 0.001
+
+Conclusion: We will reject the null hypothesis as the calculated p-value is less than the level of significance.
 
 Out of mere curiosity, let us examine the residuals from the Goossens correlation (@eq-goossens):
 
