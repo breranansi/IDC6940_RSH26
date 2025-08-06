@@ -579,9 +579,15 @@ This encouraged us to add exponential and logarithmic terms:
 
 $$ \hat{y} \approx \beta_{00}+\beta_{01}x_0+\beta_{02}x_0^2+\beta_{03}x_0^3+\frac{\beta_{04}}{x_0}+\beta_{05}log(x_0)+\beta_{06}e^{x_0}$$ {#eq-spa-exp}
 
-and we were quite disappointed when $\beta_{06}\neq 0$.
+and again we were thrilled to see all terms except $\beta_{00},\beta_{04}$ were reduced to (near) zero .
 
-This suggested to us that the regularization *was* needed when vanilla linear regression is used for symbolic regression.
+However, when we removed the inverse term:
+
+$$ \hat{y} \approx \beta_{00}+\beta_{01}x_0+\beta_{02}x_0^2+\beta_{03}x_0^3+\beta_{05}log(x_0)+\beta_{06}e^{x_0}$$ {#eq-spa-no-inv}
+
+All the remaining terms got very large, even though the fit continued to be excellent.
+
+This suggested to us that the regularization *was* an important part of sparse regression when it is used for symbolic regression.
 
 ### AI Statement
 
@@ -983,7 +989,7 @@ Next, we look at the residuals, plotted against the raw molecular mass:
 
 ![Default Run Residuals](moleDataSet_files/figure-html/cell-17-output-1.png){#fig-res-def-res}
 
-Visually, the residuals *appear* to be normally distributed, but running the Shapiro-Wilk test reveals a probability of only 0.001 of the residuals being normally distributed.  So much for eye-balling!
+Visually, the residuals *appear* to be normally distributed, but running the Shapiro-Wilk test (@shapiro1965analysis) reveals a probability of only 0.001 of the residuals being normally distributed.  So much for eye-balling!
 
 Let us see how *bad* it is:
 ```{r}

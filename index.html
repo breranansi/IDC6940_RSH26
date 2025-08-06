@@ -2801,8 +2801,11 @@ Table 5: gramEvol Results
 <p>and without even using regularization, all the terms except <span class="math inline">\(\beta_{00},\beta_{04}\)</span> were reduced to zero and we obtained a perfect fit.</p>
 <p>This encouraged us to add exponential and logarithmic terms:</p>
 <p><span id="eq-spa-exp"><span class="math display">\[ \hat{y} \approx \beta_{00}+\beta_{01}x_0+\beta_{02}x_0^2+\beta_{03}x_0^3+\frac{\beta_{04}}{x_0}+\beta_{05}log(x_0)+\beta_{06}e^{x_0} \tag{18}\]</span></span></p>
-<p>and we were quite disappointed when <span class="math inline">\(\beta_{06}\neq 0\)</span>.</p>
-<p>This suggested to us that the regularization <em>was</em> needed when vanilla linear regression is used for symbolic regression.</p>
+<p>and again we were thrilled to see all terms except <span class="math inline">\(\beta_{00},\beta_{04}\)</span> were reduced to (near) zero .</p>
+<p>However, when we removed the inverse term:</p>
+<p><span id="eq-spa-no-inv"><span class="math display">\[ \hat{y} \approx \beta_{00}+\beta_{01}x_0+\beta_{02}x_0^2+\beta_{03}x_0^3+\beta_{05}log(x_0)+\beta_{06}e^{x_0} \tag{19}\]</span></span></p>
+<p>All the remaining terms got very large, even though the fit continued to be excellent.</p>
+<p>This suggested to us that the regularization <em>was</em> an important part of sparse regression when it is used for symbolic regression.</p>
 </section>
 <section id="ai-statement" class="level3">
 <h3 class="anchored" data-anchor-id="ai-statement">AI Statement</h3>
@@ -3227,67 +3230,67 @@ Table 8: Correlation Nomenclature
 <h5 class="anchored" data-anchor-id="hariu-sage-1969">Hariu &amp; Sage (1969)</h5>
 <p><span id="eq-harlu"><span class="math display">\[
 M_w = a_{00} + a_{01} K_w + a_{02} K_w^2 + a_{03} T_b K_w + a_04 T_b K_w^2 + a_{05} T_b^2 K_w + a_{06} T_b^2 K_w^2
-\tag{19}\]</span></span></p>
-<p><span id="eq-UOP"><span class="math display">\[K_w =\frac{\sqrt[3]T_b}{\gamma_o} \tag{20}\]</span></span></p>
+\tag{20}\]</span></span></p>
+<p><span id="eq-UOP"><span class="math display">\[K_w =\frac{\sqrt[3]T_b}{\gamma_o} \tag{21}\]</span></span></p>
 </section>
 <section id="kesler-lee-1976" class="level5">
 <h5 class="anchored" data-anchor-id="kesler-lee-1976">Kesler &amp; Lee (1976)</h5>
-<p><span id="eq-kesler"><span class="math display">\[M_w = X_0 + \frac{X_1}{T_b} + \frac{X_2}{T_b^2} \tag{21}\]</span></span></p>
-<p><span id="eq-kes-0"><span class="math display">\[X_0 = a_{00} + a_{01} γ_o+ \left (a_{02} + a_{03} γ_o \right ) T_b \tag{22}\]</span></span></p>
+<p><span id="eq-kesler"><span class="math display">\[M_w = X_0 + \frac{X_1}{T_b} + \frac{X_2}{T_b^2} \tag{22}\]</span></span></p>
+<p><span id="eq-kes-0"><span class="math display">\[X_0 = a_{00} + a_{01} γ_o+ \left (a_{02} + a_{03} γ_o \right ) T_b \tag{23}\]</span></span></p>
 <p><span id="eq-kes-1"><span class="math display">\[
 X_1 = \left (1+ a_{04} γ_o + a_{05}γ_o^2 \right ) \left (a_{06} + \frac{a_ {07}}{T_b} \right ) \cdot 10^7
-\tag{23}\]</span></span></p>
+\tag{24}\]</span></span></p>
 <p><span id="eq-kes-2"><span class="math display">\[
 X_2 = \left (1+ a_{08} γ_o+ a_{09} γ_o^2 \right ) \left (a_{10} + \frac{a_{11}}{T_b} \right ) \cdot 10^{12}
-\tag{24}\]</span></span></p>
+\tag{25}\]</span></span></p>
 </section>
 <section id="american-petroleum-institute-1977" class="level5">
 <h5 class="anchored" data-anchor-id="american-petroleum-institute-1977">American Petroleum Institute (1977)</h5>
 <p><span id="eq-api-77"><span class="math display">\[
 M_w = a_{00} e^ {\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^{a_{03}} γ_o^ {a_{04}}
-\tag{25}\]</span></span></p>
+\tag{26}\]</span></span></p>
 </section>
 <section id="winn-sim-daubert-1980" class="level5">
 <h5 class="anchored" data-anchor-id="winn-sim-daubert-1980">Winn, Sim &amp; Daubert (1980)</h5>
-<p><span id="eq-win"><span class="math display">\[M_w = a_{00} T_b^{a_ {01}} γ_o^{a_{02}} \tag{26}\]</span></span></p>
+<p><span id="eq-win"><span class="math display">\[M_w = a_{00} T_b^{a_ {01}} γ_o^{a_{02}} \tag{27}\]</span></span></p>
 </section>
 <section id="riazi-daubert-1980" class="level5">
 <h5 class="anchored" data-anchor-id="riazi-daubert-1980">Riazi &amp; Daubert (1980)</h5>
-<p><span id="eq-riazi-80"><span class="math display">\[M_w = a_{00} T_b^{a_ {01}}γ_o^{a_{02}} \tag{27}\]</span></span></p>
+<p><span id="eq-riazi-80"><span class="math display">\[M_w = a_{00} T_b^{a_ {01}}γ_o^{a_{02}} \tag{28}\]</span></span></p>
 </section>
 <section id="rao-bardon-1985" class="level5">
 <h5 class="anchored" data-anchor-id="rao-bardon-1985">Rao &amp; Bardon (1985)</h5>
-<p><span id="eq-rao"><span class="math display">\[ln {M_w} = (a_{00} + a_{01} K_w) ln (\frac{T_b} {a_{02} + a_{03} K_w} ) \tag{28}\]</span></span></p>
-<p>See <a href="#eq-UOP" class="quarto-xref">Equation 20</a></p>
+<p><span id="eq-rao"><span class="math display">\[ln {M_w} = (a_{00} + a_{01} K_w) ln (\frac{T_b} {a_{02} + a_{03} K_w} ) \tag{29}\]</span></span></p>
+<p>See <a href="#eq-UOP" class="quarto-xref">Equation 21</a></p>
 </section>
 <section id="riazi-daubert-1987" class="level5">
 <h5 class="anchored" data-anchor-id="riazi-daubert-1987">Riazi &amp; Daubert (1987)</h5>
 <p><span id="eq-riazi-87"><span class="math display">\[
 M_w = a_{00} T_b^{a_{01}} γ_o^{a_{02}} e^{\left (a_{03} T_b + a_{04} γ_o + a_{05} T_b γ \right )}
-\tag{29}\]</span></span></p>
+\tag{30}\]</span></span></p>
 </section>
 <section id="goossens-1996" class="level5">
 <h5 class="anchored" data-anchor-id="goossens-1996">Goossens (1996)</h5>
-<p><span id="eq-goossens"><span class="math display">\[M_w = a_{00} T_b^{X_0} \tag{30}\]</span></span></p>
+<p><span id="eq-goossens"><span class="math display">\[M_w = a_{00} T_b^{X_0} \tag{31}\]</span></span></p>
 <p><span id="eq-goo-0"><span class="math display">\[
 X_0 =\frac {a_{03} + a_{04} ln {\left (\frac{T_b}  {a_{05} - T_b} \right )}}  {a_{01} γ_o + a_{02}}
-\tag{31}\]</span></span></p>
+\tag{32}\]</span></span></p>
 </section>
 <section id="linan-2011" class="level5">
 <h5 class="anchored" data-anchor-id="linan-2011">Linan (2011)</h5>
 <p><span id="eq-linan"><span class="math display">\[
 M_w = a_{00} e^{\left (a_{01} T_b \right )} e^{\left (a_{02} γ_o \right )} T_b^ {a_{03}} γ_o^{a_{04}}
-\tag{32}\]</span></span></p>
+\tag{33}\]</span></span></p>
 </section>
 <section id="hosseinifar-shahverdi-2021" class="level5">
 <h5 class="anchored" data-anchor-id="hosseinifar-shahverdi-2021">Hosseinifar &amp; Shahverdi (2021)</h5>
-<p><span id="eq-hosseinifar"><span class="math display">\[M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ_o} {3-γ_o} \right )}^{\frac{a_{02}}{2}} + a_{03} T_b^{a_{04}} {\left (\frac{3+2γ_o}{3-γ_o} \right )}^{\frac{a_{05}}{2}} \right ]}^{a_{06}} \tag{33}\]</span></span></p>
+<p><span id="eq-hosseinifar"><span class="math display">\[M_w = {\left [a_{00} T_b^{a_{01}} {\left (\frac{3+2γ_o} {3-γ_o} \right )}^{\frac{a_{02}}{2}} + a_{03} T_b^{a_{04}} {\left (\frac{3+2γ_o}{3-γ_o} \right )}^{\frac{a_{05}}{2}} \right ]}^{a_{06}} \tag{34}\]</span></span></p>
 </section>
 <section id="stratiev-2023" class="level5">
 <h5 class="anchored" data-anchor-id="stratiev-2023">Stratiev (2023)</h5>
 <p><span id="eq-stratiev"><span class="math display">\[
 M_w = a_{00} + a_{01} e^{\left [a_{02} e^{\left (a_{03} \frac{T_b^{a_{06}}}{γ_o^{a_{05}}} \right )} \right ]}
-\tag{34}\]</span></span></p>
+\tag{35}\]</span></span></p>
 <p>The reader will notice that all the correlations are non-linear, and that only a few of them can be easily transformed into a linear relationship. Some of the additional operators we may want to consider from an inspection of these equations include:</p>
 <div id="tbl-ope-add" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -3350,7 +3353,7 @@ Table 9: Partial List of Additional Operators
 <p>Our first experiment is to run <code>PySR</code> with default parameters against our molecular mass dataset. The resulting equation looks nothing like the existing equations:</p>
 <p><span id="eq-res-def"><span class="math display">\[
 M_w=a_{00}+\frac{a_{01}}{\gamma_o-a_{02}}+\frac{T_b\cdot (a_{03}\cdot T_b-a_{04})}{\gamma_o\cdot (a_{05}-\frac{a_{06}}{T_b})}
-\tag{35}\]</span></span></p>
+\tag{36}\]</span></span></p>
 <p>But its performance is quite impressive considering its restricted grammar of addition, subtraction, multiplication and division:</p>
 <div id="fig-res-def" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -3362,7 +3365,7 @@ Figure 16: Default Parameter Run
 </figcaption>
 </figure>
 </div>
-<p>It even has a (slightly) better correlation coefficient with the raw molecular mass data than <a href="#eq-goossens" class="quarto-xref">Equation 30</a> presented with this data in the Goossens paper:</p>
+<p>It even has a (slightly) better correlation coefficient with the raw molecular mass data than <a href="#eq-goossens" class="quarto-xref">Equation 31</a> presented with this data in the Goossens paper:</p>
 <div id="tbl-res-def" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-res-def-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -3448,7 +3451,7 @@ Figure 17: Default Run Residuals
 </figcaption>
 </figure>
 </div>
-<p>Visually, the residuals <em>appear</em> to be normally distributed, but running the Shapiro-Wilk test reveals a probability of only 0.001 of the residuals being normally distributed. So much for eye-balling!</p>
+<p>Visually, the residuals <em>appear</em> to be normally distributed, but running the Shapiro-Wilk test (<span class="citation" data-cites="shapiro1965analysis">Shapiro and Wilk (<a href="#ref-shapiro1965analysis" role="doc-biblioref">1965</a>)</span>) reveals a probability of only 0.001 of the residuals being normally distributed. So much for eye-balling!</p>
 <p>Let us see how <em>bad</em> it is:</p>
 <div class="cell">
 <details class="code-fold">
@@ -3488,7 +3491,7 @@ Formal Statistical Test
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(H_0\)</span>: The residuals created by using <a href="#eq-res-def" class="quarto-xref">Equation 35</a> to predict the molecular masses in the Goossens dataset are normally distributed.</p>
+<p><span class="math inline">\(H_0\)</span>: The residuals created by using <a href="#eq-res-def" class="quarto-xref">Equation 36</a> to predict the molecular masses in the Goossens dataset are normally distributed.</p>
 <p><span class="math inline">\(H_1\)</span>: The residuals are not normally distributed.</p>
 <p><strong>Level of Significance</strong>: 0.05</p>
 <p><strong>Shapiro-Wilk Statistic</strong>: 0.932714</p>
@@ -3496,7 +3499,7 @@ Formal Statistical Test
 <p><strong>Conclusion</strong>: We will reject the null hypothesis as the calculated p-value is less than the level of significance.</p>
 </div>
 </div>
-<p>Out of mere curiosity, let us examine the residuals from the Goossens correlation (<a href="#eq-goossens" class="quarto-xref">Equation 30</a>):</p>
+<p>Out of mere curiosity, let us examine the residuals from the Goossens correlation (<a href="#eq-goossens" class="quarto-xref">Equation 31</a>):</p>
 <div id="fig-res-def-goo" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-res-def-goo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -3524,7 +3527,7 @@ Figure 20: Power Operator Run
 </figure>
 </div>
 <p>Although the equation has got simpler:</p>
-<p><span id="eq-res-pow"><span class="math display">\[M_w=a_{00} \cdot a_{01}^{\gamma_o^{-a_{02}} + a_{03} \cdot T_b} + a_{04} \tag{36}\]</span></span></p>
+<p><span id="eq-res-pow"><span class="math display">\[M_w=a_{00} \cdot a_{01}^{\gamma_o^{-a_{02}} + a_{03} \cdot T_b} + a_{04} \tag{37}\]</span></span></p>
 <p>and the correlation coefficient has degraded slightly:</p>
 <div id="tbl-res-pow" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -3583,14 +3586,14 @@ Table 11: Power Operator Run Correlation Coefficients
 </div>
 </figure>
 </div>
-<p>One can argue that nested exponents <span class="math inline">\(\left (a^{b^c} \right )\)</span> aren’t very explainable. However the Stratiev correlation (<a href="#eq-stratiev" class="quarto-xref">Equation 34</a>) does this with Euler’s number <span class="math inline">\(\left ( a \cdot e^{b \cdot e^{c}} \right )\)</span>. In the hydrocarbon flow literature, nested logarithms <span class="math inline">\(ln(ln(a))\)</span> are more common.</p>
+<p>One can argue that nested exponents <span class="math inline">\(\left (a^{b^c} \right )\)</span> aren’t very explainable. However the Stratiev correlation (<a href="#eq-stratiev" class="quarto-xref">Equation 35</a>) does this with Euler’s number <span class="math inline">\(\left ( a \cdot e^{b \cdot e^{c}} \right )\)</span>. In the hydrocarbon flow literature, nested logarithms <span class="math inline">\(ln(ln(a))\)</span> are more common.</p>
 </section>
 <section id="exponential-run" class="level4">
 <h4 class="anchored" data-anchor-id="exponential-run">Exponential Run</h4>
 <p>Our third experiment was to replace the binary power operator with unary logarithm and exponential operators. Our initial results were a major surprise as neither transcendental operator made it to the final equation:</p>
-<p><span id="eq-res-exp-1"><span class="math display">\[ M_w= - T_b \cdot \left(a_{00} \cdot T_b - a_{01}\right) \left(a_{02} \cdot 10^{-6} \left(a_{03} \cdot \gamma_o - 2 \cdot T_b \right) \left(T_b - a_{04}\right) - 1\right) + a_{05} \tag{37}\]</span></span></p>
+<p><span id="eq-res-exp-1"><span class="math display">\[ M_w= - T_b \cdot \left(a_{00} \cdot T_b - a_{01}\right) \left(a_{02} \cdot 10^{-6} \left(a_{03} \cdot \gamma_o - 2 \cdot T_b \right) \left(T_b - a_{04}\right) - 1\right) + a_{05} \tag{38}\]</span></span></p>
 <p>Accordingly, we re-set the random number generator and tried again:</p>
-<p><span id="eq-res-exp-2"><span class="math display">\[ M_w= a_{00}\cdot T_b + a_{01} \cdot e^{- \gamma_o^{2} + a_{02}\cdot \gamma_o + a_{03} \cdot T_b} \tag{38}\]</span></span></p>
+<p><span id="eq-res-exp-2"><span class="math display">\[ M_w= a_{00}\cdot T_b + a_{01} \cdot e^{- \gamma_o^{2} + a_{02}\cdot \gamma_o + a_{03} \cdot T_b} \tag{39}\]</span></span></p>
 <p>This is a dramatically different equation. This experience suggests that the <em>real</em> reason the deterministic algorithms are still under active development today is to avoid this kind of ambiguity.</p>
 <p>Our correlation coefficients are <em>still</em> not as good as the default run:</p>
 <div id="tbl-res-exp" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
@@ -3686,11 +3689,11 @@ Figure 21: Raw Data Scale Change
 <p>Here is the first equation after a thousand iterations:</p>
 <p><span id="eq-res-eon-1"><span class="math display">\[
 M_w=(a_{00}\cdot T_b-a_{01})e^{a_{02}\cdot 10^{-9}T_b^2(a_{03}\cdot \gamma_0 +a_{04}\cdot T_b)}
-\tag{39}\]</span></span></p>
+\tag{40}\]</span></span></p>
 <p>And the second equation<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>:</p>
 <p><span id="eq-res-eon-2"><span class="math display">\[
 M_w=-a_{00}\cdot \gamma_o+\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} +a_{02}\cdot T_b
-\tag{40}\]</span></span></p>
+\tag{41}\]</span></span></p>
 <p>The correlation coefficients, however, now rival the default run:</p>
 <div id="tbl-res-eon" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -3804,9 +3807,9 @@ Figure 27: Untransformed prediced vs. actual, Box-Cox Run
 </figure>
 </div>
 <p>This run produced the same equation structure at 100, 500 and 1000 iterations, which was <em>not</em> the case for the <code>PySR</code> runs in the Aeon experiment above:</p>
-<p><span id="eq-res-boxcox"><span class="math display">\[ M_w^t = \left (\gamma_o \left(a_{00} T_b -a_{01} \right) log{(\gamma_o)} + a_{02} \right) log{(T_b)}  \tag{41}\]</span></span></p>
+<p><span id="eq-res-boxcox"><span class="math display">\[ M_w^t = \left (\gamma_o \left(a_{00} T_b -a_{01} \right) log{(\gamma_o)} + a_{02} \right) log{(T_b)}  \tag{42}\]</span></span></p>
 <p>We do need to remember to reverse the Box-Cox transform:</p>
-<p><span id="eq-unboxcox"><span class="math display">\[ M_w = {\left(\lambda M_w^t +1 \right)}^{\frac{1}{\lambda}}  \tag{42}\]</span></span></p>
+<p><span id="eq-unboxcox"><span class="math display">\[ M_w = {\left(\lambda M_w^t +1 \right)}^{\frac{1}{\lambda}}  \tag{43}\]</span></span></p>
 <p>The correlation coefficient for the longest run (1000 iterations) is in line with the Aeon runs discussed earlier:</p>
 <div id="tbl-res-boxcox" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -3854,8 +3857,8 @@ Figure 28: Residuals outside of Box-Cox Space, Box-Cox Run
 <section id="first-sparse-run" class="level4">
 <h4 class="anchored" data-anchor-id="first-sparse-run">First Sparse Run</h4>
 <p>It would seem remiss to not <em>at least</em> look at one of the deterministic models. The first library to work without requiring long-depreciated versions of Python is <code>SyMANTIC</code> (<span class="citation" data-cites="muthyala2025symantic">Muthyala et al. (<a href="#ref-muthyala2025symantic" role="doc-biblioref">2025</a>)</span>) so we set up the run to be equivalent the the <em>Default Run</em> above. Our “winning” equation is:</p>
-<p><span id="eq-res-mth-1"><span class="math display">\[ M_w=-a_{00} \cdot \gamma_o +\frac{a_{01}\cdot \gamma_o}{T_b}+a_{02}\cdot T_b -a_{03} \tag{43}\]</span></span></p>
-<p>Compare this to <a href="#eq-res-eon-2" class="quarto-xref">Equation 40</a>. Similar, but much simpler. The quality of the fit, however, is disappointing:</p>
+<p><span id="eq-res-mth-1"><span class="math display">\[ M_w=-a_{00} \cdot \gamma_o +\frac{a_{01}\cdot \gamma_o}{T_b}+a_{02}\cdot T_b -a_{03} \tag{44}\]</span></span></p>
+<p>Compare this to <a href="#eq-res-eon-2" class="quarto-xref">Equation 41</a>. Similar, but much simpler. The quality of the fit, however, is disappointing:</p>
 <div id="tbl-res-mth-1" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-res-mth-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -3904,7 +3907,7 @@ Figure 29: 1st Sparse Run Residuals
 <h4 class="anchored" data-anchor-id="second-sparse-run">Second Sparse Run</h4>
 <p>This leads to a second deterministic experiment, in which we add the logarithm and exponential functions, but leave the division operator in place. These is the same operator set used in the Box-Cox run above.</p>
 <p>Our new equation is <em>not</em> complex either:</p>
-<p><span id="eq-res-mth-2"><span class="math display">\[ M_w=-a_{00}\cdot \gamma_o\cdot T_b +a_{01}\cdot T^2_b +a_{02}\cdot e^{\gamma_o} +a_{03} \tag{44}\]</span></span></p>
+<p><span id="eq-res-mth-2"><span class="math display">\[ M_w=-a_{00}\cdot \gamma_o\cdot T_b +a_{01}\cdot T^2_b +a_{02}\cdot e^{\gamma_o} +a_{03} \tag{45}\]</span></span></p>
 <p>And our fit improves slightly:</p>
 <div id="tbl-res-mth-2" class="striped hover quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -4021,7 +4024,7 @@ Table 17: Validation Run Correlation Coefficients
 </section>
 <section id="general-observations" class="level4">
 <h4 class="anchored" data-anchor-id="general-observations">General Observations</h4>
-<p>The “UOP Characterization Factor” <a href="#eq-UOP" class="quarto-xref">Equation 20</a> which (at least) two researchers decided was an important correlating variable for molecular mass, was not discovered by our symbolic regression model.</p>
+<p>The “UOP Characterization Factor” <a href="#eq-UOP" class="quarto-xref">Equation 21</a> which (at least) two researchers decided was an important correlating variable for molecular mass, was not discovered by our symbolic regression model.</p>
 <p>In fairness, however, we dropped the division operator early in our experimentation, and never asked the model to consider a “cube root” unary operator.</p>
 <p>Replication is very challenging with these symbolic regression libraries that use evolutionary algorithms. Re-running the same dataset on the same machine with the same libraries produces different equations. In many <code>Scikit-Learn</code> algorithms, answer variation can be minimized by seeding the random number generator the same way each time, but in <code>PySR</code> we also have to turn off the optimizations that allow Julia to run the calculations massively in parallel, which contributes to the criticism that these algorithms are slow.</p>
 <p>The deterministic symbolic regression libraries don’t need random number seeds, and the answers stay the same between runs. The equations are definitely more <em>explainable</em>, but appear to be less accurate. Does this accuracy matter? Is it real? The answer to these questions depend on how good we think our measurements are!</p>
@@ -4110,6 +4113,9 @@ Sahoo, Subham, Christoph Lampert, and Georg Martius. 2018. <span>“Learning Equ
 </div>
 <div id="ref-shannon2001mathematical" class="csl-entry" role="listitem">
 Shannon, Claude E. 2001. <span>“A Mathematical Theory of Communication.”</span> <em>ACM SIGMOBILE Mobile Computing and Communications Review</em> 5 (1): 3–55.
+</div>
+<div id="ref-shapiro1965analysis" class="csl-entry" role="listitem">
+Shapiro, Samuel Sanford, and Martin B Wilk. 1965. <span>“An Analysis of Variance Test for Normality (Complete Samples).”</span> <em>Biometrika</em> 52 (3-4): 591–611.
 </div>
 <div id="ref-stratiev2023prediction" class="csl-entry" role="listitem">
 Stratiev, Dicho, Sotir Sotirov, Evdokia Sotirova, Svetoslav Nenov, Rosen Dinkov, Ivelina Shishkova, Iliyan Venkov Kolev, et al. 2023. <span>“Prediction of Molecular Weight of Petroleum Fluids by Empirical Correlations and Artificial Neuron Networks.”</span> <em>Processes</em> 11 (2): 426.
