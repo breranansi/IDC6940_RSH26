@@ -2785,8 +2785,8 @@ Table 5: gramEvol Results
 <section id="alternatives-to-evolution" class="level3">
 <h3 class="anchored" data-anchor-id="alternatives-to-evolution">Alternatives to Evolution</h3>
 <p>Although genetic programming has proven to be most popular approach to Symbolic Regression <span class="citation" data-cites="dong2025recent">(<a href="#ref-dong2025recent" role="doc-biblioref">Dong and Zhong 2025</a>)</span>, it has been criticized for being slow and producing bloated equations.</p>
-<p>Deterministic methods such as brute-force search <span class="citation" data-cites="udrescu2020ai">(<a href="#ref-udrescu2020ai" role="doc-biblioref">Udrescu and Tegmark 2020</a>)</span>, mathematical programming <span class="citation" data-cites="austel2017globally">(<a href="#ref-austel2017globally" role="doc-biblioref">Austel et al. 2017</a>)</span> and sparse regression <span class="citation" data-cites="muthyala2025symantic">(<a href="#ref-muthyala2025symantic" role="doc-biblioref">Muthyala et al. 2025</a>)</span> have been employed. The latter is particularly good at removing variables that don’t materially contribute to the prediction. Typically, they don’t solve the speed problem, but are thought to produce more easily interpreted equations.</p>
-<p>Methods which rely on information technology have also been used, especially of late. The idea here is to replace the random changes to the equations that are the heart of the evolutionary approach with changes based on what we know about th data. Sometimes this information is learned from the data <span class="citation" data-cites="anthes2025transformer">(<a href="#ref-anthes2025transformer" role="doc-biblioref">Anthes, Sobania, and Rothlauf 2025</a>)</span>, and other times it is supplied externally <span class="citation" data-cites="keren2023computational">(<a href="#ref-keren2023computational" role="doc-biblioref">Keren, Liberzon, and Lazebnik 2023</a>)</span> as “human experience”. In the latter case, there is the risk that the search space may become so restricted that nothing new can be learned.</p>
+<p>Deterministic methods such as brute-force search <span class="citation" data-cites="udrescu2020ai">(<a href="#ref-udrescu2020ai" role="doc-biblioref">Udrescu and Tegmark 2020</a>)</span>, mathematical programming <span class="citation" data-cites="austel2017globally">(<a href="#ref-austel2017globally" role="doc-biblioref">Austel et al. 2017</a>)</span> and sparse regression <span class="citation" data-cites="muthyala2025symantic">(<a href="#ref-muthyala2025symantic" role="doc-biblioref">Muthyala et al. 2025</a>)</span> have been employed.</p>
+<p>Methods which rely on <a href="https://en.wikipedia.org/wiki/Information_theory">information theory</a> have also been used, especially of late. The idea here is to replace the random changes to the equations that are the heart of the evolutionary approach with changes based on what we know about the data. Sometimes this information is learned from the data <span class="citation" data-cites="anthes2025transformer">(<a href="#ref-anthes2025transformer" role="doc-biblioref">Anthes, Sobania, and Rothlauf 2025</a>)</span>, and other times it is supplied externally <span class="citation" data-cites="keren2023computational">(<a href="#ref-keren2023computational" role="doc-biblioref">Keren, Liberzon, and Lazebnik 2023</a>)</span> as “human experience”. In the latter case, there is the risk that the search space may become so restricted that nothing new can be learned.</p>
 <p>Neural Network methods have also made an appearance. An early approach <span class="citation" data-cites="martius2016extrapolation">(<a href="#ref-martius2016extrapolation" role="doc-biblioref">Martius and Lampert 2016</a>)</span> replaced the activation functions in an ANN with trancendental functions such as sine and log. The main idea here is that each layer would host multiple kinds of functions instead of just one. The more recent approaches <span class="citation" data-cites="kamienny2022end">(<a href="#ref-kamienny2022end" role="doc-biblioref">Kamienny et al. 2022</a>)</span> pre-train a transformer model to learn the relationships between data and equations using synthetic data. The major advantage here is that if we ignore the pre-training phase, the training phase may be quick enough to use the model in real time.</p>
 </section>
 <section id="sparse-toy" class="level3">
@@ -2798,15 +2798,15 @@ Table 5: gramEvol Results
 <p>and got a very good fit. We then added an inverse term:</p>
 <p><span id="eq-spa-inv"><span class="math display">\[ \hat{y} \approx \beta_{00}+\beta_{01}x_0+\beta_{02}x_0^2+\beta_{03}x_0^3+\frac{\beta_{04}}{x_0} \tag{17}\]</span></span></p>
 <p>and without even using regularization, all the terms except <span class="math inline">\(\beta_{00},\beta_{04}\)</span> were reduced to zero and we obtained a perfect fit.</p>
-<p>This encouraged us to add some exponential and logarithmic terms:</p>
+<p>This encouraged us to add exponential and logarithmic terms:</p>
 <p><span id="eq-spa-exp"><span class="math display">\[ \hat{y} \approx \beta_{00}+\beta_{01}x_0+\beta_{02}x_0^2+\beta_{03}x_0^3+\frac{\beta_{04}}{x_0}+\beta_{05}log(x_0)+\beta_{06}e^{x_0} \tag{18}\]</span></span></p>
-<p>and we were quite disappointed when <span class="math inline">\(\beta_{06}\neq 0\)</span></p>
-<p>This showed us that the regularization <em>was</em> needed when vanilla linear regression is used for symbolic regression.</p>
+<p>and we were quite disappointed when <span class="math inline">\(\beta_{06}\neq 0\)</span>.</p>
+<p>This suggested to us that the regularization <em>was</em> needed when vanilla linear regression is used for symbolic regression.</p>
 </section>
 <section id="ai-statement" class="level3">
 <h3 class="anchored" data-anchor-id="ai-statement">AI Statement</h3>
-<p>No generative AI products were used in the writing of this paper. Accordingly, the reader will encounter a shameless mixture of American and British spelling and idioms.</p>
-<p>However, AI <em>was</em> used to coax recalcitrant libraries to stop throwing error codes and actually produce something useful. Fortunately for the reader, this was only partially successful, or this paper would be a lot longer.</p>
+<p>No generative AI products were used in the writing of this paper<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Accordingly, the reader will encounter a shameless mixture of American and British spelling and idioms.</p>
+<p>However, AI <em>was</em> used to coerce recalcitrant libraries to stop throwing error codes and actually produce something useful. Fortunately for the reader, this was only partially successful, or this paper would be a lot longer.</p>
 </section>
 <section id="next-steps" class="level3">
 <h3 class="anchored" data-anchor-id="next-steps">Next Steps</h3>
@@ -3476,13 +3476,25 @@ Figure 18: Q-Q Plot for the Default Run Residuals
 </div>
 </div>
 <p>The plot suggests that small residuals (say <span class="math inline">\(\pm 2.5\)</span>) are normally distributed, but the large residuals are not.</p>
-<p>Maybe it is appropriate at this juncture to include a formal statistical test:</p>
+<p>Maybe it is appropriate at this juncture to include this:</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Formal Statistical Test">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Formal Statistical Test
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p><span class="math inline">\(H_0\)</span>: The residuals created by using <a href="#eq-res-def" class="quarto-xref">Equation 35</a> to predict the molecular masses in the Goossens dataset are normally distributed.</p>
 <p><span class="math inline">\(H_1\)</span>: The residuals are not normally distributed.</p>
-<p>Level of Significance: 0.05</p>
-<p>Shapiro-Wilk Statistic: 0.932714</p>
-<p>Shapiro-Wilk p-Value: 0.001</p>
-<p>Conclusion: We will reject the null hypothesis as the calculated p-value is less than the level of significance.</p>
+<p><strong>Level of Significance</strong>: 0.05</p>
+<p><strong>Shapiro-Wilk Statistic</strong>: 0.932714</p>
+<p><strong>Shapiro-Wilk p-Value</strong>: 0.001</p>
+<p><strong>Conclusion</strong>: We will reject the null hypothesis as the calculated p-value is less than the level of significance.</p>
+</div>
+</div>
 <p>Out of mere curiosity, let us examine the residuals from the Goossens correlation (<a href="#eq-goossens" class="quarto-xref">Equation 30</a>):</p>
 <div id="fig-res-def-goo" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -3674,7 +3686,7 @@ Figure 21: Raw Data Scale Change
 <p><span id="eq-res-eon-1"><span class="math display">\[
 M_w=(a_{00}\cdot T_b-a_{01})e^{a_{02}\cdot 10^{-9}T_b^2(a_{03}\cdot \gamma_0 +a_{04}\cdot T_b)}
 \tag{39}\]</span></span></p>
-<p>And the second equation<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:</p>
+<p>And the second equation<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>:</p>
 <p><span id="eq-res-eon-2"><span class="math display">\[
 M_w=-a_{00}\cdot \gamma_o+\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} +a_{02}\cdot T_b
 \tag{40}\]</span></span></p>
@@ -4108,7 +4120,8 @@ Virgolin, Marco, and Peter AN Bosman. 2022. <span>“Coefficient Mutation in the
 
 <ol>
 <li id="fn1"><p>A post-fix variant was used on scientific calculators in the 1970’s as it was more efficient. The learning curve, however, was brutal for mere mortals, so that owning one of these ‘RPN’ <a href="https://en.wikipedia.org/wiki/HP-35">artifacts</a> became a status symbol in the engineering community well into the 1990’s.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>A quick note for humans on this second equation: <span class="math inline">\({log(T_b)}^3 = {(ln(T_b))}^3 \neq ln(T^3_b)\)</span> This was made clear by inspecting the Polish Notation version of the equation. Just sayin’.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>No algorithms were harmed during the making of this paper.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>A quick note for humans on this second equation: <span class="math inline">\({log(T_b)}^3 = {(ln(T_b))}^3 \neq ln(T^3_b)\)</span> This was made clear by inspecting the Polish Notation version of the equation. Just sayin’.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main>
 <!-- /main column -->

@@ -536,15 +536,12 @@ slow and producing bloated equations.
 
 Deterministic methods such as brute-force search [@udrescu2020ai],
 mathematical programming [@austel2017globally] and sparse regression
-[@muthyala2025symantic] have been employed. The latter is particularly
-good at removing variables that don't materially contribute to the
-prediction. Typically, they don't solve the speed problem, but are
-thought to produce more easily interpreted equations.
+[@muthyala2025symantic] have been employed.
 
-Methods which rely on information technology have also been used,
+Methods which rely on [information theory](https://en.wikipedia.org/wiki/Information_theory) have also been used,
 especially of late. The idea here is to replace the random changes to
 the equations that are the heart of the evolutionary approach with
-changes based on what we know about th data. Sometimes this information
+changes based on what we know about the data. Sometimes this information
 is learned from the data [@anthes2025transformer], and other times it is
 supplied externally [@keren2023computational] as "human experience". In
 the latter case, there is the risk that the search space may become so
@@ -576,19 +573,19 @@ $$ \hat{y} \approx \beta_{00}+\beta_{01}x_0+\beta_{02}x_0^2+\beta_{03}x_0^3+\fra
 
 and without even using regularization, all the terms except $\beta_{00},\beta_{04}$ were reduced to zero and we obtained a perfect fit.
 
-This encouraged us to add some exponential and logarithmic terms:
+This encouraged us to add exponential and logarithmic terms:
 
 $$ \hat{y} \approx \beta_{00}+\beta_{01}x_0+\beta_{02}x_0^2+\beta_{03}x_0^3+\frac{\beta_{04}}{x_0}+\beta_{05}log(x_0)+\beta_{06}e^{x_0}$$ {#eq-spa-exp}
 
-and we were quite disappointed when $\beta_{06}\neq 0$
+and we were quite disappointed when $\beta_{06}\neq 0$.
 
-This showed us that the regularization *was* needed when vanilla linear regression is used for symbolic regression.
+This suggested to us that the regularization *was* needed when vanilla linear regression is used for symbolic regression.
 
 ### AI Statement
 
-No generative AI products were used in the writing of this paper.  Accordingly, the reader will encounter a shameless mixture of American and British spelling and idioms.
+No generative AI products were used in the writing of this paper[^2].  Accordingly, the reader will encounter a shameless mixture of American and British spelling and idioms.
 
-However, AI *was* used to coax recalcitrant libraries to stop throwing error codes and actually produce something useful.  Fortunately for the reader, this was only partially successful, or this paper would be a lot longer.
+However, AI *was* used to coerce recalcitrant libraries to stop throwing error codes and actually produce something useful.  Fortunately for the reader, this was only partially successful, or this paper would be a lot longer.
 
 
 ### Next Steps
@@ -1003,19 +1000,22 @@ grid()
 
 The plot suggests that small residuals (say $\pm 2.5$) are normally distributed, but the large residuals are not.
 
-Maybe it is appropriate at this juncture to include a formal statistical test:
+Maybe it is appropriate at this juncture to include this:
+
+::: {.callout-tip title="Formal Statistical Test"}
 
 $H_0$:  The residuals created by using @eq-res-def to predict the molecular masses in the Goossens dataset are normally distributed.
 
 $H_1$: The residuals are not normally distributed.
 
-Level of Significance: 0.05
+__Level of Significance__: 0.05
 
-Shapiro-Wilk Statistic: 0.932714
+__Shapiro-Wilk Statistic__: 0.932714
 
-Shapiro-Wilk p-Value: 0.001
+__Shapiro-Wilk p-Value__: 0.001
 
-Conclusion: We will reject the null hypothesis as the calculated p-value is less than the level of significance.
+__Conclusion__: We will reject the null hypothesis as the calculated p-value is less than the level of significance.
+:::
 
 Out of mere curiosity, let us examine the residuals from the Goossens correlation (@eq-goossens):
 
@@ -1125,7 +1125,7 @@ $$
 M_w=(a_{00}\cdot T_b-a_{01})e^{a_{02}\cdot 10^{-9}T_b^2(a_{03}\cdot \gamma_0 +a_{04}\cdot T_b)}
 $$ {#eq-res-eon-1}
 
-And the second equation[^2]:
+And the second equation[^3]:
 
 $$
 M_w=-a_{00}\cdot \gamma_o+\frac{e^{-\gamma_o^2+{log(T_b)}^3}}{T_b^{a_{01}}} +a_{02}\cdot T_b
@@ -1345,6 +1345,7 @@ Our main conclusions are:
 
 9.  Running both evolutionary and deterministic models on the same problem is *also* a good idea.
 
-[^2]: A quick note for humans on this second equation: ${log(T_b)}^3 = {(ln(T_b))}^3 \neq ln(T^3_b)$  This was made clear by inspecting the Polish Notation version of the equation.  Just sayin'.
+[^2]: No algorithms were harmed during the making of this paper.
+[^3]: A quick note for humans on this second equation: ${log(T_b)}^3 = {(ln(T_b))}^3 \neq ln(T^3_b)$  This was made clear by inspecting the Polish Notation version of the equation.  Just sayin'.
 
 ## References
