@@ -1,0 +1,46 @@
+---
+title: "Cubic Models"
+output: html_notebook
+---
+```{r}
+# Generate Dataset where the range is from 0.55 to 1.075 on the x-axis
+x<-seq(from=0.55,to=1.075,by=0.025)
+# Build a nonlinear model
+y<-141.5/x-131.5
+# Draw Graph
+plot(x,y,main="Toy Dataset",
+    xlab="Specific Gravity",
+    ylab="API Gravity")
+grid()
+```
+
+```{r}
+# Find the square & cube of the x variables (by creating new x variables)
+# Generate an output variable then build a Dataframe that produces a summary
+x2<-x^2
+x3<-x^3
+df<-data.frame(x1=x,
+               x2=x2,
+               x3=x3,
+               y=y)
+summary(df)
+```
+
+```{r}
+# Fitting a linear regression to show significance
+myMod<-lm(data=df,
+          y~x1+x2+x3)
+summary(myMod)
+# R-squared shows perfect fit
+```
+```{r}
+# Goodness of fit shown, despite the difference in equation models are identical
+plot(x,y,main="Toy Dataset Fit",
+    xlab="Specific Gravity",
+    ylab="API Gravity")
+grid()
+y_pred<-predict(myMod)
+lines(x,y_pred,col='red')
+```
+
+This shows that you can have two different equations that give you the same answer
